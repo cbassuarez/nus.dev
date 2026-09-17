@@ -1,17 +1,23 @@
-/* The hero terminal.
+/* The shell.
  *
- * Not a mockup and not a video: a recorded PTY byte stream fed to nus's own
- * VT core, compiled to WebAssembly. Every glyph's position, colour, width and
- * wrap is decided by the same `nus_vt::Term` the application runs. This file
- * only paints the grid it is handed.
+ * Not a mockup, not a video, and no longer my own painter: a recorded PTY
+ * session decoded by `nus_vt::Term` and drawn by `nus_render::GridRenderer` —
+ * the app's own renderer — both compiled to WebAssembly. What arrives here is
+ * the renderer's draw list, `nus_render::Instance` quads in push order, plus
+ * the glyph bitmaps swash rasterised into its atlas.
  *
- * The palette is set from the page's theme through the real `Palette`, so the
- * paper/ink toggle drives the terminal the same way a theme does in the app.
+ * So the cell metrics, the shaping, the glyph coverage, the colour resolution,
+ * the wide characters and the cursor are all the app's. This file blits quads,
+ * which is the one part that is exact by construction.
+ *
+ * wgpu is not involved: the app's pipeline passes screen size as a WGSL
+ * immediate, which WebGPU has no equivalent for. Consuming the scene instead of
+ * rendering it needs no GPU API and works in every browser.
  */
 
-import init, { Vt } from '../wasm/nus_vt_wasm.js';
+import init, { Shell } from '../wasm/nus_vt_wasm.js';
 
-/* Broadsheet's ANSI palettes, from docs/DESIGN.md in the app repo. */
+/* Broadsheet's palettes, from docs/DESIGN.md in the app repo. */
 const THEMES = {
   paper: {
     fg: 0x141414, bg: 0xf4f1ea, cursor: 0x141414,
@@ -29,18 +35,12 @@ const THEMES = {
   }
 };
 
-/* Flag bits, mirroring nus_vt::cell::Flags. */
-const F_BOLD = 1 << 0;
-const F_DIM = 1 << 1;
-const F_ITALIC = 1 << 2;
-const F_UL = (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7);
-const F_STRIKE = 1 << 11;
-const F_WIDE_SPACER = 1 << 13;
+/* nus_render::Instance kinds. A grid scene uses rect, glyph and stroke. */
+const RECT = 0, GLYPH = 1, STROKE = 4;
 
-const STRIDE = 4;
-const hex = (v) => '#' + v.toString(16).padStart(6, '0');
+const css = (r, g, b, a) =>
+  `rgba(${Math.round(r * 255)},${Math.round(g * 255)},${Math.round(b * 255)},${a})`;
 
-/** Parse an asciinema v2 cast: a header line, then [time, "o", data] lines. */
 function parseCast(text) {
   const lines = text.split('\n').filter((l) => l.trim());
   const header = JSON.parse(lines[0]);
@@ -53,6 +53,58 @@ function parseCast(text) {
   return { cols: header.width, rows: header.height, events };
 }
 
+/** The glyph atlas the renderer packs into, mirrored into a canvas. */
+class Atlas {
+  constructor(size) {
+    this.size = size;
+    this.height = 256;               // grows as the shelves fill
+    this.canvas = document.createElement('canvas');
+    this.canvas.width = size;
+    this.canvas.height = this.height;
+    this.ctx = this.canvas.getContext('2d');
+  }
+
+  grow(needed) {
+    if (needed <= this.height) return;
+    const next = Math.min(this.size, Math.max(needed, this.height * 2));
+    const c = document.createElement('canvas');
+    c.width = this.size;
+    c.height = next;
+    const ctx = c.getContext('2d');
+    ctx.drawImage(this.canvas, 0, 0);
+    this.canvas = c;
+    this.ctx = ctx;
+    this.height = next;
+  }
+
+  /** Packed uploads: [x,y,w,h] LE u32 then w*h coverage bytes, repeated. */
+  absorb(bytes) {
+    const dv = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+    let o = 0;
+    while (o + 16 <= bytes.length) {
+      const x = dv.getUint32(o, true);
+      const y = dv.getUint32(o + 4, true);
+      const w = dv.getUint32(o + 8, true);
+      const h = dv.getUint32(o + 12, true);
+      o += 16;
+      const n = w * h;
+      if (o + n > bytes.length) break;
+      if (w && h) {
+        this.grow(y + h);
+        // Coverage becomes white with alpha, so a glyph can be tinted later.
+        const img = new ImageData(w, h);
+        const px = img.data;
+        for (let i = 0; i < n; i++) {
+          px[i * 4] = 255; px[i * 4 + 1] = 255; px[i * 4 + 2] = 255;
+          px[i * 4 + 3] = bytes[o + i];
+        }
+        this.ctx.putImageData(img, x, y);
+      }
+      o += n;
+    }
+  }
+}
+
 class HeroTerminal {
   constructor(root) {
     this.root = root;
@@ -62,26 +114,23 @@ class HeroTerminal {
     this.playBtn = root.querySelector('[data-term-play]');
     this.scrub = root.querySelector('[data-term-scrub]');
 
-    this.vt = null;
-    this.cast = null;
-    this.cursor = 0;        // index of the next event to apply
-    this.clock = 0;         // seconds into the recording
+    this.cursor = 0;
+    this.clock = 0;
     this.playing = false;
     this.raf = null;
-    this.lastFrame = 0;
   }
 
   /* --- theme ------------------------------------------------------------- */
 
-  currentThemeName() {
+  themeName() {
     const t = document.documentElement.getAttribute('data-theme');
     if (t === 'ink' || t === 'paper') return t;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'ink' : 'paper';
   }
 
   applyTheme() {
-    const t = THEMES[this.currentThemeName()];
-    this.vt.set_theme(t.fg, t.bg, t.cursor, new Uint32Array(t.ansi));
+    const t = THEMES[this.themeName()];
+    this.shell.set_theme(t.fg, t.bg, t.cursor, new Uint32Array(t.ansi));
     this.theme = t;
   }
 
@@ -92,24 +141,30 @@ class HeroTerminal {
     if (!box.width || !box.height) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const pad = 12;
-    const availW = Math.max(40, box.width - pad * 2);
-    const availH = Math.max(40, box.height - pad * 2);
+    this.pad = 11 * dpr;
 
-    // Fit the grid to whichever axis binds, the way a terminal fits a window.
-    const byW = availW / (this.cast.cols * 0.6);   // Plex Mono advance = 0.6em
-    const byH = availH / (this.cast.rows * 1.45);
-    this.fontSize = Math.max(7, Math.min(byW, byH));
-    this.cellW = this.fontSize * 0.6;
-    this.cellH = this.fontSize * 1.45;
-    this.pad = pad;
+    const availW = Math.max(20, box.width * dpr - this.pad * 2);
+    const availH = Math.max(20, box.height * dpr - this.pad * 2);
+
+    // The renderer's cell size scales with px, so one probe is enough.
+    const probe = 20;
+    this.shell.set_px(probe);
+    const cw = this.shell.cell_w / probe;
+    const ch = this.shell.cell_h / probe;
+    const px = Math.max(6, Math.min(availW / (this.cast.cols * cw), availH / (this.cast.rows * ch)));
+    this.shell.set_px(px);
+    this.px = px;
 
     this.canvas.width = Math.round(box.width * dpr);
     this.canvas.height = Math.round(box.height * dpr);
     this.canvas.style.width = box.width + 'px';
     this.canvas.style.height = box.height + 'px';
-    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    this.ctx.textBaseline = 'alphabetic';
+
+    // The scratch layer tints one run of glyphs; it matches the target exactly.
+    if (!this.scratch) this.scratch = document.createElement('canvas');
+    this.scratch.width = this.canvas.width;
+    this.scratch.height = this.canvas.height;
+    this.sctx = this.scratch.getContext('2d');
 
     this.paint();
   }
@@ -126,11 +181,11 @@ class HeroTerminal {
     if (this.scrub) {
       this.scrub.max = String(Math.max(0.01, this.duration));
       this.scrub.addEventListener('input', () => {
+        this.userPaused = true;
         this.pause();
         this.seek(Number(this.scrub.value));
       });
     }
-    // Do not spend the visitor's battery on a terminal they cannot see.
     new IntersectionObserver((es) => {
       es.forEach((e) => {
         if (!e.isIntersecting && this.playing) { this.pause(true); this.autoPaused = true; }
@@ -140,22 +195,20 @@ class HeroTerminal {
   }
 
   play() {
-    if (this.playing) return;
+    if (this.playing || this.userPaused) return;
     if (this.clock >= this.duration) this.seek(0);
     this.playing = true;
-    this.lastFrame = performance.now();
+    this.last = performance.now();
     this.setStatus();
     const step = (now) => {
       if (!this.playing) return;
-      const dt = Math.min(0.25, (now - this.lastFrame) / 1000);
-      this.lastFrame = now;
+      const dt = Math.min(0.25, (now - this.last) / 1000);
+      this.last = now;
       this.advanceTo(this.clock + dt);
       if (this.clock >= this.duration) {
         this.pause(true);
         this.setStatus('end');
-        // Hold the last frame, then run it again: the hero should never be a
-        // still, and the thing typed last is the thing worth reading.
-        this.loopTimer = setTimeout(() => {
+        this.loop = setTimeout(() => {
           if (!this.autoPaused && !this.userPaused) { this.seek(0); this.play(); }
         }, 2600);
         return;
@@ -168,17 +221,18 @@ class HeroTerminal {
   pause(quiet) {
     this.playing = false;
     if (this.raf) cancelAnimationFrame(this.raf);
-    if (this.loopTimer) { clearTimeout(this.loopTimer); this.loopTimer = null; }
+    if (this.loop) { clearTimeout(this.loop); this.loop = null; }
     if (!quiet) this.setStatus();
   }
 
   seek(t) {
-    if (t < this.clock) {                 // rewind: replay from the beginning
-      if (this.loopTimer) { clearTimeout(this.loopTimer); this.loopTimer = null; }
-      this.vt = new Vt(this.cast.cols, this.cast.rows, 2000);
+    if (t < this.clock) {
+      if (this.loop) { clearTimeout(this.loop); this.loop = null; }
+      this.shell = new Shell(this.cast.cols, this.cast.rows, 2000, this.px || 20);
       this.applyTheme();
       this.cursor = 0;
       this.clock = 0;
+      this.layout();
     }
     this.advanceTo(t);
   }
@@ -187,7 +241,7 @@ class HeroTerminal {
     const ev = this.cast.events;
     let fed = false;
     while (this.cursor < ev.length && ev[this.cursor][0] <= t) {
-      this.vt.feed(ev[this.cursor][1]);
+      this.shell.feed(ev[this.cursor][1]);
       this.cursor++;
       fed = true;
     }
@@ -198,92 +252,90 @@ class HeroTerminal {
     if (fed || !this.painted) this.paint();
   }
 
-  /* --- paint ------------------------------------------------------------- */
+  /* --- paint: consume the renderer's draw list --------------------------- */
 
   paint() {
-    if (!this.vt || !this.cellW) return;
+    if (!this.shell || !this.sctx) return;
     this.painted = true;
 
-    this.vt.snapshot();
-    const cells = this.cellView();
-    const { cols, rows } = this.cast;
-    const ctx = this.ctx;
-    const { cellW, cellH, pad, fontSize } = this;
+    this.shell.draw(true);
 
-    // Ground
-    ctx.fillStyle = hex(this.vt.default_bg);
+    // Glyphs the renderer rasterised on this frame go into the atlas first.
+    const alen = this.shell.atlas_len;
+    if (alen) {
+      this.atlas.absorb(new Uint8Array(this.memory.buffer, this.shell.atlas, alen));
+    }
+
+    const inst = new Float32Array(
+      this.memory.buffer, this.shell.instances, this.shell.instances_len
+    );
+    const S = this.shell.stride;
+    const A = this.atlas.size;
+    const ctx = this.ctx;
+    const pad = this.pad;
+
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = '#' + this.shell.default_bg.toString(16).padStart(6, '0');
     ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Backgrounds first, coalescing runs so we issue few fills.
-    const defaultBg = this.vt.default_bg;
-    for (let r = 0; r < rows; r++) {
-      let runStart = -1;
-      let runColor = -1;
-      for (let c = 0; c <= cols; c++) {
-        const bg = c < cols ? cells[(r * cols + c) * STRIDE + 2] : -1;
-        if (bg !== runColor) {
-          if (runStart >= 0 && runColor !== defaultBg && runColor >= 0) {
-            ctx.fillStyle = hex(runColor);
-            ctx.fillRect(pad + runStart * cellW, pad + r * cellH, (c - runStart) * cellW, cellH);
-          }
-          runStart = c;
-          runColor = bg;
-        }
+    // Glyphs batch by colour; anything else flushes the batch, so the
+    // renderer's push order is preserved exactly.
+    let batch = null;
+    let batchColor = '';
+
+    const flush = () => {
+      if (!batch || !batch.length) { batch = null; return; }
+      const s = this.sctx;
+      s.setTransform(1, 0, 0, 1, 0, 0);
+      s.clearRect(0, 0, this.scratch.width, this.scratch.height);
+      s.globalCompositeOperation = 'source-over';
+      for (const g of batch) {
+        s.drawImage(
+          this.atlas.canvas,
+          g[4] * A, g[5] * A, (g[6] - g[4]) * A, (g[7] - g[5]) * A,
+          pad + g[0], pad + g[1], g[2], g[3]
+        );
       }
-    }
+      s.globalCompositeOperation = 'source-in';
+      s.fillStyle = batchColor;
+      s.fillRect(0, 0, this.scratch.width, this.scratch.height);
+      s.globalCompositeOperation = 'source-over';
+      ctx.drawImage(this.scratch, 0, 0);
+      batch = null;
+    };
 
-    // Glyphs
-    const baseline = pad + fontSize * 1.08;
-    let font = '';
-    for (let r = 0; r < rows; r++) {
-      const y = baseline + r * cellH;
-      for (let c = 0; c < cols; c++) {
-        const i = (r * cols + c) * STRIDE;
-        const code = cells[i];
-        const flags = cells[i + 3];
-        if (flags & F_WIDE_SPACER) continue;
-        if (code === 32 || code === 0) continue;
+    for (let o = 0; o < inst.length; o += S) {
+      const kind = inst[o + 12];
+      const color = css(inst[o + 8], inst[o + 9], inst[o + 10], inst[o + 11]);
 
-        const want =
-          `${flags & F_ITALIC ? 'italic ' : ''}${flags & F_BOLD ? 600 : 400} ` +
-          `${fontSize.toFixed(2)}px "Plex Mono", ui-monospace, monospace`;
-        if (want !== font) { ctx.font = want; font = want; }
-
-        ctx.globalAlpha = flags & F_DIM ? 0.55 : 1;
-        ctx.fillStyle = hex(cells[i + 1]);
-        ctx.fillText(String.fromCodePoint(code), pad + c * cellW, y);
-
-        if (flags & F_UL) {
-          ctx.fillRect(pad + c * cellW, y + fontSize * 0.16, cellW, Math.max(1, fontSize / 14));
-        }
-        if (flags & F_STRIKE) {
-          ctx.fillRect(pad + c * cellW, y - fontSize * 0.3, cellW, Math.max(1, fontSize / 14));
-        }
-        ctx.globalAlpha = 1;
+      if (kind === GLYPH) {
+        if (batch && batchColor !== color) flush();
+        if (!batch) { batch = []; batchColor = color; }
+        batch.push([
+          inst[o], inst[o + 1], inst[o + 2], inst[o + 3],
+          inst[o + 4], inst[o + 5], inst[o + 6], inst[o + 7]
+        ]);
+        continue;
       }
-    }
 
-    // Cursor: a block, ink on paper, no blink — Broadsheet's default.
-    const cr = this.vt.cursor_row;
-    const cc = this.vt.cursor_col;
-    if (cr < rows && cc < cols) {
-      const x = pad + cc * cellW;
-      const y = pad + cr * cellH;
-      ctx.fillStyle = hex(this.theme.cursor);
-      ctx.fillRect(x, y, cellW, cellH);
-      const i = (cr * cols + cc) * STRIDE;
-      const code = cells[i];
-      if (code && code !== 32) {
-        ctx.fillStyle = hex(this.vt.default_bg);
-        ctx.font = `400 ${fontSize.toFixed(2)}px "Plex Mono", ui-monospace, monospace`;
-        ctx.fillText(String.fromCodePoint(code), x, baseline + cr * cellH);
+      flush();
+
+      if (kind === RECT) {
+        ctx.fillStyle = color;
+        ctx.fillRect(pad + inst[o], pad + inst[o + 1], inst[o + 2], inst[o + 3]);
+      } else if (kind === STROKE) {
+        // uv carries [radius, thickness]; the grid uses it for a hollow cursor.
+        const t = inst[o + 5] || 1;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = t;
+        ctx.strokeRect(
+          pad + inst[o] + t / 2, pad + inst[o + 1] + t / 2,
+          inst[o + 2] - t, inst[o + 3] - t
+        );
       }
+      // Other kinds (rounded, hazard, texture) never appear in a grid scene.
     }
-  }
-
-  /** A view over the frame buffer in wasm memory — no copy. */
-  cellView() {
-    return new Uint32Array(this.memory.buffer, this.vt.cells, this.vt.cells_len);
+    flush();
   }
 
   setStatus(kind) {
@@ -292,7 +344,8 @@ class HeroTerminal {
       this.playBtn.textContent = this.playing ? '❚❚' : '▶';
     }
     if (!this.status) return;
-    this.status.textContent = kind === 'end' ? 'replay ended' : this.playing ? 'replaying' : 'paused';
+    this.status.textContent =
+      kind === 'end' ? 'replay ended' : this.playing ? 'replaying' : 'paused';
   }
 }
 
@@ -303,13 +356,18 @@ export async function mountHeroTerminal(root, opts) {
   const wasm = await init({ module_or_path: opts.wasm });
   term.memory = wasm.memory;
 
-  const castText = await fetch(opts.cast).then((r) => r.text());
-  term.cast = parseCast(castText);
-  term.duration = term.cast.events.length ? term.cast.events[term.cast.events.length - 1][0] : 0;
-  term.vt = new Vt(term.cast.cols, term.cast.rows, 2000);
-  term.applyTheme();
+  const castText = await fetch(opts.cast).then((r) => {
+    if (!r.ok) throw new Error(`cast ${r.status}`);
+    return r.text();
+  });
 
-  if (document.fonts && document.fonts.ready) await document.fonts.ready;
+  term.cast = parseCast(castText);
+  term.duration = term.cast.events.length
+    ? term.cast.events[term.cast.events.length - 1][0] : 0;
+
+  term.shell = new Shell(term.cast.cols, term.cast.rows, 2000, 20);
+  term.atlas = new Atlas(term.shell.atlas_size);
+  term.applyTheme();
 
   term.layout();
   new ResizeObserver(() => term.layout()).observe(term.canvas.parentElement);
@@ -322,7 +380,6 @@ export async function mountHeroTerminal(root, opts) {
 
   root.dataset.ready = 'true';
 
-  // Someone who asked for less motion gets the finished session, not a movie.
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     term.userPaused = true;
     term.seek(term.duration);

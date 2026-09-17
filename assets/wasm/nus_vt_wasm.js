@@ -1,75 +1,81 @@
-export class Vt {
+export class Shell {
     __destroy_into_raw() {
         const ptr = this.__wbg_ptr;
         this.__wbg_ptr = 0;
-        VtFinalization.unregister(this);
+        ShellFinalization.unregister(this);
         return ptr;
     }
     free() {
         const ptr = this.__destroy_into_raw();
-        wasm.__wbg_vt_free(ptr, 0);
+        wasm.__wbg_shell_free(ptr, 0);
     }
     /**
-     * True when the cursor sits at a shell prompt — from OSC 133 marks in the
-     * stream, which is how the app knows a command line from program output.
+     * True when the cursor sits at a shell prompt, from the OSC 133 marks in
+     * the stream — how the app tells a command line from program output.
      * @returns {boolean}
      */
     get at_prompt() {
-        const ret = wasm.vt_at_prompt(this.__wbg_ptr);
+        const ret = wasm.shell_at_prompt(this.__wbg_ptr);
         return ret !== 0;
     }
     /**
-     * Pointer into wasm memory; JS wraps it in a `Uint32Array`.
-     *
-     * Only valid until the next call that can reallocate (`resize`,
-     * `snapshot` after a resize), so the page re-reads it each frame.
+     * Glyph bitmaps rasterised during the last `draw`, packed as described on
+     * the field. Empty once the atlas has warmed up.
      * @returns {number}
      */
-    get cells() {
-        const ret = wasm.vt_cells(this.__wbg_ptr);
+    get atlas() {
+        const ret = wasm.shell_atlas(this.__wbg_ptr);
         return ret >>> 0;
     }
     /**
      * @returns {number}
      */
-    get cells_len() {
-        const ret = wasm.vt_cells_len(this.__wbg_ptr);
+    get atlas_len() {
+        const ret = wasm.shell_atlas_len(this.__wbg_ptr);
         return ret >>> 0;
+    }
+    /**
+     * @returns {number}
+     */
+    get atlas_size() {
+        const ret = wasm.shell_atlas_size(this.__wbg_ptr);
+        return ret >>> 0;
+    }
+    /**
+     * @returns {number}
+     */
+    get cell_h() {
+        const ret = wasm.shell_cell_h(this.__wbg_ptr);
+        return ret;
+    }
+    /**
+     * @returns {number}
+     */
+    get cell_w() {
+        const ret = wasm.shell_cell_w(this.__wbg_ptr);
+        return ret;
     }
     /**
      * @returns {number}
      */
     get cols() {
-        const ret = wasm.vt_cols(this.__wbg_ptr);
-        return ret >>> 0;
-    }
-    /**
-     * @returns {number}
-     */
-    get cursor_col() {
-        const ret = wasm.vt_cursor_col(this.__wbg_ptr);
-        return ret >>> 0;
-    }
-    /**
-     * @returns {number}
-     */
-    get cursor_row() {
-        const ret = wasm.vt_cursor_row(this.__wbg_ptr);
+        const ret = wasm.shell_cols(this.__wbg_ptr);
         return ret >>> 0;
     }
     /**
      * @returns {number}
      */
     get default_bg() {
-        const ret = wasm.vt_default_bg(this.__wbg_ptr);
+        const ret = wasm.shell_default_bg(this.__wbg_ptr);
         return ret >>> 0;
     }
     /**
-     * @returns {number}
+     * Build the frame. Afterwards `instances` holds the renderer's draw list
+     * and `take_atlas` holds any glyphs it rasterised on the way.
+     * @param {boolean} focused
      */
-    get default_fg() {
-        const ret = wasm.vt_default_fg(this.__wbg_ptr);
-        return ret >>> 0;
+    draw(focused) {
+        wasm.shell_draw(this.__wbg_ptr, focused);
     }
     /**
      * Feed raw PTY bytes — exactly the bytes a shell wrote.
@@ -78,17 +84,39 @@ export class Vt {
     feed(bytes) {
         const ptr0 = passArray8ToWasm0(bytes, wasm.__wbindgen_malloc);
         const len0 = WASM_VECTOR_LEN;
-        wasm.vt_feed(this.__wbg_ptr, ptr0, len0);
+        wasm.shell_feed(this.__wbg_ptr, ptr0, len0);
     }
     /**
+     * Pointer to the flattened draw list; JS wraps it in a `Float32Array`.
+     * Each instance is `[x, y, w, h, u0, v0, u1, v1, r, g, b, a, kind, phase]`.
+     * @returns {number}
+     */
+    get instances() {
+        const ret = wasm.shell_instances(this.__wbg_ptr);
+        return ret >>> 0;
+    }
+    /**
+     * @returns {number}
+     */
+    get instances_len() {
+        const ret = wasm.shell_instances_len(this.__wbg_ptr);
+        return ret >>> 0;
+    }
+    /**
+     * `px` is the terminal font size in physical pixels — pass the CSS size
+     * times the device pixel ratio, the way the app passes its scale factor.
      * @param {number} cols
      * @param {number} rows
      * @param {number} scrollback
+     * @param {number} px
      */
-    constructor(cols, rows, scrollback) {
-        const ret = wasm.vt_new(cols, rows, scrollback);
-        this.__wbg_ptr = ret;
-        VtFinalization.register(this, this.__wbg_ptr, this);
+    constructor(cols, rows, scrollback, px) {
+        const ret = wasm.shell_new(cols, rows, scrollback, px);
+        if (ret[2]) {
+            throw takeFromExternrefTable0(ret[1]);
+        }
+        this.__wbg_ptr = ret[0];
+        ShellFinalization.register(this, this.__wbg_ptr, this);
         return this;
     }
     /**
@@ -96,20 +124,26 @@ export class Vt {
      * @param {number} rows
      */
     resize(cols, rows) {
-        wasm.vt_resize(this.__wbg_ptr, cols, rows);
+        wasm.shell_resize(this.__wbg_ptr, cols, rows);
     }
     /**
      * @returns {number}
      */
     get rows() {
-        const ret = wasm.vt_rows(this.__wbg_ptr);
+        const ret = wasm.shell_rows(this.__wbg_ptr);
         return ret >>> 0;
     }
     /**
-     * Repaint the palette for a theme change. `ansi` is 16 packed RGB words.
-     *
-     * The app's themes drive the palette exactly this way, so the hero
-     * changing colour with the page is the real mechanism, not a CSS filter.
+     * Change the font size, in physical pixels. Rebuilds the cell metrics the
+     * way the app does when the window's scale factor changes.
+     * @param {number} px
+     */
+    set_px(px) {
+        wasm.shell_set_px(this.__wbg_ptr, px);
+    }
+    /**
+     * Repaint the palette for a theme change: the app's themes drive it the
+     * same way, so paper and ink here are the real mechanism.
      * @param {number} fg
      * @param {number} bg
      * @param {number} cursor
@@ -118,17 +152,14 @@ export class Vt {
     set_theme(fg, bg, cursor, ansi) {
         const ptr0 = passArray32ToWasm0(ansi, wasm.__wbindgen_malloc);
         const len0 = WASM_VECTOR_LEN;
-        wasm.vt_set_theme(this.__wbg_ptr, fg, bg, cursor, ptr0, len0);
+        wasm.shell_set_theme(this.__wbg_ptr, fg, bg, cursor, ptr0, len0);
     }
     /**
-     * Re-read the visible grid into the frame buffer.
-     *
-     * Each cell is `[codepoint, fg_rgb, bg_rgb, flags]`. Colours are already
-     * resolved through the palette, so OSC 4/10/11 overrides in the recorded
-     * stream land here the same way they land in the app.
+     * @returns {number}
      */
-    snapshot() {
-        wasm.vt_snapshot(this.__wbg_ptr);
+    get stride() {
+        const ret = wasm.shell_stride(this.__wbg_ptr);
+        return ret >>> 0;
     }
     /**
      * Text of the visible grid — what a selection would copy.
@@ -138,7 +169,7 @@ export class Vt {
         let deferred1_0;
         let deferred1_1;
         try {
-            const ret = wasm.vt_text(this.__wbg_ptr);
+            const ret = wasm.shell_text(this.__wbg_ptr);
             deferred1_0 = ret[0];
             deferred1_1 = ret[1];
             return getStringFromWasm0(ret[0], ret[1]);
@@ -146,50 +177,21 @@ export class Vt {
             wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
         }
     }
-    /**
-     * Advance timers (cursor blink phase, etc.).
-     */
     tick() {
-        wasm.vt_tick(this.__wbg_ptr);
-    }
-    /**
-     * @returns {string}
-     */
-    get title() {
-        let deferred1_0;
-        let deferred1_1;
-        try {
-            const ret = wasm.vt_title(this.__wbg_ptr);
-            deferred1_0 = ret[0];
-            deferred1_1 = ret[1];
-            return getStringFromWasm0(ret[0], ret[1]);
-        } finally {
-            wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
-        }
+        wasm.shell_tick(this.__wbg_ptr);
     }
 }
-if (Symbol.dispose) Vt.prototype[Symbol.dispose] = Vt.prototype.free;
+if (Symbol.dispose) Shell.prototype[Symbol.dispose] = Shell.prototype.free;
 
 /**
- * Colour constants are exported so the painter never re-derives them.
- * @returns {Uint32Array}
- */
-export function flag_bits() {
-    const ret = wasm.flag_bits();
-    var v1 = getArrayU32FromWasm0(ret[0], ret[1]).slice();
-    wasm.__wbindgen_free(ret[0], ret[1] * 4, 4);
-    return v1;
-}
-
-/**
- * Which `nus-vt` this was built from, so the page can name it.
+ * Which nus this was built from, so the page can name it.
  * @returns {string}
  */
-export function vt_source_rev() {
+export function source_rev() {
     let deferred1_0;
     let deferred1_1;
     try {
-        const ret = wasm.vt_source_rev();
+        const ret = wasm.source_rev();
         deferred1_0 = ret[0];
         deferred1_1 = ret[1];
         return getStringFromWasm0(ret[0], ret[1]);
@@ -202,6 +204,11 @@ function __wbg_get_imports() {
         __proto__: null,
         __wbg___wbindgen_throw_5d9e815e6fdf150f: function(arg0, arg1) {
             throw new Error(getStringFromWasm0(arg0, arg1));
+        },
+        __wbindgen_generic_0000000000000001: function(arg0, arg1) {
+            // Cast intrinsic for `Ref(String) -> Externref`.
+            const ret = getStringFromWasm0(arg0, arg1);
+            return ret;
         },
         __wbindgen_init_externref_table: function() {
             const table = wasm.__wbindgen_externrefs;
@@ -219,14 +226,9 @@ function __wbg_get_imports() {
     };
 }
 
-const VtFinalization = (typeof FinalizationRegistry === 'undefined')
+const ShellFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
-    : new FinalizationRegistry(ptr => wasm.__wbg_vt_free(ptr, 1));
-
-function getArrayU32FromWasm0(ptr, len) {
-    ptr = ptr >>> 0;
-    return getUint32ArrayMemory0().subarray(ptr / 4, ptr / 4 + len);
-}
+    : new FinalizationRegistry(ptr => wasm.__wbg_shell_free(ptr, 1));
 
 function getStringFromWasm0(ptr, len) {
     return decodeText(ptr >>> 0, len);
@@ -260,6 +262,12 @@ function passArray8ToWasm0(arg, malloc) {
     getUint8ArrayMemory0().set(arg, ptr / 1);
     WASM_VECTOR_LEN = arg.length;
     return ptr;
+}
+
+function takeFromExternrefTable0(idx) {
+    const value = wasm.__wbindgen_externrefs.get(idx);
+    wasm.__externref_table_dealloc(idx);
+    return value;
 }
 
 let cachedTextDecoder = new TextDecoder('utf-8', { ignoreBOM: true, fatal: true });

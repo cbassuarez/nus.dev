@@ -1,40 +1,73 @@
-//! nus-vt for the browser.
+//! nus's terminal, for the browser.
 //!
-//! This is a thin binding, not a reimplementation: every escape sequence is
-//! decoded by the same `nus_vt::Term` the app runs, so what nus.dev paints is
-//! the parser's own grid rather than a transcription of one. The page feeds it
-//! recorded PTY bytes on the recording's clock and reads the grid back.
+//! This is a binding, not a reimplementation. The session is decoded by
+//! `nus_vt::Term` and drawn by `nus_render::GridRenderer` — the same parser and
+//! the same grid renderer the application runs. What crosses into JavaScript is
+//! the renderer's own draw list: `nus_render::Instance` quads, in push order,
+//! plus the glyph bitmaps `FontSystem` rasterised with swash.
 //!
-//! The grid crosses into JavaScript as a flat `u32` array in wasm memory, four
-//! words per cell, read through a `Uint32Array` view — no copy, no JSON.
+//! So the cell metrics, the shaping, the glyph coverage, the colour resolution,
+//! the wide-character handling and the cursor are all the app's. The only thing
+//! the page does for itself is blit the quads, which is exact.
+//!
+//! wgpu is not involved: the pipeline passes screen size as a WGSL immediate,
+//! which WebGPU has no equivalent for. Consuming the scene instead of rendering
+//! it needs nothing from the GPU and works in every browser.
 
-use nus_vt::cell::{Color, Flags};
+use nus_render::text::bundled;
+use nus_render::{FontSystem, GridRenderer, Scene};
 use nus_vt::palette::{Rgb, BG, CURSOR, FG};
 use nus_vt::Term;
 use wasm_bindgen::prelude::*;
 
-/// Words per cell in the snapshot buffer.
-const STRIDE: usize = 4;
+/// Floats per instance in the flattened draw list.
+const STRIDE: usize = 14;
 
 #[inline]
-fn pack(c: Rgb) -> u32 {
-    ((c.r as u32) << 16) | ((c.g as u32) << 8) | (c.b as u32)
+fn un(v: u32) -> Rgb {
+    Rgb {
+        r: (v >> 16) as u8,
+        g: (v >> 8) as u8,
+        b: v as u8,
+    }
 }
 
 #[wasm_bindgen]
-pub struct Vt {
+pub struct Shell {
     term: Term,
-    frame: Vec<u32>,
+    fonts: FontSystem,
+    grid: GridRenderer,
+    scene: Scene,
+    /// The draw list, flattened for JS.
+    flat: Vec<f32>,
+    /// Glyph bitmaps the renderer rasterised since the last drain, packed as
+    /// `[x, y, w, h]` little-endian u32 followed by `w * h` coverage bytes.
+    atlas: Vec<u8>,
 }
 
 #[wasm_bindgen]
-impl Vt {
+impl Shell {
+    /// `px` is the terminal font size in physical pixels — pass the CSS size
+    /// times the device pixel ratio, the way the app passes its scale factor.
     #[wasm_bindgen(constructor)]
-    pub fn new(cols: usize, rows: usize, scrollback: usize) -> Vt {
-        Vt {
+    pub fn new(cols: usize, rows: usize, scrollback: usize, px: f32) -> Result<Shell, JsValue> {
+        let mut fonts = FontSystem::new();
+        let font = fonts
+            .load_bytes(bundled::PLEX_MONO, 0)
+            .map_err(|e| JsValue::from_str(&format!("font: {e}")))?;
+        // The app loads these too; a run that needs bold or italic finds them.
+        let _ = fonts.load_bytes(bundled::PLEX_MONO_SEMIBOLD, 0);
+        let _ = fonts.load_bytes(bundled::PLEX_MONO_ITALIC, 0);
+
+        let grid = GridRenderer::new(&fonts, font, px);
+        Ok(Shell {
             term: Term::new(cols, rows, scrollback),
-            frame: vec![0; cols * rows * STRIDE],
-        }
+            fonts,
+            grid,
+            scene: Scene::new(),
+            flat: Vec::new(),
+            atlas: Vec::new(),
+        })
     }
 
     /// Feed raw PTY bytes — exactly the bytes a shell wrote.
@@ -42,71 +75,98 @@ impl Vt {
         self.term.advance(bytes);
     }
 
-    /// Advance timers (cursor blink phase, etc.).
     pub fn tick(&mut self) {
         self.term.tick();
     }
 
     pub fn resize(&mut self, cols: usize, rows: usize) {
         self.term.resize(cols, rows);
-        self.frame.resize(cols * rows * STRIDE, 0);
     }
 
-    /// Re-read the visible grid into the frame buffer.
-    ///
-    /// Each cell is `[codepoint, fg_rgb, bg_rgb, flags]`. Colours are already
-    /// resolved through the palette, so OSC 4/10/11 overrides in the recorded
-    /// stream land here the same way they land in the app.
-    pub fn snapshot(&mut self) {
-        let cols = self.term.cols();
-        let rows = self.term.rows();
-        let need = cols * rows * STRIDE;
-        if self.frame.len() != need {
-            self.frame.resize(need, 0);
+    /// Change the font size, in physical pixels. Rebuilds the cell metrics the
+    /// way the app does when the window's scale factor changes.
+    pub fn set_px(&mut self, px: f32) {
+        let font = self.grid.font;
+        self.grid.set_font(&self.fonts, font, px);
+    }
+
+    /// Build the frame. Afterwards `instances` holds the renderer's draw list
+    /// and `take_atlas` holds any glyphs it rasterised on the way.
+    pub fn draw(&mut self, focused: bool) {
+        self.scene.clear();
+        self.scene.layer(None);
+        self.grid
+            .draw(&mut self.scene, &mut self.fonts, &self.term, (0.0, 0.0), focused);
+        // Close the layer so the scene is readable.
+        self.scene.layer(None);
+
+        let src = self.scene.instances();
+        self.flat.clear();
+        self.flat.reserve(src.len() * STRIDE);
+        for i in src {
+            self.flat.extend_from_slice(&[
+                i.pos[0], i.pos[1],
+                i.size[0], i.size[1],
+                i.uv[0], i.uv[1], i.uv[2], i.uv[3],
+                i.color[0], i.color[1], i.color[2], i.color[3],
+                i.kind as f32,
+                i.phase,
+            ]);
         }
 
-        let grid = self.term.grid();
-        let pal = &self.term.palette;
-
-        for r in 0..rows {
-            let row = grid.visible_row(r);
-            for c in 0..cols {
-                let cell = &row.cells[c];
-                let inverse = cell.flags.contains(Flags::INVERSE);
-                let (fg_c, bg_c) = if inverse {
-                    (cell.bg, cell.fg)
-                } else {
-                    (cell.fg, cell.bg)
-                };
-
-                // A hidden cell paints as its own background.
-                let fg = if cell.flags.contains(Flags::HIDDEN) {
-                    pal.resolve(bg_c, false)
-                } else {
-                    pal.resolve(fg_c, true)
-                };
-
-                let i = (r * cols + c) * STRIDE;
-                self.frame[i] = cell.ch as u32;
-                self.frame[i + 1] = pack(fg);
-                self.frame[i + 2] = pack(pal.resolve(bg_c, false));
-                self.frame[i + 3] = cell.flags.bits() as u32;
-            }
+        // Drain whatever swash rasterised into the atlas this frame.
+        self.atlas.clear();
+        for (x, y, w, h, data) in self.fonts.uploads.drain(..) {
+            self.atlas.extend_from_slice(&x.to_le_bytes());
+            self.atlas.extend_from_slice(&y.to_le_bytes());
+            self.atlas.extend_from_slice(&w.to_le_bytes());
+            self.atlas.extend_from_slice(&h.to_le_bytes());
+            self.atlas.extend_from_slice(&data);
         }
     }
 
-    /// Pointer into wasm memory; JS wraps it in a `Uint32Array`.
-    ///
-    /// Only valid until the next call that can reallocate (`resize`,
-    /// `snapshot` after a resize), so the page re-reads it each frame.
+    /// Pointer to the flattened draw list; JS wraps it in a `Float32Array`.
+    /// Each instance is `[x, y, w, h, u0, v0, u1, v1, r, g, b, a, kind, phase]`.
     #[wasm_bindgen(getter)]
-    pub fn cells(&self) -> *const u32 {
-        self.frame.as_ptr()
+    pub fn instances(&self) -> *const f32 {
+        self.flat.as_ptr()
     }
 
     #[wasm_bindgen(getter)]
-    pub fn cells_len(&self) -> usize {
-        self.frame.len()
+    pub fn instances_len(&self) -> usize {
+        self.flat.len()
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn stride(&self) -> usize {
+        STRIDE
+    }
+
+    /// Glyph bitmaps rasterised during the last `draw`, packed as described on
+    /// the field. Empty once the atlas has warmed up.
+    #[wasm_bindgen(getter)]
+    pub fn atlas(&self) -> *const u8 {
+        self.atlas.as_ptr()
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn atlas_len(&self) -> usize {
+        self.atlas.len()
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn atlas_size(&self) -> u32 {
+        nus_render::text::ATLAS_SIZE
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn cell_w(&self) -> f32 {
+        self.grid.cell_size().0
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn cell_h(&self) -> f32 {
+        self.grid.cell_size().1
     }
 
     #[wasm_bindgen(getter)]
@@ -119,48 +179,22 @@ impl Vt {
         self.term.rows()
     }
 
-    #[wasm_bindgen(getter)]
-    pub fn cursor_row(&self) -> usize {
-        self.term.cursor().row
-    }
-
-    #[wasm_bindgen(getter)]
-    pub fn cursor_col(&self) -> usize {
-        self.term.cursor().col
-    }
-
-    #[wasm_bindgen(getter)]
-    pub fn title(&self) -> String {
-        self.term.title().to_string()
-    }
-
-    /// True when the cursor sits at a shell prompt — from OSC 133 marks in the
-    /// stream, which is how the app knows a command line from program output.
+    /// True when the cursor sits at a shell prompt, from the OSC 133 marks in
+    /// the stream — how the app tells a command line from program output.
     #[wasm_bindgen(getter)]
     pub fn at_prompt(&self) -> bool {
         self.term.at_prompt()
     }
 
     #[wasm_bindgen(getter)]
-    pub fn default_fg(&self) -> u32 {
-        pack(self.term.palette.get(FG))
-    }
-
-    #[wasm_bindgen(getter)]
     pub fn default_bg(&self) -> u32 {
-        pack(self.term.palette.get(BG))
+        let c = self.term.palette.get(BG);
+        ((c.r as u32) << 16) | ((c.g as u32) << 8) | c.b as u32
     }
 
-    /// Repaint the palette for a theme change. `ansi` is 16 packed RGB words.
-    ///
-    /// The app's themes drive the palette exactly this way, so the hero
-    /// changing colour with the page is the real mechanism, not a CSS filter.
+    /// Repaint the palette for a theme change: the app's themes drive it the
+    /// same way, so paper and ink here are the real mechanism.
     pub fn set_theme(&mut self, fg: u32, bg: u32, cursor: u32, ansi: &[u32]) {
-        let un = |v: u32| Rgb {
-            r: (v >> 16) as u8,
-            g: (v >> 8) as u8,
-            b: v as u8,
-        };
         self.term.palette.set_base(FG, un(fg));
         self.term.palette.set_base(BG, un(bg));
         self.term.palette.set_base(CURSOR, un(cursor));
@@ -179,25 +213,8 @@ impl Vt {
     }
 }
 
-/// Which `nus-vt` this was built from, so the page can name it.
+/// Which nus this was built from, so the page can name it.
 #[wasm_bindgen]
-pub fn vt_source_rev() -> String {
+pub fn source_rev() -> String {
     "30137f4".into()
 }
-
-/// Colour constants are exported so the painter never re-derives them.
-#[wasm_bindgen]
-pub fn flag_bits() -> Vec<u32> {
-    vec![
-        Flags::BOLD.bits() as u32,
-        Flags::DIM.bits() as u32,
-        Flags::ITALIC.bits() as u32,
-        Flags::ANY_UNDERLINE.bits() as u32,
-        Flags::STRIKE.bits() as u32,
-        Flags::WIDE.bits() as u32,
-        Flags::WIDE_SPACER.bits() as u32,
-    ]
-}
-
-// Keep `Color` referenced so the import documents the contract above.
-const _: Option<Color> = None;

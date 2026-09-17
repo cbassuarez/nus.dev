@@ -3,7 +3,7 @@ name = "nus-vt-wasm"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
-description = "nus-vt compiled for the browser, so nus.dev can replay a real session through the real parser."
+description = "nus-vt and nus-render compiled for the browser, so nus.dev draws a real session with the app's own renderer."
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -12,6 +12,7 @@ crate-type = ["cdylib", "rlib"]
 # the caption on the page names it. Bump both together.
 [dependencies]
 nus-vt = { git = "https://github.com/cbassuarez/nus", rev = "30137f446d30c1d964c4db29e8d1b770a893da5b" }
+nus-render = { git = "https://github.com/cbassuarez/nus", rev = "30137f446d30c1d964c4db29e8d1b770a893da5b" }
 wasm-bindgen = "0.2"
 
 [profile.release]

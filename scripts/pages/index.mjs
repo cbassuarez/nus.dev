@@ -113,16 +113,18 @@ if (stage) {
 <section class="section section--tight">
   <div class="section__in">
     <p class="dim mb0" style="font-size:13px;max-width:78ch">
-      The shell above is not a screenshot and not a video: a recorded PTY session —
-      <code>cargo test -p nus-vt</code>, <code>git log</code>, then a URL typed at the
-      prompt — replayed through nus's own VT core compiled to WebAssembly, so every
-      glyph is placed by the parser the app runs.
+      The shell above is not a screenshot, not a video, and not a drawing of a
+      terminal. It is a recorded PTY session decoded by <code>nus_vt::Term</code> and
+      drawn by <code>nus_render::GridRenderer</code> — the app's own renderer — both
+      compiled to WebAssembly. What the page receives is the renderer's draw list,
+      so the cell metrics, the rustybuzz shaping, the swash glyph coverage, the
+      colour resolution and the cursor are the app's; only the quad blit is the
+      page's, and that part is exact.
       <a href="./casts/nus-vt.cast" download>Download the recording</a> ·
-      ${src('crates/vt/src/term.rs')} at <code>30137f4</code>.
-      Both windows are drawn from the app's own tokens and rule weights
-      (${src('crates/render/src/theme.rs')}), though the sidebar is narrowed at this
-      size — at true proportion its rows would be too small to read. The page in the
-      browser half is a still, because CEF does not run in a browser.
+      ${src('crates/render/src/grid.rs')} at <code>30137f4</code>.
+      Two gaps, named: system font fallback cannot work in a browser, so the
+      prompt uses a glyph the bundled face carries; and the browser half is a
+      still, because CEF does not run here.
     </p>
   </div>
 </section>

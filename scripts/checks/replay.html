@@ -1,53 +1,37 @@
 <!doctype html>
 <meta charset="utf-8">
 <title>replay check</title>
-<!--
-  Drives the hero terminal to fixed points in the recording and paints each
-  one, so the replay can be checked without waiting on wall-clock time.
-  Open at /scripts/checks/replay.html with `npm run dev`.
--->
+<!-- One frame per load: open with #<seconds> to park the replay there.
+     The shell is drawn by nus_render::GridRenderer, so this is also the
+     check that the draw list is being consumed correctly. -->
 <link rel="stylesheet" href="../../assets/css/site.css">
 <style>
-  body { margin: 0; padding: 16px; background: var(--paper); color: var(--ink); }
-  h2 { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; margin: 18px 0 6px; }
-  .frame { width: 720px; height: 380px; border: 2px solid var(--ink); }
-  .frame > div { width: 100%; height: 100%; }
-  canvas { display: block; }
+  body { margin:0; padding:16px; background: var(--paper); color: var(--ink); }
+  .frame { width: 760px; height: 400px; border: 2px solid var(--ink); }
+  .frame > div { width:100%; height:100%; }
+  canvas { display:block; }
+  #note { font-size:11px; color:var(--dim); padding-top:8px; }
 </style>
-
-<div id="out"></div>
-
+<div class="frame" id="root" data-hero-term><div><canvas></canvas></div></div>
+<div id="note">loading…</div>
 <script type="module">
 import { mountHeroTerminal } from '../../assets/js/terminal.js';
 
-const TIMES = [1.2, 3.0, 4.6, 6.8];
-const out = document.getElementById('out');
+const t = parseFloat(location.hash.slice(1));
+const root = document.getElementById('root');
 
-for (const t of TIMES) {
-  const h = document.createElement('h2');
-  h.textContent = `t = ${t}s`;
-  out.appendChild(h);
+const term = await mountHeroTerminal(root, {
+  wasm: '../../assets/wasm/nus_vt_wasm_bg.wasm',
+  cast: '../../casts/nus-vt.cast'
+});
+term.userPaused = true;
+term.pause(true);
+term.seek(Number.isFinite(t) ? t : term.duration);
 
-  const root = document.createElement('div');
-  root.className = 'frame';
-  root.dataset.heroTerm = '';
-  root.innerHTML = '<div><canvas></canvas></div>';
-  out.appendChild(root);
-
-  const term = await mountHeroTerminal(root, {
-    wasm: '../../assets/wasm/nus_vt_wasm_bg.wasm',
-    cast: '../../casts/nus-vt.cast'
-  });
-  term.pause(true);
-  term.seek(t);
-
-  const note = document.createElement('div');
-  note.style.cssText = 'font-size:11px;color:var(--dim);padding:4px 0 10px';
-  note.textContent =
-    `${term.cast.cols}×${term.cast.rows} · cursor ${term.vt.cursor_row},${term.vt.cursor_col}` +
-    ` · at_prompt=${term.vt.at_prompt} · title=${JSON.stringify(term.vt.title)}`;
-  out.appendChild(note);
-}
-
+document.getElementById('note').textContent =
+  `${term.cast.cols}×${term.cast.rows} · cell ${term.shell.cell_w.toFixed(2)}×` +
+  `${term.shell.cell_h.toFixed(2)} @ ${term.px.toFixed(2)}px · ` +
+  `at_prompt=${term.shell.at_prompt} · atlas ${term.atlas.height}px tall · ` +
+  `${term.shell.instances_len / term.shell.stride} instances`;
 document.title = 'replay check · ready';
 </script>
