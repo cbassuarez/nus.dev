@@ -34,18 +34,23 @@ const rel = (depth) => (depth === 0 ? '.' : Array(depth).fill('..').join('/'));
 
 function masthead(depth) {
   const r = rel(depth);
+  // The app's own rule: text labels in the chrome give way to icons, and caps
+  // labels stay only for words that are content. The header is chrome.
   const links = [
-    ['Docs', `${r}/docs/`],
-    ['Download', `${r}/download/`],
-    ['About', `${r}/about/`]
+    ['Docs', `${r}/docs/`, 'book-open-text'],
+    ['Download', `${r}/download/`, 'download-simple'],
+    ['About', `${r}/about/`, 'planet'],
+    ['Source', SITE.repo, 'github-logo']
   ];
 
   return `<header class="masthead">
   <div class="masthead__in">
-    <a class="wordmark" href="${r}/">nus<span class="wordmark__sub">terminus</span></a>
+    <a class="wordmark" href="${r}/" aria-label="nus — home">nus</a>
     <nav class="nav" aria-label="Primary">
-      ${links.map(([t, h]) => `<a href="${h}">${t}</a>`).join('\n      ')}
-      <a href="${SITE.repo}" target="_blank" rel="noopener noreferrer">Source</a>
+      ${links.map(([t, h, ic]) => {
+        const ext = /^https?:/.test(h);
+        return `<a href="${h}" title="${t}" aria-label="${t}"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>${icon(ic)}<span class="nav__name">${t}</span></a>`;
+      }).join('\n      ')}
     </nav>
     <div class="controls">
       <div class="signalpick" data-signalpick role="group" aria-label="Signal colour"></div>

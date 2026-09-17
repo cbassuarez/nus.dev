@@ -53,10 +53,19 @@
   --ansi-teal:   #1a7f8a;
 
   /* rules */
-  --hair:   1px;
-  --struct: 1.5px;
-  --float:  2px;
-  --band:   6px;
+  /* The app's metric table, verbatim: crates/render/src/theme.rs, mod metric. */
+  --hair:      1px;      /* HAIRLINE  */
+  --struct:    1.5px;    /* STRUCTURE */
+  --float:     2px;      /* FLOATING  */
+  --band:      6px;      /* BAND      */
+  --strip:     30px;     /* TOP_STRIP */
+  --side-w:    248px;    /* SIDEBAR   */
+  --row-h:     32px;     /* ROW_H     */
+  --foot-h:    44px;     /* FOOT_H    */
+  --split-w:   520px;    /* SPLIT     */
+  --palette-w: 600px;    /* PALETTE   */
+  --preview-h: 52px;     /* PREVIEW_H */
+  --hard:      8px;      /* SHADOW    */
 
   --mono:  'Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
   --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
@@ -287,36 +296,29 @@ blockquote {
   margin-inline-start: auto;
 }
 
+/* Icons in the chrome; the name is for screen readers and for narrow widths,
+   where the nav has a row of its own and the room to spell itself out. */
 .nav a {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 7px;
   text-decoration: none;
-  padding: 6px 10px;
+  padding: 7px 9px;
   border: var(--hair) solid transparent;
-  white-space: nowrap;
+  color: inherit;
+  line-height: 0;
 }
+.nav a svg { width: 17px; height: 17px; fill: currentColor; flex: none; }
 .nav a:hover { border-color: var(--ink); color: inherit; }
 .nav a[aria-current='page'] { background: var(--ink); color: var(--paper); }
+.nav a:focus-visible { outline: var(--float) solid var(--signal); outline-offset: 1px; }
 
-/* Narrow: the nav drops to its own ruled row rather than squeezing the strip. */
-@media (max-width: 760px) {
-  :root { --mast: 84px; }
-  .masthead__in { flex-wrap: wrap; height: auto; gap: 0; }
-  .wordmark { padding-block: 9px; }
-  .controls { margin-inline-start: auto; padding-block: 9px; }
-  .nav {
-    order: 3;
-    width: 100%;
-    margin-inline-start: 0;
-    border-top: var(--hair) solid var(--ink);
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .nav::-webkit-scrollbar { display: none; }
-  .nav a { padding: 9px 11px; }
-  .nav a:first-child { padding-left: 0; }
+.nav__name {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* controls cluster: theme + signal, mirroring the app's status cluster */
@@ -570,7 +572,7 @@ li::marker { color: var(--signal); }
   display: flex;
   align-items: center;
   gap: 16px;
-  height: 30px;
+  height: var(--strip);
   padding: 0 14px;
   border-bottom: var(--struct) solid var(--ink);
   flex: none;
@@ -581,13 +583,57 @@ li::marker { color: var(--signal); }
 }
 .win__strip .serif { font-size: 17px; }
 .win__crumb { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* When a browser pane has focus the crumb becomes the address field. */
+.win__crumbfield {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+  max-width: 340px;
+  border: var(--hair) solid var(--ink);
+  padding: 2px 8px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.win__favi {
+  width: 12px; height: 12px;
+  display: grid; place-items: center;
+  background: var(--signal);
+  color: var(--on-signal);
+  font-size: 8px;
+  font-weight: 600;
+  flex: none;
+}
+
+/* The status lamp: signal while loading, ink when live, hazard when local. */
+.win__lamp { width: 7px; height: 7px; flex: none; background: var(--ink); }
+.win__lamp--local {
+  background: repeating-linear-gradient(-45deg, var(--signal) 0 2px, var(--ink) 2px 4px);
+}
+
+.win__dev {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 12px;
+  border-top: var(--hair) solid var(--ink);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  flex: none;
+}
+.win__dev .grow { flex: 1; }
 .win__spacer { flex: 1; }
 .win__ctl { display: flex; gap: 12px; font-size: 12px; letter-spacing: 0; color: var(--dim); }
 
 .win__body { display: flex; flex: 1; min-height: 0; }
 
 .win__side {
-  width: 216px;
+  width: var(--side-w);
   flex: none;
   border-right: var(--struct) solid var(--ink);
   display: flex;
@@ -610,19 +656,43 @@ li::marker { color: var(--signal); }
 .win__space--on { background: var(--ink); color: var(--paper); }
 .win__space i { width: 8px; height: 8px; flex: none; }
 
-.win__tab {
-  padding: 10px 12px;
-  border-bottom: var(--hair) solid var(--ink);
+/* Sidebar rows: ROW_H = 32, favicon or kind glyph, children under a rule. */
+.win__row {
   display: flex;
-  flex-direction: column;
-  gap: 7px;
+  align-items: center;
+  gap: 8px;
+  height: var(--row-h);
+  padding: 0 10px 0 calc(10px + var(--depth, 0) * 14px);
+  border-bottom: var(--hair) solid var(--hot);
+  font-size: 11px;
+  position: relative;
 }
-.win__tab--on { background: var(--tint); }
-.win__tab--off { opacity: 0.6; }
-.win__tabrow { display: flex; gap: 9px; align-items: baseline; font-size: 11px; }
-.win__tabrow b { font-weight: 600; }
-.win__tabrow .grow { flex: 1; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.win__tabrow .cap { font-size: 9px; color: var(--dim); }
+.win__row--on { background: var(--tint); font-weight: 600; }
+.win__row--on::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--signal);
+}
+.win__row--off { opacity: 0.6; }
+.win__row[style*='--depth'] { border-left: var(--hair) solid var(--hot); }
+
+.win__n { font-weight: 600; font-variant-numeric: tabular-nums; min-width: 14px; color: var(--dim); }
+.win__row--on .win__n { color: inherit; }
+.win__title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.win__note {
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dim);
+  flex: none;
+}
+
+.win__ico { display: inline-flex; line-height: 0; flex: none; }
+.win__ico svg { width: 13px; height: 13px; fill: currentColor; }
+.win__ico.dim { opacity: 0.4; }
+
 .win__wait {
   background: var(--signal);
   color: var(--on-signal);
@@ -630,26 +700,41 @@ li::marker { color: var(--signal); }
   font-size: 9px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  flex: none;
 }
-.win__prev {
-  height: 44px;
-  border: var(--hair) solid var(--ink);
-  padding: 5px 7px;
-  font-size: 7px;
-  line-height: 1.5;
-  overflow: hidden;
-  white-space: pre;
-  color: var(--dim);
-}
-.win__sidefoot {
-  margin-top: auto;
+
+/* A live folder under the tabs: GITHUB, PORTS, or one from rules.luau. */
+.win__folder {
   display: flex;
-  padding: 10px 12px;
+  align-items: center;
+  gap: 7px;
+  height: 26px;
+  padding: 0 10px;
   border-top: var(--struct) solid var(--ink);
-  font-size: 10px;
+  border-bottom: var(--hair) solid var(--hot);
+  background: var(--tint);
+}
+.win__foldern {
+  flex: 1;
+  font-size: 9px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  font-weight: 600;
 }
+
+.win__fill { flex: 1; }
+
+.win__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: var(--foot-h);
+  padding: 0 12px;
+  border-top: var(--struct) solid var(--ink);
+  flex: none;
+}
+.win__foot .win__ico svg { width: 14px; height: 14px; }
 .win__sidefoot .grow { flex: 1; }
 
 .win__panes { display: flex; flex: 1; min-width: 0; }
@@ -778,9 +863,26 @@ li::marker { color: var(--signal); }
 /* the app's own width rule, applied to its portrait: no split under 900 */
 @container (max-width: 900px) {
   .win__pane + .win__pane { display: none; }
-  .win__side { width: 180px; }
+  .win__side { width: 190px; }
 }
-@container (max-width: 640px) {
+/* Below this the sidebar is narrowed rather than scaled down: at miniature
+   size a true-to-metric 248px column renders its rows too small to read, and
+   an illegible sidebar argues for nothing. */
+@container (max-width: 620px) {
+  .win__side { width: 178px; }
+  .win__row {
+    height: 28px;
+    font-size: 10px;
+    gap: 6px;
+    padding-left: calc(8px + var(--depth, 0) * 11px);
+  }
+  .win__space { padding: 5px 6px; font-size: 9px; }
+  .win__note { font-size: 8px; }
+  .win__folder { height: 23px; }
+  .win__foot { height: 34px; }
+  .win__foot .win__ico svg { width: 12px; height: 12px; }
+}
+@container (max-width: 400px) {
   .win__side { display: none; }
 }
 
@@ -1112,3 +1214,175 @@ h2:hover .anchor, h3:hover .anchor, .anchor:focus { opacity: 1; }
 
 /* the subject column reads as the subject */
 .matrix td:nth-child(2), .matrix th:nth-child(2) { background: var(--tint); }
+
+/* ---------------------------------------------------------------------------
+   The orbit.
+   Two windows — the shell half and the page half — travelling an ellipse
+   around the copy between them, the way the icon's band orbits the wordmark:
+   tilted −24°, passing behind at the top and in front at the belly.
+   The page never stops scrolling; the scene is pinned for one extra viewport.
+   --------------------------------------------------------------------------- */
+
+.orbit {
+  --orbit-tilt: -24deg;
+  position: relative;
+}
+
+/* The rail's height is the scroll distance the orbit is given. */
+.orbit__rail { height: 240vh; }
+
+.orbit__stage {
+  position: sticky;
+  top: calc(var(--band) + var(--mast));
+  height: calc(100vh - var(--band) - var(--mast));
+  min-height: 560px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  perspective: 1600px;
+  perspective-origin: 50% 46%;
+}
+
+/* The copy sits at z = 0; the windows pass in front of it and behind it. */
+.orbit__core {
+  position: relative;
+  z-index: 5;
+  width: min(400px, 31vw);
+  text-align: center;
+  padding-inline: var(--gutter);
+  transform: translateY(-4%);
+}
+.orbit__core h1 {
+  font-size: clamp(28px, 3.3vw, 42px);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  margin-bottom: 18px;
+}
+.orbit__core h1 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.orbit__lede {
+  font-size: clamp(14px, 1.7vw, 17px);
+  line-height: 1.5;
+  margin: 0 auto 22px;
+  max-width: 44ch;
+}
+.orbit__acts { display: flex; flex-wrap: wrap; gap: 11px; justify-content: center; margin-bottom: 16px; }
+.orbit__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  justify-content: center;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+  align-items: center;
+}
+
+/* The bodies in orbit. JS writes --x/--y/--z/--s/--o each frame. */
+.orbit__body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(500px, 36vw);
+  margin-top: -11vw;
+  transform-style: preserve-3d;
+  /* Depth is real: translateZ against the stage's perspective. Scaling as
+     well would magnify twice and throw the bodies off the viewport. */
+  transform:
+    translate3d(calc(var(--x, 0) * 1px - 50%), calc(var(--y, 0) * 1px), calc(var(--z, 0) * 1px));
+  opacity: var(--o, 1);
+  z-index: var(--zi, 1);
+  will-change: transform, opacity;
+}
+.orbit__body .win { height: 22vw; min-height: 240px; max-height: 340px; }
+
+/* A caption travels with each window, so neither is mistaken for a screenshot. */
+.orbit__tag {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  margin-top: 10px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.orbit__tag b { font-weight: 600; color: var(--ink); }
+
+/* Progress: how far through the orbit you are. */
+.orbit__dial {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+  z-index: 6;
+}
+.orbit__track { width: 120px; height: var(--hair); background: var(--hot); position: relative; }
+.orbit__track i { position: absolute; inset: 0 auto 0 0; width: calc(var(--p, 0) * 100%); background: var(--signal); }
+
+/* --- no orbit: narrow, or reduced motion ---------------------------------- */
+
+.orbit--flat .orbit__rail { height: auto; }
+.orbit--flat .orbit__stage {
+  position: static;
+  height: auto;
+  min-height: 0;
+  perspective: none;
+  overflow: visible;
+  display: block;
+  padding-block: clamp(30px, 6vw, 58px);
+}
+.orbit--flat .orbit__core {
+  width: auto;
+  max-width: var(--shell);
+  margin: 0 auto clamp(28px, 5vw, 46px);
+  transform: none;
+}
+.orbit--flat .orbit__body {
+  position: static;
+  width: min(var(--shell), 100%);
+  margin: 0 auto clamp(24px, 4vw, 40px);
+  transform: none;
+  opacity: 1;
+}
+.orbit--flat .orbit__body .win { height: auto; max-height: none; }
+.orbit--flat .orbit__body .win__term { height: clamp(280px, 40vw, 380px); }
+.orbit--flat .orbit__dial { display: none; }
+
+@media (max-width: 1000px) {
+  .orbit__rail { height: auto; }
+  .orbit__stage {
+    position: static; height: auto; min-height: 0;
+    perspective: none; overflow: visible; display: block;
+    padding-block: clamp(30px, 6vw, 58px);
+  }
+  .orbit__core { width: auto; margin: 0 auto clamp(26px, 5vw, 42px); transform: none; }
+  .orbit__body {
+    position: static; width: 100%;
+    margin: 0 0 clamp(22px, 4vw, 36px);
+    transform: none; opacity: 1;
+  }
+  .orbit__body .win { height: auto; max-height: none; }
+  .orbit__body .win__term { height: clamp(260px, 52vw, 340px); }
+  .orbit__dial { display: none; }
+}
+
+/* The hot edge: 6px of sidebar, which slides out when the pointer nears it. */
+.win__edge {
+  width: var(--band);
+  flex: none;
+  border-right: var(--hair) solid var(--hot);
+  background: linear-gradient(var(--tint), var(--tint));
+}

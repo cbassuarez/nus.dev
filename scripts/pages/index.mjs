@@ -1,5 +1,5 @@
 import { icon, SITE } from '../layout.mjs';
-import { appWindow } from '../window.mjs';
+import { terminalWindow, browserWindow } from '../window.mjs';
 
 /* Every claim on this page points at the file that makes it true.
    Generic basenames (README.md and friends) carry their parent, so two
@@ -46,6 +46,10 @@ export default {
     'Pre-alpha, MIT.',
   module: `
 import { mountHeroTerminal } from './assets/js/terminal.js';
+import { mountOrbit } from './assets/js/orbit.js';
+
+const orbit = document.querySelector('[data-orbit]');
+if (orbit) mountOrbit(orbit);
 
 const stage = document.querySelector('[data-hero-term]');
 if (stage) {
@@ -65,45 +69,60 @@ if (stage) {
 }
 `,
   body: `
-<section class="hero">
-  <div class="hero__in">
-    <h1 class="hero__title">A terminal emulator that is <em>also</em> a browser.</h1>
-    <p class="hero__lede">
-      One window, one tab list. A shell and a page are peers, split beside each other.
-      Own VT core, Chromium composited by us, tree-sitter on the command line,
-      sandboxed Luau for all of it.
-    </p>
+<section class="orbit" data-orbit>
+  <div class="orbit__rail" data-orbit-rail>
+    <div class="orbit__stage" data-orbit-stage>
 
-    <div class="hero__acts">
-      <a class="btn btn--fill" href="./docs/">${icon('book-open-text')}The record</a>
-      <a class="btn" href="${SITE.repo}" target="_blank" rel="noopener noreferrer">${icon('github-logo')}Source</a>
-      <a class="btn btn--quiet" href="./download/">${icon('download-simple')}Builds</a>
-    </div>
+      <div class="orbit__body" data-orbit-body>
+        ${terminalWindow()}
+        <div class="orbit__tag"><b>The shell</b><span>Real VT core, replaying a real session</span></div>
+      </div>
 
-    <div class="hero__meta">
-      <span class="chip chip--signal">Pre-alpha</span>
-      <span>MIT</span>
-      <span>Rust · wgpu · CEF · Luau</span>
-      <span>Windows 11 · macOS · Linux</span>
-    </div>
+      <div class="orbit__core">
+        <h1>One window. A shell and a page, <em>peers</em>.</h1>
+        <p class="orbit__lede">
+          Two halves of the same application, not two applications. Same tab list,
+          same splits, same config, same keys. Type a URL at a prompt and it opens
+          in the pane next door.
+        </p>
+        <div class="orbit__acts">
+          <a class="btn btn--fill" href="./docs/">${icon('book-open-text')}The record</a>
+          <a class="btn" href="${SITE.repo}" target="_blank" rel="noopener noreferrer">${icon('github-logo')}Source</a>
+          <a class="btn btn--quiet" href="./download/">${icon('download-simple')}Builds</a>
+        </div>
+        <div class="orbit__meta">
+          <span class="chip chip--signal">Pre-alpha</span>
+          <span>MIT</span>
+          <span>Rust · wgpu · CEF · Luau</span>
+        </div>
+      </div>
 
-    <div class="hero__win">
-      ${appWindow()}
-      <div class="hero__caption">
-        <span>Fig. 1</span>
-        <span class="dim">
-          Not a screenshot. The shell pane is a recorded PTY session —
-          <code>cargo test -p nus-vt</code>, <code>git log</code>, then a URL typed at the
-          prompt — replayed through nus's own VT core compiled to WebAssembly, so every
-          glyph is placed by the parser the app runs. Scrub it, switch the theme, resize
-          the window: the grid answers for itself.
-          <a href="./casts/nus-vt.cast" download>Download the recording</a> ·
-          ${src('crates/vt/src/term.rs')} at <code>30137f4</code>.
-          The chrome is drawn from the app's tokens; the browser pane is a still,
-          because CEF does not run in a browser.
-        </span>
+      <div class="orbit__body" data-orbit-body>
+        ${browserWindow()}
+        <div class="orbit__tag"><b>The browser</b><span>Chromium, composited by us</span></div>
+      </div>
+
+      <div class="orbit__dial" data-orbit-dial>
+        <span>Orbit</span><span class="orbit__track"><i></i></span>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="section__in">
+    <p class="dim mb0" style="font-size:13px;max-width:78ch">
+      The shell above is not a screenshot and not a video: a recorded PTY session —
+      <code>cargo test -p nus-vt</code>, <code>git log</code>, then a URL typed at the
+      prompt — replayed through nus's own VT core compiled to WebAssembly, so every
+      glyph is placed by the parser the app runs.
+      <a href="./casts/nus-vt.cast" download>Download the recording</a> ·
+      ${src('crates/vt/src/term.rs')} at <code>30137f4</code>.
+      Both windows are drawn from the app's own tokens and rule weights
+      (${src('crates/render/src/theme.rs')}), though the sidebar is narrowed at this
+      size — at true proportion its rows would be too small to read. The page in the
+      browser half is a still, because CEF does not run in a browser.
+    </p>
   </div>
 </section>
 
