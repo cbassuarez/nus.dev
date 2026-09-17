@@ -1,0 +1,31 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>section check</title>
+<!-- Scrolls the home page to a section and shows it at a normal viewport.
+     The hero pins with vh units, so a tall full-page screenshot is meaningless;
+     this gives a real viewport instead. Open with #<heading text> to jump to that section. -->
+<style>
+  html,body { margin:0; height:100%; background:#bbb; }
+  iframe { width:100%; height:100%; border:0; display:block; }
+</style>
+<iframe id="f" src="/"></iframe>
+<script>
+const want = decodeURIComponent(location.hash.slice(1) || 'Conformance').toLowerCase();
+const f = document.getElementById('f');
+f.addEventListener('load', () => {
+  const d = f.contentDocument, w = f.contentWindow;
+  const secs = [...d.querySelectorAll('main > section')];
+  const target = secs.find((s) =>
+    (s.querySelector('h2')?.textContent || '').toLowerCase().includes(want));
+  if (!target) { document.title = 'no section matching ' + want; return; }
+  // The hero's terminal and fonts land after load and shift everything below,
+  // so aim more than once before calling it done.
+  let n = 0;
+  const aim = () => {
+    w.scrollTo(0, target.getBoundingClientRect().top + w.scrollY);
+    if (++n < 6) return setTimeout(aim, 150);
+    document.title = 'section · ' + (target.querySelector('h2')?.textContent || '—');
+  };
+  aim();
+});
+</script>

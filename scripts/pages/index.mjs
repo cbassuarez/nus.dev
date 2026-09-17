@@ -1,5 +1,6 @@
 import { icon, SITE } from '../layout.mjs';
 import { terminalWindow, browserWindow } from '../window.mjs';
+import * as panel from '../panels.mjs';
 
 /* Every claim on this page points at the file that makes it true.
    Generic basenames (README.md and friends) carry their parent, so two
@@ -246,6 +247,119 @@ if (stage) {
       ${row('Responsive', 'Presets at 390 / 768 / 1440, and a screenshot taken from our own texture rather than the OS.')}
       ${row('Reload', 'On directory change. Progress rides the loading bar through OSC 9;4.')}
       ${row('The URL rule', 'A whole line at a fresh prompt that parses as a URL opens in the split on <kbd>↵</kbd>; <kbd>Ctrl</kbd><kbd>↵</kbd> runs it as a command instead. Any editing key disqualifies the line. Bare words never trigger.', src('docs/PRODUCT.md', 83))}
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>The panels</h2><span class="cap">What it puts in front of you</span></div>
+    <p class="dim" style="margin-bottom:30px;font-size:14px;max-width:64ch">
+      Drawn here from the same tokens and rule weights the app draws them with.
+      Each links to the module that builds it.
+    </p>
+
+    <div class="panels">
+      <div class="panel">
+        ${panel.ask()}
+        <div class="panel__note">
+          <h3>${icon('sparkle')}Ask</h3>
+          <p>One line in, command blocks out — each with <b>Insert</b> at the prompt,
+          <b>Run</b>, or <b>Copy</b>. The shell, the folder and the last command's
+          output go with the question, which is why “why did that fail?” is a
+          question it can answer. Not a chat: the last few turns stay for scrolling,
+          nothing more.</p>
+          ${src('spikes/composite/src/ask.rs')}
+        </div>
+      </div>
+
+      <div class="panel">
+        ${panel.ports()}
+        <div class="panel__note">
+          <h3>${icon('plugs-connected')}Ports, and other live folders</h3>
+          <p>A region under the tab rows that fills itself. <b>PORTS</b> is what is
+          listening on this machine with the process that owns it, system services
+          filtered out; <b>GITHUB</b> is the pull requests that involve you, from
+          <code>gh</code>, off the main thread. Your own folders come from
+          <code>rules.luau</code> — a static list, or a function that returns one.</p>
+          ${src('spikes/composite/src/folders.rs')}
+        </div>
+      </div>
+
+      <div class="panel">
+        ${panel.atlas()}
+        <div class="panel__note">
+          <h3>${icon('planet')}The atlas</h3>
+          <p>What greets a launch: the last session to restore, and the recent pages
+          and shells to pick from instead. The icon's band completes one orbit as the
+          panel rises. Esc starts fresh. The planet in the header calls it back later
+          — it is never on the splash.</p>
+          ${src('spikes/composite/src/start.rs')}
+        </div>
+      </div>
+
+      <div class="panel">
+        ${panel.rules()}
+        <div class="panel__note">
+          <h3>${icon('code')}Stacks, coloured by rule</h3>
+          <p>A tab that spawns another nests under it, as deep as it goes; a stack
+          folds to one row and walks with <kbd>⌘⇧[ ]</kbd>. What each one
+          <em>looks</em> like is yours: <code>new_tab(ctx)</code> gets the kind, index,
+          profile, theme and the parent's colours when it joins a stack, and returns a
+          look. Sandboxed Luau, hot-reloaded on save.</p>
+          ${src('docs/PRODUCT.md', 188)}
+        </div>
+      </div>
+
+      <div class="panel">
+        ${panel.site()}
+        <div class="panel__note">
+          <h3>${icon('shield-check')}The site panel</h3>
+          <p>The gear at the end of a URL row, per host: zoom that is remembered,
+          autoplay, JavaScript, cookies to block or clear, the rules' boosts, content
+          blocking, and every permission the site was given — each one forgettable.
+          Kept in <code>profile/sites.json</code>, which the request handlers read as
+          the page loads.</p>
+          ${src('spikes/composite/src/sites.rs')}
+        </div>
+      </div>
+
+      <div class="panel">
+        ${panel.tiles()}
+        <div class="panel__note">
+          <h3>${icon('squares-four')}Tiles</h3>
+          <p>Select tabs with <kbd>Ctrl</kbd>+click, then <kbd>Ctrl</kbd><kbd>⇧</kbd><kbd>D</kbd>:
+          two sit side by side, three make an L, four a grid. The tiling belongs to
+          those tabs and shows whenever one of them is active; dividers drag,
+          <kbd>Ctrl</kbd><kbd>Alt</kbd>+arrows walk them, and closing one re-tiles the rest.</p>
+          ${src('spikes/composite/src/tiles.rs')}
+        </div>
+      </div>
+
+      <div class="panel">
+        ${panel.peek()}
+        <div class="panel__note">
+          <h3>${icon('corners-out')}Peek</h3>
+          <p><kbd>Alt</kbd>+click a link and it floats over the page behind a scrim
+          without your leaving. Esc or a click outside closes it;
+          <kbd>Ctrl</kbd><kbd>↵</kbd> keeps it as a page in the tab's stack. A peek is
+          a tab the sidebar does not list, so every pane path already serves it.</p>
+          ${src('spikes/composite/src/peek.rs')}
+        </div>
+      </div>
+
+      <div class="panel">
+        ${panel.compact()}
+        <div class="panel__note">
+          <h3>${icon('sidebar-simple')}Compact</h3>
+          <p><kbd>Ctrl</kbd><kbd>⇧</kbd><kbd>B</kbd> takes the sidebar down to a 48px
+          column of icons and hides the top strip until the pointer reaches the edge.
+          They are the same rows, so clicks, drags, selection and the tab menu all
+          work unchanged; the hovered row's name shows beside the column.</p>
+          ${src('spikes/composite/src/compact.rs')}
+        </div>
+      </div>
     </div>
   </div>
 </section>

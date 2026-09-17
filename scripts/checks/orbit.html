@@ -17,7 +17,8 @@ f.addEventListener('load', () => {
   const stage = d.querySelector('[data-orbit-stage]');
   if (!rail || !stage) { document.title = 'orbit check · no orbit'; return; }
   const travel = rail.offsetHeight - stage.offsetHeight;
-  w.scrollTo(0, rail.offsetTop + travel * p);
+  const top = rail.getBoundingClientRect().top + w.scrollY;
+  w.scrollTo(0, top + travel * p);
   requestAnimationFrame(() => requestAnimationFrame(() => {
     document.title = 'orbit check · p=' + p;
   }));
