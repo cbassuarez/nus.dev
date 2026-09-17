@@ -84,6 +84,37 @@ Bump `wasm/vt-wasm/Cargo.toml`'s pinned `rev` and the revision named in the
 hero caption together — the caption is a claim about which commit painted the
 page, so it has to stay true.
 
+## Screenshots
+
+Real captures of the running app live in `docs/media/` in the **app** repo, so
+they are versioned with the thing they show. `npm run sync` copies them into
+`assets/shots/`.
+
+nus runs on Windows today, so they have to be taken there. The shot list the
+site wants, one file each:
+
+| File | What |
+|---|---|
+| `window-browser.png` | The browser half: sidebar revealed with a stack and the PORTS folder, a page on localhost with its hazard tape, devtools beside it |
+| `panel-palette.png` | ⌘K mid-query, tabs above actions |
+| `panel-ask.png` | Ask with a question answered and command blocks out |
+| `panel-folders.png` | The sidebar showing PORTS and GITHUB filled |
+| `panel-atlas.png` | The atlas over a launch |
+| `panel-stacks.png` | The sidebar with a stack nested two deep |
+| `panel-site.png` | The site panel open on a host |
+| `panel-tiles.png` | Three tabs tiled as an L |
+| `panel-peek.png` | A peek floating over a page |
+| `panel-pip.png` | PiP over another tab |
+| `panel-compact.png` | Compact, with a row hovered |
+
+Capture the whole window, PNG, no OS shadow, and take each one **twice** —
+once in paper and once in ink — suffixed `-paper` / `-ink`, so the page can
+swap with the theme the way everything else does. Note the scale factor in the
+commit message; the site needs it to size them without guessing.
+
+The shell in the hero does **not** want a screenshot: it is live, and a still
+would be a downgrade.
+
 ## Design
 
 The site is drawn from the same tokens as the app: see
