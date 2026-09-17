@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spikes · nus</title>
+<meta name="description" content="Four throwaway binaries, ordered cheapest-to-kill. What each one answered, and when.">
+<link rel="canonical" href="https://nus.dev/docs/spikes/">
+<meta name="theme-color" content="#c8102e">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="nus.dev">
+<meta property="og:title" content="Spikes · nus">
+<meta property="og:description" content="Four throwaway binaries, ordered cheapest-to-kill. What each one answered, and when.">
+<meta property="og:url" content="https://nus.dev/docs/spikes/">
+<meta property="og:image" content="https://nus.dev/assets/icon/nus-512.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="../../assets/icon/nus-32.png" sizes="32x32">
+<link rel="icon" href="../../assets/icon/nus-128.png" sizes="128x128">
+<link rel="apple-touch-icon" href="../../assets/icon/nus-256.png">
+
+<link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/Newsreader-Italic.woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script>
+/* Apply the stored theme and signal before first paint, so the page never flashes. */
+(function(){try{
+  var t=localStorage.getItem('nus.theme');
+  if(t==='paper'||t==='ink')document.documentElement.setAttribute('data-theme',t);
+  var s=localStorage.getItem('nus.signal');
+  if(s){document.documentElement.style.setProperty('--signal',s);
+    document.documentElement.style.setProperty('--on-signal',s==='#d9a400'?'#141414':'#ffffff');}
+}catch(e){}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="band"></div>
+<header class="masthead">
+  <div class="masthead__in">
+    <a class="wordmark" href="../../">nus<span class="wordmark__sub">terminus</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="../../docs/">Docs</a>
+      <a href="../../download/">Download</a>
+      <a href="../../about/">About</a>
+      <a href="https://github.com/cbassuarez/nus" target="_blank" rel="noopener noreferrer">Source</a>
+    </nav>
+    <div class="controls">
+      <div class="signalpick" data-signalpick role="group" aria-label="Signal colour"></div>
+      <button class="iconbtn" type="button" data-theme-toggle aria-label="Switch theme">
+        <span data-sun hidden><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></svg></span><span data-moon><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></svg></span>
+      </button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<div class="doc">
+<nav class="doc__nav" aria-label="Documentation">
+  <h4>The record</h4>
+  <ul><li><a href="../architecture/">Architecture</a></li><li><a href="../design/">Design</a></li><li><a href="../product/">Product</a></li><li><a href="../spikes/">Spikes</a></li><li><a href="../dependencies/">Dependencies</a></li></ul>
+  <h4>On this page</h4><ul><li class=""><a href="#1-cef-osr-cef-offscreen-wgpu-texture-all-three-oses">1. cef-osr — CEF offscreen → wgpu texture, all three OSes</a></li><li class=""><a href="#2-cef-ext-extensions-native-messaging-under-osr">2. cef-ext — extensions + native messaging under OSR</a></li><li class=""><a href="#3-vt-render-own-vt-core-glyph-atlas">3. vt-render — own VT core + glyph atlas</a></li><li class=""><a href="#4-composite-1-3-in-one-window-with-a-sidebar">4. composite — #1 + #3 in one window with a sidebar</a></li><li class=""><a href="#look-and-feel-before-spike-4">Look and feel (before spike 4)</a></li></ul>
+</nav>
+<article class="doc__body">
+  <h1>Spikes</h1>
+  <div class="doc__meta">
+    <span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,152V136a96.37,96.37,0,0,0-64-90.51V40a16,16,0,0,0-16-16H112A16,16,0,0,0,96,40v5.49A96.37,96.37,0,0,0,32,136v16a16,16,0,0,0-16,16v24a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V168A16,16,0,0,0,224,152Zm-16-16v16H160V62.67A80.36,80.36,0,0,1,208,136ZM144,40V152H112V40ZM48,136A80.36,80.36,0,0,1,96,62.67V152H48Zm176,56H32V168H224v24Z"/></svg></span>
+    <span>Spikes</span>
+    <span class="doc__source">
+      <a href="https://github.com/cbassuarez/nus/blob/main/docs/SPIKES.md" target="_blank" rel="noopener noreferrer">docs/SPIKES.md ↗</a>
+    </span>
+  </div>
+<p>Throwaway binaries under <code>spikes/</code>, each its own crate, excluded from the workspace. A spike is done when its README records the answer. Order matters: each one can kill or reshape the design, cheapest-to-kill first.</p>
+<h2 id="1-cef-osr-cef-offscreen-wgpu-texture-all-three-oses"><a class="anchor" href="#1-cef-osr-cef-offscreen-wgpu-texture-all-three-oses" aria-hidden="true">#</a>1. <code>cef-osr</code> — CEF offscreen → wgpu texture, all three OSes</h2>
+<p><strong>Windows done 2026-09-15: shared texture via D3D11→D3D12, 144 fps.</strong> macOS and Linux runs still TODO — see <code>spikes/cef-osr/README.md</code>.</p>
+<p>Boot CEF (Chrome runtime, windowless), load a page, get paint callbacks into a wgpu texture, draw it in a winit window.</p>
+<ul><li>Shared texture path works on Windows (D3D11) and macOS (IOSurface)?</li><li>Linux: shared texture or CPU upload? Frame cost at 4K?</li><li>Boots under a Wayland-only session?</li><li>Which <code>cef-rs</code> version/commit; what needed patching.</li></ul>
+<h2 id="2-cef-ext-extensions-native-messaging-under-osr"><a class="anchor" href="#2-cef-ext-extensions-native-messaging-under-osr" aria-hidden="true">#</a>2. <code>cef-ext</code> — extensions + native messaging under OSR</h2>
+<p><strong>Done 2026-09-15 on Windows — answer: no.</strong> See <code>spikes/cef-osr/README.md</code>. Extensions run but cannot reach Alloy-style tabs. Design amended in ARCHITECTURE.md: native replacements in v1, own libcef build later.</p>
+<p>On top of #1: load uBlock Origin Lite and the 1Password extension. Log in.</p>
+<ul><li>MV3 extensions load and run in Chrome runtime + windowless?</li><li>Extension popups/options pages render in OSR?</li><li>Native messaging host reachable from the extension?</li></ul>
+<p>If this fails, &quot;daily-driver browser&quot; is redefined before any UI is written.</p>
+<h2 id="3-vt-render-own-vt-core-glyph-atlas"><a class="anchor" href="#3-vt-render-own-vt-core-glyph-atlas" aria-hidden="true">#</a>3. <code>vt-render</code> — own VT core + glyph atlas</h2>
+<p><strong>Windows done 2026-09-15: vim + ligatures correct, 2.8 ms key→present, &lt;2 ms full-screen frames in release.</strong> Core lives in <code>crates/vt</code> and <code>crates/pty</code>; findings in <code>spikes/vt-render/README.md</code>. macOS/Linux TODO.</p>
+<p><code>vte</code> state machine, grid, PTY via <code>portable-pty</code>, swash/rustybuzz atlas. Run <code>vim</code>, <code>lazygit</code>, <code>claude</code> at 120 fps with ligatures on all three OSes.</p>
+<ul><li>Input latency (key → pixel) measured, not guessed.</li><li>ConPTY resize/scrollback behaviour on Windows.</li><li>Kitty keyboard protocol negotiated correctly.</li></ul>
+<h2 id="4-composite-1-3-in-one-window-with-a-sidebar"><a class="anchor" href="#4-composite-1-3-in-one-window-with-a-sidebar" aria-hidden="true">#</a>4. <code>composite</code> — #1 + #3 in one window with a sidebar</h2>
+<p><strong>Windows done 2026-09-16.</strong> Compositor in <code>crates/render</code>; navigation model implemented; findings in <code>spikes/composite/README.md</code>. Next: move the glue into <code>crates/app</code>/<code>ui</code>/<code>browser</code> and delete the spikes.</p>
+<p>The skeleton of the real app. Two layers, a hand-rolled sidebar, keyboard focus routing between terminal and browser. When this works, the code moves into <code>crates/</code> and the spikes are deleted.</p>
+<h2 id="look-and-feel-before-spike-4"><a class="anchor" href="#look-and-feel-before-spike-4" aria-hidden="true">#</a>Look and feel (before spike 4)</h2>
+<p>Direction &quot;Broadsheet&quot; chosen 2026-09-16 — see <code>docs/DESIGN.md</code> and the canvas sources in <code>design/</code>. Spike 4 renders the chrome from those tokens.</p>
+</article>
+</div>
+</main>
+<footer class="foot">
+  <div class="foot__in">
+    <div>
+      <a class="wordmark" href="../../" style="font-size:30px">nus</a>
+      <p class="dim" style="font-size:12.5px;margin-top:10px;max-width:24ch">A terminal emulator that is also a browser. Pre-alpha.</p>
+    </div>
+    <div>
+      <h4>Project</h4>
+      <ul><li><a href="../../download/">Download</a></li><li><a href="https://github.com/cbassuarez/nus" target="_blank" rel="noopener noreferrer">Source</a></li><li><a href="https://github.com/cbassuarez/nus/releases" target="_blank" rel="noopener noreferrer">Releases</a></li><li><a href="https://github.com/cbassuarez/nus/issues" target="_blank" rel="noopener noreferrer">Issues</a></li></ul>
+    </div>
+    <div>
+      <h4>Docs</h4>
+      <ul><li><a href="../../docs/architecture/">Architecture</a></li><li><a href="../../docs/design/">Design</a></li><li><a href="../../docs/product/">Product</a></li><li><a href="../../docs/spikes/">Spikes</a></li></ul>
+    </div>
+    <div>
+      <h4>More</h4>
+      <ul><li><a href="../../about/">About</a></li><li><a href="../../docs/dependencies/">Dependencies</a></li><li><a href="https://github.com/cbassuarez/nus/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Licence</a></li></ul>
+    </div>
+  </div>
+  <div class="foot__end">
+    <div>
+      <span>© 2026 Sebastian Suarez-Solis</span>
+      <span>MIT</span>
+      <span class="grow"></span>
+      <span>Set in IBM Plex Mono &amp; Newsreader</span>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/site.js" defer></script>
+</body>
+</html>

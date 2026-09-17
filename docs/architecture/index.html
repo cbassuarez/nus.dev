@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Architecture · nus</title>
+<meta name="description" content="The host, the crates, the browser, and the security posture. Each entry is a commitment.">
+<link rel="canonical" href="https://nus.dev/docs/architecture/">
+<meta name="theme-color" content="#c8102e">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="nus.dev">
+<meta property="og:title" content="Architecture · nus">
+<meta property="og:description" content="The host, the crates, the browser, and the security posture. Each entry is a commitment.">
+<meta property="og:url" content="https://nus.dev/docs/architecture/">
+<meta property="og:image" content="https://nus.dev/assets/icon/nus-512.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="../../assets/icon/nus-32.png" sizes="32x32">
+<link rel="icon" href="../../assets/icon/nus-128.png" sizes="128x128">
+<link rel="apple-touch-icon" href="../../assets/icon/nus-256.png">
+
+<link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/Newsreader-Italic.woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script>
+/* Apply the stored theme and signal before first paint, so the page never flashes. */
+(function(){try{
+  var t=localStorage.getItem('nus.theme');
+  if(t==='paper'||t==='ink')document.documentElement.setAttribute('data-theme',t);
+  var s=localStorage.getItem('nus.signal');
+  if(s){document.documentElement.style.setProperty('--signal',s);
+    document.documentElement.style.setProperty('--on-signal',s==='#d9a400'?'#141414':'#ffffff');}
+}catch(e){}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="band"></div>
+<header class="masthead">
+  <div class="masthead__in">
+    <a class="wordmark" href="../../">nus<span class="wordmark__sub">terminus</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="../../docs/">Docs</a>
+      <a href="../../download/">Download</a>
+      <a href="../../about/">About</a>
+      <a href="https://github.com/cbassuarez/nus" target="_blank" rel="noopener noreferrer">Source</a>
+    </nav>
+    <div class="controls">
+      <div class="signalpick" data-signalpick role="group" aria-label="Signal colour"></div>
+      <button class="iconbtn" type="button" data-theme-toggle aria-label="Switch theme">
+        <span data-sun hidden><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></svg></span><span data-moon><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></svg></span>
+      </button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<div class="doc">
+<nav class="doc__nav" aria-label="Documentation">
+  <h4>The record</h4>
+  <ul><li><a href="../architecture/">Architecture</a></li><li><a href="../design/">Design</a></li><li><a href="../product/">Product</a></li><li><a href="../spikes/">Spikes</a></li><li><a href="../dependencies/">Dependencies</a></li></ul>
+  <h4>On this page</h4><ul><li class=""><a href="#host">Host</a></li><li class=""><a href="#crates">Crates</a></li><li class=""><a href="#terminal">Terminal</a></li><li class=""><a href="#browser">Browser</a></li><li class=""><a href="#chrome-ui">Chrome UI</a></li><li class=""><a href="#config">Config</a></li><li class=""><a href="#security-posture">Security posture</a></li><li class=""><a href="#platform-notes">Platform notes</a></li></ul>
+</nav>
+<article class="doc__body">
+  <h1>Architecture</h1>
+  <div class="doc__meta">
+    <span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232,112H136V88h8a16,16,0,0,0,16-16V40a16,16,0,0,0-16-16H112A16,16,0,0,0,96,40V72a16,16,0,0,0,16,16h8v24H24a8,8,0,0,0,0,16H56v32H48a16,16,0,0,0-16,16v32a16,16,0,0,0,16,16H80a16,16,0,0,0,16-16V176a16,16,0,0,0-16-16H72V128H184v32h-8a16,16,0,0,0-16,16v32a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V176a16,16,0,0,0-16-16h-8V128h32a8,8,0,0,0,0-16ZM112,40h32V72H112ZM80,208H48V176H80Zm128,0H176V176h32Z"/></svg></span>
+    <span>Architecture</span>
+    <span class="doc__source">
+      <a href="https://github.com/cbassuarez/nus/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noopener noreferrer">docs/ARCHITECTURE.md ↗</a>
+    </span>
+  </div>
+<p>Decisions made 2026-09-15. Each is a commitment, not a suggestion; change the doc when you change your mind.</p>
+<h2 id="host"><a class="anchor" href="#host" aria-hidden="true">#</a>Host</h2>
+<p>Rust workspace, one binary per OS. <code>winit</code> owns the window, <code>wgpu</code> owns the surface, <strong>we own the compositor</strong>. Everything on screen — chrome, terminal grids, browser tabs, PiP — is a layer in our scene graph. No platform child windows, no webview for UI. This is what makes Wayland, PiP, tab previews and splits uniform across OSes.</p>
+<h2 id="crates"><a class="anchor" href="#crates" aria-hidden="true">#</a>Crates</h2>
+<div class="tablewrap"><table><thead><tr><th>crate</th><th>owns</th></tr></thead><tbody><tr><td><code>vt</code></td><td>VT parser (<code>vte</code>), grid, scrollback, modes, Kitty keyboard, Kitty/Sixel graphics</td></tr><tr><td><code>pty</code></td><td>shell profiles; spawns local shells, WSL distros, <code>ssh &lt;host&gt;</code> via <code>portable-pty</code></td></tr><tr><td><code>render</code></td><td>wgpu compositor, retained scene graph, glyph atlas (swash + rustybuzz), external texture layers</td></tr><tr><td><code>ui</code></td><td>sidebar, Spaces, tabs, splits, command bar, previews, attention state</td></tr><tr><td><code>browser</code></td><td>CEF host (offscreen, Chrome runtime), profiles, ad-block (<code>adblock</code>), extensions, Arc import</td></tr><tr><td><code>config</code></td><td>Luau sandbox, curated API, keybinds, themes, hooks</td></tr><tr><td><code>app</code></td><td>wiring, event loop, notifications</td></tr></tbody></table></div>
+<h2 id="terminal"><a class="anchor" href="#terminal" aria-hidden="true">#</a>Terminal</h2>
+<p>Own core. <code>vte</code> for the state machine; grid/scrollback/modes ours. Reference implementations to read, not copy: Ghostty (state design, Kitty protocols), Alacritty (<code>vte</code> usage), WezTerm (ConPTY quirks).</p>
+<h2 id="browser"><a class="anchor" href="#browser" aria-hidden="true">#</a>Browser</h2>
+<p>CEF, offscreen rendering, Chrome runtime. Each tab is a <code>CefBrowser</code> whose paint output lands in a wgpu texture — shared texture where the platform allows (D3D11 on Windows, IOSurface on macOS), CPU upload otherwise. Profiles are CEF request contexts; a Space can pin a profile.</p>
+<p>Ad-blocking is ours: Brave's <code>adblock</code> engine hooked into CEF's resource request handler, so it works with zero extensions installed.</p>
+<p><strong>No Chrome extensions in v1</strong> (decided 2026-09-15 after spike 2). Windowless browsers are Alloy style, and libcef does not attach the tab model or the extension request proxy to Alloy WebContents: extensions load and run but cannot see, filter, or inject into our tabs. The things extensions are used for are built natively instead:</p>
+<ul><li>ad/tracker blocking: <code>adblock</code> in the resource request handler (above)</li><li>userscripts / userstyles: our own, injected per browser through CEF's DevTools protocol (<code>Page.addScriptToEvaluateOnNewDocument</code>). Covers Vimium-style keys, dark mode, Arc &quot;Boosts&quot;</li><li>password manager: <code>op</code> (1Password) / <code>bw</code> (Bitwarden) CLIs behind a <code>nus-browser</code> credential provider; form detection and fill via injected JS</li><li>profiles: CEF request contexts, one per Space if configured</li></ul>
+<p>Escape hatch, post-v1: build our own libcef with Alloy-style tabs wired into the extension system. Chromium-scale build on three OSes, monthly. Tracked as a future phase, not a v1 dependency.</p>
+<p>PiP is ours: a tab's texture drawn into a small always-on-top window. Not Chromium's PiP.</p>
+<h2 id="chrome-ui"><a class="anchor" href="#chrome-ui" aria-hidden="true">#</a>Chrome UI</h2>
+<p>Hand-rolled retained scene graph on wgpu. Rects, rounded rects, text runs, texture quads, clip, scroll. No general-purpose toolkit; the UI surface area (sidebar, tabs, command bar, settings) doesn't justify one, and nothing else composites external textures without friction.</p>
+<h2 id="config"><a class="anchor" href="#config" aria-hidden="true">#</a>Config</h2>
+<p>Luau via <code>mlua</code>. Sandboxed: no <code>io</code>, <code>os</code>, <code>require</code> of arbitrary files, no FFI. The config gets a curated <code>nus</code> table: keybinds, theme, profiles, and hooks such as <code>on_output(tab, line)</code> — which is how the built-in &quot;localhost URL → open browser split&quot; feature is implemented, so users can replace it.</p>
+<h2 id="security-posture"><a class="anchor" href="#security-posture" aria-hidden="true">#</a>Security posture</h2>
+<ul><li>HTML is never used for UI. The only web content is the user's browsing.</li><li>Config is a sandboxed VM with no host access.</li><li>Terminal → browser communication is typed messages in-process; the browser never gets a PTY handle, the terminal never gets a <code>CefBrowser</code>.</li><li>CEF is pinned and bumped on Chromium's 4-week cadence. A stale CEF is a stale browser.</li></ul>
+<h2 id="platform-notes"><a class="anchor" href="#platform-notes" aria-hidden="true">#</a>Platform notes</h2>
+<ul><li>Windows: ConPTY; pwsh default profile; WSL distros enumerated as profiles.</li><li>macOS: IOSurface shared textures; notarized builds.</li><li>Linux: Wayland first, X11 works. Verify CEF boots under Wayland-only sessions (no XWayland) — SPIKES.md #1.</li></ul>
+</article>
+</div>
+</main>
+<footer class="foot">
+  <div class="foot__in">
+    <div>
+      <a class="wordmark" href="../../" style="font-size:30px">nus</a>
+      <p class="dim" style="font-size:12.5px;margin-top:10px;max-width:24ch">A terminal emulator that is also a browser. Pre-alpha.</p>
+    </div>
+    <div>
+      <h4>Project</h4>
+      <ul><li><a href="../../download/">Download</a></li><li><a href="https://github.com/cbassuarez/nus" target="_blank" rel="noopener noreferrer">Source</a></li><li><a href="https://github.com/cbassuarez/nus/releases" target="_blank" rel="noopener noreferrer">Releases</a></li><li><a href="https://github.com/cbassuarez/nus/issues" target="_blank" rel="noopener noreferrer">Issues</a></li></ul>
+    </div>
+    <div>
+      <h4>Docs</h4>
+      <ul><li><a href="../../docs/architecture/">Architecture</a></li><li><a href="../../docs/design/">Design</a></li><li><a href="../../docs/product/">Product</a></li><li><a href="../../docs/spikes/">Spikes</a></li></ul>
+    </div>
+    <div>
+      <h4>More</h4>
+      <ul><li><a href="../../about/">About</a></li><li><a href="../../docs/dependencies/">Dependencies</a></li><li><a href="https://github.com/cbassuarez/nus/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Licence</a></li></ul>
+    </div>
+  </div>
+  <div class="foot__end">
+    <div>
+      <span>© 2026 Sebastian Suarez-Solis</span>
+      <span>MIT</span>
+      <span class="grow"></span>
+      <span>Set in IBM Plex Mono &amp; Newsreader</span>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html><meta charset=utf-8>
+<body style="font:12px monospace;margin:0;padding:8px;white-space:pre" id=out>measuring…
+<script>
+var PAGES = ['/', '/docs/', '/docs/architecture/', '/docs/design/', '/docs/product/',
+             '/docs/spikes/', '/docs/dependencies/', '/download/', '/about/', '/404.html'];
+var WIDTHS = [390, 768, 1440];
+var out = document.getElementById('out'), lines = [], q = [];
+PAGES.forEach(function (p) { WIDTHS.forEach(function (w) { q.push([p, w]); }); });
+
+function next() {
+  if (!q.length) { out.textContent = lines.join('\n'); return; }
+  var job = q.shift(), f = document.createElement('iframe');
+  f.style.cssText = 'position:absolute;left:-9999px;height:900px;border:0;width:' + job[1] + 'px';
+  f.src = job[0];
+  f.onload = function () {
+    var d = f.contentDocument, sw = d.documentElement.scrollWidth;
+    var bad = [];
+    if (sw > job[1] + 1) {
+      d.querySelectorAll('*').forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.right > job[1] + 1 && el.children.length === 0)
+          bad.push(el.tagName.toLowerCase() + '.' + (el.className || '').toString().trim().split(/\s+/)[0]);
+      });
+    }
+    lines.push((sw > job[1] + 1 ? 'OVERFLOW ' : 'ok       ') + job[1] + 'px  sw=' + sw +
+               '  ' + job[0] + (bad.length ? '   → ' + bad.slice(0, 4).join(', ') : ''));
+    f.remove(); next();
+  };
+  document.body.appendChild(f);
+}
+next();
+</script>

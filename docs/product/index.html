@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Product · nus</title>
+<meta name="description" content="Thirteen passes of settled behaviour — navigation, stacks, sound, containers, the look studio.">
+<link rel="canonical" href="https://nus.dev/docs/product/">
+<meta name="theme-color" content="#c8102e">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="nus.dev">
+<meta property="og:title" content="Product · nus">
+<meta property="og:description" content="Thirteen passes of settled behaviour — navigation, stacks, sound, containers, the look studio.">
+<meta property="og:url" content="https://nus.dev/docs/product/">
+<meta property="og:image" content="https://nus.dev/assets/icon/nus-512.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="../../assets/icon/nus-32.png" sizes="32x32">
+<link rel="icon" href="../../assets/icon/nus-128.png" sizes="128x128">
+<link rel="apple-touch-icon" href="../../assets/icon/nus-256.png">
+
+<link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/Newsreader-Italic.woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script>
+/* Apply the stored theme and signal before first paint, so the page never flashes. */
+(function(){try{
+  var t=localStorage.getItem('nus.theme');
+  if(t==='paper'||t==='ink')document.documentElement.setAttribute('data-theme',t);
+  var s=localStorage.getItem('nus.signal');
+  if(s){document.documentElement.style.setProperty('--signal',s);
+    document.documentElement.style.setProperty('--on-signal',s==='#d9a400'?'#141414':'#ffffff');}
+}catch(e){}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="band"></div>
+<header class="masthead">
+  <div class="masthead__in">
+    <a class="wordmark" href="../../">nus<span class="wordmark__sub">terminus</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="../../docs/">Docs</a>
+      <a href="../../download/">Download</a>
+      <a href="../../about/">About</a>
+      <a href="https://github.com/cbassuarez/nus" target="_blank" rel="noopener noreferrer">Source</a>
+    </nav>
+    <div class="controls">
+      <div class="signalpick" data-signalpick role="group" aria-label="Signal colour"></div>
+      <button class="iconbtn" type="button" data-theme-toggle aria-label="Switch theme">
+        <span data-sun hidden><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></svg></span><span data-moon><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></svg></span>
+      </button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<div class="doc">
+<nav class="doc__nav" aria-label="Documentation">
+  <h4>The record</h4>
+  <ul><li><a href="../architecture/">Architecture</a></li><li><a href="../design/">Design</a></li><li><a href="../product/">Product</a></li><li><a href="../spikes/">Spikes</a></li><li><a href="../dependencies/">Dependencies</a></li></ul>
+  <h4>On this page</h4><ul><li class=""><a href="#windows-and-spaces">Windows and Spaces</a></li><li class=""><a href="#quick-terminal">Quick terminal</a></li><li class=""><a href="#attention-waiting">Attention ("waiting")</a></li><li class=""><a href="#session-restore">Session restore</a></li><li class=""><a href="#theme">Theme</a></li><li class=""><a href="#browser">Browser</a></li><li class=""><a href="#profiles">Profiles</a></li><li class=""><a href="#ops">Ops</a></li><li class=""><a href="#navigation-settled-2026-09-16-second-pass">Navigation (settled 2026-09-16, second pass)</a></li><li class=""><a href="#sidebar-and-settings-settled-2026-09-16-third-pass">Sidebar and settings (settled 2026-09-16, third pass)</a></li><li class=""><a href="#arc-parity-targets-settled-2026-09-16-fourth-pass">Arc parity targets (settled 2026-09-16, fourth pass)</a></li><li class=""><a href="#header-stacks-settings-onboarding-settled-2026-09-16-fifth-pass">Header, stacks, settings, onboarding (settled 2026-09-16, fifth pass)</a></li><li class=""><a href="#surface-rules-sidebar-rules-settled-2026-09-16-sixth-pass">Surface, rules, sidebar rules (settled 2026-09-16, sixth pass)</a></li><li class=""><a href="#motion-small-screens-2027-niceties-settled-2026-09-16-seventh-pass">Motion, small screens, 2027 niceties (settled 2026-09-16, seventh pass)</a></li><li class=""><a href="#look-feel-pages-sound-startup-settled-2026-09-16-eighth-pass">Look & feel pages, sound, startup (settled 2026-09-16, eighth pass)</a></li><li class=""><a href="#windows-the-sidebar-header-hover-settled-2026-09-16-ninth-pass">Windows, the sidebar header, hover (settled 2026-09-16, ninth pass)</a></li><li class=""><a href="#the-look-studio-settled-2026-09-16-tenth-pass">The look studio (settled 2026-09-16, tenth pass)</a></li><li class=""><a href="#the-polish-pass-settled-2026-09-16-eleventh-pass">The polish pass (settled 2026-09-16, eleventh pass)</a></li><li class=""><a href="#tier-two-settled-2026-09-16-twelfth-pass">Tier two (settled 2026-09-16, twelfth pass)</a></li><li class=""><a href="#icons-status-ask-settled-2026-09-17-thirteenth-pass">Icons, status, ask (settled 2026-09-17, thirteenth pass)</a></li></ul>
+</nav>
+<article class="doc__body">
+  <h1>Product decisions</h1>
+  <div class="doc__meta">
+    <span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"/></svg></span>
+    <span>Product</span>
+    <span class="doc__source">
+      <a href="https://github.com/cbassuarez/nus/blob/main/docs/PRODUCT.md" target="_blank" rel="noopener noreferrer">docs/PRODUCT.md ↗</a>
+    </span>
+  </div>
+<p>Settled 2026-09-16 in the design pass. These are the behaviours spike 4 and the v1 crates implement; change the doc when a decision changes.</p>
+<h2 id="windows-and-spaces"><a class="anchor" href="#windows-and-spaces" aria-hidden="true">#</a>Windows and Spaces</h2>
+<ul><li><strong>A Space is a window.</strong> Switching Space (⌘⌥1–9) raises that window. The Space row at the top of the sidebar is a window switcher; the tab list is the current Space's only. Quick terminal and PiP are the only other windows.</li><li>A Space owns: its signal color, a default shell profile + cwd for new terminal tabs, and a browser profile (CEF request context / cookie jar). Config overrides per Space are not v1.</li><li>Splits: a tab is one pane or a left|right pair. No vertical splits, no nesting. One tab = one sidebar preview.</li><li>Chromeless by default: 6px signal band + 30px top strip. Sidebar on ⌘⇧S.</li></ul>
+<h2 id="quick-terminal"><a class="anchor" href="#quick-terminal" aria-hidden="true">#</a>Quick terminal</h2>
+<ul><li>⌥⌘T. Global hotkey by default (summons over any app); <code>quick.global = false</code> keeps it inside nus. Drops from the top edge of the active display.</li></ul>
+<h2 id="attention-waiting"><a class="anchor" href="#attention-waiting" aria-hidden="true">#</a>Attention (&quot;waiting&quot;)</h2>
+<ul><li>Signals: BEL, OSC 9 / OSC 777 notifications, and shell integration (OSC 133 prompt marks → &quot;command finished&quot;). nus installs the shell hook for pwsh, bash, zsh, fish. No output-idle heuristics.</li><li>Shown in the sidebar (filled label in the Space's signal color) and in the top strip summary; OS notification when the window is unfocused.</li></ul>
+<h2 id="session-restore"><a class="anchor" href="#session-restore" aria-hidden="true">#</a>Session restore</h2>
+<ul><li>On launch: Spaces (windows), tabs, splits, each terminal's profile + cwd, each browser tab's URL and scroll, <strong>and each terminal's scrollback snapshot</strong> as read-only history above the fresh prompt.</li></ul>
+<h2 id="theme"><a class="anchor" href="#theme" aria-hidden="true">#</a>Theme</h2>
+<ul><li>Follows the OS (paper when light, ink when dark), switches live. <code>theme = &quot;paper&quot; | &quot;ink&quot;</code> pins one.</li></ul>
+<h2 id="browser"><a class="anchor" href="#browser" aria-hidden="true">#</a>Browser</h2>
+<ul><li>New tab opens ⌘K; there is no new-tab page. URL or search from the palette.</li><li>Search engine configurable (<code>browser.search</code>), default Google.</li><li>Third-party cookies blocked by default, per-site exceptions in config.</li><li>Downloads: silent to ~/Downloads, ruled toast with open / reveal.</li><li>Password manager: 1Password via the <code>op</code> CLI (biometric unlock), our own form detection and fill. Bitwarden later.</li><li>Import: bookmarks/history/Spaces from Chromium-family browsers (Arc, Chrome, Edge, Brave) — Chromium profile format, one-shot.</li></ul>
+<h2 id="profiles"><a class="anchor" href="#profiles" aria-hidden="true">#</a>Profiles</h2>
+<ul><li>SSH: every <code>Host</code> in ~/.ssh/config becomes an <code>ssh:&lt;name&gt;</code> profile.</li><li>WSL: <code>wsl -l</code> distros become <code>wsl:&lt;name&gt;</code> profiles on Windows.</li><li>&quot;Open in nus&quot; entry in Explorer / Finder / file managers.</li></ul>
+<h2 id="ops"><a class="anchor" href="#ops" aria-hidden="true">#</a>Ops</h2>
+<ul><li>Self-update from GitHub Releases, offered in the top strip. No telemetry. Crashes write a local log only.</li></ul>
+<h2 id="navigation-settled-2026-09-16-second-pass"><a class="anchor" href="#navigation-settled-2026-09-16-second-pass" aria-hidden="true">#</a>Navigation (settled 2026-09-16, second pass)</h2>
+<p><strong>Modifier.</strong> App chords are ⌘ on macOS and <strong>Ctrl+Shift</strong> on Windows/Linux, so they never reach the shell (Ctrl+T/K/L/W/D/R are shell keys). Ctrl+1–9 is the one plain-Ctrl chord: tab by position (shells don't use it).</p>
+<div class="tablewrap"><table><thead><tr><th>chord (Win/Linux · mac)</th><th>action</th></tr></thead><tbody><tr><td>Ctrl+Shift+T · ⌘T</td><td>new tab → palette in <em>new</em> mode</td></tr><tr><td>Ctrl+Shift+K · ⌘K</td><td>palette in <em>go</em> mode</td></tr><tr><td>Ctrl+Shift+L · ⌘L</td><td>palette in <em>url</em> mode (browser pane)</td></tr><tr><td>Ctrl+Shift+W · ⌘W</td><td>close tab (closes every selected tab; asks first if a foreground process is running)</td></tr><tr><td>Ctrl+Shift+Z · ⌘Z</td><td>reopen last closed tab (profile + cwd, or URL)</td></tr><tr><td>Ctrl+Shift+D · ⌘D</td><td>toggle the browser split</td></tr><tr><td>Ctrl+Shift+S · ⌘⇧S</td><td>sidebar</td></tr><tr><td>Ctrl+1–9 · ⌘1–9</td><td>tab N</td></tr><tr><td>Ctrl+<code>· ⌃</code></td><td>cycle tabs most-recently-used (Ctrl+Tab is left to the OS)</td></tr><tr><td>Ctrl+PgUp/PgDn · ⌘⇧[ ]</td><td>previous / next tab in order</td></tr><tr><td>Ctrl+Enter · ⌘↵</td><td>open the detected localhost URL in the split; +Shift → new tab</td></tr></tbody></table></div>
+<p><strong>New tab</strong> opens the palette (<em>new</em>): profile rows for a terminal, or type a URL / search terms for a browser tab. Empty Enter → default shell.</p>
+<p><strong>URL at a shell prompt.</strong> If the entire line typed at a fresh prompt is a URL (scheme, <code>localhost[:port]</code>, or <code>host.tld[/path]</code> with a known TLD) and you press Enter, nus clears the line and opens the page in the split beside the terminal (Ctrl+Shift+Enter: new tab). A ruled hint appears as you type (<code>↵ opens in browser · Ctrl+↵ runs in shell</code>). Any editing key (arrows, history, Ctrl+…) disqualifies the line until the next Enter. Bare words never trigger. This is the browser-session-from-a-terminal feature.</p>
+<p><strong>Browser panes</strong> mirror Chrome while focused: Ctrl+L url, Ctrl+R / F5 reload, Alt+←/→ back/forward, Ctrl+plus/minus/0 zoom, Ctrl+F find, F12 devtools. App chords stay Ctrl+Shift.</p>
+<p><strong>Palette.</strong> <em>go</em>: tabs → actions → open-URL / search rows. URL vs search is auto-detected and both rows are always offered. <em>new</em>: profiles → browser row. <em>url</em>: navigate the browser pane.</p>
+<p><strong>Sidebar.</strong> A pinned row on top (durable tabs: your shell, the dev server), then one list in creation order. Ctrl+click toggles selection, Shift+click selects a range; close acts on the selection. Pin/unpin via the palette or the tab's row menu.</p>
+<h2 id="sidebar-and-settings-settled-2026-09-16-third-pass"><a class="anchor" href="#sidebar-and-settings-settled-2026-09-16-third-pass" aria-hidden="true">#</a>Sidebar and settings (settled 2026-09-16, third pass)</h2>
+<ul><li><strong>Reveal:</strong> hidden by default; hovering the 6px hot edge slides it over the content; it hides ~300 ms after the mouse leaves. Ctrl+Shift+S pins it.</li><li><strong>Rows:</strong> one line per tab — number, kind glyph, title, cwd/host. The 52px live preview expands only under the hovered row and under any tab that is <em>waiting</em>. Pinned row on top (compact cells).</li><li><strong>Footer:</strong> Space identity and controls — Space color + name, browser identity (cookie jar) and default shell profile for new tabs, assistant router status (which of claude / codex / ollama / chatgpt are wired, and the default), gear → settings tab, <code>+ new tab</code>.</li><li><strong>Settings:</strong> Ctrl+, opens a native settings tab (Broadsheet styled): fonts, theme, Space profiles, browser (search engine, cookies, downloads), assistants (router), keys. Every edit writes <code>~/.config/nus/init.luau</code>; the file is the source of truth and hot-reloads.</li><li><strong>Assistants:</strong> the palette offers <em>search</em>, <em>ask chatgpt</em>, <em>ask claude</em> (web, <code>?q=</code>) and <em>ask &lt;tool&gt; in this shell</em> for local CLIs on PATH (<code>claude &quot;…&quot;</code>, <code>codex &quot;…&quot;</code>, <code>ollama run &lt;model&gt; &quot;…&quot;</code>), which types the command into the focused terminal. The router (which tool, which model, args vs stdin) is a config table.</li></ul>
+<h2 id="arc-parity-targets-settled-2026-09-16-fourth-pass"><a class="anchor" href="#arc-parity-targets-settled-2026-09-16-fourth-pass" aria-hidden="true">#</a>Arc parity targets (settled 2026-09-16, fourth pass)</h2>
+<p><strong>Shell (carapace).</strong> The Space color as a physical shell around the window. Styles: <code>band</code> (today's 6px top band), <code>stroke</code> (all four edges), <code>gradient</code> (signal → ink along the stroke), <code>aurora</code> (slowly animated gradient). A global <code>radius</code> rounds the window corners and the stroke together (0 by default — Broadsheet — but yours to turn). Config: <code>nus.shell = { style, width, radius }</code>.</p>
+<p><strong>PiP.</strong> Ours, in the compositor. Trigger: automatically when a playing video's tab leaves view (tab/Space switch, window blur); returning to the tab pulls it back; manual toggle too. Source: the tab's own texture cropped to the video's rect, tracked by an injected script that also scrolls it into view — no second decode, no DRM issue. Transport keys act on the element through CDP, so sites can't hide them: ←/→ ±10 s, Space/K play-pause, J/L ±10, ,/. frame-step, ↑/↓ volume, M mute — only while the PiP window is focused. Bezier easing on every move/resize, wheel-over scales around the cursor, corner snapping.</p>
+<p><strong>Local sites.</strong> Detected: localhost, 127.0.0.1, <code>*.local</code>, RFC-1918. Safety tape (diagonal signal + ink hazard stroke) around the page and in the URL field. Dev suite, all v1: ports list in the palette (listening ports with process names → open with tape on), DevTools as a windowless CEF pane, responsive presets (390/768/1440) + screenshot from our texture, reload on directory change + console mirrored into the terminal split.</p>
+<p><strong>Script channel.</strong> One mechanism under PiP, theme reach, the JSON viewer and the dev suite: scripts injected per tab via CEF's DevTools protocol (<code>Page.addScriptToEvaluateOnNewDocument</code>, <code>Runtime.addBinding</code>), results back through a DevTools message observer. This is also the userscript system.</p>
+<h2 id="header-stacks-settings-onboarding-settled-2026-09-16-fifth-pass"><a class="anchor" href="#header-stacks-settings-onboarding-settled-2026-09-16-fifth-pass" aria-hidden="true">#</a>Header, stacks, settings, onboarding (settled 2026-09-16, fifth pass)</h2>
+<p><strong>Icons.</strong> Phosphor (MIT), regular weight for chrome, bold for the active state, rasterized from SVG into the glyph atlas. Text labels in the chrome give way to icons; caps labels remain for words that are content (tab titles, section names).</p>
+<p><strong>Header.</strong> Platform-native controls (traffic lights left on macOS; — ▢ ✕ right elsewhere), drag anywhere else. Left: wordmark, then a clickable crumb (Space → Space switcher, tab → palette, cwd → open here). When a browser pane is focused the crumb becomes an editable URL field. Right: a status cluster — waiting count, PiP, assistant, local ports — as icons with counts.</p>
+<p><strong>Stacks.</strong> A tab that spawns another (terminal → URL beside it, page → link, agent → tab) nests it one level under the parent. A stack collapses to one row (&quot;parent · +3&quot;) unless it is active or holds a waiting tab. Closing the parent closes the stack (asks first). A stack is one ⌘-number; ⌘⇧[ ] walk inside it. Terminal → URL opens the split beside the terminal; a link from a page opens in the same stack, unfocused.</p>
+<p><strong>Settings, v1 scope.</strong> Terminal: scrollback, cursor, copy-on-select, bell → OS notification when unfocused. Tabs: new-tab position, ⌘W inside a stack, auto-collapse. Browser: per-site zoom, downloads directory, third-party cookie exceptions. Assistants: router table (default tool, model per tool, args vs stdin, web fallbacks).</p>
+<p><strong>Onboarding.</strong> First launch opens a real shell with a ruled panel beside it: five things to try (⌘K, ⌘T + URL, a URL at the prompt, hover the edge, ⌥⌘T), each ticked off as you do it. No wizard, no modal.</p>
+<h2 id="surface-rules-sidebar-rules-settled-2026-09-16-sixth-pass"><a class="anchor" href="#surface-rules-sidebar-rules-settled-2026-09-16-sixth-pass" aria-hidden="true">#</a>Surface, rules, sidebar rules (settled 2026-09-16, sixth pass)</h2>
+<p><strong>Texture stays on the carapace.</strong> Grain goes on the band or stroke, never on content and never on the PiP video.</p>
+<p><strong>Surface picker.</strong> Beyond the fixed Broadsheet tokens, the surface is the user's: a signal colour (carapace, Space square, ticks, progress), an optional base the paper is tinted toward (with a tint amount), texture strength, window opacity (terminal panes show the desktop through; the chrome stays paper), carapace style, width and corner radius. Every control is native chrome — swatches, chips, sliders — and the window is its own live preview.</p>
+<p><strong>Rules.</strong> <code>rules.luau</code> (sandboxed Luau; <code>~/.config/nus/rules.luau</code> in v1) decides what a new tab or Space looks like. <code>new_tab(ctx)</code> gets kind, index, profile, Space, signal, theme and — when the tab joins a stack — the parent's colours, and returns <code>{ bg, signal }</code>. The default rule gives each terminal its own hue and keeps a stack in the parent's family. The RULES section of settings shows the file, reloads it, resets it, opens it in the editor. Helpers: <code>hue</code>, <code>mix</code>, <code>hsl</code>.</p>
+<p><strong>Sidebar rules.</strong> Side: left or right. Reveal: from the screen edge (a flick from the desktop works) or only when the pointer travels from inside the window. Grace: how long it stays after the pointer leaves. Fullscreen: hover, hidden, or pinned. F11 toggles fullscreen.</p>
+<p><strong>Tab behaviour.</strong> Links a page opens go to the stack, the split, or a new tab. A URL at a prompt opens beside or in a new tab. Closing asks when a process is running, or never. Default shell profile.</p>
+<p><strong>Onboarding, as built.</strong> The fifth chord in the panel is Ctrl+` (last tab) until the quick terminal exists. Ticks persist across launches; SKIP THE TOUR is remembered.</p>
+<h2 id="motion-small-screens-2027-niceties-settled-2026-09-16-seventh-pass"><a class="anchor" href="#motion-small-screens-2027-niceties-settled-2026-09-16-seventh-pass" aria-hidden="true">#</a>Motion, small screens, 2027 niceties (settled 2026-09-16, seventh pass)</h2>
+<p><strong>Motion as ink.</strong> One easing (ease-out cubic), base durations of 80–220ms, and a register slider from snappy (0.45×) to cinematic (2.2×); reduce motion follows the OS or is forced. Things slide and rules extend; nothing scales, bounces or blurs. Sidebar slides, rows grow, stacks unfold, the active tint travels, the palette rises, bands drop, the crumb fades, the loading bar travels. Content switches instantly.</p>
+<p><strong>Loading bar.</strong> Chases real progress with a trickle, fades on arrival. Styles: rule, comet (bright head, fading tail), carapace (fills the band across the window). Colour: signal, the tab's own, or ink. Weight and chase are sliders.</p>
+<p><strong>Width, not mode.</strong> Wide ≥1200 logical px: everything. Standard 900–1200: sidebar hover-only. Narrow &lt;900: no split (the focused pane takes the content), one status icon, palette to the window, settings as a tile grid that drills into a section under a back crumb. No manual kiosk/touch switch.</p>
+<p><strong>Reader mode.</strong> Ctrl+Shift+R or the book: the article, extracted in the page, set here in Newsreader on our paper — 640px measure, 19/28 body, rules not boxes, signal bullets, mono code. The page keeps living underneath. Word count in the tools row; the text feeds &quot;ask about this page&quot;.</p>
+<p><strong>Boosts.</strong> <code>on_page(ctx)</code> in <code>rules.luau</code> returns <code>{ css, js }</code> per site.</p>
+<p><strong>Little nus.</strong> Links from other apps open in a small floating window with the band and one page; Esc closes, Ctrl+Shift+O keeps it as a tab. One instance: later launches hand their URLs over. MAKE DEFAULT in settings registers nus as a browser (Windows now; bundle / .desktop for the others).</p>
+<p><strong>Accessibility.</strong> The chrome is an AccessKit tree from day one: every hit target is a node with a spoken label and an action, panes carry their text, the palette is a list box. Screen readers and UI automation see the same thing the mouse does.</p>
+<p><strong>Deferred from this pass</strong> (still planned): content blocking (adblock crate), sleeping tabs, OS media controls, find in page, favicons, ruled context menus, downloads, history/autocomplete, session restore, site permission bands, print to PDF, snap layouts, <code>&lt;select&gt;</code> popups.</p>
+<h2 id="look-feel-pages-sound-startup-settled-2026-09-16-eighth-pass"><a class="anchor" href="#look-feel-pages-sound-startup-settled-2026-09-16-eighth-pass" aria-hidden="true">#</a>Look &amp; feel pages, sound, startup (settled 2026-09-16, eighth pass)</h2>
+<p><strong>Icon.</strong> A Newsreader Italic <em>n</em> with an open, tapered band in orbit (NASA-meatball stroke: start and end, heavier at the belly, tilted −24°). Ink <em>n</em>, signal band; the live icon follows the current theme and signal, the bundled one ships Broadsheet. The splash is the same drawing, nothing else, and fades once the first tab has painted (debounced, min hold from settings). Restore / recent live in the <strong>atlas</strong> modal (header planet icon), never on the splash.</p>
+<p><strong>Header.</strong> Wordmark once. A crumb of favicon + <em>Title · host</em>, click to edit the address. DevTools panels (console, network, elements) are icons.</p>
+<p><strong>Sidebar.</strong> 32px rows, favicon or profile icon, ⌘-numerals ≤ 9, hover ×, waiting dot, children under a rule. Footer is one row: avatar (drop a <code>profile/avatar.png</code>), +, history, downloads, settings.</p>
+<p><strong>Surface.</strong> Ramps, not a colour: 2–4 stops, angle, loop, aurora drift and breath. Signal, tint, opacity (on window / chrome / panes — Windows DX12 is opaque, the row says so). Textures: grain, stipple, stitch, linen, halftone, scale, still or animated, placed on the <strong>carapace</strong> (masked to its rounded stroke, two-tone so it reads on any ramp, ×3 strength for a thin band), the chrome, or the panes — never on content or video. Shell: band or frame, width, radius. Presets (Broadsheet, Midnight, Ledger, Darkroom) plus <code>profile/surfaces/*.json</code>; SAVE PRESET writes one.</p>
+<p><strong>Theme.</strong> Paper / ink / page tokens per mode, ANSI 16 with a picker, families (Solarized, Gruvbox, Nord, from-signal), contrast grade and saturation, import from Ghostty / Windows Terminal / VS Code / base16 files in <code>profile/themes/</code>. Broadsheet's own tokens are not editable — edits layer over them and RESET returns.</p>
+<p><strong>Rules.</strong> <code>profile/rules.luau</code>, sandboxed. <code>new_tab(ctx)</code> and <code>new_space(ctx)</code> return a look (<code>bg</code>, <code>signal</code>); <code>on_page(ctx)</code> returns boosts; <code>on_event(ev)</code> returns a cue name (or <code>false</code> to silence). Five starters, live status, syntax-coloured preview, reload on save.</p>
+<p><strong>Sound.</strong> cuelume's seventeen recipes ported to a native synth on cpal (tone + noise layers, exponential envelopes, glide, detune, biquad, shimmer), cached per cue, mixed on one stream. Fourteen events, each mapped to a cue or silence, previewable; master volume; rules can override per event.</p>
+<p><strong>Startup.</strong> Window: remembered / maximised / fullscreen. Splash: icon, icon + sound, none; hold. Then: last session / atlas / new tab / nothing. Atlas: on demand, on launch, persistent. Outside links: little nus or a tab. Start on login; make default browser.</p>
+<p><strong>Cursor.</strong> Shape (the shell's, block, beam, underline), hollow or hidden when unfocused, blink never / after 2s idle / always with a period, colour ink / signal / the tab's own, motion jump / glide / comet on the motion register, beam weight, pointer over the chrome (system, ink arrow, signal dot), hide the pointer while typing.</p>
+<p><strong>Width rule for all of it.</strong> Every page is the same ruled two-column form; under 900px it becomes tiles that drill in. Settings changed by assistive tech persist like clicks.</p>
+<h2 id="windows-the-sidebar-header-hover-settled-2026-09-16-ninth-pass"><a class="anchor" href="#windows-the-sidebar-header-hover-settled-2026-09-16-ninth-pass" aria-hidden="true">#</a>Windows, the sidebar header, hover (settled 2026-09-16, ninth pass)</h2>
+<p><strong>Windows, not Spaces.</strong> A window owns its tabs; everyone knows what a window is. Auto-named from the git root it was launched in, else the dominant host, else <em>nus</em>; duplicates number themselves; F2 (or the list) renames through the palette; the name shows in the sidebar, the list, the OS title bar and Alt-Tab. Switching is the OS's job plus the header's list; new window is Ctrl N. (Spike: one process per window, each with its own Chromium cache — the process singleton forbids sharing one; v1 moves windows in-process so they share the profile.)</p>
+<p><strong>Header styles, named for what they do.</strong> BAR: the window's name and NEW TAB in one ruled row, a split caret for the kinds. RAIL: every window as its square along the sidebar's edge, the name above the tabs. Bools for the variants: masthead title (Newsreader) or caps, dateline (where · tabs · ports), NEW TAB in the header and/or as the next ruled row (a ghost plus where the tab will appear), window cell with or without the name, kinds caret, rail always or on hover, press flash.</p>
+<p><strong>NEW TAB</strong> is the button hit most: click for a shell in the default profile (rules colour it, the band flashes through the signal); hold 240ms, right-click, or the caret fans the kinds out (profiles as their squares, page).</p>
+<p><strong>Hover.</strong> Every icon button gets a soft rounded ink overlay under the pointer; the important ones move on the motion register — pop, spin, bob, swing. No icon is ever a bare glyph you have to guess at.</p>
+<p><strong>Look chip.</strong> Paper · ink · signal in the footer, fanned on hover; opens the look pages. Settings are grouped LOOK · FEEL · WORK · SYSTEM.</p>
+<h2 id="the-look-studio-settled-2026-09-16-tenth-pass"><a class="anchor" href="#the-look-studio-settled-2026-09-16-tenth-pass" aria-hidden="true">#</a>The look studio (settled 2026-09-16, tenth pass)</h2>
+<p><strong>One roof.</strong> Appearance, surface, theme and cursor are one section, LOOK: a live <strong>proof</strong> of the window at the top (carapace with its ramp and texture, chrome, sidebar, a shell with coloured runs and the cursor, a page), a tab strip beneath — PRESETS · SURFACE · TOKENS · TYPE &amp; MOTION · CURSOR — and the rows of the tab you're on. What you change, you see change in the proof and in the window around it.</p>
+<p><strong>Neobrutal tokens.</strong> Presets are cards faced with their own ramp, the signal as a chip, the name in Newsreader; a hard offset shadow, a 2px ink outline, the current one ringed. Tokens are big tiles with name and hex under them; ANSI as a row of small tiles. Tiles lift on hover.</p>
+<p><strong>A real picker.</strong> Pick a tile and hue / saturation / lightness sliders appear with a tray of candidates (the signal's family, the swatches, the mode's papers or inks). Any token can be any colour; the tray is a shortcut, not a limit.</p>
+<p><strong>Icon and text.</strong> The icon is embedded in the exe and set on every window from the first frame — never the default exe glyph. Sidebar text fits, or marquees when its row is active or hovered, or clips under a fade; never an ellipsis.</p>
+<h2 id="the-polish-pass-settled-2026-09-16-eleventh-pass"><a class="anchor" href="#the-polish-pass-settled-2026-09-16-eleventh-pass" aria-hidden="true">#</a>The polish pass (settled 2026-09-16, eleventh pass)</h2>
+<p>Researched against Rio, Ghostty, kitty, WezTerm, Warp, Dia, Arc, Zen, Vivaldi and Orion; tier one built in full.</p>
+<p><strong>Windows in one process.</strong> One <code>App</code> per OS window, one Chromium profile, a registry every window sees; the rail and the window list are real; links from other launches land in the window last used.</p>
+<p><strong>Shell integration, auto-injected.</strong> OSC 133 prompt marks, OSC 7 cwd and OSC 9;4 progress read in nus-vt at the point they occur; bundled scripts for PowerShell (-NoExit -EncodedCommand), bash (--rcfile), zsh (ZDOTDIR), fish (-C), cmd (PROMPT); nushell has it built in. AUTO / OFF under TERMINAL. It buys: a bar cursor at the prompt, new shells where the focused one is, the window's name and dateline from the cwd, jump between prompts, copy the last output, paste with a band when it's risky, DONE / FAILED badges and a ring when a long command ends elsewhere, × codes on failed lines, progress as the loading bar, no close-confirm at a prompt, recent commands in the palette to run again.</p>
+<p><strong>Blocks.</strong> Each command is a block: a hairline where it starts, a gutter rule on hover (signal when it failed), chips to copy its output or run it again, Ctrl+triple-click selects its output, the scrollbar ticks are the prompts.</p>
+<p><strong>The terminal's interaction layer.</strong> Selection with semantic zones, copy and paste (bracketed, protected), click-to-move at a prompt, a thin scrollbar that appears on hover or when scrolled, find in scrollback as a band, hints mode (labels over URLs, paths and hashes), an unfocused split washes with paper, a cols × rows card while resizing.</p>
+<p><strong>Fonts and images.</strong> Missing glyphs come from system fallbacks (symbols, emoji as masks, other scripts) without the app knowing; Kitty graphics and iTerm2 inline images draw in the shell; the Kitty keyboard protocol was already in.</p>
+<p><strong>The command line, lit and predicted.</strong> Tokens colour as you type; the history entry that continues your line ghosts after the caret and Right / End accepts it. Terminal-side, nothing to install; history per profile in profile/history.</p>
+<p><strong>Browser table stakes.</strong> Find in page, downloads (to ~/Downloads, a list in the footer, click reveals), permission asks as a band, <code>&lt;select&gt;</code> popups composited, content blocking (built-in hosts plus profile/blocklist.txt), history-ranked address palette, idle pages sleep after 30 minutes and archive after 12 hours.</p>
+<p><strong>The welcome page.</strong> A full tab, ruled, with a live START HERE checklist and TRY buttons that do the thing; F1, the palette, settings.</p>
+<p><strong>Still to do before bundling:</strong> <code>&lt;select&gt;</code> popups need a live test on a real form; downloads and permission bands were built to the CEF contract but not exercised by hand; colour emoji want an RGBA atlas; Sixel is not decoded; command output folding; hints with custom regex.</p>
+<h2 id="tier-two-settled-2026-09-16-twelfth-pass"><a class="anchor" href="#tier-two-settled-2026-09-16-twelfth-pass" aria-hidden="true">#</a>Tier two (settled 2026-09-16, twelfth pass)</h2>
+<p>The ten from the research report, in the order asked, all built.</p>
+<p><strong>Stock themes.</strong> Thirteen originals and seven ports, each a theme across paper, ink, page, sixteen ANSI colours, the surface, cursor, loading bar, sounds and a tab-colour wish for the rules; a contrast audit is a test.</p>
+<p><strong>The tab tree.</strong> Stacks nest as deep as they go; a caret folds, Ctrl+ Shift+- folds all; a row drags onto another to nest under it, or between rows to move.</p>
+<p><strong>Name, icon, colour per tab.</strong> Right-click a row: RENAME (F2, through the palette; Shift+F2 now names the window), ICON (an emoji or any short string in the favicon's place), a row of swatches (the user's tint beats the rules' and survives a theme), PIN, CLOSE, TILE, SAVE TO FOLDER. All of it in the session.</p>
+<p><strong>Tiles.</strong> Ctrl+click rows, Ctrl+Shift+D: two side by side, three as an L, four as a grid. A tiling belongs to its tabs and shows whenever one is active; dividers drag; Ctrl+Alt+arrows walk, with Shift swap; a closed tile re-tiles the rest.</p>
+<p><strong>Peek.</strong> Alt+click a link: it floats over the page behind a scrim. Esc or a click outside closes it; Ctrl+Enter keeps it in the stack. A peek is a tab the sidebar doesn't list, so every pane path serves it.</p>
+<p><strong>Compact.</strong> Ctrl+Shift+B: a 48px column of icons, the top strip hidden until the pointer reaches the top edge, the hovered row's name beside the column.</p>
+<p><strong>Chains, and settings in the palette.</strong> A <code>chains</code> table in rules.luau names lists of palette commands (&quot;open &lt;url&gt;&quot;, &quot;run &lt;cmd&gt;&quot;, &quot;tile&quot;, anything the palette takes); every settings row is a palette row that opens settings there.</p>
+<p><strong>Folders.</strong> Under the tabs: GITHUB (open pull requests involving you, from <code>gh</code>, off the main thread), PORTS (what's listening), lists from rules.luau (<code>folders</code>, static or a function), and your own (SAVE TO FOLDER; a saved page never archives). Items open in place or go to the tab that has them.</p>
+<p><strong>The site panel.</strong> The gear at the end of a URL row, per host: zoom (remembered), autoplay, JavaScript, cookies (block or clear), boosts, blocking, and the permissions the site was given — band answers are remembered and answered without asking next time, each forgettable.</p>
+<p><strong>Focus.</strong> Ctrl+Shift+F11: the page or shell alone in the window.</p>
+<p><strong>Containers.</strong> Named cookie jars, one CEF request context each under profile/container-&lt;name&gt;; a window's container colours its square and names its title, new pages open in it, a new window inherits it; a page can be reopened in another; the palette makes new ones.</p>
+<p><strong>Learned on the way.</strong> A CEF request context with its own cache must be a direct child of the root cache path, and its profile initialises a few pumps later — the first browser in it waits for <code>on_request_context_initialized</code>. Sidebar hits resolve topmost-last so a menu over the folders wins. <code>layout()</code> now schedules the shells' resize itself (a split terminal used to keep its old size). SendKeys cannot deliver Ctrl+Alt+arrow chords; keybd_event with the arrow's scancode and the extended flag can.</p>
+<h2 id="icons-status-ask-settled-2026-09-17-thirteenth-pass"><a class="anchor" href="#icons-status-ask-settled-2026-09-17-thirteenth-pass" aria-hidden="true">#</a>Icons, status, ask (settled 2026-09-17, thirteenth pass)</h2>
+<p><strong>Site icons.</strong> A page without a favicon gets a letter tile — the host's first letter on a square in one of the signal's family — never the generic globe; a favicon can't linger from the previous site.</p>
+<p><strong>What's in the tab.</strong> The row names the focused pane and badges the split's other pane's kind at the icon's corner; the title follows. A shell that exits leaves: the other pane takes the tab, a lone shell's tab closes.</p>
+<p><strong>The status lamp.</strong> LIVE was a word; it's a lamp now — signal while loading, ink when live, hazard stripes when local, hollow while asleep — with BROWSER · STATUS choosing lamp, lamp + word, word, or none.</p>
+<p><strong>Ask.</strong> Ctrl+Shift+? beside a shell: one line in, a few command blocks out, each with INSERT (at the prompt), RUN, COPY. The shell, folder and the last command's output go along. Not a chat; the last turns scroll. Backends are what the machine has: claude -p, codex exec, the Copilot CLI if installed, ollama, or the Anthropic API through curl with ANTHROPIC_API_KEY; NUS_ASK_CMD for anything else. (Ctrl+Shift+A was first; a global hotkey on the machine swallowed it before winit saw it.)</p>
+<p><strong>The sidebar drew at 10 fps.</strong> fit() trimmed a character at a time and measured every step; it bisects now and widths are cached. 83 fps in a debug build.</p>
+</article>
+</div>
+</main>
+<footer class="foot">
+  <div class="foot__in">
+    <div>
+      <a class="wordmark" href="../../" style="font-size:30px">nus</a>
+      <p class="dim" style="font-size:12.5px;margin-top:10px;max-width:24ch">A terminal emulator that is also a browser. Pre-alpha.</p>
+    </div>
+    <div>
+      <h4>Project</h4>
+      <ul><li><a href="../../download/">Download</a></li><li><a href="https://github.com/cbassuarez/nus" target="_blank" rel="noopener noreferrer">Source</a></li><li><a href="https://github.com/cbassuarez/nus/releases" target="_blank" rel="noopener noreferrer">Releases</a></li><li><a href="https://github.com/cbassuarez/nus/issues" target="_blank" rel="noopener noreferrer">Issues</a></li></ul>
+    </div>
+    <div>
+      <h4>Docs</h4>
+      <ul><li><a href="../../docs/architecture/">Architecture</a></li><li><a href="../../docs/design/">Design</a></li><li><a href="../../docs/product/">Product</a></li><li><a href="../../docs/spikes/">Spikes</a></li></ul>
+    </div>
+    <div>
+      <h4>More</h4>
+      <ul><li><a href="../../about/">About</a></li><li><a href="../../docs/dependencies/">Dependencies</a></li><li><a href="https://github.com/cbassuarez/nus/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Licence</a></li></ul>
+    </div>
+  </div>
+  <div class="foot__end">
+    <div>
+      <span>© 2026 Sebastian Suarez-Solis</span>
+      <span>MIT</span>
+      <span class="grow"></span>
+      <span>Set in IBM Plex Mono &amp; Newsreader</span>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/site.js" defer></script>
+</body>
+</html>

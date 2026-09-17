@@ -1,0 +1,166 @@
+/* The page shell: head, signal band, masthead, footer.
+   Every page on nus.dev goes through here, so the chrome cannot drift. */
+
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+const ROOT = new URL('..', import.meta.url).pathname;
+
+export const SITE = {
+  name: 'nus',
+  long: 'terminus',
+  domain: 'nus.dev',
+  url: 'https://nus.dev',
+  repo: 'https://github.com/cbassuarez/nus',
+  tagline: 'A terminal emulator that is also a browser.',
+  author: 'Sebastian Suarez-Solis'
+};
+
+const iconCache = new Map();
+
+/** Inlines a Phosphor icon so it inherits colour and costs no request. */
+export function icon(name, cls = '') {
+  if (!iconCache.has(name)) {
+    const raw = readFileSync(join(ROOT, 'assets/icons', `${name}.svg`), 'utf8');
+    iconCache.set(name, raw.replace(/\s*\n\s*/g, '').trim());
+  }
+  let svg = iconCache.get(name);
+  svg = svg.replace('<svg', `<svg aria-hidden="true" focusable="false"${cls ? ` class="${cls}"` : ''}`);
+  return svg;
+}
+
+/** `depth` is how many directories deep the page sits, for relative asset paths. */
+const rel = (depth) => (depth === 0 ? '.' : Array(depth).fill('..').join('/'));
+
+function masthead(depth) {
+  const r = rel(depth);
+  const links = [
+    ['Docs', `${r}/docs/`],
+    ['Download', `${r}/download/`],
+    ['About', `${r}/about/`]
+  ];
+
+  return `<header class="masthead">
+  <div class="masthead__in">
+    <a class="wordmark" href="${r}/">nus<span class="wordmark__sub">terminus</span></a>
+    <nav class="nav" aria-label="Primary">
+      ${links.map(([t, h]) => `<a href="${h}">${t}</a>`).join('\n      ')}
+      <a href="${SITE.repo}" target="_blank" rel="noopener noreferrer">Source</a>
+    </nav>
+    <div class="controls">
+      <div class="signalpick" data-signalpick role="group" aria-label="Signal colour"></div>
+      <button class="iconbtn" type="button" data-theme-toggle aria-label="Switch theme">
+        <span data-sun hidden>${icon('sun')}</span><span data-moon>${icon('moon')}</span>
+      </button>
+    </div>
+  </div>
+</header>`;
+}
+
+function footer(depth) {
+  const r = rel(depth);
+  const year = new Date().getFullYear();
+
+  const cols = [
+    ['Project', [
+      ['Download', `${r}/download/`],
+      ['Source', SITE.repo],
+      ['Releases', `${SITE.repo}/releases`],
+      ['Issues', `${SITE.repo}/issues`]
+    ]],
+    ['Docs', [
+      ['Architecture', `${r}/docs/architecture/`],
+      ['Design', `${r}/docs/design/`],
+      ['Product', `${r}/docs/product/`],
+      ['Spikes', `${r}/docs/spikes/`]
+    ]],
+    ['More', [
+      ['About', `${r}/about/`],
+      ['Dependencies', `${r}/docs/dependencies/`],
+      ['Licence', `${SITE.repo}/blob/main/LICENSE`]
+    ]]
+  ];
+
+  return `<footer class="foot">
+  <div class="foot__in">
+    <div>
+      <a class="wordmark" href="${r}/" style="font-size:30px">nus</a>
+      <p class="dim" style="font-size:12.5px;margin-top:10px;max-width:24ch">${SITE.tagline} Pre-alpha.</p>
+    </div>
+    ${cols.map(([h, items]) => `<div>
+      <h4>${h}</h4>
+      <ul>${items.map(([t, u]) => {
+        const ext = /^https?:/.test(u);
+        return `<li><a href="${u}"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>${t}</a></li>`;
+      }).join('')}</ul>
+    </div>`).join('\n    ')}
+  </div>
+  <div class="foot__end">
+    <div>
+      <span>© ${year} ${SITE.author}</span>
+      <span>MIT</span>
+      <span class="grow"></span>
+      <span>Set in IBM Plex Mono &amp; Newsreader</span>
+    </div>
+  </div>
+</footer>`;
+}
+
+/**
+ * @param {{title:string, description:string, body:string, depth?:number,
+ *          path?:string, bodyClass?:string, head?:string}} page
+ */
+export function page({ title, description, body, depth = 0, path = '/', bodyClass = '', head = '' }) {
+  const r = rel(depth);
+  const full = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${title} · ${SITE.name}`;
+  const canonical = SITE.url + path;
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>${full}</title>
+<meta name="description" content="${description}">
+<link rel="canonical" href="${canonical}">
+<meta name="theme-color" content="#c8102e">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="${SITE.domain}">
+<meta property="og:title" content="${full}">
+<meta property="og:description" content="${description}">
+<meta property="og:url" content="${canonical}">
+<meta property="og:image" content="${SITE.url}/assets/icon/nus-512.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="${r}/assets/icon/nus-32.png" sizes="32x32">
+<link rel="icon" href="${r}/assets/icon/nus-128.png" sizes="128x128">
+<link rel="apple-touch-icon" href="${r}/assets/icon/nus-256.png">
+
+<link rel="preload" as="font" type="font/woff2" href="${r}/assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="${r}/assets/fonts/Newsreader-Italic.woff2" crossorigin>
+<link rel="stylesheet" href="${r}/assets/css/site.css">
+<script>
+/* Apply the stored theme and signal before first paint, so the page never flashes. */
+(function(){try{
+  var t=localStorage.getItem('nus.theme');
+  if(t==='paper'||t==='ink')document.documentElement.setAttribute('data-theme',t);
+  var s=localStorage.getItem('nus.signal');
+  if(s){document.documentElement.style.setProperty('--signal',s);
+    document.documentElement.style.setProperty('--on-signal',s==='#d9a400'?'#141414':'#ffffff');}
+}catch(e){}})();
+</script>
+${head}</head>
+<body${bodyClass ? ` class="${bodyClass}"` : ''}>
+<a class="skip" href="#main">Skip to content</a>
+<div class="band"></div>
+${masthead(depth)}
+<main id="main">
+${body}
+</main>
+${footer(depth)}
+<script src="${r}/assets/js/site.js" defer></script>
+</body>
+</html>
+`;
+}

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About · nus</title>
+<meta name="description" content="What nus is, what it refuses to be, where the name comes from, and what “personal software” means for something you can still fork.">
+<link rel="canonical" href="https://nus.dev/about/">
+<meta name="theme-color" content="#c8102e">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="nus.dev">
+<meta property="og:title" content="About · nus">
+<meta property="og:description" content="What nus is, what it refuses to be, where the name comes from, and what “personal software” means for something you can still fork.">
+<meta property="og:url" content="https://nus.dev/about/">
+<meta property="og:image" content="https://nus.dev/assets/icon/nus-512.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="../assets/icon/nus-32.png" sizes="32x32">
+<link rel="icon" href="../assets/icon/nus-128.png" sizes="128x128">
+<link rel="apple-touch-icon" href="../assets/icon/nus-256.png">
+
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/Newsreader-Italic.woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/site.css">
+<script>
+/* Apply the stored theme and signal before first paint, so the page never flashes. */
+(function(){try{
+  var t=localStorage.getItem('nus.theme');
+  if(t==='paper'||t==='ink')document.documentElement.setAttribute('data-theme',t);
+  var s=localStorage.getItem('nus.signal');
+  if(s){document.documentElement.style.setProperty('--signal',s);
+    document.documentElement.style.setProperty('--on-signal',s==='#d9a400'?'#141414':'#ffffff');}
+}catch(e){}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="band"></div>
+<header class="masthead">
+  <div class="masthead__in">
+    <a class="wordmark" href="../">nus<span class="wordmark__sub">terminus</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="../docs/">Docs</a>
+      <a href="../download/">Download</a>
+      <a href="../about/">About</a>
+      <a href="https://github.com/cbassuarez/nus" target="_blank" rel="noopener noreferrer">Source</a>
+    </nav>
+    <div class="controls">
+      <div class="signalpick" data-signalpick role="group" aria-label="Signal colour"></div>
+      <button class="iconbtn" type="button" data-theme-toggle aria-label="Switch theme">
+        <span data-sun hidden><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></svg></span><span data-moon><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></svg></span>
+      </button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<section class="section">
+  <div class="section__in">
+    <h1 style="margin-bottom:18px">About</h1>
+    <p class="lede">
+      nus is a terminal emulator that is also a browser. It is personal software,
+      written for one person’s working day, and MIT-licensed so that using it never
+      requires a conversation about licensing.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>The premise</h2><span class="cap">Why</span></div>
+    <p>
+      Work that starts in a shell rarely stays there. A dev server prints a URL, a
+      stack trace names a doc, a test fails against an API you have to go read. The
+      usual answer is a second application, a window manager and a habit of
+      alt-tabbing, and the two halves never learn anything about each other.
+    </p>
+    <p>
+      nus puts them in one window and makes them peers. A shell tab and a page tab
+      sit in the same list, split beside one another, restored together. A URL typed
+      at a prompt opens next door rather than somewhere else. The terminal knows the
+      browser exists; the browser knows which directory you are in.
+    </p>
+    <p>
+      That is the whole idea. Everything in
+      <a href="./../docs/architecture/">the architecture</a> follows from wanting it to
+      be true without compromise: our own VT core so the terminal is real, Chromium
+      offscreen so the browser is real, and our own compositor so neither one is a
+      guest in the other’s window.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>What it refuses</h2><span class="cap">Constraints</span></div>
+    <div class="ledger" style="max-width:none">
+      <div class="ledger__row"><span class="cap">No HTML in the UI</span><p class="mb0">
+        The chrome is a hand-rolled retained scene graph on wgpu. The only web content
+        in the process is the page you asked for. A UI built from the same engine as
+        the untrusted content is a category error, and it is also slow.</p></div>
+      <div class="ledger__row"><span class="cap">No multiplexer</span><p class="mb0">
+        Windows, tabs and splits are the app’s own. Nothing is nested inside a second
+        program that has its own idea of what a pane is.</p></div>
+      <div class="ledger__row"><span class="cap">No config that can read your disk</span><p class="mb0">
+        Luau in a sandbox: no <code>io</code>, no <code>os</code>, no FFI, no arbitrary
+        <code>require</code>. A config file people copy from the internet should not be
+        able to do anything interesting to the machine.</p></div>
+      <div class="ledger__row"><span class="cap">No telemetry</span><p class="mb0">
+        Not off by default — absent. Crashes write a local log.</p></div>
+      <div class="ledger__row"><span class="cap">No Chrome extensions in v1</span><p class="mb0">
+        Decided after a spike said no rather than hoped so: windowless CEF browsers are
+        Alloy-style, and the extension request proxy never attaches to them. Ad-blocking,
+        userscripts and password filling are built natively instead, and the escape hatch
+        — our own libcef build — is a later phase, not a dependency.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>The name</h2><span class="cap">nus · terminus</span></div>
+    <p>
+      <em class="serif" style="font-size:22px">terminus</em> — an end point, and the root
+      the word <em>terminal</em> comes from. <em class="serif" style="font-size:22px">nus</em>
+      is its last three letters, which is what you type. The icon is a Newsreader
+      italic <em class="serif">n</em> with an open tapered band in orbit, heavier at the
+      belly and tilted −24°: a meatball, if you grew up on NASA insignia.
+    </p>
+    <div class="row" style="gap:20px;align-items:flex-end;margin-top:26px">
+      <img src="../assets/icon/nus-256.png" alt="The nus icon: an italic n crossed by an orbiting band."
+           width="112" height="112" style="border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink)">
+      <p class="dim mb0" style="font-size:13px;max-width:38ch">
+        The live icon follows the current theme and signal; the bundled one ships
+        Broadsheet. The splash screen is the same drawing and nothing else, and it
+        fades once the first tab has painted.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Personal software</h2><span class="cap">What that means</span></div>
+    <p>
+      nus is built to one person’s taste and does not take feature requests as
+      obligations. There is no roadmap you are on, no plan to grow it, and no
+      support commitment. Decisions get made once and written down, and the
+      documents in <a href="./../docs/">the record</a> are the real ones — when a
+      decision changes, the document changes with it.
+    </p>
+    <p>
+      It is also MIT. Fork it, cut it up, ship something else with it. The licence
+      exists so the answer to “can I…” is always yes and nobody has to ask.
+    </p>
+    <div class="row" style="margin-top:26px">
+      <a class="btn" href="https://github.com/cbassuarez/nus" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M208.31,75.68A59.78,59.78,0,0,0,202.93,28,8,8,0,0,0,196,24a59.75,59.75,0,0,0-48,24H124A59.75,59.75,0,0,0,76,24a8,8,0,0,0-6.93,4,59.78,59.78,0,0,0-5.38,47.68A58.14,58.14,0,0,0,56,104v8a56.06,56.06,0,0,0,48.44,55.47A39.8,39.8,0,0,0,96,192v8H72a24,24,0,0,1-24-24A40,40,0,0,0,8,136a8,8,0,0,0,0,16,24,24,0,0,1,24,24,40,40,0,0,0,40,40H96v16a8,8,0,0,0,16,0V192a24,24,0,0,1,48,0v40a8,8,0,0,0,16,0V192a39.8,39.8,0,0,0-8.44-24.53A56.06,56.06,0,0,0,216,112v-8A58.14,58.14,0,0,0,208.31,75.68ZM200,112a40,40,0,0,1-40,40H112a40,40,0,0,1-40-40v-8a41.74,41.74,0,0,1,6.9-22.48A8,8,0,0,0,80,73.83a43.81,43.81,0,0,1,.79-33.58,43.88,43.88,0,0,1,32.32,20.06A8,8,0,0,0,119.82,64h32.35a8,8,0,0,0,6.74-3.69,43.87,43.87,0,0,1,32.32-20.06A43.81,43.81,0,0,1,192,73.83a8.09,8.09,0,0,0,1,7.65A41.72,41.72,0,0,1,200,104Z"/></svg>Source</a>
+      <a class="btn btn--quiet" href="./../docs/"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232,48H160a40,40,0,0,0-32,16A40,40,0,0,0,96,48H24a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8H96a24,24,0,0,1,24,24,8,8,0,0,0,16,0,24,24,0,0,1,24-24h72a8,8,0,0,0,8-8V56A8,8,0,0,0,232,48ZM96,192H32V64H96a24,24,0,0,1,24,24V200A39.81,39.81,0,0,0,96,192Zm128,0H160a39.81,39.81,0,0,0-24,8V88a24,24,0,0,1,24-24h64ZM160,88h40a8,8,0,0,1,0,16H160a8,8,0,0,1,0-16Zm48,40a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,128Zm0,32a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,160Z"/></svg>The record</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Credits</h2><span class="cap">Standing on</span></div>
+    <div class="ledger" style="max-width:none">
+      <div class="ledger__row"><span class="cap">Read, not copied</span><p class="mb0">
+        Ghostty for VT state design and the Kitty protocols, Alacritty for
+        <code>vte</code> in practice, WezTerm for ConPTY’s quirks. The polish pass was
+        researched against Rio, kitty, Warp, Dia, Arc, Zen, Vivaldi and Orion.</p></div>
+      <div class="ledger__row"><span class="cap">Libraries</span><p class="mb0">
+        winit, wgpu, vte, portable-pty, swash, rustybuzz, mlua, cef-rs, Brave’s
+        <code>adblock</code>, cpal, AccessKit. <a href="./../docs/dependencies/">The list</a>.</p></div>
+      <div class="ledger__row"><span class="cap">Type &amp; icons</span><p class="mb0">
+        IBM Plex Mono and Newsreader, both OFL. Phosphor icons, MIT.</p></div>
+      <div class="ledger__row"><span class="cap">Written by</span><p class="mb0">
+        Sebastian Suarez-Solis.</p></div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="foot">
+  <div class="foot__in">
+    <div>
+      <a class="wordmark" href="../" style="font-size:30px">nus</a>
+      <p class="dim" style="font-size:12.5px;margin-top:10px;max-width:24ch">A terminal emulator that is also a browser. Pre-alpha.</p>
+    </div>
+    <div>
+      <h4>Project</h4>
+      <ul><li><a href="../download/">Download</a></li><li><a href="https://github.com/cbassuarez/nus" target="_blank" rel="noopener noreferrer">Source</a></li><li><a href="https://github.com/cbassuarez/nus/releases" target="_blank" rel="noopener noreferrer">Releases</a></li><li><a href="https://github.com/cbassuarez/nus/issues" target="_blank" rel="noopener noreferrer">Issues</a></li></ul>
+    </div>
+    <div>
+      <h4>Docs</h4>
+      <ul><li><a href="../docs/architecture/">Architecture</a></li><li><a href="../docs/design/">Design</a></li><li><a href="../docs/product/">Product</a></li><li><a href="../docs/spikes/">Spikes</a></li></ul>
+    </div>
+    <div>
+      <h4>More</h4>
+      <ul><li><a href="../about/">About</a></li><li><a href="../docs/dependencies/">Dependencies</a></li><li><a href="https://github.com/cbassuarez/nus/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Licence</a></li></ul>
+    </div>
+  </div>
+  <div class="foot__end">
+    <div>
+      <span>© 2026 Sebastian Suarez-Solis</span>
+      <span>MIT</span>
+      <span class="grow"></span>
+      <span>Set in IBM Plex Mono &amp; Newsreader</span>
+    </div>
+  </div>
+</footer>
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

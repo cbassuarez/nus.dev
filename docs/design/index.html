@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Design · nus</title>
+<meta name="description" content="Broadsheet: tokens, type, rules, spacing, shadow, and every surface the app draws.">
+<link rel="canonical" href="https://nus.dev/docs/design/">
+<meta name="theme-color" content="#c8102e">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="nus.dev">
+<meta property="og:title" content="Design · nus">
+<meta property="og:description" content="Broadsheet: tokens, type, rules, spacing, shadow, and every surface the app draws.">
+<meta property="og:url" content="https://nus.dev/docs/design/">
+<meta property="og:image" content="https://nus.dev/assets/icon/nus-512.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="../../assets/icon/nus-32.png" sizes="32x32">
+<link rel="icon" href="../../assets/icon/nus-128.png" sizes="128x128">
+<link rel="apple-touch-icon" href="../../assets/icon/nus-256.png">
+
+<link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/Newsreader-Italic.woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/css/site.css">
+<script>
+/* Apply the stored theme and signal before first paint, so the page never flashes. */
+(function(){try{
+  var t=localStorage.getItem('nus.theme');
+  if(t==='paper'||t==='ink')document.documentElement.setAttribute('data-theme',t);
+  var s=localStorage.getItem('nus.signal');
+  if(s){document.documentElement.style.setProperty('--signal',s);
+    document.documentElement.style.setProperty('--on-signal',s==='#d9a400'?'#141414':'#ffffff');}
+}catch(e){}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="band"></div>
+<header class="masthead">
+  <div class="masthead__in">
+    <a class="wordmark" href="../../">nus<span class="wordmark__sub">terminus</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="../../docs/">Docs</a>
+      <a href="../../download/">Download</a>
+      <a href="../../about/">About</a>
+      <a href="https://github.com/cbassuarez/nus" target="_blank" rel="noopener noreferrer">Source</a>
+    </nav>
+    <div class="controls">
+      <div class="signalpick" data-signalpick role="group" aria-label="Signal colour"></div>
+      <button class="iconbtn" type="button" data-theme-toggle aria-label="Switch theme">
+        <span data-sun hidden><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></svg></span><span data-moon><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></svg></span>
+      </button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<div class="doc">
+<nav class="doc__nav" aria-label="Documentation">
+  <h4>The record</h4>
+  <ul><li><a href="../architecture/">Architecture</a></li><li><a href="../design/">Design</a></li><li><a href="../product/">Product</a></li><li><a href="../spikes/">Spikes</a></li><li><a href="../dependencies/">Dependencies</a></li></ul>
+  <h4>On this page</h4><ul><li class=""><a href="#principles">Principles</a></li><li class=""><a href="#tokens">Tokens</a></li><li class=""><a href="#type">Type</a></li><li class=""><a href="#rules-spacing-shadow">Rules, spacing, shadow</a></li><li class=""><a href="#surfaces">Surfaces</a></li><li class=""><a href="#keys">Keys</a></li></ul>
+</nav>
+<article class="doc__body">
+  <h1>Design — "Broadsheet"</h1>
+  <div class="doc__meta">
+    <span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M200.77,53.89A103.27,103.27,0,0,0,128,24h-1.07A104,104,0,0,0,24,128c0,43,26.58,79.06,69.36,94.17A32,32,0,0,0,136,192a16,16,0,0,1,16-16h46.21a31.81,31.81,0,0,0,31.2-24.88,104.43,104.43,0,0,0,2.59-24A103.28,103.28,0,0,0,200.77,53.89Zm13,93.71A15.89,15.89,0,0,1,198.21,160H152a32,32,0,0,0-32,32,16,16,0,0,1-21.31,15.07C62.49,194.3,40,164,40,128a88,88,0,0,1,87.09-88h.9a88.35,88.35,0,0,1,88,87.25A88.86,88.86,0,0,1,213.81,147.6ZM140,76a12,12,0,1,1-12-12A12,12,0,0,1,140,76ZM96,100A12,12,0,1,1,84,88,12,12,0,0,1,96,100Zm0,56a12,12,0,1,1-12-12A12,12,0,0,1,96,156Zm88-56a12,12,0,1,1-12-12A12,12,0,0,1,184,100Z"/></svg></span>
+    <span>Design</span>
+    <span class="doc__source">
+      <a href="https://github.com/cbassuarez/nus/blob/main/docs/DESIGN.md" target="_blank" rel="noopener noreferrer">docs/DESIGN.md ↗</a>
+    </span>
+  </div>
+<p>Chosen 2026-09-16 from three directions (canvas: design/, page 2 keeps the record). Ink on paper, one monospace face, rules instead of boxes, and one color on screen: the active Space's.</p>
+<h2 id="principles"><a class="anchor" href="#principles" aria-hidden="true">#</a>Principles</h2>
+<ol><li>Rules, not boxes. Hierarchy by weight and case, never by color.</li><li>One color on screen: the Space's signal. Everything else is ink on paper.</li><li>The terminal keeps its ANSI palette; the chrome stays monochrome around it.</li><li>Floating things get a 2px edge and a hard offset shadow. Nothing blurs, nothing is rounded, nothing is translucent.</li><li>Chromeless by default: a 6px signal band and a 30px top strip are all the furniture; the sidebar slides in on ⌘⇧S.</li></ol>
+<h2 id="tokens"><a class="anchor" href="#tokens" aria-hidden="true">#</a>Tokens</h2>
+<div class="tablewrap"><table><thead><tr><th>token</th><th>paper (light)</th><th>ink (dark)</th></tr></thead><tbody><tr><td>paper</td><td><code>#f4f1ea</code></td><td><code>#141414</code></td></tr><tr><td>ink</td><td><code>#141414</code></td><td><code>#ece7da</code></td></tr><tr><td>tint</td><td><code>rgba(20,20,20,0.06)</code></td><td><code>rgba(236,231,218,0.07)</code></td></tr><tr><td>hot edge</td><td><code>rgba(20,20,20,0.12)</code></td><td><code>rgba(236,231,218,0.14)</code></td></tr><tr><td>dim</td><td><code>#8a857a</code></td><td><code>#8a857a</code></td></tr><tr><td>page</td><td><code>#ffffff</code> (web content)</td><td><code>#ffffff</code></td></tr><tr><td>scrim</td><td><code>rgba(244,241,234,.55)</code></td><td><code>rgba(0,0,0,0.5)</code></td></tr></tbody></table></div>
+<p>Space signals (same in both themes): red <code>#c8102e</code>, blue <code>#1f5fbf</code>, gold <code>#d9a400</code>, green <code>#2e7d32</code>, violet <code>#6b3fa0</code>, teal <code>#1a7f8a</code>. Attention (&quot;waiting&quot;) uses the Space's own signal as a filled label.</p>
+<p>ANSI 0–15, paper theme: <code>#141414 #b3261e #2e7d32 #9a6b00 #1f5fbf #8e3b8e #1a7f8a #8a857a</code> <code>#4a4740 #d63a2f #3f9a45 #c48a00 #3b7ee0 #b04eb0 #22a3b0 #f4f1ea</code></p>
+<p>ANSI 0–15, ink theme: <code>#141414 #e0574c #7ac77f #e5b94a #6ea3ef #d086d0 #6fd0da #bdb8ab</code> <code>#5a564e #ff6f63 #93e39a #ffd06a #8fbcff #e9a0e9 #8be6ef #ece7da</code></p>
+<p>Terminal default fg/bg = ink/paper of the theme. Cursor: block, ink on paper, no blink by default.</p>
+<h2 id="type"><a class="anchor" href="#type" aria-hidden="true">#</a>Type</h2>
+<ul><li>UI and terminal: IBM Plex Mono (bundled, OFL) by default. Regular 400, medium 500, semibold 600. Both are config keys: <code>font.terminal</code> and <code>font.ui</code>.</li><li>Wordmark only: Newsreader Italic 500 (bundled, OFL) — <code>nus</code>, <code>go</code>, <code>quick</code>, <code>paper</code>, <code>ink</code>.</li><li>Ramp: ui 13/1.5; ui strong 600; label 11 caps tracking 0.08em; palette input 16; preview 7.5/1.5; wordmark 34 (sidebar) / 20 (top strip) / 18.</li></ul>
+<h2 id="rules-spacing-shadow"><a class="anchor" href="#rules-spacing-shadow" aria-hidden="true">#</a>Rules, spacing, shadow</h2>
+<ul><li>Rule weights: 1 hairline (rows), 1.5 structure (sidebar edge, headers), 2 floating (palette, quick terminal, PiP). 6 signal band.</li><li>Shadow: hard offset only — 8×8 for palette/quick terminal, 6×6 for PiP, 4×4 for the localhost chip. No blur radius, ever.</li><li>Radii: 0 everywhere.</li><li>Spacing: sidebar rows 12×14, pane headers 9×18, top strip 30, sidebar 272, browser split 520, palette 600, tab preview 52 tall.</li><li>Inactive: 60% opacity. Selected: ink fill, paper text. Hover: 1px ink outline. Links: 1.5px underline, 3px offset.</li></ul>
+<h2 id="surfaces"><a class="anchor" href="#surfaces" aria-hidden="true">#</a>Surfaces</h2>
+<ul><li><strong>Top strip</strong> (30): wordmark · <code>space · NN tab · cwd</code> · attention summary · ⌘K · window controls (— ▢ ✕). Present in every state; it is the drag region.</li><li><strong>Sidebar</strong> (272, ⌘⇧S): Space tabs as a ruled segmented row (selected = ink fill), numbered tabs 01–09 with 52px live previews, <code>+ new tab ⌘T</code> pinned to the bottom.</li><li><strong>Panes</strong>: terminal and browser are peers split by a 1.5 rule; each has a 9×18 caps header. Browser URL is a 1px boxed field; devtools is a caps tab row under the page.</li><li><strong>Palette</strong> (⌘K, 600 wide, top 220): serif &quot;go&quot; prompt, 2px edge, 8×8 shadow, selected row = ink fill.</li><li><strong>Quick terminal</strong> (⌥⌘T): 960 wide sheet from the top edge, no top border, 300 tall, serif &quot;quick&quot;.</li><li><strong>PiP</strong>: 400 wide, 4px signal band, 2px edge, 6×6 shadow, caps footer with <code>space · NN</code>, title, ↗ (return to tab), ✕.</li><li><strong>localhost chip</strong>: anchored to the detected line, 1.5 edge, 4×4 shadow: <code>localhost:5173 · open split ⌘↵ · new tab ⌘⇧↵</code>.</li></ul>
+<h2 id="keys"><a class="anchor" href="#keys" aria-hidden="true">#</a>Keys</h2>
+<p>⌘K go · ⌘T new tab · ⌘1–9 tab · ⌘⌥1–9 space · ⌘⇧S sidebar · ⌥⌘T quick terminal · ⌘↵ open detected URL in split · ⌘⇧↵ in new tab · ⌘D split · ⌘W close. (Ctrl on Windows/Linux.)</p>
+</article>
+</div>
+</main>
+<footer class="foot">
+  <div class="foot__in">
+    <div>
+      <a class="wordmark" href="../../" style="font-size:30px">nus</a>
+      <p class="dim" style="font-size:12.5px;margin-top:10px;max-width:24ch">A terminal emulator that is also a browser. Pre-alpha.</p>
+    </div>
+    <div>
+      <h4>Project</h4>
+      <ul><li><a href="../../download/">Download</a></li><li><a href="https://github.com/cbassuarez/nus" target="_blank" rel="noopener noreferrer">Source</a></li><li><a href="https://github.com/cbassuarez/nus/releases" target="_blank" rel="noopener noreferrer">Releases</a></li><li><a href="https://github.com/cbassuarez/nus/issues" target="_blank" rel="noopener noreferrer">Issues</a></li></ul>
+    </div>
+    <div>
+      <h4>Docs</h4>
+      <ul><li><a href="../../docs/architecture/">Architecture</a></li><li><a href="../../docs/design/">Design</a></li><li><a href="../../docs/product/">Product</a></li><li><a href="../../docs/spikes/">Spikes</a></li></ul>
+    </div>
+    <div>
+      <h4>More</h4>
+      <ul><li><a href="../../about/">About</a></li><li><a href="../../docs/dependencies/">Dependencies</a></li><li><a href="https://github.com/cbassuarez/nus/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Licence</a></li></ul>
+    </div>
+  </div>
+  <div class="foot__end">
+    <div>
+      <span>© 2026 Sebastian Suarez-Solis</span>
+      <span>MIT</span>
+      <span class="grow"></span>
+      <span>Set in IBM Plex Mono &amp; Newsreader</span>
+    </div>
+  </div>
+</footer>
+<script src="../../assets/js/site.js" defer></script>
+</body>
+</html>
