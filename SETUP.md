@@ -12,7 +12,7 @@ GitHub → the repo → **Settings → Pages**:
 - **Branch:** `main`, folder `/ (root)`
 
 The first deploy takes a minute or two. It will appear at
-`https://cbassuarez.github.io/nus-site/` until DNS is live — relative asset
+`https://cbassuarez.github.io/nus.dev/` until DNS is live — relative asset
 paths mean the site works at either address.
 
 ## 2. DNS at the registrar

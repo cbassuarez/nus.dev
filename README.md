@@ -1,4 +1,4 @@
-# nus-site
+# nus.dev
 
 The site for [nus](https://github.com/cbassuarez/nus) — *terminus*, a terminal
 emulator that is also a browser. Published at **[nus.dev](https://nus.dev)**.
