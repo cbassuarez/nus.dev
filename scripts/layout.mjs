@@ -110,7 +110,7 @@ function footer(depth) {
  * @param {{title:string, description:string, body:string, depth?:number,
  *          path?:string, bodyClass?:string, head?:string}} page
  */
-export function page({ title, description, body, depth = 0, path = '/', bodyClass = '', head = '' }) {
+export function page({ title, description, body, depth = 0, path = '/', bodyClass = '', head = '', module = '' }) {
   const r = rel(depth);
   const full = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${title} · ${SITE.name}`;
   const canonical = SITE.url + path;
@@ -160,6 +160,9 @@ ${body}
 </main>
 ${footer(depth)}
 <script src="${r}/assets/js/site.js" defer></script>
+${module ? `<script type="module">
+${module}
+</script>` : ''}
 </body>
 </html>
 `;

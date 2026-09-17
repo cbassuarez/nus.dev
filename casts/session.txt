@@ -1,0 +1,8 @@
+# What the hero shows. Real commands, real output, real timings.
+cargo test -p nus-vt
+~1
+git log --oneline -5
+~1
+# Typed, not run: the URL sitting at the prompt is the signature feature.
+localhost:5173\
+~2

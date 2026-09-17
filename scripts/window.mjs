@@ -1,7 +1,12 @@
-/* The app window, rebuilt in HTML from the same tokens the app renders from.
-   Not a screenshot: it takes the page's theme and signal, and it obeys nus's
-   own width rule — under 900px the split collapses, under 640 the sidebar goes.
-   Ported from design/Main.dc.html in the app repo. */
+/* The app window.
+ *
+ * The terminal pane is not a drawing of a terminal: it is a canvas driven by
+ * nus's own VT core compiled to WebAssembly, replaying a recorded PTY session.
+ * The chrome around it — strip, sidebar, panes, rules — is drawn from the same
+ * tokens the app renders from, and obeys nus's own width rule.
+ *
+ * Ported from design/Main.dc.html in the app repo.
+ */
 
 const tab = ({ n, title, meta, preview, state }) => {
   const cls = state === 'on' ? ' win__tab--on' : state === 'off' ? ' win__tab--off' : '';
@@ -15,7 +20,7 @@ const tab = ({ n, title, meta, preview, state }) => {
 };
 
 export function appWindow() {
-  return `<div class="win" role="img" aria-label="The nus window: a sidebar of tabs, a shell running cargo test with a URL typed at the prompt, and the page it opens in the split beside it.">
+  return `<div class="win" data-hero-term>
   <div class="win__band"></div>
 
   <div class="win__strip">
@@ -36,15 +41,15 @@ export function appWindow() {
 
       ${tab({
         n: '01', title: 'cargo test · vt', meta: '~/nus', state: 'on',
-        preview: `test term::alt_screen_round_trip ... ok
-test term::wide_chars_take_two_cells ... ok
-test input::kitty_disambiguate ... ok
-test result: ok. 17 passed; 0 failed`
+        preview: `test result: ok. 25 passed
+test term::xtversion_and_xtgettcap
+test term::wide_chars_take_two_cells
+test input::kitty_disambiguate`
       })}
       ${tab({
         n: '02', title: 'claude', meta: 'waiting',
-        preview: `Spike 3 findings recorded.
-Proceed with spike 4? (y/n)
+        preview: `Spike 4 findings recorded.
+Move the glue into crates? (y/n)
 ▌`
       })}
       ${tab({ n: '03', title: 'localhost:5173', meta: 'split →' })}
@@ -55,23 +60,24 @@ Proceed with spike 4? (y/n)
 
     <div class="win__panes">
       <div class="win__pane">
-        <div class="win__panehead"><b>01 · cargo test</b><span class="dim">~/nus</span><span class="grow"></span><span class="dim">80×42</span></div>
-        <div class="win__term"><span class="p">❯</span> cargo test -p nus-vt
-<span class="d">   Compiling</span> nus-vt v0.0.1 (~/nus/crates/vt)
-<span class="d">    Finished</span> \`test\` profile in 1.84s
-<span class="d">     Running</span> unittests src/lib.rs
+        <div class="win__panehead">
+          <b>01 · cargo test</b>
+          <span class="dim">~/nus</span>
+          <span class="grow"></span>
+          <span class="dim" data-term-size>80×24</span>
+        </div>
 
-running 17 tests
-test input::app_cursor_mode_uses_ss3 ... <span class="g">ok</span>
-test input::kitty_disambiguate ... <span class="g">ok</span>
-test term::alt_screen_round_trip ... <span class="g">ok</span>
-test term::resize_keeps_cursor_line ... <span class="g">ok</span>
-test term::wide_chars_take_two_cells ... <span class="g">ok</span>
+        <div class="win__term" data-term-stage>
+          <canvas data-term-canvas aria-label="A recorded shell session: cargo test -p nus-vt reporting 25 passing tests, git log, and a URL typed at the prompt."></canvas>
+          <noscript><div class="win__termfall">The hero replays a recorded session through nus's VT core compiled to WebAssembly, which needs JavaScript. The recording itself is a plain text file: <a href="./casts/nus-vt.cast">nus-vt.cast</a>.</div></noscript>
+        </div>
 
-test result: <span class="g">ok</span>. 17 passed; 0 failed
-
-<span class="p">❯</span> localhost:5173<span class="win__caret">&nbsp;</span>
-<span class="d">  ↵ opens in browser · ctrl+↵ runs in shell</span></div>
+        <div class="win__transport">
+          <button class="win__tbtn" type="button" data-term-play aria-label="Pause">❚❚</button>
+          <input class="win__scrub" type="range" min="0" max="1" step="0.01" value="0"
+                 data-term-scrub aria-label="Scrub the recording">
+          <span class="cap dim" data-term-status>loading</span>
+        </div>
       </div>
 
       <div class="win__pane">

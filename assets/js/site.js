@@ -59,6 +59,8 @@
   function applyTheme(mode) {
     if (mode === 'paper' || mode === 'ink') root.setAttribute('data-theme', mode);
     else root.removeAttribute('data-theme');
+    // The hero terminal sets its palette from this, through nus's own Palette.
+    window.dispatchEvent(new CustomEvent('nus:theme'));
   }
 
   function currentIsInk() {
@@ -89,7 +91,12 @@
     });
 
     window.matchMedia('(prefers-color-scheme: dark)')
-      .addEventListener('change', function () { if (!root.getAttribute('data-theme')) paintIcon(); });
+      .addEventListener('change', function () {
+        if (!root.getAttribute('data-theme')) {
+          paintIcon();
+          window.dispatchEvent(new CustomEvent('nus:theme'));
+        }
+      });
 
     paintIcon();
   }

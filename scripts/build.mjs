@@ -190,7 +190,9 @@ if (process.argv.includes('--serve')) {
     '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
     '.js': 'text/javascript; charset=utf-8', '.svg': 'image/svg+xml',
     '.png': 'image/png', '.ico': 'image/x-icon', '.woff2': 'font/woff2',
-    '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8'
+    '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8',
+    '.wasm': 'application/wasm', '.cast': 'text/plain; charset=utf-8',
+    '.mjs': 'text/javascript; charset=utf-8'
   };
   createServer((req, res) => {
     let p = decodeURIComponent(req.url.split('?')[0]);

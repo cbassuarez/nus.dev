@@ -13,10 +13,14 @@ step and no install.
 npm run build     # write the pages
 npm run dev       # write them, then serve on http://localhost:8000
 npm run sync      # pull docs/*.md out of ../nus into content/
+npm run wasm      # rebuild the VT core for the browser  (needs Rust + wasm-pack)
+npm run record    # re-record the hero session           (needs the nus checkout)
 ```
 
 Node 18 or newer. There is no `npm install` — the build has no dependencies,
-including the Markdown renderer.
+including the Markdown renderer. `wasm` and `record` are the only steps that
+need a toolchain, and their outputs are committed, so a plain `npm run build`
+works on a clean checkout.
 
 ## Layout
 
@@ -41,6 +45,44 @@ CNAME                                    nus.dev
 
 Editing a page means editing `scripts/pages/*.mjs` or `content/*.md` and
 rebuilding — never the generated HTML, which is overwritten.
+
+## The hero terminal
+
+The shell in the hero is not a mockup and not a video. It is a recorded PTY
+session replayed through **nus's own VT core compiled to WebAssembly**, so
+every glyph's position, colour, width and wrap is decided by the same
+`nus_vt::Term` the application runs.
+
+```
+wasm/vt-wasm/          a wasm-bindgen shim over nus-vt (pinned by git rev)
+assets/wasm/           the built artifact, committed — 224 KB
+casts/nus-vt.cast      the recording, asciinema v2, plain text
+casts/session.txt      what gets typed during a recording
+casts/zdotdir/.zshrc   the OSC 133 prompt nus installs for zsh
+assets/js/terminal.js  the canvas painter and transport
+```
+
+`crates/vt` depends only on `vte`, `bitflags`, `unicode-width` and `png`, so it
+cross-compiles to `wasm32-unknown-unknown` unmodified. The grid crosses into
+JavaScript as a flat `u32` array read through a `Uint32Array` view on wasm
+memory — four words per cell, no copy and no JSON.
+
+Because it is the real parser, the page gets the real behaviour for free: OSC
+133 marks make `at_prompt()` answer, the theme toggle repaints through
+`Palette::set_base` rather than a CSS filter, and resizing reflows the grid.
+
+To re-record, with the nus checkout at `../nus`:
+
+```
+cd ../nus
+ZDOTDIR=../nus-site/casts/zdotdir \
+  python3 ../nus-site/scripts/record-cast.py ../nus-site/casts/nus-vt.cast \
+  --cols 80 --rows 24 --max-seconds 3 --send ../nus-site/casts/session.txt -- zsh -i
+```
+
+Bump `wasm/vt-wasm/Cargo.toml`'s pinned `rev` and the revision named in the
+hero caption together — the caption is a claim about which commit painted the
+page, so it has to stay true.
 
 ## Design
 
@@ -69,9 +111,14 @@ If the docs outgrow it, swap in a real parser there; the build only calls
 
 ## Checks
 
-`scripts/checks/overflow.html` loads every page in an iframe at 390, 768 and
-1440 px and reports any horizontal overflow. Run `npm run dev` and open
-<http://localhost:8000/scripts/checks/overflow.html>.
+Run `npm run dev`, then:
+
+- **`/scripts/checks/overflow.html`** loads every page in an iframe at 390, 768
+  and 1440 px and reports any horizontal overflow.
+- **`/scripts/checks/replay.html`** drives the hero terminal to fixed points in
+  the recording and paints each one, with the cursor position, `at_prompt` and
+  title beneath — so the replay can be checked without waiting on wall-clock
+  time, and regressions in the painter are obvious.
 
 ## Deployment
 

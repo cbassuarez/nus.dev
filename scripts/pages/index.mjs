@@ -44,6 +44,26 @@ export default {
     'nus (terminus): a terminal emulator that is also a browser. Own VT core, ' +
     'GPU-composited Chromium, tree-sitter command line, sandboxed Luau config. ' +
     'Pre-alpha, MIT.',
+  module: `
+import { mountHeroTerminal } from './assets/js/terminal.js';
+
+const stage = document.querySelector('[data-hero-term]');
+if (stage) {
+  mountHeroTerminal(stage, {
+    wasm: './assets/wasm/nus_vt_wasm_bg.wasm',
+    cast: './casts/nus-vt.cast'
+  }).catch((err) => {
+    // A hero that fails should say so plainly rather than sit there blank.
+    console.error('hero terminal:', err);
+    const status = stage.querySelector('[data-term-status]');
+    if (status) status.textContent = 'replay unavailable';
+    stage.querySelector('[data-term-stage]').innerHTML =
+      '<div class="win__termfall">The replay could not load. ' +
+      'The recording is a plain text file: ' +
+      '<a href="./casts/nus-vt.cast">nus-vt.cast</a>.</div>';
+  });
+}
+`,
   body: `
 <section class="hero">
   <div class="hero__in">
@@ -72,9 +92,15 @@ export default {
       <div class="hero__caption">
         <span>Fig. 1</span>
         <span class="dim">
-          The window, drawn from the app's own tokens — it takes your theme and the
-          signal you pick above, and it obeys nus's width rule: no split under
-          900px, no sidebar under 640.
+          Not a screenshot. The shell pane is a recorded PTY session —
+          <code>cargo test -p nus-vt</code>, <code>git log</code>, then a URL typed at the
+          prompt — replayed through nus's own VT core compiled to WebAssembly, so every
+          glyph is placed by the parser the app runs. Scrub it, switch the theme, resize
+          the window: the grid answers for itself.
+          <a href="./casts/nus-vt.cast" download>Download the recording</a> ·
+          ${src('crates/vt/src/term.rs')} at <code>30137f4</code>.
+          The chrome is drawn from the app's tokens; the browser pane is a still,
+          because CEF does not run in a browser.
         </span>
       </div>
     </div>

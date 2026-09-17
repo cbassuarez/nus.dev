@@ -79,7 +79,7 @@
     </div>
 
     <div class="hero__win">
-      <div class="win" role="img" aria-label="The nus window: a sidebar of tabs, a shell running cargo test with a URL typed at the prompt, and the page it opens in the split beside it.">
+      <div class="win" data-hero-term>
   <div class="win__band"></div>
 
   <div class="win__strip">
@@ -100,15 +100,15 @@
 
       <div class="win__tab win__tab--on">
         <div class="win__tabrow"><b>01</b><span class="grow">cargo test · vt</span><span class="cap">~/nus</span></div>
-        <div class="win__prev">test term::alt_screen_round_trip ... ok
-test term::wide_chars_take_two_cells ... ok
-test input::kitty_disambiguate ... ok
-test result: ok. 17 passed; 0 failed</div>
+        <div class="win__prev">test result: ok. 25 passed
+test term::xtversion_and_xtgettcap
+test term::wide_chars_take_two_cells
+test input::kitty_disambiguate</div>
       </div>
       <div class="win__tab">
         <div class="win__tabrow"><b>02</b><span class="grow">claude</span><span class="win__wait">waiting</span></div>
-        <div class="win__prev">Spike 3 findings recorded.
-Proceed with spike 4? (y/n)
+        <div class="win__prev">Spike 4 findings recorded.
+Move the glue into crates? (y/n)
 ▌</div>
       </div>
       <div class="win__tab">
@@ -125,23 +125,24 @@ Proceed with spike 4? (y/n)
 
     <div class="win__panes">
       <div class="win__pane">
-        <div class="win__panehead"><b>01 · cargo test</b><span class="dim">~/nus</span><span class="grow"></span><span class="dim">80×42</span></div>
-        <div class="win__term"><span class="p">❯</span> cargo test -p nus-vt
-<span class="d">   Compiling</span> nus-vt v0.0.1 (~/nus/crates/vt)
-<span class="d">    Finished</span> `test` profile in 1.84s
-<span class="d">     Running</span> unittests src/lib.rs
+        <div class="win__panehead">
+          <b>01 · cargo test</b>
+          <span class="dim">~/nus</span>
+          <span class="grow"></span>
+          <span class="dim" data-term-size>80×24</span>
+        </div>
 
-running 17 tests
-test input::app_cursor_mode_uses_ss3 ... <span class="g">ok</span>
-test input::kitty_disambiguate ... <span class="g">ok</span>
-test term::alt_screen_round_trip ... <span class="g">ok</span>
-test term::resize_keeps_cursor_line ... <span class="g">ok</span>
-test term::wide_chars_take_two_cells ... <span class="g">ok</span>
+        <div class="win__term" data-term-stage>
+          <canvas data-term-canvas aria-label="A recorded shell session: cargo test -p nus-vt reporting 25 passing tests, git log, and a URL typed at the prompt."></canvas>
+          <noscript><div class="win__termfall">The hero replays a recorded session through nus's VT core compiled to WebAssembly, which needs JavaScript. The recording itself is a plain text file: <a href="./casts/nus-vt.cast">nus-vt.cast</a>.</div></noscript>
+        </div>
 
-test result: <span class="g">ok</span>. 17 passed; 0 failed
-
-<span class="p">❯</span> localhost:5173<span class="win__caret">&nbsp;</span>
-<span class="d">  ↵ opens in browser · ctrl+↵ runs in shell</span></div>
+        <div class="win__transport">
+          <button class="win__tbtn" type="button" data-term-play aria-label="Pause">❚❚</button>
+          <input class="win__scrub" type="range" min="0" max="1" step="0.01" value="0"
+                 data-term-scrub aria-label="Scrub the recording">
+          <span class="cap dim" data-term-status>loading</span>
+        </div>
       </div>
 
       <div class="win__pane">
@@ -161,9 +162,15 @@ test result: <span class="g">ok</span>. 17 passed; 0 failed
       <div class="hero__caption">
         <span>Fig. 1</span>
         <span class="dim">
-          The window, drawn from the app's own tokens — it takes your theme and the
-          signal you pick above, and it obeys nus's width rule: no split under
-          900px, no sidebar under 640.
+          Not a screenshot. The shell pane is a recorded PTY session —
+          <code>cargo test -p nus-vt</code>, <code>git log</code>, then a URL typed at the
+          prompt — replayed through nus's own VT core compiled to WebAssembly, so every
+          glyph is placed by the parser the app runs. Scrub it, switch the theme, resize
+          the window: the grid answers for itself.
+          <a href="./casts/nus-vt.cast" download>Download the recording</a> ·
+          <a class="src" href="https://github.com/cbassuarez/nus/blob/main/crates/vt/src/term.rs" target="_blank" rel="noopener noreferrer">term.rs</a> at <code>30137f4</code>.
+          The chrome is drawn from the app's tokens; the browser pane is a still,
+          because CEF does not run in a browser.
         </span>
       </div>
     </div>
@@ -439,5 +446,27 @@ test result: <span class="g">ok</span>. 17 passed; 0 failed
   </div>
 </footer>
 <script src="./assets/js/site.js" defer></script>
+<script type="module">
+
+import { mountHeroTerminal } from './assets/js/terminal.js';
+
+const stage = document.querySelector('[data-hero-term]');
+if (stage) {
+  mountHeroTerminal(stage, {
+    wasm: './assets/wasm/nus_vt_wasm_bg.wasm',
+    cast: './casts/nus-vt.cast'
+  }).catch((err) => {
+    // A hero that fails should say so plainly rather than sit there blank.
+    console.error('hero terminal:', err);
+    const status = stage.querySelector('[data-term-status]');
+    if (status) status.textContent = 'replay unavailable';
+    stage.querySelector('[data-term-stage]').innerHTML =
+      '<div class="win__termfall">The replay could not load. ' +
+      'The recording is a plain text file: ' +
+      '<a href="./casts/nus-vt.cast">nus-vt.cast</a>.</div>';
+  });
+}
+
+</script>
 </body>
 </html>

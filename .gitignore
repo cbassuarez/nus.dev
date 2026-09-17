@@ -1,3 +1,12 @@
 .DS_Store
 node_modules/
 _*.html
+
+# Rust build output for the wasm shim. The built artifact is committed to
+# assets/wasm/ so the site needs no toolchain to build or deploy.
+wasm/*/target/
+wasm/*/Cargo.lock
+.wasm-pkg/
+
+# The recorded session writes a history file into its ZDOTDIR.
+casts/zdotdir/.zsh_history

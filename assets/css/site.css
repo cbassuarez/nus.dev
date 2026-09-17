@@ -671,23 +671,76 @@ li::marker { color: var(--signal); }
 .win__panehead .grow { flex: 1; }
 .win__panehead .dim { color: var(--dim); }
 
+/* The terminal pane: a canvas the real VT core paints into. */
 .win__term {
   flex: 1;
-  padding: 13px 14px;
-  font-size: 11px;
-  line-height: 1.6;
-  white-space: pre;
+  min-height: 0;
+  position: relative;
   overflow: hidden;
 }
-.win__term .p { color: var(--signal); }
-.win__term .g { color: var(--ansi-green); }
-.win__term .d { color: var(--dim); }
-.win__term .b { color: var(--ansi-blue); }
-.win__caret {
-  background: var(--ink);
-  color: var(--paper);
-  animation: none;
+.win__term canvas { display: block; width: 100%; height: 100%; }
+
+.win__termfall {
+  padding: 16px 18px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--dim);
 }
+
+/* Transport. Present only once the replay is live. */
+.win__transport {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 14px;
+  border-top: var(--hair) solid var(--ink);
+  flex: none;
+  opacity: 0;
+  transition: opacity var(--t-base) var(--ease);
+}
+.win[data-ready='true'] .win__transport { opacity: 1; }
+
+.win__tbtn {
+  appearance: none;
+  background: none;
+  border: var(--hair) solid var(--ink);
+  color: inherit;
+  font: inherit;
+  font-size: 9px;
+  line-height: 1;
+  padding: 4px 7px;
+  cursor: pointer;
+  flex: none;
+}
+.win__tbtn:hover { background: var(--ink); color: var(--paper); }
+.win__tbtn:focus-visible { outline: var(--float) solid var(--signal); outline-offset: 1px; }
+
+.win__scrub {
+  appearance: none;
+  flex: 1;
+  height: 12px;
+  background: none;
+  cursor: pointer;
+  margin: 0;
+  min-width: 0;
+}
+.win__scrub::-webkit-slider-runnable-track { height: var(--hair); background: var(--ink); }
+.win__scrub::-moz-range-track { height: var(--hair); background: var(--ink); }
+.win__scrub::-webkit-slider-thumb {
+  appearance: none;
+  width: 3px; height: 12px;
+  background: var(--signal);
+  border: 0; border-radius: 0;
+  margin-top: -6px;
+}
+.win__scrub::-moz-range-thumb {
+  width: 3px; height: 12px;
+  background: var(--signal);
+  border: 0; border-radius: 0;
+}
+.win__scrub:focus-visible { outline: var(--float) solid var(--signal); outline-offset: 2px; }
+
+.win__transport .cap { font-size: 9px; flex: none; }
 
 .win__url {
   display: flex;
