@@ -961,3 +961,101 @@ h2:hover .anchor, h3:hover .anchor, .anchor:focus { opacity: 1; }
   );
   height: var(--band);
 }
+
+/* ---------------------------------------------------------------------------
+   Specification furniture. The app documents itself in ruled rows; so do we.
+   Hierarchy by weight and case, never by colour — the signal is the exception.
+   --------------------------------------------------------------------------- */
+
+/* --- status: shipped · in flight · next ----------------------------------- */
+
+.st {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 2px 7px;
+  white-space: nowrap;
+  border: var(--hair) solid var(--ink);
+}
+.st--in     { background: var(--ink); color: var(--paper); }
+.st--flight { background: var(--signal); color: var(--on-signal); border-color: var(--signal); }
+.st--next   { color: var(--dim); border-color: var(--hot); }
+.st--no     { color: var(--dim); border-color: var(--hot); text-decoration: line-through; }
+
+/* --- source links: every claim points at the code -------------------------- */
+
+.src {
+  font-size: 11px;
+  color: var(--dim);
+  text-decoration-color: var(--hot);
+  white-space: nowrap;
+}
+.src::before { content: '→ '; }
+
+/* --- spec table ------------------------------------------------------------ */
+
+.spec th:last-child, .spec td:last-child { text-align: right; white-space: nowrap; }
+.spec td:first-child { font-weight: 600; white-space: nowrap; }
+.spec td { vertical-align: baseline; }
+.spec .note { color: var(--dim); }
+
+/* --- matrix: what we have that they do not, and what we lack --------------- */
+
+.matrix td, .matrix th { text-align: center; }
+.matrix td:first-child, .matrix th:first-child { text-align: left; white-space: normal; min-width: 180px; }
+.matrix tbody td:not(:first-child) { font-weight: 600; font-size: 15px; }
+.matrix .y { color: var(--ink); }
+.matrix .n { color: var(--dim); opacity: 0.55; }
+.matrix .p { color: var(--signal); }
+.matrix thead th:not(:first-child) { min-width: 74px; }
+.matrix caption {
+  caption-side: bottom;
+  text-align: left;
+  padding: 10px 13px;
+  font-size: 11.5px;
+  color: var(--dim);
+  border-top: var(--hair) solid var(--hot);
+}
+
+/* --- figures: the numbers, big ------------------------------------------- */
+
+.figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(178px, 1fr)); border: var(--hair) solid var(--ink); }
+.figs > div { padding: 16px 18px; border-right: var(--hair) solid var(--ink); }
+.figs > div:last-child { border-right: 0; }
+.figs b { display: block; font-size: 26px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
+.figs b small { font-size: 13px; font-weight: 500; color: var(--dim); letter-spacing: 0; }
+.figs span { display: block; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-top: 7px; }
+.figs em { display: block; font-style: normal; font-size: 11.5px; color: var(--dim); margin-top: 5px; }
+@media (max-width: 760px) {
+  .figs > div { border-right: 0; border-bottom: var(--hair) solid var(--ink); }
+  .figs > div:last-child { border-bottom: 0; }
+}
+
+/* --- a denser ledger for specification rows ------------------------------- */
+
+.ledger--tight .ledger__row { grid-template-columns: 168px 1fr; padding: 11px 0; }
+.ledger--tight .ledger__row p { font-size: 14px; }
+.ledger__row .st { margin-left: 8px; vertical-align: 1px; }
+@media (max-width: 760px) {
+  .ledger--tight .ledger__row { grid-template-columns: 1fr; }
+}
+
+/* --- inline sequence list (escape codes, env vars) ------------------------ */
+
+.seq { display: flex; flex-wrap: wrap; gap: 5px; margin: 0 0 4px; padding: 0; list-style: none; max-width: none; }
+.seq li { margin: 0; }
+.seq code {
+  background: none;
+  border: var(--hair) solid var(--hot);
+  padding: 2px 6px;
+  font-size: 12px;
+  display: inline-block;
+}
+.seq code.off { color: var(--dim); text-decoration: line-through; text-decoration-color: var(--hot); }
+
+/* the subject column reads as the subject */
+.matrix td:nth-child(2), .matrix th:nth-child(2) { background: var(--tint); }

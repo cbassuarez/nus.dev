@@ -1,40 +1,61 @@
 import { icon, SITE } from '../layout.mjs';
 import { appWindow } from '../window.mjs';
 
-const card = (ic, title, body, more) => `<${more ? 'a' : 'div'} class="card"${more ? ` href="${more[1]}"` : ''}>
-  <h3>${icon(ic)}${title}</h3>
-  <p>${body}</p>
-  ${more ? `<span class="card__more">${more[0]} →</span>` : ''}
-</${more ? 'a' : 'div'}>`;
+/* Every claim on this page points at the file that makes it true.
+   Generic basenames (README.md and friends) carry their parent, so two
+   spike logs never both render as "README.md". */
+const src = (path, line) => {
+  const parts = path.split('/');
+  const base = parts[parts.length - 1];
+  const label = /^(README|index|mod|lib|main)\./i.test(base)
+    ? parts.slice(-2).join('/')
+    : base;
+  return `<a class="src" href="${SITE.repo}/blob/main/${path}${line ? `#L${line}` : ''}"` +
+    ` target="_blank" rel="noopener noreferrer">${label}${line ? `:${line}` : ''}</a>`;
+};
 
-const key = (chord, what) => `<div>
-  <span class="k">${chord.split(' ').map((c) => `<kbd>${c}</kbd>`).join('')}</span>
-  <span class="v">${what}</span>
-</div>`;
+const ST = {
+  in:     '<span class="st st--in">Shipped</span>',
+  flight: '<span class="st st--flight">In flight</span>',
+  next:   '<span class="st st--next">Next</span>',
+  no:     '<span class="st st--no">No</span>'
+};
 
-const swatch = (name, hex, style = '') =>
-  `<div class="swatch"><div class="swatch__chip" style="background:${style || hex}"></div>
-   <div class="swatch__name">${name}<br><span class="swatch__hex">${hex}</span></div></div>`;
+const row = (label, body, status = '') =>
+  `<div class="ledger__row"><span class="cap">${label}</span><p class="mb0">${body}${status ? ' ' + status : ''}</p></div>`;
+
+const spec = (what, detail, status, source) =>
+  `<tr><td>${what}</td><td>${detail}</td><td>${status}${source ? ' ' + source : ''}</td></tr>`;
+
+const seq = (items) =>
+  `<ul class="seq">${items.map((s) => `<li><code${s.startsWith('!') ? ' class="off"' : ''}>${s.replace(/^!/, '')}</code></li>`).join('')}</ul>`;
+
+const Y = '<span class="y">●</span>';
+const N = '<span class="n">○</span>';
+const P = '<span class="p">◐</span>';
+
+const mrow = (feature, cells) => `<tr><td>${feature}</td>${cells.map((c) => `<td>${c}</td>`).join('')}</tr>`;
 
 export default {
   title: 'nus',
   path: '/',
   depth: 0,
   description:
-    'nus (terminus) is a terminal emulator that is also a browser: one window, ' +
-    'own VT core, GPU-composited Chromium, sandboxed Luau config. Pre-alpha, MIT.',
+    'nus (terminus): a terminal emulator that is also a browser. Own VT core, ' +
+    'GPU-composited Chromium, tree-sitter command line, sandboxed Luau config. ' +
+    'Pre-alpha, MIT.',
   body: `
 <section class="hero">
   <div class="hero__in">
     <h1 class="hero__title">A terminal emulator that is <em>also</em> a browser.</h1>
     <p class="hero__lede">
-      One window. Tabs that are shells and tabs that are pages, peers in the same
-      list, split beside each other. Type a URL at a prompt and it opens in the pane
-      next door. No multiplexer, no second app, no webview pretending to be a UI.
+      One window, one tab list. A shell and a page are peers, split beside each other.
+      Own VT core, Chromium composited by us, tree-sitter on the command line,
+      sandboxed Luau for all of it.
     </p>
 
     <div class="hero__acts">
-      <a class="btn btn--fill" href="./docs/">${icon('book-open-text')}Read the docs</a>
+      <a class="btn btn--fill" href="./docs/">${icon('book-open-text')}The record</a>
       <a class="btn" href="${SITE.repo}" target="_blank" rel="noopener noreferrer">${icon('github-logo')}Source</a>
       <a class="btn btn--quiet" href="./download/">${icon('download-simple')}Builds</a>
     </div>
@@ -42,7 +63,7 @@ export default {
     <div class="hero__meta">
       <span class="chip chip--signal">Pre-alpha</span>
       <span>MIT</span>
-      <span>Rust · wgpu · CEF</span>
+      <span>Rust · wgpu · CEF · Luau</span>
       <span>Windows 11 · macOS · Linux</span>
     </div>
 
@@ -51,10 +72,228 @@ export default {
       <div class="hero__caption">
         <span>Fig. 1</span>
         <span class="dim">
-          The window, drawn here from the same tokens the app renders from —
-          it takes your theme and the signal you picked above.
+          The window, drawn from the app's own tokens — it takes your theme and the
+          signal you pick above, and it obeys nus's width rule: no split under
+          900px, no sidebar under 640.
         </span>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Conformance</h2><span class="cap">What the terminal answers</span></div>
+    <p class="dim" style="margin-bottom:24px;font-size:14px;max-width:62ch">
+      The list a terminal is actually judged on, including the parts that answer
+      <em>no</em>. <code>XTGETTCAP</code> refuses every capability not named here rather
+      than guessing, and <code>DA1</code> advertises only what is decoded.
+    </p>
+
+    <div class="tablewrap">
+      <table class="spec">
+        <thead><tr><th>Capability</th><th>Detail</th><th>Status</th></tr></thead>
+        <tbody>
+          ${spec('Identity', '<code>TERM=xterm-256color</code>, <code>COLORTERM=truecolor</code>, <code>TERM_PROGRAM=nus</code>', ST.in)}
+          ${spec('DA1 / DA2', 'VT220 with ANSI colour. Sixel is not advertised until it decodes.', ST.in, src('crates/vt/src/term.rs', 1288))}
+          ${spec('XTVERSION', 'Answers <code>nus &lt;version&gt;</code>', ST.in)}
+          ${spec('XTGETTCAP', 'Answers <code>TN</code>, <code>RGB</code>/<code>Tc</code>, <code>colors</code>, <code>setrgbf</code>/<code>setrgbb</code>, <code>Ms</code>, <code>Ss</code>/<code>Se</code>, <code>Smulx</code> — and refuses the rest', ST.in)}
+          ${spec('Kitty keyboard', 'Full protocol, negotiated. Disambiguate, report events, alternates.', ST.in, src('crates/vt/src/input.rs'))}
+          ${spec('Synchronized output', 'DEC mode 2026', ST.in)}
+          ${spec('OSC', seq(['8 hyperlinks', '52 clipboard', '133 prompt marks', '7 cwd', '9;4 progress', '1337 inline images']), ST.in)}
+          ${spec('Bracketed paste', 'With a hazard band when the paste looks risky', ST.in)}
+          ${spec('Focus events', 'Reported; an unfocused split washes with paper', ST.in)}
+          ${spec('Kitty graphics', 'Draws in the shell. ConPTY drops APC, so Windows waits on a transport.', ST.in, src('docs/ARCHITECTURE.md'))}
+          ${spec('Sixel', 'Being decoded now. <code>DA1</code> gains <code>4</code> when it lands, not before.', ST.flight)}
+          ${spec('terminfo', 'A <code>nus</code> entry shipped, then <code>TERM=nus</code> once tools know it', ST.next)}
+          ${spec('vttest / esctest', 'Runs recorded against the suites', ST.next)}
+          ${spec('<code>nus</code> CLI', 'Open a URL or a file; <code>nus ask</code>', ST.next)}
+        </tbody>
+      </table>
+    </div>
+    <p class="dim mb0" style="font-size:13px">
+      Settled in the fourteenth product pass. ${src('docs/PRODUCT.md', 545)}
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Measured</h2><span class="cap">Not estimated</span></div>
+    <div class="figs">
+      <div>
+        <b>2.8<small> ms</small></b>
+        <span>Key → present</span>
+        <em>vim with ligatures, release</em>
+      </div>
+      <div>
+        <b>&lt;2<small> ms</small></b>
+        <span>Full-screen frame</span>
+        <em>80×42, release build</em>
+      </div>
+      <div>
+        <b>144<small> fps</small></b>
+        <span>Browser texture</span>
+        <em>CEF → D3D11 → D3D12, shared</em>
+      </div>
+      <div>
+        <b>25</b>
+        <span>VT tests</span>
+        <em>grid, modes, input, images</em>
+      </div>
+    </div>
+    <p class="dim" style="margin-top:18px;font-size:13px">
+      From the spike logs, which record the runs rather than the hopes.
+      ${src('spikes/vt-render/README.md')} ${src('spikes/cef-osr/README.md')}
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>The command line</h2><span class="cap">Terminal-side</span></div>
+    <p class="lede" style="margin-bottom:26px">
+      Colouring and prediction happen in the terminal, not in your shell. Nothing to
+      install, no plugin to keep current, and it works the same in pwsh, bash, zsh,
+      fish and cmd — including over <code>ssh</code>, where a shell plugin is not yours to add.
+    </p>
+
+    <pre style="max-width:64ch"><code><span style="color:var(--signal)">❯</span> cargo test -p nus-vt --<span style="color:var(--ansi-blue)">nocapture</span> <span style="color:var(--ansi-green)">"kitty"</span><span class="dim">  --release</span>
+  <span class="dim">└ command · flag · string · ghost from history</span></code></pre>
+
+    <div class="ledger ledger--tight" style="max-width:none">
+      ${row('Token classes', 'Command, flag, string, number, path, operator — classed as you type, coloured from the theme\'s ANSI slots.', src('spikes/composite/src/predict.rs'))}
+      ${row('Prediction', 'The most recent history entry that continues the line ghosts after the caret. <kbd>Right</kbd> or <kbd>End</kbd> at the end of the line accepts it.')}
+      ${row('How it knows', 'OSC 133 prompt marks say where the command begins, so the terminal can tell a command line from program output.')}
+      ${row('History', 'Per profile, in <code>profile/history</code>. Recent commands are palette rows you can run again.')}
+      ${row('Blocks', 'Each command is a block: a hairline where it starts, a gutter rule on hover, chips to copy its output or re-run it, <kbd>Ctrl</kbd>+triple-click to select the output, scrollbar ticks at the prompts.', src('crates/vt/src/term.rs', 778))}
+      ${row('Shell hooks', 'Injected automatically — PowerShell <code>-EncodedCommand</code>, bash <code>--rcfile</code>, zsh <code>ZDOTDIR</code>, fish <code>-C</code>, cmd <code>PROMPT</code>. nushell already has it. <code>AUTO</code> or <code>OFF</code>.')}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Syntax and language</h2><span class="cap">tree-sitter · LSP</span></div>
+    <div class="ledger ledger--tight" style="max-width:none">
+      ${row('tree-sitter', 'Bash and PowerShell grammars ride in the binary, for the prompt line and the ask panel\'s code blocks.', ST.in + ' ' + src('spikes/composite/src/syntax.rs'))}
+      ${row('Other grammars', 'Load from <code>profile/grammars/&lt;name&gt;/</code> — the library <code>tree-sitter build</code> makes, plus <code>highlights.scm</code>. Rust, Python, JavaScript and JSON bundles wait on the release pipeline that builds them.', ST.flight)}
+      ${row('LSP', 'An editor pane, with <code>lsp-types</code> and <code>lsp-server</code> behind it. Language servers are already in the optional-tools list — rust-analyzer fetches on <code>GET</code> into <code>profile/bin</code>.', ST.flight + ' ' + src('spikes/composite/assets/bundles.json'))}
+      ${row('Optional tools', 'The welcome page asks once. Language servers, grammars and assistant CLIs, each fetched only when you say so, each a folder you can delete. <code>assets/bundles.json</code> is the list; <code>profile/bundles.json</code> adds to it.', ST.in + ' ' + src('spikes/composite/src/bundles.rs'))}
+      ${row('Assistants', 'Whatever the machine has: <code>claude -p</code>, <code>codex exec</code>, the Copilot CLI through <code>gh</code>, <code>ollama run</code>, or the API through <code>curl</code>. <code>NUS_ASK_CMD</code> for anything else. The router is a config table.', ST.in + ' ' + src('spikes/composite/src/ask.rs'))}
+      ${row('Ask', '<kbd>Ctrl</kbd><kbd>⇧</kbd><kbd>?</kbd> beside a shell. One line in, command blocks out, each with <code>INSERT</code>, <code>RUN</code>, <code>COPY</code>. The shell, the folder and the last command\'s output go with the question. Not a chat.', ST.in)}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Localhost</h2><span class="cap">The dev suite</span></div>
+    <p class="lede" style="margin-bottom:26px">
+      A dev server is a first-class thing here, not a URL you paste somewhere else.
+      Type it at the prompt and it opens in the pane beside the shell that started it.
+    </p>
+    <div class="ledger ledger--tight" style="max-width:none">
+      ${row('Detected', '<code>localhost</code>, <code>127.0.0.1</code>, <code>*.local</code>, RFC-1918. Hazard tape around the page and in the URL field, so a dev server never passes for the real thing.', ST.in + ' ' + src('spikes/composite/src/sites.rs'))}
+      ${row('Ports', 'What is listening, with the process name that owns it, as palette rows. Open one and the tape is already on.')}
+      ${row('DevTools', 'A windowless CEF pane — console, network, elements — composited beside the page, not a detached window.', src('spikes/composite/src/webui.rs'))}
+      ${row('Console → shell', 'The page\'s console mirrored into the terminal split, so one scrollback holds both halves of the bug.')}
+      ${row('Responsive', 'Presets at 390 / 768 / 1440, and a screenshot taken from our own texture rather than the OS.')}
+      ${row('Reload', 'On directory change. Progress rides the loading bar through OSC 9;4.')}
+      ${row('The URL rule', 'A whole line at a fresh prompt that parses as a URL opens in the split on <kbd>↵</kbd>; <kbd>Ctrl</kbd><kbd>↵</kbd> runs it as a command instead. Any editing key disqualifies the line. Bare words never trigger.', src('docs/PRODUCT.md', 83))}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Against the field</h2><span class="cap">Two axes</span></div>
+    <p class="dim" style="margin-bottom:22px;font-size:14px;max-width:64ch">
+      nus is measured twice: as a terminal, and as a browser. The columns it loses
+      are in the table too — a comparison that only shows wins is an advertisement.
+    </p>
+
+    <div class="tablewrap">
+      <table class="matrix">
+        <caption>${Y} in nus today &nbsp; ${P} in flight &nbsp; ${N} not present. Terminal axis.</caption>
+        <thead><tr><th>As a terminal</th><th>nus</th><th>Ghostty</th><th>kitty</th><th>WezTerm</th></tr></thead>
+        <tbody>
+          ${mrow('Own VT core, GPU renderer', [Y, Y, Y, Y])}
+          ${mrow('Kitty keyboard protocol', [Y, Y, Y, Y])}
+          ${mrow('Kitty graphics', [Y, Y, Y, Y])}
+          ${mrow('Sixel', [P, Y, N, Y])}
+          ${mrow('Shell integration, no plugin', [Y, Y, N, N])}
+          ${mrow('Command blocks', [Y, N, N, N])}
+          ${mrow('Prediction without a shell plugin', [Y, N, N, N])}
+          ${mrow('tree-sitter on the prompt line', [Y, N, N, N])}
+          ${mrow('A browser tab as a peer', [Y, N, N, N])}
+          ${mrow('Multiplexer built in', [Y, N, N, Y])}
+          ${mrow('Scriptable config language', [Y, N, N, Y])}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tablewrap" style="margin-top:26px">
+      <table class="matrix">
+        <caption>${Y} in nus today &nbsp; ${P} in flight &nbsp; ${N} not present. Browser axis.</caption>
+        <thead><tr><th>As a browser</th><th>nus</th><th>Arc</th><th>Dia</th><th>Zen</th></tr></thead>
+        <tbody>
+          ${mrow('Chromium engine', [Y, Y, Y, N])}
+          ${mrow('Sidebar tabs, spaces, folders', [Y, Y, Y, Y])}
+          ${mrow('Split view', [Y, Y, Y, Y])}
+          ${mrow('Per-site boosts (CSS + JS)', [Y, Y, N, N])}
+          ${mrow('Named containers / cookie jars', [Y, N, N, Y])}
+          ${mrow('Picture-in-picture we own', [Y, N, N, N])}
+          ${mrow('Reader mode', [Y, Y, N, Y])}
+          ${mrow('Built-in content blocking', [Y, N, N, Y])}
+          ${mrow('A shell as a peer pane', [Y, N, N, N])}
+          ${mrow('Config as code, sandboxed', [Y, N, N, N])}
+          ${mrow('Chrome extensions', [N, Y, Y, Y])}
+          ${mrow('Shipping today', [N, Y, Y, Y])}
+        </tbody>
+      </table>
+    </div>
+
+    <p class="dim" style="margin-top:18px;font-size:13px;max-width:64ch">
+      Extensions are the honest loss. Windowless CEF browsers are Alloy-style, and
+      libcef does not attach the extension request proxy to them: extensions load but
+      cannot see our tabs. Blocking, userscripts and password fill are built natively
+      instead; our own libcef build is a later phase, not a v1 dependency.
+      ${src('docs/ARCHITECTURE.md')}
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Customization</h2><span class="cap">Where it goes further</span></div>
+    <p class="lede" style="margin-bottom:26px">
+      The axis Arc and Zen stop at. Every surface is a value you can set, and the
+      interesting ones are functions you can write.
+    </p>
+    <div class="ledger ledger--tight" style="max-width:none">
+      ${row('rules.luau', '<code>new_tab(ctx)</code> and <code>new_space(ctx)</code> return a look; <code>on_page(ctx)</code> returns per-site CSS and JS; <code>on_event(ev)</code> returns a sound cue or silences it. Sandboxed: no <code>io</code>, no <code>os</code>, no FFI.', src('docs/PRODUCT.md', 188))}
+      ${row('Surface', 'Ramps of 2–4 stops with angle, loop, aurora drift and breath. Textures — grain, stipple, stitch, linen, halftone, scale — on the carapace, the chrome or the panes, never on content or video.')}
+      ${row('Theme', 'Paper, ink and page tokens per mode, sixteen ANSI colours with a real HSL picker, contrast grade and saturation. Import from Ghostty, Windows Terminal, VS Code or base16. Twenty stock themes, contrast-audited by a test.')}
+      ${row('Cursor', 'Shape, hollow or hidden when unfocused, blink never / after 2s / always, colour, and motion: jump, glide or comet.')}
+      ${row('Motion', 'One easing, 80–220 ms base, and a register slider from 0.45× snappy to 2.2× cinematic. Reduce-motion follows the OS or is forced.')}
+      ${row('Scrolling', 'The shell rides neoscroll\'s curves — a line at a time on an eased clock, more ticks extending the trip. Pages keep Chromium\'s, switchable.', src('spikes/composite/src/scrolling.rs'))}
+      ${row('Sound', 'Seventeen synth recipes on <code>cpal</code> across fourteen events, each previewable, each overridable from rules.', src('spikes/composite/src/sound.rs'))}
+      ${row('Settings are the file', 'Every edit writes <code>~/.config/nus/init.luau</code>. The file is the source of truth and hot-reloads. Every settings row is also a palette row.')}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Provenance</h2><span class="cap">Ported, not imitated</span></div>
+    <div class="ledger ledger--tight" style="max-width:none">
+      ${row('The caret', 'Neovide\'s cursor renderer, ported: four critically damped springs, leading corners fast and trailing ones slow, drawn as one quad. <code>TRAIL</code> is Neovide\'s <code>trail_size</code>.', src('spikes/composite/src/smear.rs'))}
+      ${row('The scroll', 'neoscroll\'s curves.')}
+      ${row('The parser', '<code>vte</code> drives the state machine. The grid, cursor, modes, palette and responses are ours.', src('crates/vt/src/lib.rs'))}
+      ${row('The blocking', 'Brave\'s <code>adblock</code> engine, in CEF\'s resource request handler — so it works with nothing installed.')}
+      ${row('Read, not copied', 'Ghostty for VT state design and the Kitty protocols, Alacritty for <code>vte</code> in practice, WezTerm for ConPTY\'s quirks. The polish passes were researched against Rio, kitty, Warp, Dia, Arc, Zen, Vivaldi and Orion.')}
+      ${row('Type and icons', 'IBM Plex Mono and Newsreader, both OFL. Phosphor icons, MIT.')}
     </div>
   </div>
 </section>
@@ -69,163 +308,14 @@ export default {
       <div><dt>Public builds</dt><dd class="dim">None yet</dd></div>
     </div>
     <p class="dim" style="margin-top:20px;font-size:14px">
-      The four de-risking spikes are done and the composite spike — compositor,
-      navigation, shell integration, browser panes — runs on Windows. macOS and
-      Linux runs are outstanding, and the spike code is still being moved into the
-      real crates. Nothing is packaged, so there is nothing to download.
-      <a href="./docs/spikes/">The spike log</a> records what each one answered.
+      The composite spike — compositor, navigation, shell integration, browser panes,
+      21,000 lines of it — runs on Windows and is being moved into <code>crates/</code>.
+      macOS and Linux have not been run at all. Nothing is packaged, so there is
+      nothing to download. <a href="./docs/spikes/">The spike log</a> is the honest version.
     </p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section__in">
-    <div class="sectionhead"><h2>Four commitments</h2><span class="cap">Architecture</span></div>
-    <div class="grid grid--quad">
-      ${card('terminal-window', 'Our own VT core',
-        'A real terminal, not an embedded one. <code>vte</code> for the state machine; grid, scrollback and modes ours. Kitty keyboard and graphics, ligatures, 2.8&nbsp;ms key&nbsp;→&nbsp;pixel measured rather than guessed.')}
-      ${card('globe', 'Chromium, composited by us',
-        'CEF offscreen on the Chrome runtime. Each tab paints into a wgpu texture — shared texture where the platform allows it. Ad-blocking is Brave’s <code>adblock</code> engine in the resource handler, so it works with nothing installed.')}
-      ${card('squares-four', 'One window model',
-        'Windows → tabs → splits. A shell tab and a page tab are peers in one list; a tab is one pane or a left|right pair. We own the compositor, so splits, previews and PiP behave the same on all three OSes.')}
-      ${card('code', 'Config is a sandboxed language',
-        'Luau through <code>mlua</code>: no <code>io</code>, no <code>os</code>, no FFI, no arbitrary <code>require</code>. A curated table for keybinds, themes, profiles and hooks — and <code>rules.luau</code>, which decides what a new tab looks like.')}
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section__in">
-    <div class="sectionhead"><h2>A URL at the prompt</h2><span class="cap">The idea</span></div>
-    <p class="lede" style="margin-bottom:26px">
-      The feature the rest of the design is built around. Type a URL at a fresh
-      prompt, press Enter, and nus clears the line and opens the page in the split
-      beside the shell — instead of handing it to a browser in another app.
-    </p>
-
-    <pre style="max-width:62ch"><code><span style="color:var(--signal)">❯</span> localhost:5173
-  ↵ opens in browser · ctrl+↵ runs in shell</code></pre>
-
-    <div class="ledger" style="max-width:none">
-      <div class="ledger__row"><span class="cap">What counts</span><p class="mb0">
-        A scheme, <code>localhost[:port]</code>, or <code>host.tld[/path]</code> with a known TLD —
-        and only when it is the whole line at a fresh prompt. Bare words never trigger it.</p></div>
-      <div class="ledger__row"><span class="cap">What disqualifies</span><p class="mb0">
-        Any editing key — arrows, history, a <kbd>Ctrl</kbd> chord — takes the line out of the
-        running until the next Enter. The hint disappears with it.</p></div>
-      <div class="ledger__row"><span class="cap">Local sites are marked</span><p class="mb0">
-        <code>localhost</code>, <code>127.0.0.1</code>, <code>*.local</code> and RFC-1918 addresses get
-        hazard tape around the page and in the URL field, so a dev server never
-        passes for the real thing.</p></div>
-      <div class="ledger__row"><span class="cap">It is a hook</span><p class="mb0">
-        Implemented as <code>on_output(tab, line)</code> in the config API — the same hook your
-        own rules get, so you can replace it.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section__in">
-    <div class="sectionhead"><h2>Built, not planned</h2><span class="cap">In the spike today</span></div>
-    <div class="grid">
-      ${card('command', 'Shell integration, auto-injected',
-        'OSC 133 prompt marks, OSC 7 cwd and OSC 9;4 progress, with bundled hooks for pwsh, bash, zsh, fish and cmd. It buys prompt jumping, DONE/FAILED badges, the window’s name from the cwd, and no close-confirm at a prompt.')}
-      ${card('stack', 'Blocks and stacks',
-        'Every command is a block with a hairline, a gutter rule, and chips to copy its output or run it again. A tab that spawns another nests under it; a stack collapses to one row and walks with <kbd>⌘⇧[ ]</kbd>.')}
-      ${card('picture-in-picture', 'Our own picture-in-picture',
-        'The tab’s texture cropped to the video, drawn into a small always-on-top window — no second decode and no DRM problem. Transport keys act through CDP, so sites cannot hide them.')}
-      ${card('sparkle', 'Ask, beside the shell',
-        'One line in, a few command blocks out, each with INSERT, RUN and COPY. Backends are whatever the machine has: <code>claude -p</code>, <code>codex exec</code>, ollama, the Copilot CLI, or the API through curl.')}
-      ${card('shield-check', 'Containers',
-        'Named cookie jars, one CEF request context each. A window’s container colours its square and names its title; pages open in it, and a page can be reopened in another.')}
-      ${card('palette', 'A look studio',
-        'Surfaces, ramps, textures on the carapace, sixteen ANSI colours with a real picker, twenty stock themes, and a live proof of the window at the top of the page that changes as you change it.')}
-    </div>
-    <p class="dim" style="margin-top:22px;font-size:14px">
-      All of it on Windows, inside the composite spike, pending the move into
-      <code>crates/</code>. <a href="./docs/product/">The product log</a> records each pass and what it settled.
-    </p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section__in">
-    <div class="sectionhead"><h2>Broadsheet</h2><span class="cap">Design</span></div>
-    <p class="lede" style="margin-bottom:28px">
-      Ink on paper, one monospace face, rules instead of boxes, and one colour on
-      screen: the Space’s signal. Nothing blurs, nothing is rounded, nothing is
-      translucent. This page is drawn from the same tokens.
-    </p>
-
-    <div class="swatches" style="margin-bottom:26px">
-      ${swatch('Signal', 'the one colour', 'var(--signal)')}
-      ${swatch('Paper', '#f4f1ea')}
-      ${swatch('Ink', '#141414')}
-      ${swatch('Dim', '#8a857a')}
-      ${swatch('Page', '#ffffff')}
-    </div>
-
-    <div class="grid grid--2">
-      ${card('keyboard', 'Hierarchy by weight and case',
-        'Never by colour. Rule weights are 1 hairline, 1.5 structure, 2 floating and a 6px signal band. Radii are 0 everywhere; shadows are hard offsets with no blur, ever.')}
-      ${card('book-open-text', 'One face, one exception',
-        'IBM Plex Mono for the UI and the terminal alike. Newsreader Italic appears only as a wordmark — <em class="serif">nus</em>, <em class="serif">go</em>, <em class="serif">quick</em> — and nowhere else.')}
-    </div>
-
-    <p style="margin-top:24px"><a class="btn btn--quiet" href="./docs/design/">${icon('palette')}The design record</a></p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section__in">
-    <div class="sectionhead"><h2>Keys</h2><span class="cap">macOS shown</span></div>
-    <p class="dim" style="margin-bottom:22px;font-size:14px">
-      App chords are ⌘ on macOS and <kbd>Ctrl</kbd><kbd>Shift</kbd> on Windows and Linux, so they
-      never reach the shell. <kbd>Ctrl</kbd><kbd>1–9</kbd> is the one plain-Ctrl chord: shells do not use it.
-    </p>
-    <div class="keys">
-      ${key('⌘K', 'The palette, in <em>go</em> mode')}
-      ${key('⌘T', 'New tab — profiles, or a URL')}
-      ${key('⌘L', 'Address the browser pane')}
-      ${key('⌘D', 'Toggle the browser split')}
-      ${key('⌘⇧S', 'Pin the sidebar')}
-      ${key('⌥⌘T', 'Quick terminal, over any app')}
-      ${key('⌘↵', 'Open the detected URL in the split')}
-      ${key('⌘1–9', 'Tab by position')}
-      ${key('⌘Z', 'Reopen the last closed tab')}
-      ${key('⌃`', 'Cycle tabs, most recent first')}
-      ${key('⌘⇧R', 'Reader mode')}
-      ${key('⌘⇧?', 'Ask, beside the shell')}
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section__in">
-    <div class="sectionhead"><h2>The record</h2><span class="cap">Docs</span></div>
-    <div class="grid grid--quad">
-      ${card('network', 'Architecture', 'The host, the crates, and why the compositor is ours. Each entry is a commitment, not a suggestion.', ['Read', './docs/architecture/'])}
-      ${card('palette', 'Design', 'Broadsheet: tokens, type, rules, spacing, and every surface the app draws.', ['Read', './docs/design/'])}
-      ${card('squares-four', 'Product', 'Thirteen passes of settled behaviour — navigation, stacks, sound, the look studio, containers.', ['Read', './docs/product/'])}
-      ${card('hard-hat', 'Spikes', 'Four throwaway binaries, each one able to kill the design. What they answered, and when.', ['Read', './docs/spikes/'])}
-    </div>
-  </div>
-</section>
-
-<section class="section section--tight">
-  <div class="section__in">
-    <div class="row" style="gap:20px">
-      <div style="flex:1 1 320px">
-        <h2 style="margin-bottom:8px">No builds yet.</h2>
-        <p class="dim mb0" style="font-size:14px">
-          When there are, they will be notarized on macOS, signed on Windows, and
-          self-updating from GitHub Releases. No telemetry, then or ever.
-        </p>
-      </div>
-      <div class="row">
-        <a class="btn btn--signal" href="${SITE.repo}/subscription" target="_blank" rel="noopener noreferrer">${icon('broadcast')}Watch for releases</a>
-        <a class="btn btn--quiet" href="./download/">What to expect</a>
-      </div>
+    <div class="row" style="margin-top:24px">
+      <a class="btn btn--signal" href="${SITE.repo}/subscription" target="_blank" rel="noopener noreferrer">${icon('broadcast')}Watch for releases</a>
+      <a class="btn btn--quiet" href="./download/">Build from source</a>
     </div>
   </div>
 </section>

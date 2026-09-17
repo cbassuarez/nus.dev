@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>nus — A terminal emulator that is also a browser.</title>
-<meta name="description" content="nus (terminus) is a terminal emulator that is also a browser: one window, own VT core, GPU-composited Chromium, sandboxed Luau config. Pre-alpha, MIT.">
+<meta name="description" content="nus (terminus): a terminal emulator that is also a browser. Own VT core, GPU-composited Chromium, tree-sitter command line, sandboxed Luau config. Pre-alpha, MIT.">
 <link rel="canonical" href="https://nus.dev/">
 <meta name="theme-color" content="#c8102e">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="nus.dev">
 <meta property="og:title" content="nus — A terminal emulator that is also a browser.">
-<meta property="og:description" content="nus (terminus) is a terminal emulator that is also a browser: one window, own VT core, GPU-composited Chromium, sandboxed Luau config. Pre-alpha, MIT.">
+<meta property="og:description" content="nus (terminus): a terminal emulator that is also a browser. Own VT core, GPU-composited Chromium, tree-sitter command line, sandboxed Luau config. Pre-alpha, MIT.">
 <meta property="og:url" content="https://nus.dev/">
 <meta property="og:image" content="https://nus.dev/assets/icon/nus-512.png">
 <meta name="twitter:card" content="summary">
@@ -60,13 +60,13 @@
   <div class="hero__in">
     <h1 class="hero__title">A terminal emulator that is <em>also</em> a browser.</h1>
     <p class="hero__lede">
-      One window. Tabs that are shells and tabs that are pages, peers in the same
-      list, split beside each other. Type a URL at a prompt and it opens in the pane
-      next door. No multiplexer, no second app, no webview pretending to be a UI.
+      One window, one tab list. A shell and a page are peers, split beside each other.
+      Own VT core, Chromium composited by us, tree-sitter on the command line,
+      sandboxed Luau for all of it.
     </p>
 
     <div class="hero__acts">
-      <a class="btn btn--fill" href="./docs/"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232,48H160a40,40,0,0,0-32,16A40,40,0,0,0,96,48H24a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8H96a24,24,0,0,1,24,24,8,8,0,0,0,16,0,24,24,0,0,1,24-24h72a8,8,0,0,0,8-8V56A8,8,0,0,0,232,48ZM96,192H32V64H96a24,24,0,0,1,24,24V200A39.81,39.81,0,0,0,96,192Zm128,0H160a39.81,39.81,0,0,0-24,8V88a24,24,0,0,1,24-24h64ZM160,88h40a8,8,0,0,1,0,16H160a8,8,0,0,1,0-16Zm48,40a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,128Zm0,32a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,160Z"/></svg>Read the docs</a>
+      <a class="btn btn--fill" href="./docs/"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232,48H160a40,40,0,0,0-32,16A40,40,0,0,0,96,48H24a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8H96a24,24,0,0,1,24,24,8,8,0,0,0,16,0,24,24,0,0,1,24-24h72a8,8,0,0,0,8-8V56A8,8,0,0,0,232,48ZM96,192H32V64H96a24,24,0,0,1,24,24V200A39.81,39.81,0,0,0,96,192Zm128,0H160a39.81,39.81,0,0,0-24,8V88a24,24,0,0,1,24-24h64ZM160,88h40a8,8,0,0,1,0,16H160a8,8,0,0,1,0-16Zm48,40a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,128Zm0,32a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,160Z"/></svg>The record</a>
       <a class="btn" href="https://github.com/cbassuarez/nus" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M208.31,75.68A59.78,59.78,0,0,0,202.93,28,8,8,0,0,0,196,24a59.75,59.75,0,0,0-48,24H124A59.75,59.75,0,0,0,76,24a8,8,0,0,0-6.93,4,59.78,59.78,0,0,0-5.38,47.68A58.14,58.14,0,0,0,56,104v8a56.06,56.06,0,0,0,48.44,55.47A39.8,39.8,0,0,0,96,192v8H72a24,24,0,0,1-24-24A40,40,0,0,0,8,136a8,8,0,0,0,0,16,24,24,0,0,1,24,24,40,40,0,0,0,40,40H96v16a8,8,0,0,0,16,0V192a24,24,0,0,1,48,0v40a8,8,0,0,0,16,0V192a39.8,39.8,0,0,0-8.44-24.53A56.06,56.06,0,0,0,216,112v-8A58.14,58.14,0,0,0,208.31,75.68ZM200,112a40,40,0,0,1-40,40H112a40,40,0,0,1-40-40v-8a41.74,41.74,0,0,1,6.9-22.48A8,8,0,0,0,80,73.83a43.81,43.81,0,0,1,.79-33.58,43.88,43.88,0,0,1,32.32,20.06A8,8,0,0,0,119.82,64h32.35a8,8,0,0,0,6.74-3.69,43.87,43.87,0,0,1,32.32-20.06A43.81,43.81,0,0,1,192,73.83a8.09,8.09,0,0,0,1,7.65A41.72,41.72,0,0,1,200,104Z"/></svg>Source</a>
       <a class="btn btn--quiet" href="./download/"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"/></svg>Builds</a>
     </div>
@@ -74,7 +74,7 @@
     <div class="hero__meta">
       <span class="chip chip--signal">Pre-alpha</span>
       <span>MIT</span>
-      <span>Rust · wgpu · CEF</span>
+      <span>Rust · wgpu · CEF · Luau</span>
       <span>Windows 11 · macOS · Linux</span>
     </div>
 
@@ -161,10 +161,228 @@ test result: <span class="g">ok</span>. 17 passed; 0 failed
       <div class="hero__caption">
         <span>Fig. 1</span>
         <span class="dim">
-          The window, drawn here from the same tokens the app renders from —
-          it takes your theme and the signal you picked above.
+          The window, drawn from the app's own tokens — it takes your theme and the
+          signal you pick above, and it obeys nus's width rule: no split under
+          900px, no sidebar under 640.
         </span>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Conformance</h2><span class="cap">What the terminal answers</span></div>
+    <p class="dim" style="margin-bottom:24px;font-size:14px;max-width:62ch">
+      The list a terminal is actually judged on, including the parts that answer
+      <em>no</em>. <code>XTGETTCAP</code> refuses every capability not named here rather
+      than guessing, and <code>DA1</code> advertises only what is decoded.
+    </p>
+
+    <div class="tablewrap">
+      <table class="spec">
+        <thead><tr><th>Capability</th><th>Detail</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Identity</td><td><code>TERM=xterm-256color</code>, <code>COLORTERM=truecolor</code>, <code>TERM_PROGRAM=nus</code></td><td><span class="st st--in">Shipped</span></td></tr>
+          <tr><td>DA1 / DA2</td><td>VT220 with ANSI colour. Sixel is not advertised until it decodes.</td><td><span class="st st--in">Shipped</span> <a class="src" href="https://github.com/cbassuarez/nus/blob/main/crates/vt/src/term.rs#L1288" target="_blank" rel="noopener noreferrer">term.rs:1288</a></td></tr>
+          <tr><td>XTVERSION</td><td>Answers <code>nus &lt;version&gt;</code></td><td><span class="st st--in">Shipped</span></td></tr>
+          <tr><td>XTGETTCAP</td><td>Answers <code>TN</code>, <code>RGB</code>/<code>Tc</code>, <code>colors</code>, <code>setrgbf</code>/<code>setrgbb</code>, <code>Ms</code>, <code>Ss</code>/<code>Se</code>, <code>Smulx</code> — and refuses the rest</td><td><span class="st st--in">Shipped</span></td></tr>
+          <tr><td>Kitty keyboard</td><td>Full protocol, negotiated. Disambiguate, report events, alternates.</td><td><span class="st st--in">Shipped</span> <a class="src" href="https://github.com/cbassuarez/nus/blob/main/crates/vt/src/input.rs" target="_blank" rel="noopener noreferrer">input.rs</a></td></tr>
+          <tr><td>Synchronized output</td><td>DEC mode 2026</td><td><span class="st st--in">Shipped</span></td></tr>
+          <tr><td>OSC</td><td><ul class="seq"><li><code>8 hyperlinks</code></li><li><code>52 clipboard</code></li><li><code>133 prompt marks</code></li><li><code>7 cwd</code></li><li><code>9;4 progress</code></li><li><code>1337 inline images</code></li></ul></td><td><span class="st st--in">Shipped</span></td></tr>
+          <tr><td>Bracketed paste</td><td>With a hazard band when the paste looks risky</td><td><span class="st st--in">Shipped</span></td></tr>
+          <tr><td>Focus events</td><td>Reported; an unfocused split washes with paper</td><td><span class="st st--in">Shipped</span></td></tr>
+          <tr><td>Kitty graphics</td><td>Draws in the shell. ConPTY drops APC, so Windows waits on a transport.</td><td><span class="st st--in">Shipped</span> <a class="src" href="https://github.com/cbassuarez/nus/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noopener noreferrer">ARCHITECTURE.md</a></td></tr>
+          <tr><td>Sixel</td><td>Being decoded now. <code>DA1</code> gains <code>4</code> when it lands, not before.</td><td><span class="st st--flight">In flight</span></td></tr>
+          <tr><td>terminfo</td><td>A <code>nus</code> entry shipped, then <code>TERM=nus</code> once tools know it</td><td><span class="st st--next">Next</span></td></tr>
+          <tr><td>vttest / esctest</td><td>Runs recorded against the suites</td><td><span class="st st--next">Next</span></td></tr>
+          <tr><td><code>nus</code> CLI</td><td>Open a URL or a file; <code>nus ask</code></td><td><span class="st st--next">Next</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dim mb0" style="font-size:13px">
+      Settled in the fourteenth product pass. <a class="src" href="https://github.com/cbassuarez/nus/blob/main/docs/PRODUCT.md#L545" target="_blank" rel="noopener noreferrer">PRODUCT.md:545</a>
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Measured</h2><span class="cap">Not estimated</span></div>
+    <div class="figs">
+      <div>
+        <b>2.8<small> ms</small></b>
+        <span>Key → present</span>
+        <em>vim with ligatures, release</em>
+      </div>
+      <div>
+        <b>&lt;2<small> ms</small></b>
+        <span>Full-screen frame</span>
+        <em>80×42, release build</em>
+      </div>
+      <div>
+        <b>144<small> fps</small></b>
+        <span>Browser texture</span>
+        <em>CEF → D3D11 → D3D12, shared</em>
+      </div>
+      <div>
+        <b>25</b>
+        <span>VT tests</span>
+        <em>grid, modes, input, images</em>
+      </div>
+    </div>
+    <p class="dim" style="margin-top:18px;font-size:13px">
+      From the spike logs, which record the runs rather than the hopes.
+      <a class="src" href="https://github.com/cbassuarez/nus/blob/main/spikes/vt-render/README.md" target="_blank" rel="noopener noreferrer">vt-render/README.md</a> <a class="src" href="https://github.com/cbassuarez/nus/blob/main/spikes/cef-osr/README.md" target="_blank" rel="noopener noreferrer">cef-osr/README.md</a>
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>The command line</h2><span class="cap">Terminal-side</span></div>
+    <p class="lede" style="margin-bottom:26px">
+      Colouring and prediction happen in the terminal, not in your shell. Nothing to
+      install, no plugin to keep current, and it works the same in pwsh, bash, zsh,
+      fish and cmd — including over <code>ssh</code>, where a shell plugin is not yours to add.
+    </p>
+
+    <pre style="max-width:64ch"><code><span style="color:var(--signal)">❯</span> cargo test -p nus-vt --<span style="color:var(--ansi-blue)">nocapture</span> <span style="color:var(--ansi-green)">"kitty"</span><span class="dim">  --release</span>
+  <span class="dim">└ command · flag · string · ghost from history</span></code></pre>
+
+    <div class="ledger ledger--tight" style="max-width:none">
+      <div class="ledger__row"><span class="cap">Token classes</span><p class="mb0">Command, flag, string, number, path, operator — classed as you type, coloured from the theme's ANSI slots. <a class="src" href="https://github.com/cbassuarez/nus/blob/main/spikes/composite/src/predict.rs" target="_blank" rel="noopener noreferrer">predict.rs</a></p></div>
+      <div class="ledger__row"><span class="cap">Prediction</span><p class="mb0">The most recent history entry that continues the line ghosts after the caret. <kbd>Right</kbd> or <kbd>End</kbd> at the end of the line accepts it.</p></div>
+      <div class="ledger__row"><span class="cap">How it knows</span><p class="mb0">OSC 133 prompt marks say where the command begins, so the terminal can tell a command line from program output.</p></div>
+      <div class="ledger__row"><span class="cap">History</span><p class="mb0">Per profile, in <code>profile/history</code>. Recent commands are palette rows you can run again.</p></div>
+      <div class="ledger__row"><span class="cap">Blocks</span><p class="mb0">Each command is a block: a hairline where it starts, a gutter rule on hover, chips to copy its output or re-run it, <kbd>Ctrl</kbd>+triple-click to select the output, scrollbar ticks at the prompts. <a class="src" href="https://github.com/cbassuarez/nus/blob/main/crates/vt/src/term.rs#L778" target="_blank" rel="noopener noreferrer">term.rs:778</a></p></div>
+      <div class="ledger__row"><span class="cap">Shell hooks</span><p class="mb0">Injected automatically — PowerShell <code>-EncodedCommand</code>, bash <code>--rcfile</code>, zsh <code>ZDOTDIR</code>, fish <code>-C</code>, cmd <code>PROMPT</code>. nushell already has it. <code>AUTO</code> or <code>OFF</code>.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Syntax and language</h2><span class="cap">tree-sitter · LSP</span></div>
+    <div class="ledger ledger--tight" style="max-width:none">
+      <div class="ledger__row"><span class="cap">tree-sitter</span><p class="mb0">Bash and PowerShell grammars ride in the binary, for the prompt line and the ask panel's code blocks. <span class="st st--in">Shipped</span> <a class="src" href="https://github.com/cbassuarez/nus/blob/main/spikes/composite/src/syntax.rs" target="_blank" rel="noopener noreferrer">syntax.rs</a></p></div>
+      <div class="ledger__row"><span class="cap">Other grammars</span><p class="mb0">Load from <code>profile/grammars/&lt;name&gt;/</code> — the library <code>tree-sitter build</code> makes, plus <code>highlights.scm</code>. Rust, Python, JavaScript and JSON bundles wait on the release pipeline that builds them. <span class="st st--flight">In flight</span></p></div>
+      <div class="ledger__row"><span class="cap">LSP</span><p class="mb0">An editor pane, with <code>lsp-types</code> and <code>lsp-server</code> behind it. Language servers are already in the optional-tools list — rust-analyzer fetches on <code>GET</code> into <code>profile/bin</code>. <span class="st st--flight">In flight</span> <a class="src" href="https://github.com/cbassuarez/nus/blob/main/spikes/composite/assets/bundles.json" target="_blank" rel="noopener noreferrer">bundles.json</a></p></div>
+      <div class="ledger__row"><span class="cap">Optional tools</span><p class="mb0">The welcome page asks once. Language servers, grammars and assistant CLIs, each fetched only when you say so, each a folder you can delete. <code>assets/bundles.json</code> is the list; <code>profile/bundles.json</code> adds to it. <span class="st st--in">Shipped</span> <a class="src" href="https://github.com/cbassuarez/nus/blob/main/spikes/composite/src/bundles.rs" target="_blank" rel="noopener noreferrer">bundles.rs</a></p></div>
+      <div class="ledger__row"><span class="cap">Assistants</span><p class="mb0">Whatever the machine has: <code>claude -p</code>, <code>codex exec</code>, the Copilot CLI through <code>gh</code>, <code>ollama run</code>, or the API through <code>curl</code>. <code>NUS_ASK_CMD</code> for anything else. The router is a config table. <span class="st st--in">Shipped</span> <a class="src" href="https://github.com/cbassuarez/nus/blob/main/spikes/composite/src/ask.rs" target="_blank" rel="noopener noreferrer">ask.rs</a></p></div>
+      <div class="ledger__row"><span class="cap">Ask</span><p class="mb0"><kbd>Ctrl</kbd><kbd>⇧</kbd><kbd>?</kbd> beside a shell. One line in, command blocks out, each with <code>INSERT</code>, <code>RUN</code>, <code>COPY</code>. The shell, the folder and the last command's output go with the question. Not a chat. <span class="st st--in">Shipped</span></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Localhost</h2><span class="cap">The dev suite</span></div>
+    <p class="lede" style="margin-bottom:26px">
+      A dev server is a first-class thing here, not a URL you paste somewhere else.
+      Type it at the prompt and it opens in the pane beside the shell that started it.
+    </p>
+    <div class="ledger ledger--tight" style="max-width:none">
+      <div class="ledger__row"><span class="cap">Detected</span><p class="mb0"><code>localhost</code>, <code>127.0.0.1</code>, <code>*.local</code>, RFC-1918. Hazard tape around the page and in the URL field, so a dev server never passes for the real thing. <span class="st st--in">Shipped</span> <a class="src" href="https://github.com/cbassuarez/nus/blob/main/spikes/composite/src/sites.rs" target="_blank" rel="noopener noreferrer">sites.rs</a></p></div>
+      <div class="ledger__row"><span class="cap">Ports</span><p class="mb0">What is listening, with the process name that owns it, as palette rows. Open one and the tape is already on.</p></div>
+      <div class="ledger__row"><span class="cap">DevTools</span><p class="mb0">A windowless CEF pane — console, network, elements — composited beside the page, not a detached window. <a class="src" href="https://github.com/cbassuarez/nus/blob/main/spikes/composite/src/webui.rs" target="_blank" rel="noopener noreferrer">webui.rs</a></p></div>
+      <div class="ledger__row"><span class="cap">Console → shell</span><p class="mb0">The page's console mirrored into the terminal split, so one scrollback holds both halves of the bug.</p></div>
+      <div class="ledger__row"><span class="cap">Responsive</span><p class="mb0">Presets at 390 / 768 / 1440, and a screenshot taken from our own texture rather than the OS.</p></div>
+      <div class="ledger__row"><span class="cap">Reload</span><p class="mb0">On directory change. Progress rides the loading bar through OSC 9;4.</p></div>
+      <div class="ledger__row"><span class="cap">The URL rule</span><p class="mb0">A whole line at a fresh prompt that parses as a URL opens in the split on <kbd>↵</kbd>; <kbd>Ctrl</kbd><kbd>↵</kbd> runs it as a command instead. Any editing key disqualifies the line. Bare words never trigger. <a class="src" href="https://github.com/cbassuarez/nus/blob/main/docs/PRODUCT.md#L83" target="_blank" rel="noopener noreferrer">PRODUCT.md:83</a></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Against the field</h2><span class="cap">Two axes</span></div>
+    <p class="dim" style="margin-bottom:22px;font-size:14px;max-width:64ch">
+      nus is measured twice: as a terminal, and as a browser. The columns it loses
+      are in the table too — a comparison that only shows wins is an advertisement.
+    </p>
+
+    <div class="tablewrap">
+      <table class="matrix">
+        <caption><span class="y">●</span> in nus today &nbsp; <span class="p">◐</span> in flight &nbsp; <span class="n">○</span> not present. Terminal axis.</caption>
+        <thead><tr><th>As a terminal</th><th>nus</th><th>Ghostty</th><th>kitty</th><th>WezTerm</th></tr></thead>
+        <tbody>
+          <tr><td>Own VT core, GPU renderer</td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="y">●</span></td></tr>
+          <tr><td>Kitty keyboard protocol</td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="y">●</span></td></tr>
+          <tr><td>Kitty graphics</td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="y">●</span></td></tr>
+          <tr><td>Sixel</td><td><span class="p">◐</span></td><td><span class="y">●</span></td><td><span class="n">○</span></td><td><span class="y">●</span></td></tr>
+          <tr><td>Shell integration, no plugin</td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td></tr>
+          <tr><td>Command blocks</td><td><span class="y">●</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td></tr>
+          <tr><td>Prediction without a shell plugin</td><td><span class="y">●</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td></tr>
+          <tr><td>tree-sitter on the prompt line</td><td><span class="y">●</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td></tr>
+          <tr><td>A browser tab as a peer</td><td><span class="y">●</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td></tr>
+          <tr><td>Multiplexer built in</td><td><span class="y">●</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td><td><span class="y">●</span></td></tr>
+          <tr><td>Scriptable config language</td><td><span class="y">●</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td><td><span class="y">●</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tablewrap" style="margin-top:26px">
+      <table class="matrix">
+        <caption><span class="y">●</span> in nus today &nbsp; <span class="p">◐</span> in flight &nbsp; <span class="n">○</span> not present. Browser axis.</caption>
+        <thead><tr><th>As a browser</th><th>nus</th><th>Arc</th><th>Dia</th><th>Zen</th></tr></thead>
+        <tbody>
+          <tr><td>Chromium engine</td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="n">○</span></td></tr>
+          <tr><td>Sidebar tabs, spaces, folders</td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="y">●</span></td></tr>
+          <tr><td>Split view</td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="y">●</span></td></tr>
+          <tr><td>Per-site boosts (CSS + JS)</td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td></tr>
+          <tr><td>Named containers / cookie jars</td><td><span class="y">●</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td><td><span class="y">●</span></td></tr>
+          <tr><td>Picture-in-picture we own</td><td><span class="y">●</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td></tr>
+          <tr><td>Reader mode</td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="n">○</span></td><td><span class="y">●</span></td></tr>
+          <tr><td>Built-in content blocking</td><td><span class="y">●</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td><td><span class="y">●</span></td></tr>
+          <tr><td>A shell as a peer pane</td><td><span class="y">●</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td></tr>
+          <tr><td>Config as code, sandboxed</td><td><span class="y">●</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td><td><span class="n">○</span></td></tr>
+          <tr><td>Chrome extensions</td><td><span class="n">○</span></td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="y">●</span></td></tr>
+          <tr><td>Shipping today</td><td><span class="n">○</span></td><td><span class="y">●</span></td><td><span class="y">●</span></td><td><span class="y">●</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="dim" style="margin-top:18px;font-size:13px;max-width:64ch">
+      Extensions are the honest loss. Windowless CEF browsers are Alloy-style, and
+      libcef does not attach the extension request proxy to them: extensions load but
+      cannot see our tabs. Blocking, userscripts and password fill are built natively
+      instead; our own libcef build is a later phase, not a v1 dependency.
+      <a class="src" href="https://github.com/cbassuarez/nus/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noopener noreferrer">ARCHITECTURE.md</a>
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Customization</h2><span class="cap">Where it goes further</span></div>
+    <p class="lede" style="margin-bottom:26px">
+      The axis Arc and Zen stop at. Every surface is a value you can set, and the
+      interesting ones are functions you can write.
+    </p>
+    <div class="ledger ledger--tight" style="max-width:none">
+      <div class="ledger__row"><span class="cap">rules.luau</span><p class="mb0"><code>new_tab(ctx)</code> and <code>new_space(ctx)</code> return a look; <code>on_page(ctx)</code> returns per-site CSS and JS; <code>on_event(ev)</code> returns a sound cue or silences it. Sandboxed: no <code>io</code>, no <code>os</code>, no FFI. <a class="src" href="https://github.com/cbassuarez/nus/blob/main/docs/PRODUCT.md#L188" target="_blank" rel="noopener noreferrer">PRODUCT.md:188</a></p></div>
+      <div class="ledger__row"><span class="cap">Surface</span><p class="mb0">Ramps of 2–4 stops with angle, loop, aurora drift and breath. Textures — grain, stipple, stitch, linen, halftone, scale — on the carapace, the chrome or the panes, never on content or video.</p></div>
+      <div class="ledger__row"><span class="cap">Theme</span><p class="mb0">Paper, ink and page tokens per mode, sixteen ANSI colours with a real HSL picker, contrast grade and saturation. Import from Ghostty, Windows Terminal, VS Code or base16. Twenty stock themes, contrast-audited by a test.</p></div>
+      <div class="ledger__row"><span class="cap">Cursor</span><p class="mb0">Shape, hollow or hidden when unfocused, blink never / after 2s / always, colour, and motion: jump, glide or comet.</p></div>
+      <div class="ledger__row"><span class="cap">Motion</span><p class="mb0">One easing, 80–220 ms base, and a register slider from 0.45× snappy to 2.2× cinematic. Reduce-motion follows the OS or is forced.</p></div>
+      <div class="ledger__row"><span class="cap">Scrolling</span><p class="mb0">The shell rides neoscroll's curves — a line at a time on an eased clock, more ticks extending the trip. Pages keep Chromium's, switchable. <a class="src" href="https://github.com/cbassuarez/nus/blob/main/spikes/composite/src/scrolling.rs" target="_blank" rel="noopener noreferrer">scrolling.rs</a></p></div>
+      <div class="ledger__row"><span class="cap">Sound</span><p class="mb0">Seventeen synth recipes on <code>cpal</code> across fourteen events, each previewable, each overridable from rules. <a class="src" href="https://github.com/cbassuarez/nus/blob/main/spikes/composite/src/sound.rs" target="_blank" rel="noopener noreferrer">sound.rs</a></p></div>
+      <div class="ledger__row"><span class="cap">Settings are the file</span><p class="mb0">Every edit writes <code>~/.config/nus/init.luau</code>. The file is the source of truth and hot-reloads. Every settings row is also a palette row.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__in">
+    <div class="sectionhead"><h2>Provenance</h2><span class="cap">Ported, not imitated</span></div>
+    <div class="ledger ledger--tight" style="max-width:none">
+      <div class="ledger__row"><span class="cap">The caret</span><p class="mb0">Neovide's cursor renderer, ported: four critically damped springs, leading corners fast and trailing ones slow, drawn as one quad. <code>TRAIL</code> is Neovide's <code>trail_size</code>. <a class="src" href="https://github.com/cbassuarez/nus/blob/main/spikes/composite/src/smear.rs" target="_blank" rel="noopener noreferrer">smear.rs</a></p></div>
+      <div class="ledger__row"><span class="cap">The scroll</span><p class="mb0">neoscroll's curves.</p></div>
+      <div class="ledger__row"><span class="cap">The parser</span><p class="mb0"><code>vte</code> drives the state machine. The grid, cursor, modes, palette and responses are ours. <a class="src" href="https://github.com/cbassuarez/nus/blob/main/crates/vt/src/lib.rs" target="_blank" rel="noopener noreferrer">src/lib.rs</a></p></div>
+      <div class="ledger__row"><span class="cap">The blocking</span><p class="mb0">Brave's <code>adblock</code> engine, in CEF's resource request handler — so it works with nothing installed.</p></div>
+      <div class="ledger__row"><span class="cap">Read, not copied</span><p class="mb0">Ghostty for VT state design and the Kitty protocols, Alacritty for <code>vte</code> in practice, WezTerm for ConPTY's quirks. The polish passes were researched against Rio, kitty, Warp, Dia, Arc, Zen, Vivaldi and Orion.</p></div>
+      <div class="ledger__row"><span class="cap">Type and icons</span><p class="mb0">IBM Plex Mono and Newsreader, both OFL. Phosphor icons, MIT.</p></div>
     </div>
   </div>
 </section>
@@ -179,256 +397,14 @@ test result: <span class="g">ok</span>. 17 passed; 0 failed
       <div><dt>Public builds</dt><dd class="dim">None yet</dd></div>
     </div>
     <p class="dim" style="margin-top:20px;font-size:14px">
-      The four de-risking spikes are done and the composite spike — compositor,
-      navigation, shell integration, browser panes — runs on Windows. macOS and
-      Linux runs are outstanding, and the spike code is still being moved into the
-      real crates. Nothing is packaged, so there is nothing to download.
-      <a href="./docs/spikes/">The spike log</a> records what each one answered.
+      The composite spike — compositor, navigation, shell integration, browser panes,
+      21,000 lines of it — runs on Windows and is being moved into <code>crates/</code>.
+      macOS and Linux have not been run at all. Nothing is packaged, so there is
+      nothing to download. <a href="./docs/spikes/">The spike log</a> is the honest version.
     </p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section__in">
-    <div class="sectionhead"><h2>Four commitments</h2><span class="cap">Architecture</span></div>
-    <div class="grid grid--quad">
-      <div class="card">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M128,128a8,8,0,0,1-3,6.25l-40,32a8,8,0,1,1-10-12.5L107.19,128,75,102.25a8,8,0,1,1,10-12.5l40,32A8,8,0,0,1,128,128Zm48,24H136a8,8,0,0,0,0,16h40a8,8,0,0,0,0-16Zm56-96V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56ZM216,200V56H40V200H216Z"/></svg>Our own VT core</h3>
-  <p>A real terminal, not an embedded one. <code>vte</code> for the state machine; grid, scrollback and modes ours. Kitty keyboard and graphics, ligatures, 2.8&nbsp;ms key&nbsp;→&nbsp;pixel measured rather than guessed.</p>
-  
-</div>
-      <div class="card">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24h0A104,104,0,1,0,232,128,104.12,104.12,0,0,0,128,24Zm88,104a87.61,87.61,0,0,1-3.33,24H174.16a157.44,157.44,0,0,0,0-48h38.51A87.61,87.61,0,0,1,216,128ZM102,168H154a115.11,115.11,0,0,1-26,45A115.27,115.27,0,0,1,102,168Zm-3.9-16a140.84,140.84,0,0,1,0-48h59.88a140.84,140.84,0,0,1,0,48ZM40,128a87.61,87.61,0,0,1,3.33-24H81.84a157.44,157.44,0,0,0,0,48H43.33A87.61,87.61,0,0,1,40,128ZM154,88H102a115.11,115.11,0,0,1,26-45A115.27,115.27,0,0,1,154,88Zm52.33,0H170.71a135.28,135.28,0,0,0-22.3-45.6A88.29,88.29,0,0,1,206.37,88ZM107.59,42.4A135.28,135.28,0,0,0,85.29,88H49.63A88.29,88.29,0,0,1,107.59,42.4ZM49.63,168H85.29a135.28,135.28,0,0,0,22.3,45.6A88.29,88.29,0,0,1,49.63,168Zm98.78,45.6a135.28,135.28,0,0,0,22.3-45.6h35.66A88.29,88.29,0,0,1,148.41,213.6Z"/></svg>Chromium, composited by us</h3>
-  <p>CEF offscreen on the Chrome runtime. Each tab paints into a wgpu texture — shared texture where the platform allows it. Ad-blocking is Brave’s <code>adblock</code> engine in the resource handler, so it works with nothing installed.</p>
-  
-</div>
-      <div class="card">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"/></svg>One window model</h3>
-  <p>Windows → tabs → splits. A shell tab and a page tab are peers in one list; a tab is one pane or a left|right pair. We own the compositor, so splits, previews and PiP behave the same on all three OSes.</p>
-  
-</div>
-      <div class="card">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M69.12,94.15,28.5,128l40.62,33.85a8,8,0,1,1-10.24,12.29l-48-40a8,8,0,0,1,0-12.29l48-40a8,8,0,0,1,10.24,12.3Zm176,27.7-48-40a8,8,0,1,0-10.24,12.3L227.5,128l-40.62,33.85a8,8,0,1,0,10.24,12.29l48-40a8,8,0,0,0,0-12.29ZM162.73,32.48a8,8,0,0,0-10.25,4.79l-64,176a8,8,0,0,0,4.79,10.26A8.14,8.14,0,0,0,96,224a8,8,0,0,0,7.52-5.27l64-176A8,8,0,0,0,162.73,32.48Z"/></svg>Config is a sandboxed language</h3>
-  <p>Luau through <code>mlua</code>: no <code>io</code>, no <code>os</code>, no FFI, no arbitrary <code>require</code>. A curated table for keybinds, themes, profiles and hooks — and <code>rules.luau</code>, which decides what a new tab looks like.</p>
-  
-</div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section__in">
-    <div class="sectionhead"><h2>A URL at the prompt</h2><span class="cap">The idea</span></div>
-    <p class="lede" style="margin-bottom:26px">
-      The feature the rest of the design is built around. Type a URL at a fresh
-      prompt, press Enter, and nus clears the line and opens the page in the split
-      beside the shell — instead of handing it to a browser in another app.
-    </p>
-
-    <pre style="max-width:62ch"><code><span style="color:var(--signal)">❯</span> localhost:5173
-  ↵ opens in browser · ctrl+↵ runs in shell</code></pre>
-
-    <div class="ledger" style="max-width:none">
-      <div class="ledger__row"><span class="cap">What counts</span><p class="mb0">
-        A scheme, <code>localhost[:port]</code>, or <code>host.tld[/path]</code> with a known TLD —
-        and only when it is the whole line at a fresh prompt. Bare words never trigger it.</p></div>
-      <div class="ledger__row"><span class="cap">What disqualifies</span><p class="mb0">
-        Any editing key — arrows, history, a <kbd>Ctrl</kbd> chord — takes the line out of the
-        running until the next Enter. The hint disappears with it.</p></div>
-      <div class="ledger__row"><span class="cap">Local sites are marked</span><p class="mb0">
-        <code>localhost</code>, <code>127.0.0.1</code>, <code>*.local</code> and RFC-1918 addresses get
-        hazard tape around the page and in the URL field, so a dev server never
-        passes for the real thing.</p></div>
-      <div class="ledger__row"><span class="cap">It is a hook</span><p class="mb0">
-        Implemented as <code>on_output(tab, line)</code> in the config API — the same hook your
-        own rules get, so you can replace it.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section__in">
-    <div class="sectionhead"><h2>Built, not planned</h2><span class="cap">In the spike today</span></div>
-    <div class="grid">
-      <div class="card">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M180,144H160V112h20a36,36,0,1,0-36-36V96H112V76a36,36,0,1,0-36,36H96v32H76a36,36,0,1,0,36,36V160h32v20a36,36,0,1,0,36-36ZM160,76a20,20,0,1,1,20,20H160ZM56,76a20,20,0,0,1,40,0V96H76A20,20,0,0,1,56,76ZM96,180a20,20,0,1,1-20-20H96Zm16-68h32v32H112Zm68,88a20,20,0,0,1-20-20V160h20a20,20,0,0,1,0,40Z"/></svg>Shell integration, auto-injected</h3>
-  <p>OSC 133 prompt marks, OSC 7 cwd and OSC 9;4 progress, with bundled hooks for pwsh, bash, zsh, fish and cmd. It buys prompt jumping, DONE/FAILED badges, the window’s name from the cwd, and no close-confirm at a prompt.</p>
-  
-</div>
-      <div class="card">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M230.91,172A8,8,0,0,1,228,182.91l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,36,169.09l92,53.65,92-53.65A8,8,0,0,1,230.91,172ZM220,121.09l-92,53.65L36,121.09A8,8,0,0,0,28,134.91l96,56a8,8,0,0,0,8.06,0l96-56A8,8,0,1,0,220,121.09ZM24,80a8,8,0,0,1,4-6.91l96-56a8,8,0,0,1,8.06,0l96,56a8,8,0,0,1,0,13.82l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,24,80Zm23.88,0L128,126.74,208.12,80,128,33.26Z"/></svg>Blocks and stacks</h3>
-  <p>Every command is a block with a hairline, a gutter rule, and chips to copy its output or run it again. A tab that spawns another nests under it; a stack collapses to one row and walks with <kbd>⌘⇧[ ]</kbd>.</p>
-  
-</div>
-      <div class="card">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M216,48H40A16,16,0,0,0,24,64V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V64A16,16,0,0,0,216,48ZM40,64H216v56H136a8,8,0,0,0-8,8v64H40ZM216,192H144V136h72v56Z"/></svg>Our own picture-in-picture</h3>
-  <p>The tab’s texture cropped to the video, drawn into a small always-on-top window — no second decode and no DRM problem. Transport keys act through CDP, so sites cannot hide them.</p>
-  
-</div>
-      <div class="card">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M197.58,129.06,146,110l-19-51.62a15.92,15.92,0,0,0-29.88,0L78,110l-51.62,19a15.92,15.92,0,0,0,0,29.88L78,178l19,51.62a15.92,15.92,0,0,0,29.88,0L146,178l51.62-19a15.92,15.92,0,0,0,0-29.88ZM137,164.22a8,8,0,0,0-4.74,4.74L112,223.85,91.78,169A8,8,0,0,0,87,164.22L32.15,144,87,123.78A8,8,0,0,0,91.78,119L112,64.15,132.22,119a8,8,0,0,0,4.74,4.74L191.85,144ZM144,40a8,8,0,0,1,8-8h16V16a8,8,0,0,1,16,0V32h16a8,8,0,0,1,0,16H184V64a8,8,0,0,1-16,0V48H152A8,8,0,0,1,144,40ZM248,88a8,8,0,0,1-8,8h-8v8a8,8,0,0,1-16,0V96h-8a8,8,0,0,1,0-16h8V72a8,8,0,0,1,16,0v8h8A8,8,0,0,1,248,88Z"/></svg>Ask, beside the shell</h3>
-  <p>One line in, a few command blocks out, each with INSERT, RUN and COPY. Backends are whatever the machine has: <code>claude -p</code>, <code>codex exec</code>, ollama, the Copilot CLI, or the API through curl.</p>
-  
-</div>
-      <div class="card">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"/></svg>Containers</h3>
-  <p>Named cookie jars, one CEF request context each. A window’s container colours its square and names its title; pages open in it, and a page can be reopened in another.</p>
-  
-</div>
-      <div class="card">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M200.77,53.89A103.27,103.27,0,0,0,128,24h-1.07A104,104,0,0,0,24,128c0,43,26.58,79.06,69.36,94.17A32,32,0,0,0,136,192a16,16,0,0,1,16-16h46.21a31.81,31.81,0,0,0,31.2-24.88,104.43,104.43,0,0,0,2.59-24A103.28,103.28,0,0,0,200.77,53.89Zm13,93.71A15.89,15.89,0,0,1,198.21,160H152a32,32,0,0,0-32,32,16,16,0,0,1-21.31,15.07C62.49,194.3,40,164,40,128a88,88,0,0,1,87.09-88h.9a88.35,88.35,0,0,1,88,87.25A88.86,88.86,0,0,1,213.81,147.6ZM140,76a12,12,0,1,1-12-12A12,12,0,0,1,140,76ZM96,100A12,12,0,1,1,84,88,12,12,0,0,1,96,100Zm0,56a12,12,0,1,1-12-12A12,12,0,0,1,96,156Zm88-56a12,12,0,1,1-12-12A12,12,0,0,1,184,100Z"/></svg>A look studio</h3>
-  <p>Surfaces, ramps, textures on the carapace, sixteen ANSI colours with a real picker, twenty stock themes, and a live proof of the window at the top of the page that changes as you change it.</p>
-  
-</div>
-    </div>
-    <p class="dim" style="margin-top:22px;font-size:14px">
-      All of it on Windows, inside the composite spike, pending the move into
-      <code>crates/</code>. <a href="./docs/product/">The product log</a> records each pass and what it settled.
-    </p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section__in">
-    <div class="sectionhead"><h2>Broadsheet</h2><span class="cap">Design</span></div>
-    <p class="lede" style="margin-bottom:28px">
-      Ink on paper, one monospace face, rules instead of boxes, and one colour on
-      screen: the Space’s signal. Nothing blurs, nothing is rounded, nothing is
-      translucent. This page is drawn from the same tokens.
-    </p>
-
-    <div class="swatches" style="margin-bottom:26px">
-      <div class="swatch"><div class="swatch__chip" style="background:var(--signal)"></div>
-   <div class="swatch__name">Signal<br><span class="swatch__hex">the one colour</span></div></div>
-      <div class="swatch"><div class="swatch__chip" style="background:#f4f1ea"></div>
-   <div class="swatch__name">Paper<br><span class="swatch__hex">#f4f1ea</span></div></div>
-      <div class="swatch"><div class="swatch__chip" style="background:#141414"></div>
-   <div class="swatch__name">Ink<br><span class="swatch__hex">#141414</span></div></div>
-      <div class="swatch"><div class="swatch__chip" style="background:#8a857a"></div>
-   <div class="swatch__name">Dim<br><span class="swatch__hex">#8a857a</span></div></div>
-      <div class="swatch"><div class="swatch__chip" style="background:#ffffff"></div>
-   <div class="swatch__name">Page<br><span class="swatch__hex">#ffffff</span></div></div>
-    </div>
-
-    <div class="grid grid--2">
-      <div class="card">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,48H32A16,16,0,0,0,16,64V192a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V64A16,16,0,0,0,224,48Zm0,144H32V64H224V192Zm-16-64a8,8,0,0,1-8,8H56a8,8,0,0,1,0-16H200A8,8,0,0,1,208,128Zm0-32a8,8,0,0,1-8,8H56a8,8,0,0,1,0-16H200A8,8,0,0,1,208,96ZM72,160a8,8,0,0,1-8,8H56a8,8,0,0,1,0-16h8A8,8,0,0,1,72,160Zm96,0a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,160Zm40,0a8,8,0,0,1-8,8h-8a8,8,0,0,1,0-16h8A8,8,0,0,1,208,160Z"/></svg>Hierarchy by weight and case</h3>
-  <p>Never by colour. Rule weights are 1 hairline, 1.5 structure, 2 floating and a 6px signal band. Radii are 0 everywhere; shadows are hard offsets with no blur, ever.</p>
-  
-</div>
-      <div class="card">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232,48H160a40,40,0,0,0-32,16A40,40,0,0,0,96,48H24a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8H96a24,24,0,0,1,24,24,8,8,0,0,0,16,0,24,24,0,0,1,24-24h72a8,8,0,0,0,8-8V56A8,8,0,0,0,232,48ZM96,192H32V64H96a24,24,0,0,1,24,24V200A39.81,39.81,0,0,0,96,192Zm128,0H160a39.81,39.81,0,0,0-24,8V88a24,24,0,0,1,24-24h64ZM160,88h40a8,8,0,0,1,0,16H160a8,8,0,0,1,0-16Zm48,40a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,128Zm0,32a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,160Z"/></svg>One face, one exception</h3>
-  <p>IBM Plex Mono for the UI and the terminal alike. Newsreader Italic appears only as a wordmark — <em class="serif">nus</em>, <em class="serif">go</em>, <em class="serif">quick</em> — and nowhere else.</p>
-  
-</div>
-    </div>
-
-    <p style="margin-top:24px"><a class="btn btn--quiet" href="./docs/design/"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M200.77,53.89A103.27,103.27,0,0,0,128,24h-1.07A104,104,0,0,0,24,128c0,43,26.58,79.06,69.36,94.17A32,32,0,0,0,136,192a16,16,0,0,1,16-16h46.21a31.81,31.81,0,0,0,31.2-24.88,104.43,104.43,0,0,0,2.59-24A103.28,103.28,0,0,0,200.77,53.89Zm13,93.71A15.89,15.89,0,0,1,198.21,160H152a32,32,0,0,0-32,32,16,16,0,0,1-21.31,15.07C62.49,194.3,40,164,40,128a88,88,0,0,1,87.09-88h.9a88.35,88.35,0,0,1,88,87.25A88.86,88.86,0,0,1,213.81,147.6ZM140,76a12,12,0,1,1-12-12A12,12,0,0,1,140,76ZM96,100A12,12,0,1,1,84,88,12,12,0,0,1,96,100Zm0,56a12,12,0,1,1-12-12A12,12,0,0,1,96,156Zm88-56a12,12,0,1,1-12-12A12,12,0,0,1,184,100Z"/></svg>The design record</a></p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section__in">
-    <div class="sectionhead"><h2>Keys</h2><span class="cap">macOS shown</span></div>
-    <p class="dim" style="margin-bottom:22px;font-size:14px">
-      App chords are ⌘ on macOS and <kbd>Ctrl</kbd><kbd>Shift</kbd> on Windows and Linux, so they
-      never reach the shell. <kbd>Ctrl</kbd><kbd>1–9</kbd> is the one plain-Ctrl chord: shells do not use it.
-    </p>
-    <div class="keys">
-      <div>
-  <span class="k"><kbd>⌘K</kbd></span>
-  <span class="v">The palette, in <em>go</em> mode</span>
-</div>
-      <div>
-  <span class="k"><kbd>⌘T</kbd></span>
-  <span class="v">New tab — profiles, or a URL</span>
-</div>
-      <div>
-  <span class="k"><kbd>⌘L</kbd></span>
-  <span class="v">Address the browser pane</span>
-</div>
-      <div>
-  <span class="k"><kbd>⌘D</kbd></span>
-  <span class="v">Toggle the browser split</span>
-</div>
-      <div>
-  <span class="k"><kbd>⌘⇧S</kbd></span>
-  <span class="v">Pin the sidebar</span>
-</div>
-      <div>
-  <span class="k"><kbd>⌥⌘T</kbd></span>
-  <span class="v">Quick terminal, over any app</span>
-</div>
-      <div>
-  <span class="k"><kbd>⌘↵</kbd></span>
-  <span class="v">Open the detected URL in the split</span>
-</div>
-      <div>
-  <span class="k"><kbd>⌘1–9</kbd></span>
-  <span class="v">Tab by position</span>
-</div>
-      <div>
-  <span class="k"><kbd>⌘Z</kbd></span>
-  <span class="v">Reopen the last closed tab</span>
-</div>
-      <div>
-  <span class="k"><kbd>⌃`</kbd></span>
-  <span class="v">Cycle tabs, most recent first</span>
-</div>
-      <div>
-  <span class="k"><kbd>⌘⇧R</kbd></span>
-  <span class="v">Reader mode</span>
-</div>
-      <div>
-  <span class="k"><kbd>⌘⇧?</kbd></span>
-  <span class="v">Ask, beside the shell</span>
-</div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section__in">
-    <div class="sectionhead"><h2>The record</h2><span class="cap">Docs</span></div>
-    <div class="grid grid--quad">
-      <a class="card" href="./docs/architecture/">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232,112H136V88h8a16,16,0,0,0,16-16V40a16,16,0,0,0-16-16H112A16,16,0,0,0,96,40V72a16,16,0,0,0,16,16h8v24H24a8,8,0,0,0,0,16H56v32H48a16,16,0,0,0-16,16v32a16,16,0,0,0,16,16H80a16,16,0,0,0,16-16V176a16,16,0,0,0-16-16H72V128H184v32h-8a16,16,0,0,0-16,16v32a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V176a16,16,0,0,0-16-16h-8V128h32a8,8,0,0,0,0-16ZM112,40h32V72H112ZM80,208H48V176H80Zm128,0H176V176h32Z"/></svg>Architecture</h3>
-  <p>The host, the crates, and why the compositor is ours. Each entry is a commitment, not a suggestion.</p>
-  <span class="card__more">Read →</span>
-</a>
-      <a class="card" href="./docs/design/">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M200.77,53.89A103.27,103.27,0,0,0,128,24h-1.07A104,104,0,0,0,24,128c0,43,26.58,79.06,69.36,94.17A32,32,0,0,0,136,192a16,16,0,0,1,16-16h46.21a31.81,31.81,0,0,0,31.2-24.88,104.43,104.43,0,0,0,2.59-24A103.28,103.28,0,0,0,200.77,53.89Zm13,93.71A15.89,15.89,0,0,1,198.21,160H152a32,32,0,0,0-32,32,16,16,0,0,1-21.31,15.07C62.49,194.3,40,164,40,128a88,88,0,0,1,87.09-88h.9a88.35,88.35,0,0,1,88,87.25A88.86,88.86,0,0,1,213.81,147.6ZM140,76a12,12,0,1,1-12-12A12,12,0,0,1,140,76ZM96,100A12,12,0,1,1,84,88,12,12,0,0,1,96,100Zm0,56a12,12,0,1,1-12-12A12,12,0,0,1,96,156Zm88-56a12,12,0,1,1-12-12A12,12,0,0,1,184,100Z"/></svg>Design</h3>
-  <p>Broadsheet: tokens, type, rules, spacing, and every surface the app draws.</p>
-  <span class="card__more">Read →</span>
-</a>
-      <a class="card" href="./docs/product/">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"/></svg>Product</h3>
-  <p>Thirteen passes of settled behaviour — navigation, stacks, sound, the look studio, containers.</p>
-  <span class="card__more">Read →</span>
-</a>
-      <a class="card" href="./docs/spikes/">
-  <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,152V136a96.37,96.37,0,0,0-64-90.51V40a16,16,0,0,0-16-16H112A16,16,0,0,0,96,40v5.49A96.37,96.37,0,0,0,32,136v16a16,16,0,0,0-16,16v24a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V168A16,16,0,0,0,224,152Zm-16-16v16H160V62.67A80.36,80.36,0,0,1,208,136ZM144,40V152H112V40ZM48,136A80.36,80.36,0,0,1,96,62.67V152H48Zm176,56H32V168H224v24Z"/></svg>Spikes</h3>
-  <p>Four throwaway binaries, each one able to kill the design. What they answered, and when.</p>
-  <span class="card__more">Read →</span>
-</a>
-    </div>
-  </div>
-</section>
-
-<section class="section section--tight">
-  <div class="section__in">
-    <div class="row" style="gap:20px">
-      <div style="flex:1 1 320px">
-        <h2 style="margin-bottom:8px">No builds yet.</h2>
-        <p class="dim mb0" style="font-size:14px">
-          When there are, they will be notarized on macOS, signed on Windows, and
-          self-updating from GitHub Releases. No telemetry, then or ever.
-        </p>
-      </div>
-      <div class="row">
-        <a class="btn btn--signal" href="https://github.com/cbassuarez/nus/subscription" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M128,88a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152Zm73.71,7.14a80,80,0,0,1-14.08,22.2,8,8,0,0,1-11.92-10.67,63.95,63.95,0,0,0,0-85.33,8,8,0,1,1,11.92-10.67,80.08,80.08,0,0,1,14.08,84.47ZM69,103.09a64,64,0,0,0,11.26,67.58,8,8,0,0,1-11.92,10.67,79.93,79.93,0,0,1,0-106.67A8,8,0,1,1,80.29,85.34,63.77,63.77,0,0,0,69,103.09ZM248,128a119.58,119.58,0,0,1-34.29,84,8,8,0,1,1-11.42-11.2,103.9,103.9,0,0,0,0-145.56A8,8,0,1,1,213.71,44,119.58,119.58,0,0,1,248,128ZM53.71,200.78A8,8,0,1,1,42.29,212a119.87,119.87,0,0,1,0-168,8,8,0,1,1,11.42,11.2,103.9,103.9,0,0,0,0,145.56Z"/></svg>Watch for releases</a>
-        <a class="btn btn--quiet" href="./download/">What to expect</a>
-      </div>
+    <div class="row" style="margin-top:24px">
+      <a class="btn btn--signal" href="https://github.com/cbassuarez/nus/subscription" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M128,88a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152Zm73.71,7.14a80,80,0,0,1-14.08,22.2,8,8,0,0,1-11.92-10.67,63.95,63.95,0,0,0,0-85.33,8,8,0,1,1,11.92-10.67,80.08,80.08,0,0,1,14.08,84.47ZM69,103.09a64,64,0,0,0,11.26,67.58,8,8,0,0,1-11.92,10.67,79.93,79.93,0,0,1,0-106.67A8,8,0,1,1,80.29,85.34,63.77,63.77,0,0,0,69,103.09ZM248,128a119.58,119.58,0,0,1-34.29,84,8,8,0,1,1-11.42-11.2,103.9,103.9,0,0,0,0-145.56A8,8,0,1,1,213.71,44,119.58,119.58,0,0,1,248,128ZM53.71,200.78A8,8,0,1,1,42.29,212a119.87,119.87,0,0,1,0-168,8,8,0,1,1,11.42,11.2,103.9,103.9,0,0,0,0,145.56Z"/></svg>Watch for releases</a>
+      <a class="btn btn--quiet" href="./download/">Build from source</a>
     </div>
   </div>
 </section>
