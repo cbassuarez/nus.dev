@@ -37,6 +37,7 @@ function masthead(depth) {
   // The app's own rule: text labels in the chrome give way to icons, and caps
   // labels stay only for words that are content. The header is chrome.
   const links = [
+    ['Panels', `${r}/panels/`, 'squares-four'],
     ['Docs', `${r}/docs/`, 'book-open-text'],
     ['Download', `${r}/download/`, 'download-simple'],
     ['About', `${r}/about/`, 'planet'],
@@ -45,7 +46,9 @@ function masthead(depth) {
 
   return `<header class="masthead">
   <div class="masthead__in">
-    <a class="wordmark" href="${r}/" aria-label="nus — home">nus</a>
+    <a class="mark" href="${r}/" aria-label="nus — home" title="nus">
+      <img src="${r}/assets/icon/nus-128.png" alt="" width="26" height="26" decoding="async">
+    </a>
     <nav class="nav" aria-label="Primary">
       ${links.map(([t, h, ic]) => {
         const ext = /^https?:/.test(h);
@@ -74,6 +77,7 @@ function footer(depth) {
       ['Issues', `${SITE.repo}/issues`]
     ]],
     ['Docs', [
+      ['Panels', `${r}/panels/`],
       ['Architecture', `${r}/docs/architecture/`],
       ['Design', `${r}/docs/design/`],
       ['Product', `${r}/docs/product/`],

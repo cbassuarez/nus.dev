@@ -263,10 +263,22 @@ blockquote {
   align-items: center;
   gap: 20px;
   min-height: var(--mast);
-  max-width: var(--shell);
-  margin: 0 auto;
-  padding-inline: var(--gutter);
+  /* Chrome hugs the window, so the header keeps its own tight gutter rather
+     than lining up with the content measure. */
+  padding-inline: clamp(10px, 1.4vw, 18px);
 }
+
+.mark {
+  display: flex;
+  align-items: center;
+  flex: none;
+  padding: 4px;
+  border: var(--hair) solid transparent;
+  line-height: 0;
+}
+.mark img { display: block; width: 26px; height: 26px; }
+.mark:hover { border-color: var(--ink); }
+.mark:focus-visible { outline: var(--float) solid var(--signal); outline-offset: 1px; }
 
 .wordmark {
   font-family: var(--serif);
@@ -319,6 +331,38 @@ blockquote {
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/* Narrow: the nav drops to its own ruled row and the icons get their names
+   back, rather than the whole strip squeezing past the viewport. */
+@media (max-width: 760px) {
+  :root { --mast: 84px; }
+  .masthead__in { flex-wrap: wrap; height: auto; gap: 0; }
+  .mark { margin-block: 6px; }
+  .controls { margin-inline-start: auto; padding-block: 9px; }
+  .nav {
+    order: 3;
+    flex: 0 0 100%;
+    min-width: 0;
+    margin-inline-start: 0;
+    border-top: var(--hair) solid var(--ink);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a { padding: 9px 10px; }
+  .nav a:first-child { padding-left: 0; }
+  .nav__name {
+    position: static;
+    width: auto; height: auto;
+    clip-path: none;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    line-height: 1;
+  }
 }
 
 /* controls cluster: theme + signal, mirroring the app's status cluster */
@@ -1566,3 +1610,231 @@ h2:hover .anchor, h3:hover .anchor, .anchor:focus { opacity: 1; }
 .pnl__src { overflow-x: auto; }
 .pnl__head .pnl__cap:last-child { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .pnl__row .pnl__cap { flex: none; }
+
+/* --- panels: the teaser grid on the home page ------------------------------ */
+
+.teaser {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  border: var(--hair) solid var(--ink);
+}
+.teaser__i {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 15px;
+  border-right: var(--hair) solid var(--hot);
+  border-bottom: var(--hair) solid var(--hot);
+  text-decoration: none;
+  min-width: 0;
+}
+.teaser__i:hover { background: var(--tint); color: inherit; }
+.teaser__i svg { width: 16px; height: 16px; fill: var(--signal); flex: none; }
+.teaser__i b { font-size: 13px; font-weight: 600; white-space: nowrap; }
+.teaser__i span {
+  margin-left: auto;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+/* --- panels page: one large panel, its explanation beside it -------------- */
+
+/* The panels want more room than the reading measure allows. */
+body.panels-page { --shell: 1320px; }
+
+.panelrow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
+  gap: clamp(24px, 4vw, 52px);
+  align-items: center;
+  padding-block: clamp(26px, 4vw, 44px);
+  border-bottom: var(--hair) solid var(--ink);
+}
+.panelrow:last-child { border-bottom: 0; }
+.panelrow:nth-child(even) .panelrow__art { order: 2; }
+
+.panelrow__art { min-width: 0; }
+.panelrow__say { min-width: 0; }
+.panelrow__say h3 {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 21px;
+  margin-bottom: 12px;
+}
+.panelrow__say h3 svg { width: 19px; height: 19px; fill: var(--signal); flex: none; }
+.panelrow__chord {
+  margin-left: auto;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.panelrow__say > p { font-size: 14.5px; line-height: 1.6; margin-bottom: 16px; max-width: 54ch; }
+
+.spec { list-style: none; padding: 0; margin: 0 0 14px; max-width: none; }
+.spec li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 7px 0;
+  border-top: var(--hair) solid var(--hot);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+.spec li svg { width: 14px; height: 14px; fill: var(--dim); flex: none; margin-top: 3px; }
+.spec li code { font-size: 11.5px; }
+
+.sectionhead__n {
+  color: var(--dim);
+  font-weight: 500;
+  margin-right: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 900px) {
+  .panelrow { grid-template-columns: 1fr; gap: 20px; }
+  .panelrow:nth-child(even) .panelrow__art { order: 0; }
+}
+
+/* --- panel internals ------------------------------------------------------ */
+
+/* palette: the serif prompt word, then what you typed */
+.pnl__prompt {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: var(--struct) solid var(--ink);
+  font-size: 14px;
+}
+.pnl__prompt .serif { font-size: 19px; }
+.pnl__typed { flex: none; }
+.pnl__bar { width: 2px; height: 15px; background: var(--signal); align-self: center; }
+
+/* ask: the context the question carries with it */
+.pnl__ctx {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 11px;
+  border-bottom: var(--hair) solid var(--hot);
+}
+.pnl__ctx .pnl__cap { border: var(--hair) solid var(--hot); padding: 2px 6px; }
+
+.pnl__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.pnl__chip svg { width: 11px; height: 11px; fill: currentColor; flex: none; }
+
+.pnl__code .c { color: var(--dim); }
+
+/* atlas: the icon's band completes an orbit as the panel rises */
+.pnl__atlashead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: var(--struct) solid var(--ink);
+}
+.pnl__atlashead img { display: block; flex: none; }
+.pnl__atlast { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+
+/* stacks: the sidebar tree beside the file that colours it */
+.pnl--split { flex-direction: row; }
+.pnl__side {
+  width: 44%;
+  flex: none;
+  border-right: var(--struct) solid var(--ink);
+  display: flex;
+  flex-direction: column;
+}
+.pnl__main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.pnl__row--child { padding-left: 26px; }
+.pnl__row--grand { padding-left: 40px; }
+.pnl__row--child, .pnl__row--grand { box-shadow: inset 1px 0 0 var(--hot); color: var(--dim); }
+
+/* tiles: real content in each tile */
+.pnl__tilelab {
+  position: absolute;
+  left: 8px; top: 7px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.pnl__tilelab svg { width: 11px; height: 11px; fill: currentColor; }
+.pnl__tileterm {
+  position: absolute;
+  left: 8px; right: 8px; top: 26px;
+  font-size: 9px;
+  line-height: 1.6;
+  white-space: pre;
+  overflow: hidden;
+}
+.pnl__tileterm .p { color: var(--signal); }
+.pnl__tileterm .g { color: var(--ansi-green); }
+.pnl__tileterm .d { color: var(--dim); }
+.pnl__tileweb { position: absolute; left: 8px; right: 8px; top: 28px; }
+.pnl__tileweb i { display: block; height: 6px; background: var(--ink); opacity: .22; margin-bottom: 5px; }
+.pnl__tileweb i.s { width: 62%; }
+
+/* peek and pip float over the page behind them */
+.pnl__underline.w { width: 44%; height: 11px; opacity: .3; }
+
+.pnl__pipwin {
+  position: absolute;
+  right: 18px; bottom: 18px;
+  width: 54%;
+  border: var(--float) solid var(--ink);
+  background: var(--paper);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.pnl__pipband { height: 4px; background: var(--signal); }
+.pnl__pipvideo {
+  aspect-ratio: 16 / 9;
+  background: var(--ink);
+  display: grid;
+  place-items: center;
+}
+.pnl__pipvideo svg { width: 26px; height: 26px; fill: var(--paper); opacity: .5; }
+.pnl__pipfoot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 9px;
+  border-top: var(--hair) solid var(--ink);
+}
+.pnl__pipfoot .grow { flex: 1; }
+
+/* compact: the hovered row's name, beside the column */
+.pnl__rail .grow { flex: 1; }
+.pnl__tip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  align-self: flex-start;
+  border: var(--hair) solid var(--ink);
+  background: var(--paper);
+  box-shadow: 3px 3px 0 var(--ink);
+  padding: 5px 9px;
+  font-size: 10px;
+  margin-bottom: 4px;
+}
+.pnl__tip svg { width: 12px; height: 12px; fill: currentColor; }
+
+@media (max-width: 620px) {
+  .pnl--split { flex-direction: column; }
+  .pnl__side { width: auto; border-right: 0; border-bottom: var(--struct) solid var(--ink); }
+}
