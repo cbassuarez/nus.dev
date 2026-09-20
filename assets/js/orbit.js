@@ -39,7 +39,7 @@ export function mountOrbit(root) {
   if (!stage || bodies.length < 2) return null;
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const narrow = window.matchMedia('(max-width: 1000px)');
+  const narrow = window.matchMedia('(max-width: 700px)');
 
   let raf = null;
   let live = false;

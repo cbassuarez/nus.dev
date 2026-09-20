@@ -1421,7 +1421,7 @@ h2:hover .anchor, h3:hover .anchor, .anchor:focus { opacity: 1; }
 .orbit--flat .orbit__body .win__term { height: clamp(280px, 40vw, 380px); }
 .orbit--flat .orbit__dial { display: none; }
 
-@media (max-width: 1000px) {
+@media (max-width: 700px) {
   .orbit__rail { height: auto; }
   .orbit__stage {
     position: static; height: auto; min-height: 0;
@@ -1943,6 +1943,7 @@ h1 em,h2 em { font-family:var(--serif); font-weight:500; letter-spacing:-.035em;
 @media(max-width:720px) {.feature-pair {grid-template-columns:1fr;gap:10px;}}
 /* Restore the authored orbit; its windows are now recordings of the Mac app. */
 .orbit__core {width:min(470px,36vw);padding-inline:20px;}
+@media(max-width:1000px) {.orbit__core{width:min(470px,34vw);padding-inline:12px;} .orbit__core h1{font-size:clamp(26px,3.6vw,58px);} .orbit__lede{font-size:12px;} .orbit__body{width:min(500px,30vw);}}
 .orbit__core h1 {font-size:clamp(34px,4vw,58px);letter-spacing:-.06em;line-height:1.06;}
 .orbit__core>.cap {margin-bottom:20px;font-size:10px;}
 .orbit__lede {font-size:13px;line-height:1.7;max-width:36ch;}
@@ -1959,7 +1960,7 @@ h1 em,h2 em { font-family:var(--serif); font-weight:500; letter-spacing:-.035em;
 .orbit--flat .orbit__core {width:100%;max-width:600px;}
 .orbit--flat .orbit__body {width:100%;max-width:800px;transform:none;}
 .orbit--flat .orbit-film figcaption {font-size:12px;}
-@media(max-width:1000px) {.orbit__core{width:100%;max-width:600px;}.orbit__body{width:100%;max-width:800px;margin-inline:auto;}.capture-note{flex-direction:column;gap:6px;}}
+@media(max-width:700px) {.orbit__core{width:100%;max-width:600px;}.orbit__body{width:100%;max-width:800px;margin-inline:auto;}.capture-note{flex-direction:column;gap:6px;}}
 @media(prefers-reduced-motion:reduce) {.orbit__rail{height:auto;}.orbit__stage{position:static;height:auto;min-height:0;display:block;padding:30px var(--gutter);perspective:none;}.orbit__body{position:static;width:100%;max-width:800px;transform:none;margin:24px auto;will-change:auto;}.orbit__core{width:100%;max-width:600px;margin:auto;transform:none;}.orbit__dial{display:none;}}
 .nus-mark {display:block;width:33px;height:33px;flex:none;color:var(--ink);}
 @font-face {font-family:'Silkscreen';src:url('../fonts/Silkscreen-Regular.ttf') format('truetype');font-display:swap;}
