@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Measurements · nus</title>
-<meta name="description" content="The numbers behind the claims: bundle size, memory per tab and window, file opens, latency, frame cost — and how each was taken.">
-<link rel="canonical" href="https://nus.dev/docs/measurements/">
+<meta name="description" content="The numbers behind the claims: package sizes on every platform, memory per tab and window, file opens, latency, frame cost — and how each was taken.">
+<link rel="canonical" href="https://cbassuarez.com/nus.dev/docs/measurements/">
 <meta name="theme-color" content="#c8102e">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="nus.dev">
 <meta property="og:title" content="Measurements · nus">
-<meta property="og:description" content="The numbers behind the claims: bundle size, memory per tab and window, file opens, latency, frame cost — and how each was taken.">
-<meta property="og:url" content="https://nus.dev/docs/measurements/">
-<meta property="og:image" content="https://nus.dev/assets/icon/nus-512.png">
+<meta property="og:description" content="The numbers behind the claims: package sizes on every platform, memory per tab and window, file opens, latency, frame cost — and how each was taken.">
+<meta property="og:url" content="https://cbassuarez.com/nus.dev/docs/measurements/">
+<meta property="og:image" content="https://cbassuarez.com/nus.dev/assets/icon/nus-512.png">
 <meta name="twitter:card" content="summary">
 
 <link rel="icon" type="image/svg+xml" href="../../assets/icon/nus-paper.svg" data-nus-favicon data-icon-root="../../assets/icon/">
@@ -21,7 +21,7 @@
 
 <link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/Newsreader-Italic.woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/css/site.css?v=eade6e7955a6">
+<link rel="stylesheet" href="../../assets/css/site.css?v=e6e7bb8a95bf">
 <script>
 /* Apply the stored theme and signal before first paint, so the page never flashes. */
 (function(){try{
@@ -62,7 +62,7 @@
 <nav class="doc__nav" aria-label="Documentation">
   <h4>Docs</h4>
   <ul><li><a href="../product/">Product</a></li><li><a href="../architecture/">Architecture</a></li><li><a href="../design/">Design</a></li><li><a href="../measurements/">Measurements</a></li><li><a href="../dependencies/">Dependencies</a></li></ul>
-  <h4>On this page</h4><ul><li class=""><a href="#size-and-memory">Size and memory</a></li><li class=""><a href="#opening-files">Opening files</a></li><li class=""><a href="#the-terminal">The terminal</a></li><li class=""><a href="#what-is-checked-on-every-release">What is checked on every release</a></li></ul>
+  <h4>On this page</h4><ul><li class=""><a href="#size">Size</a></li><li class=""><a href="#memory">Memory</a></li><li class=""><a href="#opening-files">Opening files</a></li><li class=""><a href="#the-terminal">The terminal</a></li><li class=""><a href="#what-is-checked-on-every-release">What is checked on every release</a></li></ul>
 </nav>
 <article class="doc__body">
   <h1>Measurements</h1>
@@ -71,9 +71,12 @@
     <span>Measurements</span>
   </div>
 <p>The numbers the site quotes, and how each was taken. Every figure here is a recorded run on a release build, not an estimate; where a number is from an isolated harness rather than the full application, it says so.</p>
-<h2 id="size-and-memory"><a class="anchor" href="#size-and-memory" aria-hidden="true">#</a>Size and memory</h2>
-<div class="tablewrap"><table><thead><tr><th>Measurement</th><th>Result</th></tr></thead><tbody><tr><td>macOS bundle</td><td>429 → 355 MiB, 17% smaller</td></tr><tr><td>Additional idle browser tabs</td><td>101–102 MiB each, after initialization</td></tr><tr><td>Additional empty windows</td><td>1.5–19 MiB each</td></tr></tbody></table></div>
-<p>The bundle is <code>nus.app</code> as packaged for release, Chromium included. Tab and window figures are what each further tab or window adds to the process once it has finished initializing and gone idle — the marginal cost, not the baseline. A browser tab is a full Chromium renderer, which is where the hundred megabytes go; a window is only the app's own state, which is why an empty one costs so little.</p>
+<h2 id="size"><a class="anchor" href="#size" aria-hidden="true">#</a>Size</h2>
+<div class="tablewrap"><table><thead><tr><th>Platform</th><th>Download</th><th>On disk</th></tr></thead><tbody><tr><td>macOS, Apple silicon</td><td>154 MiB <code>.zip</code></td><td>355 MiB <code>nus.app</code></td></tr><tr><td>Windows, x64</td><td>191 MiB <code>.zip</code></td><td>457 MiB</td></tr><tr><td>Linux, x64</td><td>358 MiB <code>.tar.gz</code></td><td>1.49 GiB</td></tr></tbody></table></div>
+<p>The current release packages, as published, and what they unpack to. Chromium is most of every one of them; the Linux library also carries its symbol table, which is where its on-disk figure comes from.</p>
+<h2 id="memory"><a class="anchor" href="#memory" aria-hidden="true">#</a>Memory</h2>
+<div class="tablewrap"><table><thead><tr><th>Measurement</th><th>Result</th></tr></thead><tbody><tr><td>Additional idle browser tabs</td><td>101–102 MiB each, after initialization</td></tr><tr><td>Additional empty windows</td><td>1.5–19 MiB each</td></tr></tbody></table></div>
+<p>What each further tab or window adds to the process once it has finished initializing and gone idle — the marginal cost, not the baseline. A browser tab is a full Chromium renderer, which is where the hundred megabytes go; a window is only the app's own state, which is why an empty one costs so little.</p>
 <h2 id="opening-files"><a class="anchor" href="#opening-files" aria-hidden="true">#</a>Opening files</h2>
 <div class="tablewrap"><table><thead><tr><th>Measurement</th><th>Result</th></tr></thead><tbody><tr><td>A 10 MiB file</td><td>28.9 ms at p95, across 20 opens</td></tr><tr><td>A 100 MiB file</td><td>63 ms at most, across five opens</td></tr></tbody></table></div>
 <p>Opening a file means the editor pane, on a real file of that size. The buffer is a rope, so a large file is not copied into place line by line. The p95 is the number to plan around; the maximum is given for the large file because five opens are too few for a percentile to mean anything.</p>

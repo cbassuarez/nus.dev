@@ -10,6 +10,7 @@
     "dev": "node scripts/build.mjs --serve",
     "sync": "node scripts/sync-docs.mjs",
     "releases": "node scripts/releases-snapshot.mjs",
+    "packaging": "node scripts/packaging.mjs",
     "wasm": "cd wasm/vt-wasm && wasm-pack build --release --target web --out-dir ../../.wasm-pkg --no-typescript && cd ../.. && cp .wasm-pkg/nus_vt_wasm_bg.wasm .wasm-pkg/nus_vt_wasm.js assets/wasm/ && rm -rf .wasm-pkg",
     "record": "python3 scripts/record-cast.py casts/nus-vt.cast --cols 80 --rows 24 --max-seconds 3 --send casts/session.txt"
   },

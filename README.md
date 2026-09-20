@@ -14,6 +14,7 @@ npm run build     # write the pages
 npm run dev       # write them, then serve on http://localhost:8000
 npm run sync      # pull the app's screenshots out of ../nus into assets/shots/
 npm run releases  # refresh assets/releases.json, the download page's fallback
+npm run packaging # write the Homebrew cask and winget manifests from it
 npm run wasm      # rebuild the VT core for the browser  (needs Rust + wasm-pack)
 npm run record    # re-record the hero session           (needs the nus checkout)
 ```
@@ -137,6 +138,20 @@ change the page that describes it and rebuild.
 
 `content/MEASUREMENTS.md` carries every number the site quotes, with how it
 was taken; the home page's figures come from there.
+
+## Installing
+
+`install.sh` and `install.ps1` at the root are served as-is and are what the
+download page's one-liners run: find the newest release with a package for
+the machine, verify it against the release's `SHA256SUMS.txt`, unpack, put
+`nus` on PATH. They talk to GitHub Releases directly, so they work wherever
+the site is hosted.
+
+`scripts/packaging.mjs` writes `packaging/homebrew/Casks/nus.rb` and the
+winget manifests from `assets/releases.json`. The release-snapshot workflow
+runs it and pushes the cask to `cbassuarez/homebrew-tap` when a `TAP_TOKEN`
+secret (contents: write on the tap) exists; winget manifests are submitted
+to microsoft/winget-pkgs by hand or with `wingetcreate`.
 
 `scripts/markdown.mjs` covers the subset those files use — headings,
 paragraphs, lists, pipe tables, fenced code, blockquotes, and the inline set.

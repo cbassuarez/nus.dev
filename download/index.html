@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Download · nus</title>
 <meta name="description" content="Get nus for macOS, Windows and Linux. Published releases, signing details, checksums and installation instructions in one place.">
-<link rel="canonical" href="https://nus.dev/download/">
+<link rel="canonical" href="https://cbassuarez.com/nus.dev/download/">
 <meta name="theme-color" content="#c8102e">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="nus.dev">
 <meta property="og:title" content="Download · nus">
 <meta property="og:description" content="Get nus for macOS, Windows and Linux. Published releases, signing details, checksums and installation instructions in one place.">
-<meta property="og:url" content="https://nus.dev/download/">
-<meta property="og:image" content="https://nus.dev/assets/icon/nus-512.png">
+<meta property="og:url" content="https://cbassuarez.com/nus.dev/download/">
+<meta property="og:image" content="https://cbassuarez.com/nus.dev/assets/icon/nus-512.png">
 <meta name="twitter:card" content="summary">
 
 <link rel="icon" type="image/svg+xml" href="../assets/icon/nus-paper.svg" data-nus-favicon data-icon-root="../assets/icon/">
@@ -21,7 +21,7 @@
 
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/Newsreader-Italic.woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/site.css?v=eade6e7955a6">
+<link rel="stylesheet" href="../assets/css/site.css?v=e6e7bb8a95bf">
 <script>
 /* Apply the stored theme and signal before first paint, so the page never flashes. */
 (function(){try{
@@ -104,6 +104,21 @@
   <p class="small dim">A download appears only after it is published with a checksum. If this page cannot reach GitHub, <a href="https://github.com/cbassuarez/nus/releases">the release archive</a> is the source of record.</p>
 </div></section>
 </div>
+<section class="section" id="install"><div class="section__in">
+  <div class="sectionhead"><h2>From a shell.</h2><span class="cap">One line</span></div>
+  <p>The same package, fetched and checked for you. The script picks the newest release with a build for your machine, verifies it against the release’s <code>SHA256SUMS.txt</code>, unpacks it, and puts <code>nus</code> on your PATH. It needs no administrator rights and writes nowhere else. <a href="https://cbassuarez.com/nus.dev/install.sh">Read it first</a> if you like; it is short.</p>
+  <div class="install-lines">
+    <div><span class="cap">macOS · Linux</span><pre><code>curl -fsSL https://cbassuarez.com/nus.dev/install.sh | sh</code></pre></div>
+    <div><span class="cap">Windows</span><pre><code>irm https://cbassuarez.com/nus.dev/install.ps1 | iex</code></pre></div>
+  </div>
+  <p class="small dim"><code>NUS_CHANNEL=preview</code> takes the preview channel when a stable exists; <code>NUS_VERSION=v0.0.1</code> pins a tag. On Windows, set them as <code>$env:</code> variables first.</p>
+  <div class="sectionhead" style="margin-top:34px"><h2>Or your package manager.</h2><span class="cap">Homebrew · winget</span></div>
+  <div class="install-lines">
+    <div><span class="cap">macOS</span><pre><code>brew install --cask cbassuarez/tap/nus</code></pre></div>
+    <div><span class="cap">Windows</span><pre><code>winget install cbassuarez.nus</code></pre></div>
+  </div>
+  <p class="small dim">The cask and the winget manifest are written from each release’s own hashes. A preview cask is not notarized: <code>--no-quarantine</code>, or right-click and Open the first time. The winget listing appears once a release has been accepted into the community repository; until then the one-liner above installs the same package.</p>
+</div></section>
 <section class="section"><div class="section__in">
   <div class="sectionhead"><h2>For the curious.</h2><span class="cap">Build from source</span></div>
   <p>nus is written in Rust, with Chromium for pages. Bring a stable Rust toolchain and your platform’s native build tools.</p>

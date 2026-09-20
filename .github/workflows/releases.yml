@@ -25,11 +25,29 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/releases-snapshot.mjs
-      - name: Commit it if it changed
+      - name: Write the package-manager manifests
+        run: node scripts/packaging.mjs
+      - name: Commit what changed
         run: |
-          if git diff --quiet -- assets/releases.json; then echo "nothing to commit"; exit 0; fi
+          git add assets/releases.json packaging
+          if git diff --cached --quiet; then echo "nothing to commit"; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/releases.json
           git commit -m "releases: snapshot ${{ github.event.client_payload.tag || '' }}"
           git push
+      - name: Push the cask to the tap
+        # cbassuarez/homebrew-tap carries Casks/nus.rb. TAP_TOKEN needs
+        # Contents: write there; without it the cask is only kept here.
+        env:
+          TAP_TOKEN: ${{ secrets.TAP_TOKEN }}
+        run: |
+          if [ -z "$TAP_TOKEN" ]; then echo "TAP_TOKEN not set; cask left in packaging/"; exit 0; fi
+          if [ ! -f packaging/homebrew/Casks/nus.rb ]; then echo "no cask yet"; exit 0; fi
+          git clone -q "https://x-access-token:$TAP_TOKEN@github.com/cbassuarez/homebrew-tap" tap
+          mkdir -p tap/Casks && cp packaging/homebrew/Casks/nus.rb tap/Casks/nus.rb
+          cd tap
+          git add -A && if git diff --cached --quiet; then echo "tap is current"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -qm "nus $(grep -m1 "^  version" Casks/nus.rb | cut -d'"' -f2)"
+          git push -q

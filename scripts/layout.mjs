@@ -13,7 +13,9 @@ export const SITE = {
   name: 'nus',
   long: 'terminus',
   domain: 'nus.dev',
-  url: 'https://nus.dev',
+  // Served under a subpath until the nus.dev domain is live; every absolute
+  // URL on the site and in the install scripts comes from here.
+  url: 'https://cbassuarez.com/nus.dev',
   repo: 'https://github.com/cbassuarez/nus',
   tagline: 'A terminal with room for the rest.',
   author: 'Sebastian Suarez-Solis'

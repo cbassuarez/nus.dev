@@ -16,7 +16,7 @@ export default {
 <section class="section section--tight" id="measured"><div class="section__in">
  <div class="sectionhead"><h2>Light on its feet.</h2><span class="cap">Measured on release builds</span></div>
  <div class="figs figs--lead">
-  <div><b>355<small> MiB</small></b><span>macOS bundle</span><em>down from 429 MiB — 17% smaller</em></div>
+  <div><b>355<small> MiB</small></b><span>The Mac app, on disk</span><em>154 MiB to download · Windows 457 MiB · Linux 1.49 GiB</em></div>
   <div><b>28.9<small> ms</small></b><span>Opening a 10 MiB file</span><em>p95 across 20 opens</em></div>
   <div><b>63<small> ms</small></b><span>Opening a 100 MiB file</span><em>maximum across five opens</em></div>
   <div><b>101<small> MiB</small></b><span>Each idle browser tab</span><em>101–102 MiB, after initialization</em></div>

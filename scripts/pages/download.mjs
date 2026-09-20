@@ -49,6 +49,21 @@ export default {
   <p class="small dim">A download appears only after it is published with a checksum. If this page cannot reach GitHub, <a href="${SITE.repo}/releases">the release archive</a> is the source of record.</p>
 </div></section>
 </div>
+<section class="section" id="install"><div class="section__in">
+  <div class="sectionhead"><h2>From a shell.</h2><span class="cap">One line</span></div>
+  <p>The same package, fetched and checked for you. The script picks the newest release with a build for your machine, verifies it against the release’s <code>SHA256SUMS.txt</code>, unpacks it, and puts <code>nus</code> on your PATH. It needs no administrator rights and writes nowhere else. <a href="${SITE.url}/install.sh">Read it first</a> if you like; it is short.</p>
+  <div class="install-lines">
+    <div><span class="cap">macOS · Linux</span><pre><code>curl -fsSL ${SITE.url}/install.sh | sh</code></pre></div>
+    <div><span class="cap">Windows</span><pre><code>irm ${SITE.url}/install.ps1 | iex</code></pre></div>
+  </div>
+  <p class="small dim"><code>NUS_CHANNEL=preview</code> takes the preview channel when a stable exists; <code>NUS_VERSION=v0.0.1</code> pins a tag. On Windows, set them as <code>$env:</code> variables first.</p>
+  <div class="sectionhead" style="margin-top:34px"><h2>Or your package manager.</h2><span class="cap">Homebrew · winget</span></div>
+  <div class="install-lines">
+    <div><span class="cap">macOS</span><pre><code>brew install --cask cbassuarez/tap/nus</code></pre></div>
+    <div><span class="cap">Windows</span><pre><code>winget install cbassuarez.nus</code></pre></div>
+  </div>
+  <p class="small dim">The cask and the winget manifest are written from each release’s own hashes. A preview cask is not notarized: <code>--no-quarantine</code>, or right-click and Open the first time. The winget listing appears once a release has been accepted into the community repository; until then the one-liner above installs the same package.</p>
+</div></section>
 <section class="section"><div class="section__in">
   <div class="sectionhead"><h2>For the curious.</h2><span class="cap">Build from source</span></div>
   <p>nus is written in Rust, with Chromium for pages. Bring a stable Rust toolchain and your platform’s native build tools.</p>

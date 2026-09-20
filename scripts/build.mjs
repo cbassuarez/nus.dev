@@ -35,7 +35,7 @@ const DOCS = [
   { slug: 'design', file: 'DESIGN.md', title: 'Design', ic: 'palette',
     blurb: 'Broadsheet: the principles, the tokens, type, rules, spacing and shadow, and every surface the app draws.' },
   { slug: 'measurements', file: 'MEASUREMENTS.md', title: 'Measurements', ic: 'hard-hat',
-    blurb: 'The numbers behind the claims: bundle size, memory per tab and window, file opens, latency, frame cost — and how each was taken.' },
+    blurb: 'The numbers behind the claims: package sizes on every platform, memory per tab and window, file opens, latency, frame cost — and how each was taken.' },
   { slug: 'dependencies', file: 'DEPENDENCIES.md', title: 'Dependencies', ic: 'stack',
     blurb: 'What nus is built on, what it bundles, and what it ported.' }
 ];
@@ -157,8 +157,8 @@ ${urls.map((u) => `  <url><loc>${SITE.url}${u}</loc><lastmod>${today}</lastmod><
   <h1 style="margin-bottom:14px">404</h1>
   <p class="lede">That page is not here. It may never have been.</p>
   <div class="row" style="margin-top:24px">
-    <a class="btn btn--fill" href="/">${icon('arrow-right')}Home</a>
-    <a class="btn btn--quiet" href="/docs/">Docs</a>
+    <a class="btn btn--fill" href="${SITE.url}/">${icon('arrow-right')}Home</a>
+    <a class="btn btn--quiet" href="${SITE.url}/docs/">Docs</a>
   </div>
 </div></section>`
   }));

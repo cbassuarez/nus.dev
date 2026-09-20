@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nus.dev/sitemap.xml
+Sitemap: https://cbassuarez.com/nus.dev/sitemap.xml

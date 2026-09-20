@@ -2001,3 +2001,9 @@ h1 em,h2 em { font-family:var(--serif); font-weight:500; letter-spacing:-.035em;
   .figs--lead > div { border-bottom: var(--hair) solid var(--ink); }
   .figs--lead > div:nth-child(2n) { border-right: 0; }
 }
+
+/* --- download: the one-liners --------------------------------------------- */
+
+.install-lines { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 18px 0 12px; }
+.install-lines .cap { display: block; margin-bottom: 8px; color: var(--dim); }
+.install-lines pre { margin: 0; }

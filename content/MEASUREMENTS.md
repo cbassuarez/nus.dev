@@ -4,20 +4,30 @@ The numbers the site quotes, and how each was taken. Every figure here is a
 recorded run on a release build, not an estimate; where a number is from an
 isolated harness rather than the full application, it says so.
 
-## Size and memory
+## Size
+
+| Platform | Download | On disk |
+|---|---|---|
+| macOS, Apple silicon | 154 MiB `.zip` | 355 MiB `nus.app` |
+| Windows, x64 | 191 MiB `.zip` | 457 MiB |
+| Linux, x64 | 358 MiB `.tar.gz` | 1.49 GiB |
+
+The current release packages, as published, and what they unpack to.
+Chromium is most of every one of them; the Linux library also carries its
+symbol table, which is where its on-disk figure comes from.
+
+## Memory
 
 | Measurement | Result |
 |---|---|
-| macOS bundle | 429 → 355 MiB, 17% smaller |
 | Additional idle browser tabs | 101–102 MiB each, after initialization |
 | Additional empty windows | 1.5–19 MiB each |
 
-The bundle is `nus.app` as packaged for release, Chromium included. Tab and
-window figures are what each further tab or window adds to the process once
-it has finished initializing and gone idle — the marginal cost, not the
-baseline. A browser tab is a full Chromium renderer, which is where the
-hundred megabytes go; a window is only the app's own state, which is why an
-empty one costs so little.
+What each further tab or window adds to the process once it has finished
+initializing and gone idle — the marginal cost, not the baseline. A browser
+tab is a full Chromium renderer, which is where the hundred megabytes go; a
+window is only the app's own state, which is why an empty one costs so
+little.
 
 ## Opening files
 
