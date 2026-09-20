@@ -15,6 +15,7 @@ npm run dev       # write them, then serve on http://localhost:8000
 npm run sync      # pull the app's screenshots out of ../nus into assets/shots/
 npm run releases  # refresh assets/releases.json, the download page's fallback
 npm run packaging # write the Homebrew cask and winget manifests from it
+npm run vendor:cuelume -- 0.2.2  # intentionally refresh the pinned site sound library
 npm run wasm      # rebuild the VT core for the browser  (needs Rust + wasm-pack)
 npm run record    # re-record the hero session           (needs the nus checkout)
 ```
@@ -177,5 +178,6 @@ Pages serves `main` at the repo root. `CNAME` points at `nus.dev`; see
 ## Licence
 
 Site code MIT, same as the app. Bundled fonts are OFL (IBM Plex Mono,
-Newsreader) and the icons are Phosphor, MIT — see `assets/fonts/OFL-*.txt` and
-`assets/icons/LICENSE`.
+Newsreader), the icons are Phosphor (MIT), and the pinned Cuelume interaction
+sound library is MIT — see `assets/fonts/OFL-*.txt`, `assets/icons/LICENSE`,
+and `assets/vendor/cuelume/0.2.2/LICENSE`.
