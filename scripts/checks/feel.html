@@ -27,12 +27,13 @@ main{max-width:1000px;margin:auto;padding:36px var(--gutter) 70px}
 <div class="row" style="margin:22px 0">
 <button class="btn btn--quiet" id="sound">Sound on</button>
 <button class="btn btn--quiet" id="raw">Raw Web Audio tone</button>
-<button class="btn btn--quiet" id="rearm">Re-arm mobile primer</button>
+<button class="btn btn--quiet" id="rearm">Primer not used on iOS media backend</button>
 <label class="cap">Volume <input id="volume" type="range" min="0" max="1" step=".05" value=".55"></label>
 </div>
 
 <h2>Mobile audio diagnostics</h2>
 <dl class="diag">
+<div><dt>Production backend</dt><dd id="backend">—</dd></div>
 <div><dt>Web Audio</dt><dd id="web-audio">—</dd></div>
 <div><dt>User activation</dt><dd id="activation">—</dd></div>
 <div><dt>Audio session</dt><dd id="session">—</dd></div>
@@ -46,13 +47,15 @@ main{max-width:1000px;margin:auto;padding:36px var(--gutter) 70px}
 <h2>Event log</h2><pre id="log" aria-live="polite"></pre>
 </main>
 <script type="module">
-import {sounds,play,setVolume} from "../../assets/vendor/cuelume/0.2.2/index.js";
+import {sounds} from "../../assets/vendor/cuelume/0.2.2/index.js";
+import {play,setVolume,diagnostics as transportState} from "../../assets/js/feel-audio.js";
 import {feel,audioDiagnostics} from "../../assets/js/feel.js";
 import {FEEL_EVENTS} from "../../assets/js/feel-config.js";
 
 const q=s=>document.querySelector(s),palette=q("#palette"),events=q("#events"),log=q("#log");
 
 function paint(){
+  q("#backend").textContent=audioDiagnostics.backend+" · "+JSON.stringify(transportState());
   q("#web-audio").textContent=(window.AudioContext||window.webkitAudioContext)?"available":"unavailable";
   const a=audioDiagnostics.userActivation;
   q("#activation").textContent=a?("hasBeenActive="+a.hasBeenActive+" · isActive="+a.isActive):"API unavailable";
@@ -74,7 +77,7 @@ q("#sound").onclick=()=>{
   if(feel.soundEnabled) play("toggle",{volume:.35});
   paint();
 };
-q("#rearm").onclick=()=>{audioDiagnostics.rearm();log.textContent="mobile primer re-armed\n"+log.textContent;paint();};
+q("#rearm").hidden=true;
 q("#volume").oninput=e=>setVolume(Number(e.target.value));
 
 let rawContext;
