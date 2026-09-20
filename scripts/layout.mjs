@@ -7,7 +7,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const assetVersion = path => createHash('sha256').update(readFileSync(join(ROOT,path))).digest('hex').slice(0,12);
+export const assetVersion = path => createHash('sha256').update(readFileSync(join(ROOT,path))).digest('hex').slice(0,12);
 
 export const SITE = {
   name: 'nus',
@@ -16,13 +16,14 @@ export const SITE = {
   // Served under a subpath until the nus.dev domain is live; every absolute
   // URL on the site and in the install scripts comes from here.
   url: 'https://cbassuarez.com/nus.dev',
+  entryUrl: 'https://cbassuarez.github.io/nus.dev',
   repo: 'https://github.com/cbassuarez/nus',
   tagline: 'A terminal with room for the rest.',
   author: 'Sebastian Suarez-Solis'
 };
 
 const iconCache = new Map();
-const nusMark = readFileSync(join(ROOT, 'assets/icon/nus.svg'), 'utf8')
+export const nusMark = readFileSync(join(ROOT, 'assets/icon/nus.svg'), 'utf8')
   .replace('<svg ', '<svg class="nus-mark" aria-hidden="true" focusable="false" ');
 
 /** Inlines a Phosphor icon so it inherits colour and costs no request. */
@@ -37,7 +38,7 @@ export function icon(name, cls = '') {
 }
 
 /** `depth` is how many directories deep the page sits, for relative asset paths. */
-const rel = (depth) => (depth === 0 ? '.' : Array(depth).fill('..').join('/'));
+export const rel = (depth) => (depth === 0 ? '.' : Array(depth).fill('..').join('/'));
 
 function masthead(depth) {
   const r = rel(depth);
@@ -125,9 +126,10 @@ function footer(depth) {
 
 /**
  * @param {{title:string, description:string, body:string, depth?:number,
- *          path?:string, bodyClass?:string, head?:string}} page
+ *          path?:string, bodyClass?:string, head?:string, indexed?:boolean,
+ *          chrome?:{header:string,footer:string}|null, module?:string}} page
  */
-export function page({ title, description, body, depth = 0, path = '/', bodyClass = '', head = '', module = '' }) {
+export function page({ title, description, body, depth = 0, path = '/', bodyClass = '', head = '', module = '', indexed = true, chrome = null }) {
   const r = rel(depth);
   const full = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${title} · ${SITE.name}`;
   const canonical = SITE.url + path;
@@ -140,6 +142,7 @@ export function page({ title, description, body, depth = 0, path = '/', bodyClas
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${full}</title>
 <meta name="description" content="${description}">
+${indexed ? '' : '<meta name="robots" content="noindex,nofollow,noarchive">'}
 <link rel="canonical" href="${canonical}">
 <meta name="theme-color" content="#c8102e">
 
@@ -171,11 +174,11 @@ ${head}</head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
 <a class="skip" href="#main">Skip to content</a>
 <div class="band"></div>
-${masthead(depth)}
+${chrome ? chrome.header : masthead(depth)}
 <main id="main">
 ${body}
 </main>
-${footer(depth)}
+${chrome ? chrome.footer : footer(depth)}
 <script src="${r}/assets/js/site.js?v=${assetVersion('assets/js/site.js')}" defer></script>
 ${module ? `<script type="module">
 ${module}

@@ -1,0 +1,36 @@
+name: Build review packet
+on:
+  push:
+    branches: [review-room-20260920]
+permissions:
+  contents: write
+concurrency:
+  group: review-room-20260920
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Refresh published release evidence
+        run: npm run releases
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Build and test the complete static site
+        run: |
+          npm run build
+          npm test
+      - name: Commit generated HTML to the integration branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add review/ assets/releases.json sitemap.xml robots.txt 404.html docs/ index.html about/ download/ panels/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Generate reviewed static packet and current release snapshot'
+            git push origin HEAD:review-room-20260920
+          fi

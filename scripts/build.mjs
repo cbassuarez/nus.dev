@@ -12,6 +12,7 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, existsSync
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
+import { buildReview } from './review/build.mjs';
 import { render } from './markdown.mjs';
 import { page, icon, SITE } from './layout.mjs';
 
@@ -182,7 +183,9 @@ async function build() {
   written.push(buildDocsIndex());
   for (const d of DOCS) written.push(buildDoc(d));
 
+  // Review output is public-by-URL, deliberately excluded from discovery feeds.
   buildFeeds(written);
+  written.push(...buildReview());
 
   console.log(written.map((p) => `  ${p}`).join('\n'));
   console.log(`\n${written.length} pages in ${Date.now() - t0}ms`);
