@@ -1,7 +1,9 @@
 # nus.dev
 
 The site for [nus](https://github.com/cbassuarez/nus) — *terminus*, a terminal
-emulator that is also a browser. Published at **[nus.dev](https://nus.dev)**.
+emulator that is also a browser. Published for now at
+**[cbassuarez.github.io/nus.dev](https://cbassuarez.github.io/nus.dev/)**,
+with **cbassuarez.com/nus.dev** retained as the canonical/final destination.
 
 Static HTML with no dependencies. `node scripts/build.mjs` writes the pages;
 the output is committed, so GitHub Pages serves the repo directly with no CI
