@@ -75,3 +75,19 @@ test("the built site uses only local Cuelume runtime assets",()=>{
     }
   }
 });
+
+
+test("mobile feel integration opts into playback and primes Web Audio on activating gestures",()=>{
+  const js=read("assets/js/feel.js");
+  assert.ok(js.includes('navigator.audioSession.type = active ? "playback" : "ambient"'));
+  assert.ok(js.includes('const events = ["pointerup", "touchend", "click", "keydown", "mousedown"]'));
+  assert.ok(js.includes('play("tick", { volume: 0.0001 })'));
+  assert.ok(js.includes('CustomEvent("nus:audio-prime")'));
+});
+
+test("mobile Feel Lab includes a raw Web Audio bypass diagnostic",()=>{
+  const html=read("scripts/checks/feel.html");
+  assert.ok(html.includes("Raw Web Audio tone"));
+  assert.ok(html.includes("navigator.audioSession.type=\"playback\""));
+  assert.ok(html.includes("raw Web Audio tone requested"));
+});
