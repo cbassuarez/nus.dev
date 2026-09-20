@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import { sounds } from "../assets/vendor/cuelume/0.2.2/index.js";
 import { FEEL_EVENTS, SOUND_DEFAULT, SOUND_VOLUME } from "../assets/js/feel-config.js";
 import { createFeel } from "../assets/js/feel-core.js";
+import { renderCueBlob } from "../assets/js/feel-audio.js";
 
 const ROOT=fileURLToPath(new URL("..",import.meta.url));
 const read=p=>readFileSync(join(ROOT,p),"utf8");
@@ -77,17 +78,33 @@ test("the built site uses only local Cuelume runtime assets",()=>{
 });
 
 
-test("mobile feel integration opts into playback and primes Web Audio on activating gestures",()=>{
-  const js=read("assets/js/feel.js");
-  assert.ok(js.includes('navigator.audioSession.type = active ? "playback" : "ambient"'));
-  assert.ok(js.includes('const events = ["pointerup", "touchend", "click", "keydown", "mousedown"]'));
-  assert.ok(js.includes('play("tick", { volume: 0.0001 })'));
-  assert.ok(js.includes('CustomEvent("nus:audio-prime")'));
+test("iOS transport renders the vendored Cuelume recipes as valid WAV media",async()=>{
+  for(const name of ["toggle","success","arrival"]){
+    const blob=renderCueBlob(name);
+    assert.equal(blob.type,"audio/wav");
+    assert.ok(blob.size>4000,name+" WAV too small");
+    const bytes=Buffer.from(await blob.arrayBuffer());
+    assert.equal(bytes.toString("ascii",0,4),"RIFF");
+    assert.equal(bytes.toString("ascii",8,12),"WAVE");
+    assert.equal(bytes.toString("ascii",36,40),"data");
+  }
 });
 
-test("mobile Feel Lab includes a raw Web Audio bypass diagnostic",()=>{
+test("iOS transport bypasses Cuelume AudioContext while preserving its recipe catalog",()=>{
+  const audio=read("assets/js/feel-audio.js");
+  const feel=read("assets/js/feel.js");
+  assert.ok(audio.includes('from "../vendor/cuelume/0.2.2/sounds/recipes.js"'));
+  assert.ok(audio.includes('return iOSDevice || iPadDesktopUA'));
+  assert.ok(audio.includes('navigator.audioSession.type = active ? "playback" : "ambient"'));
+  assert.ok(audio.includes("new Audio(mediaURL(name))"));
+  assert.ok(feel.includes('from "./feel-audio.js"'));
+  assert.ok(!feel.includes("../vendor/cuelume/0.2.2/index.js"));
+});
+
+test("mobile Feel Lab exercises production transport and keeps a raw Web Audio control",()=>{
   const html=read("scripts/checks/feel.html");
+  assert.ok(html.includes('from "../../assets/js/feel-audio.js"'));
+  assert.ok(html.includes("Production backend"));
   assert.ok(html.includes("Raw Web Audio tone"));
-  assert.ok(html.includes("navigator.audioSession.type=\"playback\""));
   assert.ok(html.includes("raw Web Audio tone requested"));
 });
