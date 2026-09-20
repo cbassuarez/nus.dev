@@ -2,11 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Feel lab · nus</title>
 <link rel="stylesheet" href="../../assets/css/site.css">
 <style>
-main{max-width:1000px;margin:auto;padding:36px var(--gutter) 70px}.lab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0;border-top:var(--hair) solid var(--ink)}.lab-grid button{font:inherit;color:inherit;background:none;border:0;border-bottom:var(--hair) solid var(--ink);border-right:var(--hair) solid var(--ink);padding:12px;text-align:left;cursor:pointer}.lab-grid button:hover{background:var(--tint)}#log{min-height:180px;white-space:pre-wrap}
+main{max-width:1000px;margin:auto;padding:36px var(--gutter) 70px}
+.lab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border-top:var(--hair) solid var(--ink)}
+.lab-grid button{font:inherit;color:inherit;background:none;border:0;border-bottom:var(--hair) solid var(--ink);border-right:var(--hair) solid var(--ink);padding:12px;text-align:left;cursor:pointer;min-height:44px}
+.lab-grid button:hover{background:var(--tint)}
+#log{min-height:180px;white-space:pre-wrap}
+.diag{border-top:var(--struct) solid var(--ink);margin:22px 0}
+.diag>div{display:grid;grid-template-columns:160px 1fr;gap:12px;padding:9px 0;border-bottom:var(--hair) solid var(--ink)}
+.diag dt{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}.diag dd{margin:0;overflow-wrap:anywhere}
+@media(max-width:520px){.diag>div{grid-template-columns:1fr;gap:3px}.lab-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -14,24 +22,78 @@ main{max-width:1000px;margin:auto;padding:36px var(--gutter) 70px}.lab-grid{disp
 <main>
 <p class="cap">Development harness / unlisted</p>
 <h1>Feel lab</h1>
-<p class="lede">Listen to the pinned palette, emit semantic events, and inspect the local event stream. Nothing here reports anywhere.</p>
+<p class="lede">Listen to the pinned palette, emit semantic events, and inspect the local audio state. Nothing here reports anywhere.</p>
+
 <div class="row" style="margin:22px 0">
 <button class="btn btn--quiet" id="sound">Sound on</button>
+<button class="btn btn--quiet" id="raw">Raw Web Audio tone</button>
+<button class="btn btn--quiet" id="rearm">Re-arm mobile primer</button>
 <label class="cap">Volume <input id="volume" type="range" min="0" max="1" step=".05" value=".55"></label>
 </div>
+
+<h2>Mobile audio diagnostics</h2>
+<dl class="diag">
+<div><dt>Web Audio</dt><dd id="web-audio">—</dd></div>
+<div><dt>User activation</dt><dd id="activation">—</dd></div>
+<div><dt>Audio session</dt><dd id="session">—</dd></div>
+<div><dt>Sound preference</dt><dd id="preference">—</dd></div>
+<div><dt>Viewport / platform</dt><dd id="platform">—</dd></div>
+</dl>
+<p class="small dim">On iOS the site requests the <code>playback</code> audio session while sound is enabled, so Web Audio does not disappear merely because the phone is in Silent mode. The raw tone bypasses Cuelume and tests Web Audio directly.</p>
+
 <h2>Cuelume palette</h2><div class="lab-grid" id="palette"></div>
 <h2>Semantic events</h2><div class="lab-grid" id="events"></div>
 <h2>Event log</h2><pre id="log" aria-live="polite"></pre>
 </main>
 <script type="module">
-import {sounds,play,setEnabled,setVolume} from "../../assets/vendor/cuelume/0.2.2/index.js";
-import {feel} from "../../assets/js/feel.js";
+import {sounds,play,setVolume} from "../../assets/vendor/cuelume/0.2.2/index.js";
+import {feel,audioDiagnostics} from "../../assets/js/feel.js";
 import {FEEL_EVENTS} from "../../assets/js/feel-config.js";
-const palette=document.querySelector("#palette"),events=document.querySelector("#events"),log=document.querySelector("#log");
-for(const name of sounds){const b=document.createElement("button");b.textContent=name;b.onclick=()=>play(name);palette.append(b);}
-for(const name of Object.keys(FEEL_EVENTS)){const b=document.createElement("button");b.textContent=name;b.onclick=()=>feel.emit(name,{target:b});events.append(b);}
+
+const q=s=>document.querySelector(s),palette=q("#palette"),events=q("#events"),log=q("#log");
+
+function paint(){
+  q("#web-audio").textContent=(window.AudioContext||window.webkitAudioContext)?"available":"unavailable";
+  const a=audioDiagnostics.userActivation;
+  q("#activation").textContent=a?("hasBeenActive="+a.hasBeenActive+" · isActive="+a.isActive):"API unavailable";
+  q("#session").textContent=audioDiagnostics.audioSession||"AudioSession API unavailable";
+  q("#preference").textContent=feel.soundEnabled?"on":"off";
+  q("#platform").textContent=(navigator.platform||"unknown")+" · "+innerWidth+"×"+innerHeight;
+  q("#sound").textContent=feel.soundEnabled?"Sound on":"Sound off";
+}
+paint();
+addEventListener("pointerup",paint,true);addEventListener("click",paint,true);addEventListener("nus:audio-prime",paint);
+
+for(const name of sounds){const b=document.createElement("button");b.textContent=name;b.onclick=()=>{play(name);paint();};palette.append(b);}
+for(const name of Object.keys(FEEL_EVENTS)){const b=document.createElement("button");b.textContent=name;b.onclick=()=>{feel.emit(name,{target:b});paint();};events.append(b);}
 document.addEventListener("nus:feel",e=>{const d=e.detail;log.textContent=new Date().toISOString().slice(11,23)+"  "+d.name+"\n              cue="+d.cue+"  motion="+(d.motion||"—")+"\n"+log.textContent;});
-const sound=document.querySelector("#sound");sound.onclick=()=>{feel.setSound(!feel.soundEnabled);sound.textContent=feel.soundEnabled?"Sound on":"Sound off";};
-document.querySelector("#volume").oninput=e=>setVolume(Number(e.target.value));
+
+q("#sound").onclick=()=>{
+  feel.setSound(!feel.soundEnabled);
+  if(navigator.audioSession){try{navigator.audioSession.type=feel.soundEnabled?"playback":"ambient";}catch{}}
+  if(feel.soundEnabled) play("toggle",{volume:.35});
+  paint();
+};
+q("#rearm").onclick=()=>{audioDiagnostics.rearm();log.textContent="mobile primer re-armed\n"+log.textContent;paint();};
+q("#volume").oninput=e=>setVolume(Number(e.target.value));
+
+let rawContext;
+q("#raw").onclick=async()=>{
+  try{
+    if(navigator.audioSession) navigator.audioSession.type="playback";
+    const Ctor=window.AudioContext||window.webkitAudioContext;
+    if(!Ctor) throw new Error("Web Audio unavailable");
+    rawContext ||= new Ctor();
+    if(rawContext.state!=="running") await rawContext.resume();
+    const osc=rawContext.createOscillator(),gain=rawContext.createGain(),now=rawContext.currentTime;
+    osc.type="sine";osc.frequency.value=660;
+    gain.gain.setValueAtTime(.0001,now);
+    gain.gain.exponentialRampToValueAtTime(.07,now+.01);
+    gain.gain.exponentialRampToValueAtTime(.0001,now+.16);
+    osc.connect(gain).connect(rawContext.destination);osc.start(now);osc.stop(now+.2);
+    log.textContent="raw Web Audio tone requested · state="+rawContext.state+"\n"+log.textContent;
+  }catch(error){log.textContent="raw Web Audio error · "+error+"\n"+log.textContent;}
+  paint();
+};
 </script>
 </body></html>
