@@ -74,5 +74,7 @@ test('no new automatic third-party runtime or video autoplay',()=>{
   assert.ok(html.includes('referrer" content="no-referrer'));
  }
  const js=read('assets/js/review.js');
- assert.ok(js.includes("check.addEventListener('click'"));
+ assert.ok(js.includes('check.addEventListener("click"'));
+ assert.ok(js.includes('review.refresh.start'));
+ assert.ok(js.includes('review.refresh.ready'));
 });
