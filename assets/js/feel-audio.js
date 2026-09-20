@@ -179,11 +179,15 @@ function wavBlob(samples, rate = RATE) {
   return new Blob([buffer],{type:"audio/wav"});
 }
 
+export function renderCueBlob(name) {
+  if (!isSoundName(name)) throw new Error("Unknown Cuelume cue: " + name);
+  return wavBlob(renderRecipe(name, RECIPES[name]));
+}
+
 function mediaURL(name) {
   let url=mediaCache.get(name);
   if (url) return url;
-  const recipe=RECIPES[name];
-  const blob=wavBlob(renderRecipe(name,recipe));
+  const blob=renderCueBlob(name);
   url=URL.createObjectURL(blob);
   mediaCache.set(name,url);
   return url;
