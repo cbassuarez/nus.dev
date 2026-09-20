@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Review motion sheet · nus</title>
+<link rel="stylesheet" href="../../assets/css/site.css"><link rel="stylesheet" href="../../assets/css/review.css">
+<style>main{max-width:960px;margin:auto;padding:36px var(--gutter) 80px}.spec{margin:28px 0}.controls{position:sticky;top:0;background:var(--paper);border-block:var(--struct) solid var(--ink);padding:8px;z-index:3}.controls button{font:inherit;margin:3px}</style>
+</head><body class="review-page"><div class="band"></div><main>
+<p class="cap">Development harness / unlisted</p><h1>Review motion sheet</h1>
+<div class="controls"><button data-do="enter">Enter page</button><button data-do="open">Open all</button><button data-do="close">Close all</button><button data-do="confirm">Confirm</button><button data-do="working">Working</button><button data-do="ready">Ready</button></div>
+<section class="spec"><div class="review-kicker cap feel-rule"><span>04 / Security</span><span>2026-09-20</span></div><h2>Rule and entry specimen.</h2><p class="lede">The final composition exists before motion. Motion only describes its arrival.</p></section>
+<section class="spec review-map__nodes"><details data-feel-disclosure="architecture"><summary><span class="cap">Selected context</span><b>Assistant</b></summary><p>Process/API boundary and source reference.</p></details><details data-feel-disclosure="ordinary"><summary><span class="cap">Evidence</span><b>Disclosure</b></summary><p>Native details remain usable without animation.</p></details></section>
+<section class="spec review-allocation"><details data-feel-disclosure="funding"><summary><span>Independent security research</span><b>$1,800</b><small>36%</small></summary><div class="review-allocation__detail"><div class="review-allocation__bar" style="width:36%"></div><p>Representative allocation.</p></div></details></section>
+<button class="btn btn--quiet" id="target">Copy SHA-256</button>
+</main>
+<script type="module">
+import {createMotion} from "../../assets/js/feel-motion.js";
+const motion=createMotion({reduced:false}),target=document.querySelector("#target");
+document.addEventListener("click",e=>{const a=e.target.closest("[data-do]");if(!a)return;const k=a.dataset.do;
+if(k==="enter"){document.documentElement.classList.remove("review-enter");requestAnimationFrame(()=>requestAnimationFrame(()=>document.documentElement.classList.add("review-enter")));}
+if(k==="open")document.querySelectorAll("details").forEach(x=>x.open=true);
+if(k==="close")document.querySelectorAll("details").forEach(x=>x.open=false);
+if(["confirm","working","ready"].includes(k))motion.run(k,target);
+});
+</script></body></html>
