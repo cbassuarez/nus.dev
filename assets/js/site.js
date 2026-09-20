@@ -43,6 +43,7 @@
       b.title = 'Signal — ' + s[0];
       b.setAttribute('aria-label', 'Signal colour ' + s[0]);
       b.setAttribute('aria-pressed', String(s[1] === current));
+      b.setAttribute('data-cuelume-toggle', 'toggle');
       b.addEventListener('click', function () {
         applySignal(s[1]);
         set('nus.signal', s[1]);
