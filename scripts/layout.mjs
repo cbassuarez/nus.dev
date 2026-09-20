@@ -37,6 +37,13 @@ export function icon(name, cls = '') {
   return svg;
 }
 
+/** Hidden until the local Feel module initializes. Muting never plays a final cue. */
+export function soundControl() {
+  return `<button class="iconbtn" type="button" data-sound-toggle hidden aria-pressed="true" aria-label="Mute site sounds">
+    <span data-sound-on>${icon('speaker-high')}</span><span data-sound-off hidden>${icon('speaker-slash')}</span>
+  </button>`;
+}
+
 /** `depth` is how many directories deep the page sits, for relative asset paths. */
 export const rel = (depth) => (depth === 0 ? '.' : Array(depth).fill('..').join('/'));
 
@@ -66,7 +73,8 @@ function masthead(depth) {
     </nav>
     <div class="controls">
       <div class="signalpick" data-signalpick role="group" aria-label="Signal colour"></div>
-      <button class="iconbtn" type="button" data-theme-toggle aria-label="Switch theme">
+      ${soundControl()}
+      <button class="iconbtn" type="button" data-theme-toggle data-cuelume-toggle="toggle" aria-label="Switch theme">
         <span data-sun hidden>${icon('sun')}</span><span data-moon>${icon('moon')}</span>
       </button>
     </div>
@@ -180,6 +188,7 @@ ${body}
 </main>
 ${chrome ? chrome.footer : footer(depth)}
 <script src="${r}/assets/js/site.js?v=${assetVersion('assets/js/site.js')}" defer></script>
+<script type="module" src="${r}/assets/js/feel.js?v=${assetVersion('assets/js/feel.js')}"></script>
 ${module ? `<script type="module">
 ${module}
 </script>` : ''}
