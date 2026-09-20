@@ -13,6 +13,7 @@ step and no install.
 npm run build     # write the pages
 npm run dev       # write them, then serve on http://localhost:8000
 npm run sync      # pull the app's screenshots out of ../nus into assets/shots/
+npm run releases  # refresh assets/releases.json, the download page's fallback
 npm run wasm      # rebuild the VT core for the browser  (needs Rust + wasm-pack)
 npm run record    # re-record the hero session           (needs the nus checkout)
 ```

@@ -37,7 +37,7 @@ const DOCS = [
   { slug: 'measurements', file: 'MEASUREMENTS.md', title: 'Measurements', ic: 'hard-hat',
     blurb: 'The numbers behind the claims: bundle size, memory per tab and window, file opens, latency, frame cost — and how each was taken.' },
   { slug: 'dependencies', file: 'DEPENDENCIES.md', title: 'Dependencies', ic: 'stack',
-    blurb: 'What nus is built on, what it bundles, what it ported, and what it read but did not copy.' }
+    blurb: 'What nus is built on, what it bundles, and what it ported.' }
 ];
 
 /* The old address of the measurements page. */

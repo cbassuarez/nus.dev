@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dependencies · nus</title>
-<meta name="description" content="What nus is built on, what it bundles, what it ported, and what it read but did not copy.">
+<meta name="description" content="What nus is built on, what it bundles, and what it ported.">
 <link rel="canonical" href="https://nus.dev/docs/dependencies/">
 <meta name="theme-color" content="#c8102e">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="nus.dev">
 <meta property="og:title" content="Dependencies · nus">
-<meta property="og:description" content="What nus is built on, what it bundles, what it ported, and what it read but did not copy.">
+<meta property="og:description" content="What nus is built on, what it bundles, and what it ported.">
 <meta property="og:url" content="https://nus.dev/docs/dependencies/">
 <meta property="og:image" content="https://nus.dev/assets/icon/nus-512.png">
 <meta name="twitter:card" content="summary">
@@ -62,7 +62,7 @@
 <nav class="doc__nav" aria-label="Documentation">
   <h4>Docs</h4>
   <ul><li><a href="../product/">Product</a></li><li><a href="../architecture/">Architecture</a></li><li><a href="../design/">Design</a></li><li><a href="../measurements/">Measurements</a></li><li><a href="../dependencies/">Dependencies</a></li></ul>
-  <h4>On this page</h4><ul><li class=""><a href="#bundled">Bundled</a></li><li class=""><a href="#carried-as-source">Carried as source</a></li><li class=""><a href="#crates">Crates</a></li><li class=""><a href="#ported">Ported</a></li><li class=""><a href="#read-not-copied">Read, not copied</a></li></ul>
+  <h4>On this page</h4><ul><li class=""><a href="#bundled">Bundled</a></li><li class=""><a href="#carried-as-source">Carried as source</a></li><li class=""><a href="#crates">Crates</a></li><li class=""><a href="#ported">Ported</a></li></ul>
 </nav>
 <article class="doc__body">
   <h1>Dependencies</h1>
@@ -70,7 +70,7 @@
     <span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M230.91,172A8,8,0,0,1,228,182.91l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,36,169.09l92,53.65,92-53.65A8,8,0,0,1,230.91,172ZM220,121.09l-92,53.65L36,121.09A8,8,0,0,0,28,134.91l96,56a8,8,0,0,0,8.06,0l96-56A8,8,0,1,0,220,121.09ZM24,80a8,8,0,0,1,4-6.91l96-56a8,8,0,0,1,8.06,0l96,56a8,8,0,0,1,0,13.82l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,24,80Zm23.88,0L128,126.74,208.12,80,128,33.26Z"/></svg></span>
     <span>Dependencies</span>
   </div>
-<p>What nus is built on, what it bundles, and what it read but did not copy. Every release package carries the licences of what it ships.</p>
+<p>What nus is built on and what it bundles. Every release package carries the licences of what it ships.</p>
 <h2 id="bundled"><a class="anchor" href="#bundled" aria-hidden="true">#</a>Bundled</h2>
 <ul><li><strong>Chromium</strong>, through the Chromium Embedded Framework (BSD). The version is pinned by the <code>cef-rs</code> submodule and bumped on Chromium's four-week cadence. Windows x64, macOS Apple silicon, Linux x64.</li><li><strong>Fonts:</strong> IBM Plex Mono, Victor Mono, JetBrains Mono (all OFL), ABC Areal with its Semi Mono and Mono (under its own licence), and Newsreader (OFL) for the wordmark and the reader. No system font installation is required.</li><li><strong>Icons:</strong> Phosphor (MIT), rasterized into the glyph atlas.</li><li><strong>Grammars:</strong> tree-sitter grammars for bash and PowerShell (MIT), in the binary; others fetch on request as bundles.</li><li><strong>Sounds:</strong> seventeen synth recipes, rendered by nus's own synth at runtime — no sample files.</li></ul>
 <h2 id="carried-as-source"><a class="anchor" href="#carried-as-source" aria-hidden="true">#</a>Carried as source</h2>
@@ -79,8 +79,6 @@
 <p>wgpu, winit, raw-window-handle, vte, portable-pty, unicode-width, swash, rustybuzz, fontdb, tree-sitter, ropey, lsp-types, lsp-server, adblock (Brave's engine), mlua (Luau), rusqlite (browser import), keyring, notify-rust, cpal (sound), AccessKit, rfd (the system's own file dialog — NSOpenPanel, the common item dialog, the XDG portal), image, and the <code>windows</code> crate for notifications, the taskbar and the process table.</p>
 <h2 id="ported"><a class="anchor" href="#ported" aria-hidden="true">#</a>Ported</h2>
 <ul><li><strong>The caret</strong> is Neovide's cursor renderer, ported: four critically damped springs drawn as one quad (MIT).</li><li><strong>Scrolling</strong> rides neoscroll's easing curves (MIT).</li></ul>
-<h2 id="read-not-copied"><a class="anchor" href="#read-not-copied" aria-hidden="true">#</a>Read, not copied</h2>
-<ul><li><strong>Ghostty</strong> — terminal state design, the Kitty keyboard and graphics protocols, shaping.</li><li><strong>Alacritty</strong> — <code>vte</code> in practice, the grid.</li><li><strong>WezTerm</strong> — ConPTY's quirks, SSH profiles.</li><li><strong>Brave</strong> — integrating the <code>adblock</code> engine.</li><li><strong>Zed / gpui</strong> — scene graph and text system design.</li><li><strong>Arc, Dia, Zen, Vivaldi, Orion</strong> — the browser side; <strong>Rio, kitty, Warp</strong> — the terminal side. Arc's sidebar and Chromium's bookmarks and history formats, for import.</li></ul>
 </article>
 </div>
 </main>

@@ -1,6 +1,6 @@
 # Dependencies
 
-What nus is built on, what it bundles, and what it read but did not copy.
+What nus is built on and what it bundles.
 Every release package carries the licences of what it ships.
 
 ## Bundled
@@ -38,15 +38,3 @@ NSOpenPanel, the common item dialog, the XDG portal), image, and the
 - **The caret** is Neovide's cursor renderer, ported: four critically damped
   springs drawn as one quad (MIT).
 - **Scrolling** rides neoscroll's easing curves (MIT).
-
-## Read, not copied
-
-- **Ghostty** — terminal state design, the Kitty keyboard and graphics
-  protocols, shaping.
-- **Alacritty** — `vte` in practice, the grid.
-- **WezTerm** — ConPTY's quirks, SSH profiles.
-- **Brave** — integrating the `adblock` engine.
-- **Zed / gpui** — scene graph and text system design.
-- **Arc, Dia, Zen, Vivaldi, Orion** — the browser side; **Rio, kitty, Warp** —
-  the terminal side. Arc's sidebar and Chromium's bookmarks and history
-  formats, for import.

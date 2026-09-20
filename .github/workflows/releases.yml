@@ -1,0 +1,35 @@
+name: Release snapshot
+# Keeps assets/releases.json — the download page's fallback — current.
+# The app's release workflow dispatches `release-published` after it
+# uploads a release; the schedule catches anything that did not.
+on:
+  repository_dispatch:
+    types: [release-published]
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: release-snapshot
+  cancel-in-progress: false
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Refresh the snapshot
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/releases-snapshot.mjs
+      - name: Commit it if it changed
+        run: |
+          if git diff --quiet -- assets/releases.json; then echo "nothing to commit"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/releases.json
+          git commit -m "releases: snapshot ${{ github.event.client_payload.tag || '' }}"
+          git push
