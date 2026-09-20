@@ -3,8 +3,10 @@
 
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { createHash } from 'node:crypto';
 
 const ROOT = new URL('..', import.meta.url).pathname;
+const assetVersion = path => createHash('sha256').update(readFileSync(join(ROOT,path))).digest('hex').slice(0,12);
 
 export const SITE = {
   name: 'nus',
@@ -12,11 +14,13 @@ export const SITE = {
   domain: 'nus.dev',
   url: 'https://nus.dev',
   repo: 'https://github.com/cbassuarez/nus',
-  tagline: 'A terminal emulator that is also a browser.',
+  tagline: 'A terminal with room for the rest.',
   author: 'Sebastian Suarez-Solis'
 };
 
 const iconCache = new Map();
+const nusMark = readFileSync(join(ROOT, 'assets/icon/nus.svg'), 'utf8')
+  .replace('<svg ', '<svg class="nus-mark" aria-hidden="true" focusable="false" ');
 
 /** Inlines a Phosphor icon so it inherits colour and costs no request. */
 export function icon(name, cls = '') {
@@ -47,7 +51,8 @@ function masthead(depth) {
   return `<header class="masthead">
   <div class="masthead__in">
     <a class="mark" href="${r}/" aria-label="nus — home" title="nus">
-      <img src="${r}/assets/icon/nus-128.png" alt="" width="26" height="26" decoding="async">
+      ${nusMark}
+      <span class="wordmark">nus</span>
     </a>
     <nav class="nav" aria-label="Primary">
       ${links.map(([t, h, ic]) => {
@@ -94,7 +99,7 @@ function footer(depth) {
   <div class="foot__in">
     <div>
       <a class="wordmark" href="${r}/" style="font-size:30px">nus</a>
-      <p class="dim" style="font-size:12.5px;margin-top:10px;max-width:24ch">${SITE.tagline} Pre-alpha.</p>
+      <p class="dim" style="font-size:12.5px;margin-top:10px;max-width:24ch">${SITE.tagline}<br>Independent software, in progress.</p>
     </div>
     ${cols.map(([h, items]) => `<div>
       <h4>${h}</h4>
@@ -123,6 +128,7 @@ export function page({ title, description, body, depth = 0, path = '/', bodyClas
   const r = rel(depth);
   const full = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${title} · ${SITE.name}`;
   const canonical = SITE.url + path;
+  module = module.replace(/(['"])(\.\.?\/assets\/js\/([^'"]+))\1/g, (_, quote, url, name) => `${quote}${url}?v=${assetVersion('assets/js/'+name)}${quote}`);
 
   return `<!doctype html>
 <html lang="en">
@@ -142,13 +148,12 @@ export function page({ title, description, body, depth = 0, path = '/', bodyClas
 <meta property="og:image" content="${SITE.url}/assets/icon/nus-512.png">
 <meta name="twitter:card" content="summary">
 
-<link rel="icon" href="${r}/assets/icon/nus-32.png" sizes="32x32">
-<link rel="icon" href="${r}/assets/icon/nus-128.png" sizes="128x128">
+<link rel="icon" type="image/svg+xml" href="${r}/assets/icon/nus-paper.svg" data-nus-favicon data-icon-root="${r}/assets/icon/">
 <link rel="apple-touch-icon" href="${r}/assets/icon/nus-256.png">
 
 <link rel="preload" as="font" type="font/woff2" href="${r}/assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="${r}/assets/fonts/Newsreader-Italic.woff2" crossorigin>
-<link rel="stylesheet" href="${r}/assets/css/site.css">
+<link rel="stylesheet" href="${r}/assets/css/site.css?v=${assetVersion('assets/css/site.css')}">
 <script>
 /* Apply the stored theme and signal before first paint, so the page never flashes. */
 (function(){try{
@@ -168,7 +173,7 @@ ${masthead(depth)}
 ${body}
 </main>
 ${footer(depth)}
-<script src="${r}/assets/js/site.js" defer></script>
+<script src="${r}/assets/js/site.js?v=${assetVersion('assets/js/site.js')}" defer></script>
 ${module ? `<script type="module">
 ${module}
 </script>` : ''}

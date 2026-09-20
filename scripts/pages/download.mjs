@@ -4,12 +4,12 @@ export default {
   description: 'Get nus for macOS, Windows and Linux. Published releases, signing details, checksums and installation instructions in one place.',
   module: "import { mountDownloads } from '../assets/js/releases.js'; mountDownloads();",
   body: `
-<section class="section"><div class="section__in">
-  <p class="cap">nus / downloads</p>
-  <h1>Make yourself<br><em>at home.</em></h1>
-  <p class="lede">A shell, a browser, and the space between them.<br>Pick your machine. Keep your tools.</p>
+<section class="section download-intro"><div class="section__in">
+  <div><p class="cap">nus / downloads</p>
+  <h1>Make yourself<br><em>at home.</em></h1></div>
+  <p class="lede">Pick your machine. Keep your tools.<br>Every published build comes with its version, signing details, and a checksum.</p>
 </div></section>
-<div data-downloads>
+<div class="download-body" data-downloads>
 <section class="section"><div class="section__in">
   <div class="download-workbench">
     <div class="download-choice">
@@ -32,7 +32,7 @@ export default {
       <noscript><p>JavaScript is off. <a href="${SITE.repo}/releases">Download from GitHub Releases</a>; each release includes signing information and checksums.</p></noscript>
     </div>
     <div class="download-receipt">
-      <p class="cap">Package record</p>
+      <p class="cap">02 / The release record</p>
       <dl><div><dt>Version</dt><dd data-version>Checking…</dd></div><div><dt>Published</dt><dd data-date>—</dd></div><div><dt>Signing</dt><dd data-signing>Shown with each published package</dd></div><div><dt>Licence</dt><dd><a href="${SITE.repo}/blob/main/LICENSE">MIT · source available</a></dd></div><div><dt>Delivery</dt><dd>Direct from GitHub Releases</dd></div></dl>
       <details data-hash-section hidden><summary>Verify your download</summary><p class="small">Compare your archive’s SHA-256 with this release record.</p><code class="download-hash" data-hash></code><button class="text-button" data-copy>Copy SHA-256</button><p class="small">macOS / Linux: <code>shasum -a 256 filename</code><br>PowerShell: <code>Get-FileHash filename -Algorithm SHA256</code></p></details>
     </div>
@@ -46,7 +46,7 @@ export default {
 </div></section>
 <section class="section"><div class="section__in">
   <div class="sectionhead"><h2>Every package, together.</h2><span class="cap">Selected channel</span></div>
-  <div class="tablewrap"><table><thead><tr><th>Platform</th><th>Processor</th><th>Signing</th><th>Package</th></tr></thead><tbody data-packages></tbody></table></div>
+  <div class="tablewrap"><table><thead><tr><th>Platform</th><th>Processor</th><th>Version</th><th>Signing</th><th>Package</th></tr></thead><tbody data-packages></tbody></table></div>
   <p class="small dim">A download appears only after it is published with a checksum. If this page cannot reach GitHub, <a href="${SITE.repo}/releases">the release archive</a> is the source of record.</p>
 </div></section>
 </div>

@@ -15,6 +15,14 @@ export function publishedReleases(input) {
 export function latestFor(releases, channel) {
   return publishedReleases(releases).find(r => r.prerelease === (channel === 'preview'));
 }
+export function latestPackageFor(releases, channel, target) {
+  for (const release of publishedReleases(releases)) {
+    if (release.prerelease !== (channel === 'preview')) continue;
+    const pkg = packageFor(release, target);
+    if (pkg) return {release, pkg};
+  }
+  return null;
+}
 export function packageFor(release, target) {
   const platform = TARGETS.find(t => t[0] === target);
   if (!platform || !publishedReleases([release]).length) return null;
@@ -44,10 +52,11 @@ export async function mountDownloads(root = document.querySelector('[data-downlo
   let releases = [], source = '', loading = false;
   const render = () => {
     const channel = q('[name=channel]:checked').value;
-    const release = latestFor(releases, channel), pkg = packageFor(release, target.value);
+    const selected = latestPackageFor(releases, channel, target.value);
+    const release = selected?.release, pkg = selected?.pkg;
     q('[data-version]').textContent = release?.tag_name || 'Awaiting first release';
     q('[data-date]').textContent = release ? new Date(release.published_at).toLocaleDateString(undefined, {year:'numeric',month:'short',day:'numeric'}) : '—';
-    q('[data-status]').textContent = loading ? 'Checking published releases…' : pkg ? source || 'Ready to download from GitHub.' : release ? 'This package is not available with a verified checksum yet.' : `No ${channel} release is published yet. ${source}`;
+    q('[data-status]').textContent = loading ? 'Checking published releases…' : pkg ? source || 'Ready to download from GitHub.' : `No ${channel} package is published for this machine yet. ${source}`;
     q('[data-signing]').textContent = pkg ? signingLabel(pkg.signing) : 'Shown with each published package';
     const link = q('[data-download]');
     link.hidden = !pkg;
@@ -60,8 +69,8 @@ export async function mountDownloads(root = document.querySelector('[data-downlo
     for (const note of root.querySelectorAll('[data-install]')) note.hidden = !target.value.startsWith(note.dataset.install);
     const tbody = q('[data-packages]');
     tbody.replaceChildren(...TARGETS.map(([id,os,arch]) => {
-      const row = document.createElement('tr'), p = packageFor(release,id);
-      for (const value of [os, arch, p ? signingLabel(p.signing) : 'Not published']) { const td=document.createElement('td'); td.textContent=value; row.append(td); }
+      const row = document.createElement('tr'), available = latestPackageFor(releases,channel,id), p = available?.pkg;
+      for (const value of [os, arch, available?.release.tag_name || '—', p ? signingLabel(p.signing) : 'Not published']) { const td=document.createElement('td'); td.textContent=value; row.append(td); }
       const td=document.createElement('td');
       if (p) { const a=document.createElement('a'); a.href=p.url; a.textContent=`Download (${(p.size/1048576).toFixed(0)} MB)`; a.setAttribute('aria-label',`Download ${os} ${arch}`); td.append(a); } else td.textContent='—';
       row.append(td); return row;

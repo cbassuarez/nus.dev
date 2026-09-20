@@ -59,6 +59,7 @@
   function applyTheme(mode) {
     if (mode === 'paper' || mode === 'ink') root.setAttribute('data-theme', mode);
     else root.removeAttribute('data-theme');
+    paintFavicon();
     // The hero terminal sets its palette from this, through nus's own Palette.
     window.dispatchEvent(new CustomEvent('nus:theme'));
   }
@@ -67,6 +68,11 @@
     var t = root.getAttribute('data-theme');
     if (t) return t === 'ink';
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  function paintFavicon() {
+    var favicon=document.querySelector('[data-nus-favicon]');
+    if(favicon) favicon.href=favicon.dataset.iconRoot+'nus-'+(currentIsInk()?'ink':'paper')+'.svg';
   }
 
   applyTheme(get('nus.theme'));
@@ -93,6 +99,7 @@
     window.matchMedia('(prefers-color-scheme: dark)')
       .addEventListener('change', function () {
         if (!root.getAttribute('data-theme')) {
+          paintFavicon();
           paintIcon();
           window.dispatchEvent(new CustomEvent('nus:theme'));
         }
@@ -156,4 +163,27 @@
 
     targets.forEach(function (t) { io.observe(t); });
   }
+})();
+
+/* The same sixteenth-note face sequence as the app's launch mark. */
+(() => {
+ const faces=[['Plex Mono','normal',600,26],['Silkscreen','normal',400,23],['Plex Mono','italic',400,26],['Bungee','normal',400,23],['Rubik Mono','normal',400,20],['Newsreader','italic',500,29]];
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ for(const link of document.querySelectorAll('.mark')) {
+  const word=link.querySelector('.wordmark'); if(!word)continue;
+  let generation=0,timer;
+  const settle=()=>{generation++;clearTimeout(timer);word.style.removeProperty('font');word.style.removeProperty('letter-spacing');};
+  const start=async()=>{
+   settle();if(reduced.matches)return;
+   const run=generation;
+   await Promise.all(faces.map(([name,style,weight,size])=>document.fonts.load(`${style} ${weight} ${size}px "${name}"`).catch(()=>{})));
+   if(run!==generation || reduced.matches)return;
+   let frame=0;
+   const beat=()=>{if(run!==generation)return;const [name,style,weight,size]=faces[frame++];word.style.font=`${style} ${weight} ${size}px "${name}"`;word.style.letterSpacing='-.06em';if(frame<faces.length)timer=setTimeout(beat,60000/152/4);else settle();};
+   beat();
+  };
+  link.addEventListener('pointerenter',start);link.addEventListener('pointerleave',settle);
+  link.addEventListener('focus',start);link.addEventListener('blur',settle);
+  reduced.addEventListener('change',settle);document.addEventListener('visibilitychange',()=>{if(document.hidden)settle();});
+ }
 })();

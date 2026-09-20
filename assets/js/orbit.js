@@ -72,8 +72,7 @@ export function mountOrbit(root) {
     // Half a turn across the pin: the two windows trade places.
     const theta0 = p * Math.PI;
 
-    // Wide enough that the windows clear the copy at rest and bleed off the
-    // edges instead of crowding it.
+    // Keep the complete Mac window and its caption visible at rest.
     const a = stage.offsetWidth * 0.35;
     const c = 260;
 
@@ -81,7 +80,7 @@ export function mountOrbit(root) {
       const { x, y, z } = place(theta0 + i * Math.PI, a, c);
       const depth = z / c;                       // −1 behind … +1 in front
       body.style.setProperty('--x', x.toFixed(2));
-      body.style.setProperty('--y', y.toFixed(2));
+      body.style.setProperty('--y', (y * .65).toFixed(2));
       body.style.setProperty('--z', z.toFixed(2));
       body.style.setProperty('--o', (MIN_OPACITY + (1 - MIN_OPACITY) * (depth + 1) / 2).toFixed(3));
       body.style.setProperty('--zi', depth >= 0 ? 8 : 1);

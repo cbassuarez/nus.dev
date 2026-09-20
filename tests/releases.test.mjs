@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {publishedReleases,latestFor,packageFor} from '../assets/js/releases.js';
+import {publishedReleases,latestFor,latestPackageFor,packageFor} from '../assets/js/releases.js';
 function fixture(tag='v0.0.1-preview.1', signing='notarized') {
  const name=`nus-${tag.slice(1)}-macos-arm64.zip`, hash='a'.repeat(64);
  const entry={name,target:'macos-arm64',size:100,sha256:hash,signing};
@@ -34,4 +34,12 @@ test('unsigned stable cannot be offered; unsigned previews are labeled',()=>{
 test('malformed API responses fail closed',()=>{
  for (const value of [undefined,{},[],{message:'rate limited'}]) assert.deepEqual(publishedReleases(value),[]);
  assert.equal(packageFor(undefined,'macos-arm64'),null);
+});
+test('platform previews keep earlier verified downloads available',()=>{
+ const earlier=fixture();
+ const newer={...fixture('v0.0.1-preview.2'),published_at:'2026-09-21T12:00:00Z',assets:[]};
+ assert.equal(latestFor([earlier,newer],'preview'),newer);
+ assert.equal(latestPackageFor([earlier,newer],'preview','macos-arm64').release,earlier);
+ assert.equal(latestPackageFor([earlier,newer],'stable','macos-arm64'),null);
+ assert.equal(latestPackageFor([earlier,newer],'preview','linux-x86_64'),null);
 });
