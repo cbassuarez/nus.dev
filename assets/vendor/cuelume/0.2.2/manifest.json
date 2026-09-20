@@ -1,0 +1,20 @@
+{
+  "name": "cuelume",
+  "version": "0.2.2",
+  "source": "npm:cuelume@0.2.2",
+  "homepage": "https://cuelume-site.pages.dev/",
+  "repository": "https://github.com/danielwh2/cuelume",
+  "license": "MIT",
+  "entry": "index.js",
+  "hashes": {
+    "LICENSE": "c0d53cbcf3b4e9cfa23c0ce575a1568d34f763eaf74917fb525a61d5624752ca",
+    "audio/engine.d.ts": "a4412f7626c89007134a899a266366fc60d27cc40f0f91e851b015a20030556a",
+    "audio/engine.js": "f1bbaf5f1c51fe286834be809ca3394a86d267a2acf8b9eb881344351de9d173",
+    "index.d.ts": "1fa6589554a9cf2d2a8ee3f38d441d44f575bc25640d3bef7ed64ec6fd20c3c6",
+    "index.js": "201937573edca75c8cb1ae44caec603b94709aa68df891a009711c800b7e975f",
+    "interactions/bind.d.ts": "19c5fb321d1bcb5d907ea3c385ec07ac16539ed47c3a7330fd7b704ba36ca2c0",
+    "interactions/bind.js": "7c973333be0ddf880de8850ec68b7475d65fb9c81c3cc7c206688abb38b3105d",
+    "sounds/recipes.d.ts": "6a066ba3787af4839a307cdc6966ef969fb6ff0d8b2542a71797b82adddebf42",
+    "sounds/recipes.js": "67186934646dbf68c1677b6fad4559c66e6e5944c1ca9fa02c6995aa4bfb78fe"
+  }
+}
