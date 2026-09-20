@@ -21,11 +21,10 @@ export default {
       <label class="cap" for="download-platform">Your machine</label>
       <select id="download-platform" data-target>
         <option value="macos-arm64">macOS · Apple silicon (M-series)</option>
-        <option value="macos-x86_64">macOS · Intel</option>
         <option value="windows-x86_64">Windows · Intel / AMD 64-bit</option>
         <option value="linux-x86_64">Linux · Intel / AMD 64-bit</option>
       </select>
-      <p class="small dim">On a Mac, find your chip under Apple menu → About This Mac.</p>
+      <p class="small dim">Apple silicon only on the Mac; Intel Macs are not a target.</p>
       <a class="btn btn--fill download-primary" data-download hidden>Download nus</a>
       <p class="download-status small" data-status role="status" aria-live="polite">Checking published releases…</p>
       <div class="row"><a data-notes href="${SITE.repo}/releases">Release notes ↗</a><button class="text-button" data-retry>Check again</button></div>
@@ -40,7 +39,7 @@ export default {
 </div></section>
 <section class="section"><div class="section__in">
   <div class="sectionhead"><h2>Up and running.</h2><span class="cap">Installation</span></div>
-  <div data-install="macos"><ol class="install-steps"><li>Unzip the complete download.</li><li>Move <strong>nus.app</strong> into Applications.</li><li>Open nus and choose your shell. Your existing shell configuration comes with you.</li></ol><p class="dim small">Check the package record above for the exact signing and notarization status. Intel and Apple silicon builds are separate downloads.</p></div>
+  <div data-install="macos"><ol class="install-steps"><li>Unzip the complete download.</li><li>Move <strong>nus.app</strong> into Applications.</li><li>Open nus and choose your shell. Your existing shell configuration comes with you.</li></ol><p class="dim small">Check the package record above for the exact signing and notarization status. The Mac build is for Apple silicon; Intel Macs are not a target.</p></div>
   <div data-install="windows" hidden><ol class="install-steps"><li>Extract the entire ZIP into a folder you want to keep.</li><li>Open <strong>nus.exe</strong>. Keep the runtime files beside it.</li><li>Choose your shell. Settings are stored in your user profile.</li></ol><p class="dim small">Windows previews may be unsigned and show a SmartScreen warning. The package record states the signing status; Windows signing uses a separate certificate from Apple.</p></div>
   <div data-install="linux" hidden><ol class="install-steps"><li>Extract the archive into a folder you want to keep.</li><li>Run <code>./nus</code> inside that folder.</li><li>Follow the included README for desktop integration.</li></ol><p class="dim small">Requires glibc 2.35 or newer, GTK 3, NSS, ALSA and a working Vulkan driver. Ubuntu 22.04 is the packaging baseline. Wayland and X11 behavior depends on your desktop; report issues with the compositor and graphics driver noted.</p></div>
 </div></section>

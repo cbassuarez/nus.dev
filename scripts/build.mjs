@@ -5,12 +5,12 @@
  *   node scripts/build.mjs --serve   build, then serve ./ on :8000
  *
  * Static pages come from scripts/pages/*.mjs; doc pages are rendered from the
- * markdown in content/, which is a verbatim copy of docs/ in the app repo.
- * Output is committed, so GitHub Pages needs no CI and no install step. */
+ * markdown in content/, which is written for this site. Output is committed,
+ * so GitHub Pages needs no CI and no install step. */
 
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { render } from './markdown.mjs';
 import { page, icon, SITE } from './layout.mjs';
@@ -28,19 +28,20 @@ function write(relPath, html) {
 /* --- the docs -------------------------------------------------------------- */
 
 const DOCS = [
-  { slug: 'architecture', file: 'ARCHITECTURE.md', title: 'Architecture', ic: 'network',
-    blurb: 'The host, the crates, the browser, and the security posture. Each entry is a commitment.' },
-  { slug: 'design', file: 'DESIGN.md', title: 'Design', ic: 'palette',
-    blurb: 'Broadsheet: tokens, type, rules, spacing, shadow, and every surface the app draws.' },
   { slug: 'product', file: 'PRODUCT.md', title: 'Product', ic: 'squares-four',
-    blurb: 'Thirteen passes of settled behaviour — navigation, stacks, sound, containers, the look studio.' },
-  { slug: 'spikes', file: 'SPIKES.md', title: 'Spikes', ic: 'hard-hat',
-    blurb: 'Four throwaway binaries, ordered cheapest-to-kill. What each one answered, and when.' },
+    blurb: 'What nus does and how it behaves: windows and tabs, the terminal, the browser, assistants, the hatch, the look, rules and settings.' },
+  { slug: 'architecture', file: 'ARCHITECTURE.md', title: 'Architecture', ic: 'network',
+    blurb: 'One process, one compositor: the host, the crates, the terminal core, the browser, held shells, replay, and the security posture.' },
+  { slug: 'design', file: 'DESIGN.md', title: 'Design', ic: 'palette',
+    blurb: 'Broadsheet: the principles, the tokens, type, rules, spacing and shadow, and every surface the app draws.' },
+  { slug: 'measurements', file: 'MEASUREMENTS.md', title: 'Measurements', ic: 'hard-hat',
+    blurb: 'The numbers behind the claims: bundle size, memory per tab and window, file opens, latency, frame cost — and how each was taken.' },
   { slug: 'dependencies', file: 'DEPENDENCIES.md', title: 'Dependencies', ic: 'stack',
-    blurb: 'What nus is built on, and what each crate is there to do.' }
+    blurb: 'What nus is built on, what it bundles, what it ported, and what it read but did not copy.' }
 ];
 
-const SOURCE = (file) => `${SITE.repo}/blob/main/docs/${file}`;
+/* The old address of the measurements page. */
+const MOVED = { 'docs/spikes/index.html': '/docs/measurements/' };
 
 function docNav(current) {
   const items = DOCS.map((d) => `<li><a href="../${d.slug}/">${d.title}</a></li>`).join('');
@@ -50,7 +51,7 @@ function docNav(current) {
         .join('')}</ul>`
     : '';
   return `<nav class="doc__nav" aria-label="Documentation">
-  <h4>The record</h4>
+  <h4>Docs</h4>
   <ul>${items}</ul>
   ${toc}
 </nav>`;
@@ -67,9 +68,6 @@ ${docNav({ toc })}
   <div class="doc__meta">
     <span>${icon(d.ic)}</span>
     <span>${d.title}</span>
-    <span class="doc__source">
-      <a href="${SOURCE(d.file)}" target="_blank" rel="noopener noreferrer">docs/${d.file} ↗</a>
-    </span>
   </div>
 ${html}
 </article>
@@ -93,12 +91,11 @@ function buildDocsIndex() {
 
   const body = `<section class="section">
   <div class="section__in">
-    <h1 style="margin-bottom:18px">The record</h1>
+    <h1 style="margin-bottom:18px">Docs</h1>
     <p class="lede">
-      nus is documented as a set of decision records rather than a manual. Each one
-      says what was settled, when, and what it rules out — and when a decision changes,
-      the document changes with it. These pages are generated from the markdown in the
-      app repository, so they cannot drift from it.
+      What nus does, how it is built, how it looks, and what was measured. Start with
+      the product page for the behaviour, the architecture page for the machinery
+      underneath, and the measurements page for the numbers.
     </p>
   </div>
 </section>
@@ -109,15 +106,15 @@ function buildDocsIndex() {
       ${cards}
     </div>
     <p class="dim" style="margin-top:24px;font-size:14px">
-      These are working project notes, including plans and historical decisions.
-      Check <a href="../download/">the download page</a> for published builds and installation details.
+      In the app, F1 opens the keyboard guide and every settings row is also a palette
+      row. <a href="../download/">The download page</a> has the builds.
     </p>
   </div>
 </section>`;
 
   return write(join('docs', 'index.html'), page({
     title: 'Docs',
-    description: 'Architecture, design, product and spike records for nus — generated from the app repository.',
+    description: 'nus documentation: product behaviour, architecture, the Broadsheet design system, measurements and dependencies.',
     path: '/docs/',
     depth: 1,
     body
@@ -141,6 +138,16 @@ ${urls.map((u) => `  <url><loc>${SITE.url}${u}</loc><lastmod>${today}</lastmod><
 
   write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE.url}/sitemap.xml\n`);
 
+  // Old addresses keep working: a tiny page that forwards, and says where to.
+  for (const [from, to] of Object.entries(MOVED)) {
+    write(from, `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Moved · nus</title>
+<meta name="robots" content="noindex"><link rel="canonical" href="${SITE.url}${to}">
+<meta http-equiv="refresh" content="0; url=${to}"></head>
+<body><h1>Moved</h1><p>This page is now at <a href="${to}">${SITE.url}${to}</a>.</p></body></html>
+`);
+  }
+
   write('404.html', page({
     title: 'Not found',
     description: 'That page is not here.',
@@ -151,7 +158,7 @@ ${urls.map((u) => `  <url><loc>${SITE.url}${u}</loc><lastmod>${today}</lastmod><
   <p class="lede">That page is not here. It may never have been.</p>
   <div class="row" style="margin-top:24px">
     <a class="btn btn--fill" href="/">${icon('arrow-right')}Home</a>
-    <a class="btn btn--quiet" href="/docs/">The record</a>
+    <a class="btn btn--quiet" href="/docs/">Docs</a>
   </div>
 </div></section>`
   }));
@@ -167,7 +174,7 @@ async function build() {
   const pageDir = join(ROOT, 'scripts', 'pages');
   for (const file of readdirSync(pageDir).sort()) {
     if (!file.endsWith('.mjs')) continue;
-    const mod = (await import(join(pageDir, file))).default;
+    const mod = (await import(pathToFileURL(join(pageDir, file)).href)).default;
     const out = mod.path === '/' ? 'index.html' : join(mod.path.replace(/^\/|\/$/g, ''), 'index.html');
     written.push(write(out, page(mod)));
   }

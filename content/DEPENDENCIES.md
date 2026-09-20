@@ -1,32 +1,52 @@
-# Dependencies: bundle / fork / depend / reference
+# Dependencies
 
-## Bundle (fetched by `scripts/fetch-cef.sh`, never committed)
-- **CEF** binary distribution, version pinned by the `vendor/cef-rs` submodule
-  commit (currently CEF 152 / Chromium 152). Windows
-  x64, macOS arm64, Linux x64. Bump monthly with Chromium.
-- **Fonts:** JetBrains Mono (OFL) as default, Symbols Nerd Font for icons.
+What nus is built on, what it bundles, and what it read but did not copy.
+Every release package carries the licences of what it ships.
 
-## Fork (git submodule under `vendor/`, we carry patches)
-- `vendor/cef-rs` — tauri-apps/cef-rs. Expect patches around OSR shared
-  textures and Chrome-runtime windowless mode.
+## Bundled
 
-## Temporary source patch
-- `vendor/wgpu-hal` — crates.io 30.0.1 plus the macOS first-frame fix from
-  [wgpu #10302](https://github.com/gfx-rs/wgpu/pull/10302). Both Cargo workspaces
-  use this path patch. See `vendor/wgpu-hal/NUS-PATCHES.md` for removal criteria.
+- **Chromium**, through the Chromium Embedded Framework (BSD). The version
+  is pinned by the `cef-rs` submodule and bumped on Chromium's four-week
+  cadence. Windows x64, macOS Apple silicon, Linux x64.
+- **Fonts:** IBM Plex Mono, Victor Mono, JetBrains Mono (all OFL), ABC Areal
+  with its Semi Mono and Mono (under its own licence), and Newsreader (OFL)
+  for the wordmark and the reader. No system font installation is required.
+- **Icons:** Phosphor (MIT), rasterized into the glyph atlas.
+- **Grammars:** tree-sitter grammars for bash and PowerShell (MIT), in the
+  binary; others fetch on request as bundles.
+- **Sounds:** seventeen synth recipes, rendered by nus's own synth at
+  runtime — no sample files.
 
-## Depend (crates.io)
+## Carried as source
+
+- `cef-rs` (tauri-apps), as a submodule with nus's patches around offscreen
+  shared textures and Chrome-runtime windowless mode.
+- `wgpu-hal`, crates.io plus a macOS first-frame fix that is on its way
+  upstream.
+
+## Crates
+
 wgpu, winit, raw-window-handle, vte, portable-pty, unicode-width, swash,
-rustybuzz, fontdb, adblock (Brave), mlua (luau), rusqlite (Arc import),
-keyring, notify-rust, windows (notifications), rfd (the system's own file
-dialog: NSOpenPanel, the common item dialog, the XDG portal — no GTK),
-image (whatever picture you pick, read and squared off).
+rustybuzz, fontdb, tree-sitter, ropey, lsp-types, lsp-server, adblock
+(Brave's engine), mlua (Luau), rusqlite (browser import), keyring,
+notify-rust, cpal (sound), AccessKit, rfd (the system's own file dialog —
+NSOpenPanel, the common item dialog, the XDG portal), image, and the
+`windows` crate for notifications, the taskbar and the process table.
 
-## Reference (read, don't vendor)
-- Ghostty — terminal state, Kitty keyboard/graphics, shaping.
-- Alacritty — `vte` integration, grid.
-- WezTerm — ConPTY, SSH profile UX.
-- Brave — `adblock` engine integration.
-- Zed / gpui — scene graph and text system design.
-- Arc — `~/Library/Application Support/Arc/StorableSidebar.json` (Spaces),
-  Chromium `Bookmarks` and `History` under Arc's User Data (import).
+## Ported
+
+- **The caret** is Neovide's cursor renderer, ported: four critically damped
+  springs drawn as one quad (MIT).
+- **Scrolling** rides neoscroll's easing curves (MIT).
+
+## Read, not copied
+
+- **Ghostty** — terminal state design, the Kitty keyboard and graphics
+  protocols, shaping.
+- **Alacritty** — `vte` in practice, the grid.
+- **WezTerm** — ConPTY's quirks, SSH profiles.
+- **Brave** — integrating the `adblock` engine.
+- **Zed / gpui** — scene graph and text system design.
+- **Arc, Dia, Zen, Vivaldi, Orion** — the browser side; **Rio, kitty, Warp** —
+  the terminal side. Arc's sidebar and Chromium's bookmarks and history
+  formats, for import.

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {publishedReleases,latestFor,latestPackageFor,packageFor} from '../assets/js/releases.js';
+import {publishedReleases,latestFor,latestPackageFor,packageFor,TARGETS} from '../assets/js/releases.js';
 function fixture(tag='v0.0.1-preview.1', signing='notarized') {
  const name=`nus-${tag.slice(1)}-macos-arm64.zip`, hash='a'.repeat(64);
  const entry={name,target:'macos-arm64',size:100,sha256:hash,signing};
@@ -42,4 +42,8 @@ test('platform previews keep earlier verified downloads available',()=>{
  assert.equal(latestPackageFor([earlier,newer],'preview','macos-arm64').release,earlier);
  assert.equal(latestPackageFor([earlier,newer],'stable','macos-arm64'),null);
  assert.equal(latestPackageFor([earlier,newer],'preview','linux-x86_64'),null);
+});
+test('Intel Macs are not a target',()=>{
+ assert.ok(!TARGETS.some(t=>t[0]==='macos-x86_64'));
+ assert.equal(packageFor(fixture(),'macos-x86_64'),null);
 });

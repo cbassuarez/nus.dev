@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dependencies · nus</title>
-<meta name="description" content="What nus is built on, and what each crate is there to do.">
+<meta name="description" content="What nus is built on, what it bundles, what it ported, and what it read but did not copy.">
 <link rel="canonical" href="https://nus.dev/docs/dependencies/">
 <meta name="theme-color" content="#c8102e">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="nus.dev">
 <meta property="og:title" content="Dependencies · nus">
-<meta property="og:description" content="What nus is built on, and what each crate is there to do.">
+<meta property="og:description" content="What nus is built on, what it bundles, what it ported, and what it read but did not copy.">
 <meta property="og:url" content="https://nus.dev/docs/dependencies/">
 <meta property="og:image" content="https://nus.dev/assets/icon/nus-512.png">
 <meta name="twitter:card" content="summary">
@@ -21,7 +21,7 @@
 
 <link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/Newsreader-Italic.woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/css/site.css?v=6c33e7b61dc5">
+<link rel="stylesheet" href="../../assets/css/site.css?v=d71a6714d84c">
 <script>
 /* Apply the stored theme and signal before first paint, so the page never flashes. */
 (function(){try{
@@ -60,29 +60,27 @@
 <main id="main">
 <div class="doc">
 <nav class="doc__nav" aria-label="Documentation">
-  <h4>The record</h4>
-  <ul><li><a href="../architecture/">Architecture</a></li><li><a href="../design/">Design</a></li><li><a href="../product/">Product</a></li><li><a href="../spikes/">Spikes</a></li><li><a href="../dependencies/">Dependencies</a></li></ul>
-  <h4>On this page</h4><ul><li class=""><a href="#bundle-fetched-by-scriptsfetch-cefsh-never-committed">Bundle (fetched by scripts/fetch-cef.sh, never committed)</a></li><li class=""><a href="#fork-git-submodule-under-vendor-we-carry-patches">Fork (git submodule under vendor/, we carry patches)</a></li><li class=""><a href="#temporary-source-patch">Temporary source patch</a></li><li class=""><a href="#depend-cratesio">Depend (crates.io)</a></li><li class=""><a href="#reference-read-dont-vendor">Reference (read, don't vendor)</a></li></ul>
+  <h4>Docs</h4>
+  <ul><li><a href="../product/">Product</a></li><li><a href="../architecture/">Architecture</a></li><li><a href="../design/">Design</a></li><li><a href="../measurements/">Measurements</a></li><li><a href="../dependencies/">Dependencies</a></li></ul>
+  <h4>On this page</h4><ul><li class=""><a href="#bundled">Bundled</a></li><li class=""><a href="#carried-as-source">Carried as source</a></li><li class=""><a href="#crates">Crates</a></li><li class=""><a href="#ported">Ported</a></li><li class=""><a href="#read-not-copied">Read, not copied</a></li></ul>
 </nav>
 <article class="doc__body">
-  <h1>Dependencies: bundle / fork / depend / reference</h1>
+  <h1>Dependencies</h1>
   <div class="doc__meta">
     <span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M230.91,172A8,8,0,0,1,228,182.91l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,36,169.09l92,53.65,92-53.65A8,8,0,0,1,230.91,172ZM220,121.09l-92,53.65L36,121.09A8,8,0,0,0,28,134.91l96,56a8,8,0,0,0,8.06,0l96-56A8,8,0,1,0,220,121.09ZM24,80a8,8,0,0,1,4-6.91l96-56a8,8,0,0,1,8.06,0l96,56a8,8,0,0,1,0,13.82l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,24,80Zm23.88,0L128,126.74,208.12,80,128,33.26Z"/></svg></span>
     <span>Dependencies</span>
-    <span class="doc__source">
-      <a href="https://github.com/cbassuarez/nus/blob/main/docs/DEPENDENCIES.md" target="_blank" rel="noopener noreferrer">docs/DEPENDENCIES.md ↗</a>
-    </span>
   </div>
-<h2 id="bundle-fetched-by-scriptsfetch-cefsh-never-committed"><a class="anchor" href="#bundle-fetched-by-scriptsfetch-cefsh-never-committed" aria-hidden="true">#</a>Bundle (fetched by <code>scripts/fetch-cef.sh</code>, never committed)</h2>
-<ul><li><strong>CEF</strong> binary distribution, version pinned by the <code>vendor/cef-rs</code> submodule commit (currently CEF 152 / Chromium 152). Windows x64, macOS arm64, Linux x64. Bump monthly with Chromium.</li><li><strong>Fonts:</strong> JetBrains Mono (OFL) as default, Symbols Nerd Font for icons.</li></ul>
-<h2 id="fork-git-submodule-under-vendor-we-carry-patches"><a class="anchor" href="#fork-git-submodule-under-vendor-we-carry-patches" aria-hidden="true">#</a>Fork (git submodule under <code>vendor/</code>, we carry patches)</h2>
-<ul><li><code>vendor/cef-rs</code> — tauri-apps/cef-rs. Expect patches around OSR shared textures and Chrome-runtime windowless mode.</li></ul>
-<h2 id="temporary-source-patch"><a class="anchor" href="#temporary-source-patch" aria-hidden="true">#</a>Temporary source patch</h2>
-<ul><li><code>vendor/wgpu-hal</code> — crates.io 30.0.1 plus the macOS first-frame fix from <a href="https://github.com/gfx-rs/wgpu/pull/10302" target="_blank" rel="noopener noreferrer">wgpu #10302</a>. Both Cargo workspaces use this path patch. See <code>vendor/wgpu-hal/NUS-PATCHES.md</code> for removal criteria.</li></ul>
-<h2 id="depend-cratesio"><a class="anchor" href="#depend-cratesio" aria-hidden="true">#</a>Depend (crates.io)</h2>
-<p>wgpu, winit, raw-window-handle, vte, portable-pty, unicode-width, swash, rustybuzz, fontdb, adblock (Brave), mlua (luau), rusqlite (Arc import), keyring, notify-rust, windows (notifications), rfd (the system's own file dialog: NSOpenPanel, the common item dialog, the XDG portal — no GTK), image (whatever picture you pick, read and squared off).</p>
-<h2 id="reference-read-dont-vendor"><a class="anchor" href="#reference-read-dont-vendor" aria-hidden="true">#</a>Reference (read, don't vendor)</h2>
-<ul><li>Ghostty — terminal state, Kitty keyboard/graphics, shaping.</li><li>Alacritty — <code>vte</code> integration, grid.</li><li>WezTerm — ConPTY, SSH profile UX.</li><li>Brave — <code>adblock</code> engine integration.</li><li>Zed / gpui — scene graph and text system design.</li><li>Arc — <code>~/Library/Application Support/Arc/StorableSidebar.json</code> (Spaces), Chromium <code>Bookmarks</code> and <code>History</code> under Arc's User Data (import).</li></ul>
+<p>What nus is built on, what it bundles, and what it read but did not copy. Every release package carries the licences of what it ships.</p>
+<h2 id="bundled"><a class="anchor" href="#bundled" aria-hidden="true">#</a>Bundled</h2>
+<ul><li><strong>Chromium</strong>, through the Chromium Embedded Framework (BSD). The version is pinned by the <code>cef-rs</code> submodule and bumped on Chromium's four-week cadence. Windows x64, macOS Apple silicon, Linux x64.</li><li><strong>Fonts:</strong> IBM Plex Mono, Victor Mono, JetBrains Mono (all OFL), ABC Areal with its Semi Mono and Mono (under its own licence), and Newsreader (OFL) for the wordmark and the reader. No system font installation is required.</li><li><strong>Icons:</strong> Phosphor (MIT), rasterized into the glyph atlas.</li><li><strong>Grammars:</strong> tree-sitter grammars for bash and PowerShell (MIT), in the binary; others fetch on request as bundles.</li><li><strong>Sounds:</strong> seventeen synth recipes, rendered by nus's own synth at runtime — no sample files.</li></ul>
+<h2 id="carried-as-source"><a class="anchor" href="#carried-as-source" aria-hidden="true">#</a>Carried as source</h2>
+<ul><li><code>cef-rs</code> (tauri-apps), as a submodule with nus's patches around offscreen shared textures and Chrome-runtime windowless mode.</li><li><code>wgpu-hal</code>, crates.io plus a macOS first-frame fix that is on its way upstream.</li></ul>
+<h2 id="crates"><a class="anchor" href="#crates" aria-hidden="true">#</a>Crates</h2>
+<p>wgpu, winit, raw-window-handle, vte, portable-pty, unicode-width, swash, rustybuzz, fontdb, tree-sitter, ropey, lsp-types, lsp-server, adblock (Brave's engine), mlua (Luau), rusqlite (browser import), keyring, notify-rust, cpal (sound), AccessKit, rfd (the system's own file dialog — NSOpenPanel, the common item dialog, the XDG portal), image, and the <code>windows</code> crate for notifications, the taskbar and the process table.</p>
+<h2 id="ported"><a class="anchor" href="#ported" aria-hidden="true">#</a>Ported</h2>
+<ul><li><strong>The caret</strong> is Neovide's cursor renderer, ported: four critically damped springs drawn as one quad (MIT).</li><li><strong>Scrolling</strong> rides neoscroll's easing curves (MIT).</li></ul>
+<h2 id="read-not-copied"><a class="anchor" href="#read-not-copied" aria-hidden="true">#</a>Read, not copied</h2>
+<ul><li><strong>Ghostty</strong> — terminal state design, the Kitty keyboard and graphics protocols, shaping.</li><li><strong>Alacritty</strong> — <code>vte</code> in practice, the grid.</li><li><strong>WezTerm</strong> — ConPTY's quirks, SSH profiles.</li><li><strong>Brave</strong> — integrating the <code>adblock</code> engine.</li><li><strong>Zed / gpui</strong> — scene graph and text system design.</li><li><strong>Arc, Dia, Zen, Vivaldi, Orion</strong> — the browser side; <strong>Rio, kitty, Warp</strong> — the terminal side. Arc's sidebar and Chromium's bookmarks and history formats, for import.</li></ul>
 </article>
 </div>
 </main>
@@ -98,7 +96,7 @@
     </div>
     <div>
       <h4>Docs</h4>
-      <ul><li><a href="../../panels/">Panels</a></li><li><a href="../../docs/architecture/">Architecture</a></li><li><a href="../../docs/design/">Design</a></li><li><a href="../../docs/product/">Product</a></li><li><a href="../../docs/spikes/">Spikes</a></li></ul>
+      <ul><li><a href="../../panels/">Panels</a></li><li><a href="../../docs/architecture/">Architecture</a></li><li><a href="../../docs/design/">Design</a></li><li><a href="../../docs/product/">Product</a></li><li><a href="../../docs/measurements/">Measurements</a></li></ul>
     </div>
     <div>
       <h4>More</h4>
@@ -114,7 +112,7 @@
     </div>
   </div>
 </footer>
-<script src="../../assets/js/site.js?v=fecb56b08fba" defer></script>
+<script src="../../assets/js/site.js?v=9aafecf8611a" defer></script>
 
 </body>
 </html>

@@ -13,6 +13,17 @@ export default {
  </div></div>
 </section>
 <div class="section__in capture-note"><span>Actual Mac app captures, including its window controls.</span><span>Play either window. Scripted demonstrations; timing is paced.</span></div>
+<section class="section section--tight" id="measured"><div class="section__in">
+ <div class="sectionhead"><h2>Light on its feet.</h2><span class="cap">Measured on release builds</span></div>
+ <div class="figs figs--lead">
+  <div><b>355<small> MiB</small></b><span>macOS bundle</span><em>down from 429 MiB — 17% smaller</em></div>
+  <div><b>28.9<small> ms</small></b><span>Opening a 10 MiB file</span><em>p95 across 20 opens</em></div>
+  <div><b>63<small> ms</small></b><span>Opening a 100 MiB file</span><em>maximum across five opens</em></div>
+  <div><b>101<small> MiB</small></b><span>Each idle browser tab</span><em>101–102 MiB, after initialization</em></div>
+  <div><b>1.5–19<small> MiB</small></b><span>Each empty window</span><em>added per extra window</em></div>
+ </div>
+ <p class="small dim figs__note">A whole Chromium and a whole terminal in one process, and it still opens like a terminal. File opens are the editor pane on real files; memory is what each further tab or window adds once it has settled. <a href="./docs/measurements/">How each number was taken →</a></p>
+</div></section>
 <section class="section" id="work"><div class="section__in">
  <div class="sectionhead"><h2>The work has a few moving parts.</h2><span class="cap">Keep them close</span></div>
  <div class="work-notes">

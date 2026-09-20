@@ -2,7 +2,6 @@ export const API = 'https://api.github.com/repos/cbassuarez/nus/releases?per_pag
 const REPO = 'https://github.com/cbassuarez/nus';
 export const TARGETS = [
   ['macos-arm64', 'macOS', 'Apple silicon', 'zip'],
-  ['macos-x86_64', 'macOS', 'Intel', 'zip'],
   ['windows-x86_64', 'Windows', 'Intel / AMD 64-bit', 'zip'],
   ['linux-x86_64', 'Linux', 'Intel / AMD 64-bit', 'tar.gz']
 ];

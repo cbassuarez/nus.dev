@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Docs · nus</title>
-<meta name="description" content="Architecture, design, product and spike records for nus — generated from the app repository.">
+<meta name="description" content="nus documentation: product behaviour, architecture, the Broadsheet design system, measurements and dependencies.">
 <link rel="canonical" href="https://nus.dev/docs/">
 <meta name="theme-color" content="#c8102e">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="nus.dev">
 <meta property="og:title" content="Docs · nus">
-<meta property="og:description" content="Architecture, design, product and spike records for nus — generated from the app repository.">
+<meta property="og:description" content="nus documentation: product behaviour, architecture, the Broadsheet design system, measurements and dependencies.">
 <meta property="og:url" content="https://nus.dev/docs/">
 <meta property="og:image" content="https://nus.dev/assets/icon/nus-512.png">
 <meta name="twitter:card" content="summary">
@@ -21,7 +21,7 @@
 
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/Newsreader-Italic.woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/site.css?v=6c33e7b61dc5">
+<link rel="stylesheet" href="../assets/css/site.css?v=d71a6714d84c">
 <script>
 /* Apply the stored theme and signal before first paint, so the page never flashes. */
 (function(){try{
@@ -60,12 +60,11 @@
 <main id="main">
 <section class="section">
   <div class="section__in">
-    <h1 style="margin-bottom:18px">The record</h1>
+    <h1 style="margin-bottom:18px">Docs</h1>
     <p class="lede">
-      nus is documented as a set of decision records rather than a manual. Each one
-      says what was settled, when, and what it rules out — and when a decision changes,
-      the document changes with it. These pages are generated from the markdown in the
-      app repository, so they cannot drift from it.
+      What nus does, how it is built, how it looks, and what was measured. Start with
+      the product page for the behaviour, the architecture page for the machinery
+      underneath, and the measurements page for the numbers.
     </p>
   </div>
 </section>
@@ -73,35 +72,35 @@
 <section class="section">
   <div class="section__in">
     <div class="grid">
+      <a class="card" href="./product/">
+    <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"/></svg>Product</h3>
+    <p>What nus does and how it behaves: windows and tabs, the terminal, the browser, assistants, the hatch, the look, rules and settings.</p>
+    <span class="card__more">Read →</span>
+  </a>
       <a class="card" href="./architecture/">
     <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232,112H136V88h8a16,16,0,0,0,16-16V40a16,16,0,0,0-16-16H112A16,16,0,0,0,96,40V72a16,16,0,0,0,16,16h8v24H24a8,8,0,0,0,0,16H56v32H48a16,16,0,0,0-16,16v32a16,16,0,0,0,16,16H80a16,16,0,0,0,16-16V176a16,16,0,0,0-16-16H72V128H184v32h-8a16,16,0,0,0-16,16v32a16,16,0,0,0,16,16h32a16,16,0,0,0,16-16V176a16,16,0,0,0-16-16h-8V128h32a8,8,0,0,0,0-16ZM112,40h32V72H112ZM80,208H48V176H80Zm128,0H176V176h32Z"/></svg>Architecture</h3>
-    <p>The host, the crates, the browser, and the security posture. Each entry is a commitment.</p>
+    <p>One process, one compositor: the host, the crates, the terminal core, the browser, held shells, replay, and the security posture.</p>
     <span class="card__more">Read →</span>
   </a>
       <a class="card" href="./design/">
     <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M200.77,53.89A103.27,103.27,0,0,0,128,24h-1.07A104,104,0,0,0,24,128c0,43,26.58,79.06,69.36,94.17A32,32,0,0,0,136,192a16,16,0,0,1,16-16h46.21a31.81,31.81,0,0,0,31.2-24.88,104.43,104.43,0,0,0,2.59-24A103.28,103.28,0,0,0,200.77,53.89Zm13,93.71A15.89,15.89,0,0,1,198.21,160H152a32,32,0,0,0-32,32,16,16,0,0,1-21.31,15.07C62.49,194.3,40,164,40,128a88,88,0,0,1,87.09-88h.9a88.35,88.35,0,0,1,88,87.25A88.86,88.86,0,0,1,213.81,147.6ZM140,76a12,12,0,1,1-12-12A12,12,0,0,1,140,76ZM96,100A12,12,0,1,1,84,88,12,12,0,0,1,96,100Zm0,56a12,12,0,1,1-12-12A12,12,0,0,1,96,156Zm88-56a12,12,0,1,1-12-12A12,12,0,0,1,184,100Z"/></svg>Design</h3>
-    <p>Broadsheet: tokens, type, rules, spacing, shadow, and every surface the app draws.</p>
+    <p>Broadsheet: the principles, the tokens, type, rules, spacing and shadow, and every surface the app draws.</p>
     <span class="card__more">Read →</span>
   </a>
-      <a class="card" href="./product/">
-    <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"/></svg>Product</h3>
-    <p>Thirteen passes of settled behaviour — navigation, stacks, sound, containers, the look studio.</p>
-    <span class="card__more">Read →</span>
-  </a>
-      <a class="card" href="./spikes/">
-    <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,152V136a96.37,96.37,0,0,0-64-90.51V40a16,16,0,0,0-16-16H112A16,16,0,0,0,96,40v5.49A96.37,96.37,0,0,0,32,136v16a16,16,0,0,0-16,16v24a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V168A16,16,0,0,0,224,152Zm-16-16v16H160V62.67A80.36,80.36,0,0,1,208,136ZM144,40V152H112V40ZM48,136A80.36,80.36,0,0,1,96,62.67V152H48Zm176,56H32V168H224v24Z"/></svg>Spikes</h3>
-    <p>Four throwaway binaries, ordered cheapest-to-kill. What each one answered, and when.</p>
+      <a class="card" href="./measurements/">
+    <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,152V136a96.37,96.37,0,0,0-64-90.51V40a16,16,0,0,0-16-16H112A16,16,0,0,0,96,40v5.49A96.37,96.37,0,0,0,32,136v16a16,16,0,0,0-16,16v24a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V168A16,16,0,0,0,224,152Zm-16-16v16H160V62.67A80.36,80.36,0,0,1,208,136ZM144,40V152H112V40ZM48,136A80.36,80.36,0,0,1,96,62.67V152H48Zm176,56H32V168H224v24Z"/></svg>Measurements</h3>
+    <p>The numbers behind the claims: bundle size, memory per tab and window, file opens, latency, frame cost — and how each was taken.</p>
     <span class="card__more">Read →</span>
   </a>
       <a class="card" href="./dependencies/">
     <h3><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M230.91,172A8,8,0,0,1,228,182.91l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,36,169.09l92,53.65,92-53.65A8,8,0,0,1,230.91,172ZM220,121.09l-92,53.65L36,121.09A8,8,0,0,0,28,134.91l96,56a8,8,0,0,0,8.06,0l96-56A8,8,0,1,0,220,121.09ZM24,80a8,8,0,0,1,4-6.91l96-56a8,8,0,0,1,8.06,0l96,56a8,8,0,0,1,0,13.82l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,24,80Zm23.88,0L128,126.74,208.12,80,128,33.26Z"/></svg>Dependencies</h3>
-    <p>What nus is built on, and what each crate is there to do.</p>
+    <p>What nus is built on, what it bundles, what it ported, and what it read but did not copy.</p>
     <span class="card__more">Read →</span>
   </a>
     </div>
     <p class="dim" style="margin-top:24px;font-size:14px">
-      These are working project notes, including plans and historical decisions.
-      Check <a href="../download/">the download page</a> for published builds and installation details.
+      In the app, F1 opens the keyboard guide and every settings row is also a palette
+      row. <a href="../download/">The download page</a> has the builds.
     </p>
   </div>
 </section>
@@ -118,7 +117,7 @@
     </div>
     <div>
       <h4>Docs</h4>
-      <ul><li><a href="../panels/">Panels</a></li><li><a href="../docs/architecture/">Architecture</a></li><li><a href="../docs/design/">Design</a></li><li><a href="../docs/product/">Product</a></li><li><a href="../docs/spikes/">Spikes</a></li></ul>
+      <ul><li><a href="../panels/">Panels</a></li><li><a href="../docs/architecture/">Architecture</a></li><li><a href="../docs/design/">Design</a></li><li><a href="../docs/product/">Product</a></li><li><a href="../docs/measurements/">Measurements</a></li></ul>
     </div>
     <div>
       <h4>More</h4>
@@ -134,7 +133,7 @@
     </div>
   </div>
 </footer>
-<script src="../assets/js/site.js?v=fecb56b08fba" defer></script>
+<script src="../assets/js/site.js?v=9aafecf8611a" defer></script>
 
 </body>
 </html>

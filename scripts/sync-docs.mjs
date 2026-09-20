@@ -1,18 +1,17 @@
 #!/usr/bin/env node
-/* Copies the decision records out of the app repo into content/.
+/* Pulls the app's screenshots into assets/shots/.
  *
  *   node scripts/sync-docs.mjs [path-to-nus-repo]   # default: ../nus
  *
- * content/ is a verbatim copy, never edited by hand — edit docs/ in the app
- * repo, sync, rebuild, commit. The build reads content/ so that this repo
- * still builds on a machine that does not have the app checked out. */
+ * The docs in content/ are written for this site and are not synced: the
+ * app repo's docs/ are its working notes, and the pages here are the public
+ * account of the same thing. Only media comes across. */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, copyFileSync, statSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, copyFileSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const FILES = ['ARCHITECTURE.md', 'DESIGN.md', 'PRODUCT.md', 'SPIKES.md', 'DEPENDENCIES.md'];
 
 const app = resolve(process.argv[2] || join(ROOT, '..', 'nus'));
 const docs = join(app, 'docs');
@@ -23,17 +22,6 @@ if (!existsSync(docs)) {
 }
 
 let changed = 0;
-for (const f of FILES) {
-  const src = join(docs, f);
-  if (!existsSync(src)) { console.warn(`  skip  ${f} (missing in app repo)`); continue; }
-  const next = readFileSync(src, 'utf8');
-  const dest = join(ROOT, 'content', f);
-  const prev = existsSync(dest) ? readFileSync(dest, 'utf8') : null;
-  if (prev === next) { console.log(`  same  ${f}`); continue; }
-  writeFileSync(dest, next);
-  console.log(`  ${prev === null ? 'new ' : 'sync'}  ${f}`);
-  changed++;
-}
 
 /* --- media ----------------------------------------------------------------
  * Screenshots of the running app live in docs/media/ in the app repo, so they

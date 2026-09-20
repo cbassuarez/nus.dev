@@ -1988,3 +1988,15 @@ h1 em,h2 em { font-family:var(--serif); font-weight:500; letter-spacing:-.035em;
 .download-primary {background:var(--signal)!important;border-color:var(--signal)!important;color:var(--on-signal)!important;}
 .download-section-label {margin-bottom:18px;}
 @media(max-width:720px) {.download-intro .section__in,.download-workbench {grid-template-columns:1fr;gap:22px;}.download-workbench{gap:0;}.download-intro h1 {font-size:42px;}.download-intro .lede {font-size:13px;}.download-choice,.download-receipt{padding:22px;}}
+
+/* --- the stats lead ------------------------------------------------------- */
+
+.figs--lead { grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); border-bottom: 0; }
+.figs--lead b { font-size: 34px; }
+.figs--lead > div { padding: 20px 18px 18px; border-bottom: var(--hair) solid var(--ink); }
+.figs__note { margin-top: 14px; max-width: 78ch; }
+@media (max-width: 620px) {
+  .figs--lead { grid-template-columns: 1fr 1fr; }
+  .figs--lead > div { border-bottom: var(--hair) solid var(--ink); }
+  .figs--lead > div:nth-child(2n) { border-right: 0; }
+}

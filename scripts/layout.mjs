@@ -4,8 +4,9 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = new URL('..', import.meta.url).pathname;
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const assetVersion = path => createHash('sha256').update(readFileSync(join(ROOT,path))).digest('hex').slice(0,12);
 
 export const SITE = {
@@ -86,7 +87,7 @@ function footer(depth) {
       ['Architecture', `${r}/docs/architecture/`],
       ['Design', `${r}/docs/design/`],
       ['Product', `${r}/docs/product/`],
-      ['Spikes', `${r}/docs/spikes/`]
+      ['Measurements', `${r}/docs/measurements/`]
     ]],
     ['More', [
       ['About', `${r}/about/`],

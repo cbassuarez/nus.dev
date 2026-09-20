@@ -12,7 +12,7 @@ step and no install.
 ```
 npm run build     # write the pages
 npm run dev       # write them, then serve on http://localhost:8000
-npm run sync      # pull docs/*.md out of ../nus into content/
+npm run sync      # pull the app's screenshots out of ../nus into assets/shots/
 npm run wasm      # rebuild the VT core for the browser  (needs Rust + wasm-pack)
 npm run record    # re-record the hero session           (needs the nus checkout)
 ```
@@ -26,14 +26,14 @@ works on a clean checkout.
 
 ```
 index.html  about/  download/  docs/     generated — do not edit
-content/*.md                             verbatim copy of nus/docs/*.md
+content/*.md                             the docs, written for this site
 scripts/
   build.mjs        the whole build
   layout.mjs       page shell: head, masthead, footer, icons
   markdown.mjs     the Markdown subset the docs use
   window.mjs       the app window, rebuilt in HTML
   pages/*.mjs      body of each hand-written page
-  sync-docs.mjs    content/ ← ../nus/docs/
+  sync-docs.mjs    assets/shots/ ← ../nus/docs/media/
   checks/          dev-only harnesses (not linked from the site)
 assets/
   css/site.css     the Broadsheet design system
@@ -128,12 +128,14 @@ and it obeys nus's own width rule (no split under 900px, no sidebar under 640).
 
 ## Docs
 
-`docs/<slug>/` pages are generated from `content/*.md`, which is a copy of
-`docs/*.md` in the app repo. When those change:
+`docs/<slug>/` pages are generated from `content/*.md`. Those files are the
+public account of the app — organised by topic, in the present tense, with
+no dates, passes or working notes — and are written here, not copied from
+the app repo's `docs/`, which are its working notes. When the app changes,
+change the page that describes it and rebuild.
 
-```
-npm run sync && npm run build && git commit -am "docs: sync"
-```
+`content/MEASUREMENTS.md` carries every number the site quotes, with how it
+was taken; the home page's figures come from there.
 
 `scripts/markdown.mjs` covers the subset those files use — headings,
 paragraphs, lists, pipe tables, fenced code, blockquotes, and the inline set.
