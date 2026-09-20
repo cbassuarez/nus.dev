@@ -37,7 +37,9 @@
   --ink:       #141414;
   --tint:      rgba(20, 20, 20, 0.06);
   --hot:       rgba(20, 20, 20, 0.12);
-  --dim:       #8a857a;
+  --dim:       #68645c;
+  --rule:      var(--hot);
+  --muted:     var(--dim);
   --page:      #ffffff;
   --scrim:     rgba(244, 241, 234, 0.55);
 
@@ -1838,3 +1840,31 @@ body.panels-page { --shell: 1320px; }
   .pnl--split { flex-direction: column; }
   .pnl__side { width: auto; border-right: 0; border-bottom: var(--struct) solid var(--ink); }
 }
+
+/* Downloads are a ledger: choices on the left, a verifiable record on the right. */
+.small { font-size:13px; line-height:1.65; }
+.download-workbench { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); border:2px solid var(--ink); box-shadow:8px 8px 0 var(--ink); }
+.download-choice,.download-receipt { padding:clamp(22px,4vw,44px); min-width:0; }
+.download-receipt { border-left:1px solid var(--ink); }
+.channel-picker { border:0; margin:0 0 20px; padding:0; display:flex; gap:24px; flex-wrap:wrap; }
+.channel-picker legend { font-size:12px; text-transform:uppercase; letter-spacing:.1em; margin-bottom:12px; }
+.channel-picker label { cursor:pointer; display:flex; gap:9px; align-items:center; }
+.channel-picker input { accent-color:var(--signal); width:17px; height:17px; }
+.download-choice select { display:block; width:100%; margin:12px 0; padding:15px 12px; background:var(--paper); color:var(--ink); border:1px solid var(--ink); border-radius:0; font:inherit; font-size:14px; }
+.download-choice .row { gap:20px; font-size:13px; }
+.download-primary { width:100%; justify-content:center; margin:16px 0 0; }
+.download-status { min-height:3.3em; }
+.download-receipt dl { margin:0; }
+.download-receipt dl>div { padding:14px 0; border-bottom:1px solid var(--rule); display:grid; grid-template-columns:90px minmax(0,1fr); gap:12px; font-size:13px; }
+.download-receipt dt { color:var(--muted); }
+.download-receipt dd { margin:0; }
+.download-receipt details { margin-top:24px; font-size:13px; }
+.download-receipt summary { cursor:pointer; }
+.download-hash { display:block; overflow-wrap:anywhere; margin:14px 0; font-size:12px; user-select:all; }
+.text-button { padding:0; border:0; border-bottom:1px solid currentColor; background:none; color:inherit; font:inherit; cursor:pointer; }
+.text-button:disabled { opacity:.55; cursor:wait; }
+.install-steps { padding-left:22px; max-width:75ch; }
+.install-steps li { padding:7px 0 7px 8px; }
+[hidden] { display:none!important; }
+:focus-visible { outline:2px solid var(--signal); outline-offset:5px; }
+@media(max-width:720px) { .download-workbench {grid-template-columns:1fr;} .download-receipt {border-left:0;border-top:1px solid var(--ink);} }

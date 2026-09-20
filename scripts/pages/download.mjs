@@ -1,106 +1,65 @@
 import { icon, SITE } from '../layout.mjs';
-
-const plat = (name, target, status, note) => `<tr>
-  <td><strong>${name}</strong></td>
-  <td><code>${target}</code></td>
-  <td>${status}</td>
-  <td class="dim">${note}</td>
-</tr>`;
-
 export default {
-  title: 'Download',
-  path: '/download/',
-  depth: 1,
-  description:
-    'nus is pre-alpha and has no packaged builds yet. What the release will look ' +
-    'like when it exists, and how to build it from source in the meantime.',
+  title: 'Download', path: '/download/', depth: 1,
+  description: 'Get nus for macOS, Windows and Linux. Published releases, signing details, checksums and installation instructions in one place.',
+  module: "import { mountDownloads } from '../assets/js/releases.js'; mountDownloads();",
   body: `
-<section class="section">
-  <div class="section__in">
-    <div class="row" style="gap:14px;margin-bottom:18px">
-      <h1 style="margin:0">Download</h1>
-      <span class="chip chip--signal">Not yet</span>
+<section class="section"><div class="section__in">
+  <p class="cap">nus / downloads</p>
+  <h1>Make yourself<br><em>at home.</em></h1>
+  <p class="lede">A shell, a browser, and the space between them.<br>Pick your machine. Keep your tools.</p>
+</div></section>
+<div data-downloads>
+<section class="section"><div class="section__in">
+  <div class="download-workbench">
+    <div class="download-choice">
+      <fieldset class="channel-picker"><legend>Release channel</legend>
+        <label><input type="radio" name="channel" value="preview" checked> Preview</label>
+        <label><input type="radio" name="channel" value="stable"> Stable</label>
+      </fieldset>
+      <p class="small dim">Preview is where new work lands. Stable appears after a release has cleared its checks.</p>
+      <label class="cap" for="download-platform">Your machine</label>
+      <select id="download-platform" data-target>
+        <option value="macos-arm64">macOS · Apple silicon (M-series)</option>
+        <option value="macos-x86_64">macOS · Intel</option>
+        <option value="windows-x86_64">Windows · Intel / AMD 64-bit</option>
+        <option value="linux-x86_64">Linux · Intel / AMD 64-bit</option>
+      </select>
+      <p class="small dim">On a Mac, find your chip under Apple menu → About This Mac.</p>
+      <a class="btn btn--fill download-primary" data-download hidden>Download nus</a>
+      <p class="download-status small" data-status role="status" aria-live="polite">Checking published releases…</p>
+      <div class="row"><a data-notes href="${SITE.repo}/releases">Release notes ↗</a><button class="text-button" data-retry>Check again</button></div>
+      <noscript><p>JavaScript is off. <a href="${SITE.repo}/releases">Download from GitHub Releases</a>; each release includes signing information and checksums.</p></noscript>
     </div>
-    <p class="lede">
-      There are no builds. nus is pre-alpha: the de-risking spikes are done and the
-      composite spike runs on Windows, but nothing is packaged, signed or notarized,
-      and the spike code has not finished moving into the real crates. Putting a
-      binary here before that would be a favour to nobody.
-    </p>
-    <div class="row" style="margin-top:26px">
-      <a class="btn btn--fill" href="${SITE.repo}/subscription" target="_blank" rel="noopener noreferrer">${icon('broadcast')}Watch the repo</a>
-      <a class="btn btn--quiet" href="${SITE.repo}/releases" target="_blank" rel="noopener noreferrer">${icon('github-logo')}Releases page</a>
+    <div class="download-receipt">
+      <p class="cap">Package record</p>
+      <dl><div><dt>Version</dt><dd data-version>Checking…</dd></div><div><dt>Published</dt><dd data-date>—</dd></div><div><dt>Signing</dt><dd data-signing>Shown with each published package</dd></div><div><dt>Licence</dt><dd><a href="${SITE.repo}/blob/main/LICENSE">MIT · source available</a></dd></div><div><dt>Delivery</dt><dd>Direct from GitHub Releases</dd></div></dl>
+      <details data-hash-section hidden><summary>Verify your download</summary><p class="small">Compare your archive’s SHA-256 with this release record.</p><code class="download-hash" data-hash></code><button class="text-button" data-copy>Copy SHA-256</button><p class="small">macOS / Linux: <code>shasum -a 256 filename</code><br>PowerShell: <code>Get-FileHash filename -Algorithm SHA256</code></p></details>
     </div>
   </div>
-</section>
-
-<section class="section">
-  <div class="section__in">
-    <div class="sectionhead"><h2>Targets</h2><span class="cap">Planned</span></div>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>Platform</th><th>Target</th><th>Status</th><th>Note</th></tr></thead>
-        <tbody>
-          ${plat('Windows 11', 'x86_64-pc-windows-msvc', '<span class="chip">Spike runs</span>',
-            'D3D11 shared texture, 144 fps. ConPTY drops APC, so Kitty graphics wait.')}
-          ${plat('macOS', 'aarch64-apple-darwin', '<span class="chip chip--dim">Not run</span>',
-            'IOSurface shared textures planned; builds will be notarized.')}
-          ${plat('Linux', 'x86_64-unknown-linux-gnu', '<span class="chip chip--dim">Not run</span>',
-            'Wayland first, X11 works. CEF under a Wayland-only session is unverified.')}
-        </tbody>
-      </table>
-    </div>
-    <p class="dim" style="font-size:14px">
-      Intel Macs and 32-bit Windows are not targets. Status here tracks
-      <a href="../docs/spikes/">the spike log</a>, which is the honest version.
-    </p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section__in">
-    <div class="sectionhead"><h2>Build it yourself</h2><span class="cap">Today</span></div>
-    <p>Stable Rust via <code>rustup</code>, plus the platform toolchain:</p>
-    <ul>
-      <li><strong>Windows</strong> — Visual Studio 2022 with the <em>Desktop development with C++</em> workload.</li>
-      <li><strong>macOS</strong> — Xcode command line tools.</li>
-      <li><strong>Linux</strong> — <code>build-essential pkg-config libwayland-dev libxkbcommon-dev libgtk-3-dev</code>.</li>
-    </ul>
+</div></section>
+<section class="section"><div class="section__in">
+  <div class="sectionhead"><h2>Up and running.</h2><span class="cap">Installation</span></div>
+  <div data-install="macos"><ol class="install-steps"><li>Unzip the complete download.</li><li>Move <strong>nus.app</strong> into Applications.</li><li>Open nus and choose your shell. Your existing shell configuration comes with you.</li></ol><p class="dim small">Check the package record above for the exact signing and notarization status. Intel and Apple silicon builds are separate downloads.</p></div>
+  <div data-install="windows" hidden><ol class="install-steps"><li>Extract the entire ZIP into a folder you want to keep.</li><li>Open <strong>nus.exe</strong>. Keep the runtime files beside it.</li><li>Choose your shell. Settings are stored in your user profile.</li></ol><p class="dim small">Windows previews may be unsigned and show a SmartScreen warning. The package record states the signing status; Windows signing uses a separate certificate from Apple.</p></div>
+  <div data-install="linux" hidden><ol class="install-steps"><li>Extract the archive into a folder you want to keep.</li><li>Run <code>./nus</code> inside that folder.</li><li>Follow the included README for desktop integration.</li></ol><p class="dim small">Requires glibc 2.35 or newer, GTK 3, NSS, ALSA and a working Vulkan driver. Ubuntu 22.04 is the packaging baseline. Wayland and X11 behavior depends on your desktop; report issues with the compositor and graphics driver noted.</p></div>
+</div></section>
+<section class="section"><div class="section__in">
+  <div class="sectionhead"><h2>Every package, together.</h2><span class="cap">Selected channel</span></div>
+  <div class="tablewrap"><table><thead><tr><th>Platform</th><th>Processor</th><th>Signing</th><th>Package</th></tr></thead><tbody data-packages></tbody></table></div>
+  <p class="small dim">A download appears only after it is published with a checksum. If this page cannot reach GitHub, <a href="${SITE.repo}/releases">the release archive</a> is the source of record.</p>
+</div></section>
+</div>
+<section class="section"><div class="section__in">
+  <div class="sectionhead"><h2>For the curious.</h2><span class="cap">Build from source</span></div>
+  <p>nus is written in Rust, with Chromium for pages. Bring a stable Rust toolchain and your platform’s native build tools.</p>
 <pre><code>git clone --recurse-submodules ${SITE.repo}.git
 cd nus
-
-scripts/fetch-cef.sh              # CEF binary matching vendor/cef-rs → vendor/cef
-export CEF_PATH=$PWD/vendor/cef   # per-OS library paths: vendor/cef-rs/README.md
-
-cargo build</code></pre>
-    <p class="dim" style="font-size:14px">
-      Expect it to be rough, and expect it to be rough in a different way on macOS
-      and Linux, where the compositor has not been run at all.
-    </p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section__in">
-    <div class="sectionhead"><h2>When there is a release</h2><span class="cap">The shape of it</span></div>
-    <div class="ledger" style="max-width:none">
-      <div class="ledger__row"><span class="cap">Channel</span><p class="mb0">
-        GitHub Releases, one artifact per platform. The app self-updates from there and
-        offers the update in the top strip; you can decline it.</p></div>
-      <div class="ledger__row"><span class="cap">Signing</span><p class="mb0">
-        Notarized on macOS, signed on Windows. An unsigned build is a build that
-        teaches people to click through warnings.</p></div>
-      <div class="ledger__row"><span class="cap">Telemetry</span><p class="mb0">
-        None. Crashes write a local log and stay there. There is no analytics
-        endpoint to turn off because there is not one to begin with.</p></div>
-      <div class="ledger__row"><span class="cap">Chromium currency</span><p class="mb0">
-        CEF is pinned and bumped on Chromium’s four-week cadence. A stale CEF is a
-        stale browser, which is a security problem rather than a cosmetic one.</p></div>
-      <div class="ledger__row"><span class="cap">Licence</span><p class="mb0">
-        MIT, so the licence question never comes up.
-        <a href="${SITE.repo}/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Read it</a>.</p></div>
-    </div>
-  </div>
-</section>
-`
+bash scripts/fetch-cef.sh
+source scripts/env.sh
+cargo build --release --locked --manifest-path spikes/composite/Cargo.toml --bins
+# On macOS, create the app bundle:
+bash scripts/bundle-mac.sh</code></pre>
+  <p><a href="${SITE.repo}/blob/main/docs/RELEASING.md">Build and release notes ↗</a> · <a href="${SITE.repo}/issues">Report something broken ↗</a></p>
+</div></section>`
 };
