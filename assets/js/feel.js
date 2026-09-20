@@ -1,5 +1,13 @@
-/* Site-level feel: Cuelume audio + Broadsheet motion. No meaning depends on either. */
-import { bind, play, setEnabled, setVolume } from "../vendor/cuelume/0.2.2/index.js";
+/* Site-level feel: resilient Cuelume audio + Broadsheet motion.
+   No meaning depends on either output. */
+import {
+  bind,
+  play,
+  setEnabled,
+  setVolume,
+  audioBackend,
+  diagnostics as audioState
+} from "./feel-audio.js";
 import { SOUND_VOLUME } from "./feel-config.js";
 import { createFeel } from "./feel-core.js";
 import { createMotion } from "./feel-motion.js";
@@ -8,15 +16,6 @@ const safeStorage = {
   getItem(key) { try { return localStorage.getItem(key); } catch { return null; } },
   setItem(key, value) { try { localStorage.setItem(key, value); } catch {} }
 };
-
-function setAudioSession(active) {
-  if (typeof navigator === "undefined" || !navigator.audioSession) return;
-  try {
-    navigator.audioSession.type = active ? "playback" : "ambient";
-  } catch {
-    /* Older WebKit exposes no writable AudioSession API. */
-  }
-}
 
 setVolume(SOUND_VOLUME);
 
@@ -28,43 +27,6 @@ export const feel = createFeel({
     document.dispatchEvent(new CustomEvent("nus:feel", { detail: event }));
   }
 });
-
-setAudioSession(feel.soundEnabled);
-
-/*
- * WebKit/iOS can leave Web Audio suspended until resume() happens directly on
- * a real activating gesture. Prime Cuelume on that stack with a nearly silent
- * cue; do not synthesize anything before activation, and do not consume the
- * listener while sound is disabled.
- */
-function installAudioPrimer() {
-  if (typeof window === "undefined") return () => {};
-  const events = ["pointerup", "touchend", "click", "keydown", "mousedown"];
-  let primed = false;
-
-  const remove = () => {
-    for (const name of events) window.removeEventListener(name, prime, true);
-  };
-
-  const prime = () => {
-    if (primed || !feel.soundEnabled) return;
-    const activation = navigator.userActivation;
-    if (activation && activation.hasBeenActive === false && activation.isActive === false) return;
-
-    setAudioSession(true);
-    play("tick", { volume: 0.0001 });
-    primed = true;
-    remove();
-    document.dispatchEvent(new CustomEvent("nus:audio-prime"));
-  };
-
-  for (const name of events) {
-    window.addEventListener(name, prime, { capture: true, passive: true });
-  }
-  return remove;
-}
-
-let removeAudioPrimer = installAudioPrimer();
 
 function soundButton(root) {
   const button = root.querySelector("[data-sound-toggle]");
@@ -83,12 +45,9 @@ function soundButton(root) {
   button.addEventListener("click", () => {
     if (feel.soundEnabled) {
       feel.setSound(false);
-      setAudioSession(false);
       paint();
       return;
     }
-
-    setAudioSession(true);
     feel.setSound(true);
     play("toggle", { volume: 0.35 });
     paint();
@@ -135,6 +94,8 @@ export function mountFeel(root = document) {
 if (typeof document !== "undefined") mountFeel(document);
 
 export const audioDiagnostics = {
+  get backend() { return audioBackend(); },
+  get state() { return audioState(); },
   get enabled() { return feel.soundEnabled; },
   get userActivation() {
     if (typeof navigator === "undefined" || !navigator.userActivation) return null;
@@ -142,15 +103,5 @@ export const audioDiagnostics = {
       hasBeenActive: navigator.userActivation.hasBeenActive,
       isActive: navigator.userActivation.isActive
     };
-  },
-  get audioSession() {
-    return typeof navigator !== "undefined" && navigator.audioSession
-      ? navigator.audioSession.type
-      : null;
-  },
-  rearm() {
-    removeAudioPrimer();
-    removeAudioPrimer = installAudioPrimer();
-    return true;
   }
 };
