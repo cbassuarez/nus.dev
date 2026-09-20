@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Feel lab · nus</title>
+<link rel="stylesheet" href="../../assets/css/site.css">
+<style>
+main{max-width:1000px;margin:auto;padding:36px var(--gutter) 70px}.lab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0;border-top:var(--hair) solid var(--ink)}.lab-grid button{font:inherit;color:inherit;background:none;border:0;border-bottom:var(--hair) solid var(--ink);border-right:var(--hair) solid var(--ink);padding:12px;text-align:left;cursor:pointer}.lab-grid button:hover{background:var(--tint)}#log{min-height:180px;white-space:pre-wrap}
+</style>
+</head>
+<body>
+<div class="band"></div>
+<main>
+<p class="cap">Development harness / unlisted</p>
+<h1>Feel lab</h1>
+<p class="lede">Listen to the pinned palette, emit semantic events, and inspect the local event stream. Nothing here reports anywhere.</p>
+<div class="row" style="margin:22px 0">
+<button class="btn btn--quiet" id="sound">Sound on</button>
+<label class="cap">Volume <input id="volume" type="range" min="0" max="1" step=".05" value=".55"></label>
+</div>
+<h2>Cuelume palette</h2><div class="lab-grid" id="palette"></div>
+<h2>Semantic events</h2><div class="lab-grid" id="events"></div>
+<h2>Event log</h2><pre id="log" aria-live="polite"></pre>
+</main>
+<script type="module">
+import {sounds,play,setEnabled,setVolume} from "../../assets/vendor/cuelume/0.2.2/index.js";
+import {feel} from "../../assets/js/feel.js";
+import {FEEL_EVENTS} from "../../assets/js/feel-config.js";
+const palette=document.querySelector("#palette"),events=document.querySelector("#events"),log=document.querySelector("#log");
+for(const name of sounds){const b=document.createElement("button");b.textContent=name;b.onclick=()=>play(name);palette.append(b);}
+for(const name of Object.keys(FEEL_EVENTS)){const b=document.createElement("button");b.textContent=name;b.onclick=()=>feel.emit(name,{target:b});events.append(b);}
+document.addEventListener("nus:feel",e=>{const d=e.detail;log.textContent=new Date().toISOString().slice(11,23)+"  "+d.name+"\n              cue="+d.cue+"  motion="+(d.motion||"—")+"\n"+log.textContent;});
+const sound=document.querySelector("#sound");sound.onclick=()=>{feel.setSound(!feel.soundEnabled);sound.textContent=feel.soundEnabled?"Sound on":"Sound off";};
+document.querySelector("#volume").oninput=e=>setVolume(Number(e.target.value));
+</script>
+</body></html>
