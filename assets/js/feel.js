@@ -64,7 +64,7 @@ function installAudioPrimer() {
   return remove;
 }
 
-const removeAudioPrimer = installAudioPrimer();
+let removeAudioPrimer = installAudioPrimer();
 
 function soundButton(root) {
   const button = root.querySelector("[data-sound-toggle]");
@@ -150,6 +150,7 @@ export const audioDiagnostics = {
   },
   rearm() {
     removeAudioPrimer();
-    return installAudioPrimer();
+    removeAudioPrimer = installAudioPrimer();
+    return true;
   }
 };
