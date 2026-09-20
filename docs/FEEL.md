@@ -61,3 +61,12 @@ prefers-reduced-motion settles the same composition immediately. Reduced motion 
 - Review navigation degrades cleanly when View Transitions are unavailable.
 - No Cuelume runtime request leaves nus.dev.
 - No state exists only as sound or motion.
+
+
+## iOS transport
+
+iOS/iPadOS does not use Cuelume's private shared `AudioContext` for production playback. WebKit has long-standing failure modes where an AudioContext can report `running` while producing no sound, or become stuck in an interrupted/suspended state.
+
+On iOS the site therefore imports Cuelume's exact vendored recipe catalog and renders each requested cue to cached mono PCM/WAV. Playback is through `HTMLAudioElement` with the WebKit audio session set to `playback` while site sound is enabled. Other platforms continue to use Cuelume's Web Audio engine.
+
+The semantic cue names, recipe data, global volume and user-facing sound controls are shared across both transports. The Feel Lab shows the selected production backend and includes a raw Web Audio tone only as a diagnostic control.
