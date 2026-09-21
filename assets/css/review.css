@@ -19,6 +19,8 @@
 .review__main :is(code,td,dd){overflow-wrap:anywhere}.review__main .tablewrap{max-width:100%}.review__main table{min-width:0}
 .review__main a:hover{color:inherit;text-decoration-color:var(--ink)}.review-page :is(a,button,summary):focus-visible{outline:2px solid var(--ink);outline-offset:4px}
 .review-hero h1{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(64px,9vw,100px);letter-spacing:-.035em;line-height:.95}
+.review-status{color:var(--ink);border-left:3px solid var(--signal);padding-left:12px;margin:0 0 20px;line-height:1.6}
+.review-signing{margin-top:24px}.review-signing p+p{margin-top:12px}
 .review-hero__line{font-size:clamp(19px,2.4vw,27px);line-height:1.45;margin-bottom:24px}.review-hero__line em{font-family:var(--serif);font-size:1.16em;font-weight:500}
 .review-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin:24px 0 32px}
 .review-ledger{margin:24px 0 32px;border-top:var(--hair) solid var(--ink)}.review-ledger>div{display:grid;grid-template-columns:minmax(115px,165px) minmax(0,1fr);gap:18px;padding:11px 0;border-bottom:var(--hair) solid var(--rule)}
@@ -58,6 +60,10 @@
 /* --- Feel / Review motion -------------------------------------------------
    Same desk, next document. Unsupported browsers get normal navigation. */
 @view-transition { navigation: auto; }
+
+/* Keep the desk stationary; only the document changes. */
+::view-transition-old(root),
+::view-transition-new(root) { animation:none; mix-blend-mode:normal; }
 
 .reviewhead { view-transition-name: review-head; }
 .review__rail { view-transition-name: review-rail; }
@@ -155,6 +161,7 @@
 [data-feel-motion="ready"] { animation:feel-confirm var(--t-base) var(--ease) both; }
 
 @media(prefers-reduced-motion:reduce) {
+  @view-transition { navigation:none; }
   ::view-transition-old(*),
   ::view-transition-new(*) { animation-duration:.01ms!important; }
   .review-enter *,

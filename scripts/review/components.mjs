@@ -1,35 +1,15 @@
 import {SITE, rel} from '../layout.mjs';
 import {REVIEW, money} from './data.mjs';
 import {escape as e} from './layout.mjs';
-import {publishedReleases, packageFor, TARGETS, signingLabel} from '../../assets/js/releases.js';
+import {reviewReleaseRecord,packageCards,releaseSummary} from '../../assets/js/review-releases.js';
 
 export const source = (path,rev=REVIEW.evidenceRevision) => `${SITE.repo}/blob/${rev}/${path}`;
-export function releaseRecord(snapshot) {
-  const release=publishedReleases(snapshot.releases).find(r=>r.tag_name===REVIEW.releaseTag);
-  if(!release) return {release:null,revision:null,packages:[],checkedAt:snapshot.checked_at||null};
-  let meta;
-  try { meta=JSON.parse((release.body||'').match(/<!-- nus-release:(.*?) -->/s)?.[1]||'{}'); } catch { meta={}; }
-  const revision=meta.version===release.tag_name && /^[a-f0-9]{40}$/.test(meta.revision||'') ? meta.revision : null;
-  return {release,revision,checkedAt:snapshot.checked_at||null,packages:TARGETS.map(([id,os,arch])=>({id,os,arch,pkg:packageFor(release,id)}))};
-}
+export function releaseRecord(snapshot) { return reviewReleaseRecord(snapshot.releases,snapshot.checked_at||null); }
 export function ledger(rows) {
   return `<dl class="review-ledger">${rows.map(([key,value])=>`<div><dt>${e(key)}</dt><dd>${value}</dd></div>`).join('')}</dl>`;
 }
-export function recordSummary(record) {
-  const {release,revision,packages}=record;
-  return ledger([
-    ['Review candidate',release?`<a href="${SITE.repo}/releases/tag/${e(release.tag_name)}">${e(release.tag_name)}</a>`:'No verified candidate in the snapshot'],
-    ['Source revision',revision?`<a class="review-hash" href="${SITE.repo}/commit/${revision}">${revision}</a>`:'Not verified'],
-    ['Published packages',e(packages.filter(x=>x.pkg).map(x=>`${x.os} / ${x.arch}`).join(' · ')||'None verified')],
-    ['License','MIT; dependencies retain their own licenses'],
-    ['Requested funding',`${money(REVIEW.request)} · proposed, not awarded`]
-  ]);
-}
-export function releasePackages(record) {
-  const {release,packages}=record;
-  if(!release)return '<p class="review-callout">The selected release is absent from the snapshot. No download links have been invented. <a href="https://github.com/cbassuarez/nus/releases">Inspect Releases ↗</a></p>';
-  return `<div class="review-packages">${packages.map(({id,os,arch,pkg})=>`<section class="review-package" id="package-${id}"><div class="review-package__top"><div><p class="cap">${e(arch)}</p><h3>${os}</h3></div><span class="review-package__size">${pkg?`${(pkg.size/1048576).toFixed(1)} <small>MiB</small>`:'—'}</span></div>${pkg?`<p class="review-package__state">${e(signingLabel(pkg.signing))}</p><p class="small dim">Compressed download · ${pkg.size.toLocaleString('en-US')} bytes</p><p><a class="btn btn--quiet" href="${e(pkg.url)}">Download ${os} ↗</a></p><details data-feel-disclosure="ordinary"><summary>SHA-256 checksum</summary><code class="review-hash" id="hash-${id}">${pkg.hash}</code><button type="button" class="review-copy" data-copy-hash="hash-${id}" data-feel-semantic="copy" hidden>Copy checksum</button></details>`:'<p>Not published for this candidate.</p>'}</section>`).join('')}</div>`;
-}
+export function recordSummary(record) {return `<div data-review-record>${releaseSummary(record)}</div>`;}
+export function releasePackages(record) {return `<div data-review-packages>${packageCards(record)}</div>`;}
 export function film(depth) {
   const r=rel(depth);
   return `<figure class="review-film"><video controls playsinline preload="none" width="1320" height="870" poster="${r}/assets/films/shell.png" aria-describedby="film-caption"><source src="${r}/assets/films/shell.mp4" type="video/mp4"><p><a href="${r}/assets/films/shell.mp4">Open the recording</a></p></video><figcaption id="film-caption"><b>The shell / macOS</b><span>The app building this site. Scripted pacing, not a performance measurement.</span><a href="${r}/about/#pictures">How this was recorded ↗</a></figcaption></figure>`;
@@ -53,5 +33,5 @@ export function measurements() {
   ['101–102','MiB','Each further idle browser tab','After initialization','Additional whole-process-tree RSS in this fixture.','Not the first browser tab; RSS can double-count shared pages.'],
   ['1.5–19','MiB','Each further empty window','Four-window run','Change in parent-process RSS.','Not total GPU allocation or private physical footprint.']
  ];
- return `<div class="review-measurements">${rows.map(([v,u,t,s,scope,limit])=>`<section class="review-measurement"><p class="cap">${t}</p><div class="review-measurement__value">${v} <small>${u}</small></div><p>${s}</p>${ledger([['Scope',e(scope)],['Machine','Apple M4 Pro · 48 GiB RAM'],['Boundary',e(limit)]])}<a href="${source('docs/PERFORMANCE_BUDGETS.md')}">Method ↗</a> · <a href="${source('docs/performance/2026-09-20-m4-pro.json')}">Raw report ↗</a></section>`).join('')}</div>`;
+ return `<div class="review-measurements">${rows.map(([v,u,t,s,scope,limit])=>`<section class="review-measurement"><p class="cap">${t}</p><div class="review-measurement__value">${v} <small>${u}</small></div><p>${s}</p>${ledger([['Scope',e(scope)],['Machine','Apple M4 Pro · 48 GiB RAM'],['Boundary',e(limit)]])}<a href="${source('docs/PERFORMANCE_BUDGETS.md',REVIEW.measurementRevision)}">Method ↗</a> · <a href="${source('docs/performance/2026-09-20-m4-pro.json',REVIEW.measurementRevision)}">Raw report ↗</a></section>`).join('')}</div>`;
 }

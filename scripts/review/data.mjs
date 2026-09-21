@@ -1,10 +1,14 @@
+import {readFileSync} from 'node:fs';
+import {reviewReleaseRecord} from '../../assets/js/review-releases.js';
+const latest=reviewReleaseRecord(JSON.parse(readFileSync(new URL('../../assets/releases.json',import.meta.url),'utf8')).releases);
 // Proposal amounts are spending ceilings, not purchase quotes or an active bounty.
 export const REVIEW = {
-  date: '2026-09-20',
+  date: '2026-09-21',
   edition: '2026.09',
   request: 5000,
-  releaseTag: 'v0.0.1-preview.4',
-  evidenceRevision: '1c58b5a51185a65b60141f9f45c6b6af151fb9e8',
+  releaseTag: latest.release?.tag_name || null,
+  evidenceRevision: latest.revision || '1c58b5a51185a65b60141f9f45c6b6af151fb9e8',
+  measurementRevision: '1c58b5a51185a65b60141f9f45c6b6af151fb9e8',
   budget: [
     {id:'bounties', label:'Independent security research / bounties', amount:1800, basis:'Capped reserve', purpose:'An invited round of adversarial research on browser, assistant, shell, local-control and private-session boundaries. Researcher payouts and any payment fees share this ceiling. This is proposed funding, not an active public bounty or guaranteed audit.'},
     {id:'cef', label:'Source-built CEF investigation', amount:900, basis:'Compute and storage allowance', purpose:'One initial platform and a pinned CEF/Chromium version: source checkout, clean build, limited rebuilds, a small extension-compatibility test set and a published maintenance assessment. Partial and negative results are valid outputs.'},

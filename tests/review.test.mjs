@@ -7,6 +7,8 @@ import {REVIEW,validateBudget} from '../scripts/review/data.mjs';
 import {REVIEW_PAGES} from '../scripts/review/manifest.mjs';
 import {releaseRecord,releasePackages} from '../scripts/review/components.mjs';
 import {SITE} from '../scripts/layout.mjs';
+import {distributionStatus} from '../assets/js/review-releases.js';
+import {signingLabel} from '../assets/js/releases.js';
 const ROOT=fileURLToPath(new URL('..',import.meta.url));
 const read=p=>readFileSync(join(ROOT,p),'utf8');
 const reviewFiles=REVIEW_PAGES.map(p=>`review/${p.slug?p.slug+'/':''}index.html`);
@@ -47,7 +49,7 @@ test('public discovery surfaces do not link into the review room',()=>{
 test('review body remains complete without client JavaScript',()=>{
  for(const file of ['review/try/index.html','review/releases/index.html']) {
   const html=read(file);assert.ok(html.includes(REVIEW.releaseTag));
-  assert.ok(html.includes('Ad-hoc signed'));assert.ok(html.includes('Unsigned preview'));
+  for(const x of releaseRecord(JSON.parse(read('assets/releases.json'))).packages.filter(x=>x.pkg))assert.ok(html.includes(signingLabel(x.pkg.signing)));
   assert.equal((html.match(/id="hash-/g)||[]).length,3);
   assert.equal((html.match(/>Download (?:macOS|Windows|Linux) ↗<\/a>/g)||[]).length,3);
  }
@@ -55,7 +57,7 @@ test('review body remains complete without client JavaScript',()=>{
  for(const x of REVIEW.budget)assert.ok(funding.includes(`id="budget-${x.id}"`));
  assert.ok(funding.includes('$5,000'));assert.ok(funding.includes('not active'));
 });
-test('release record never silently switches the packet to another candidate',()=>{
+test('review release record follows the latest published snapshot with matching source',()=>{
  const snapshot=JSON.parse(read('assets/releases.json')),record=releaseRecord(snapshot);
  assert.equal(record.release.tag_name,REVIEW.releaseTag);
  assert.equal(record.revision,REVIEW.evidenceRevision);
@@ -65,7 +67,7 @@ test('release record never silently switches the packet to another candidate',()
  const release=damaged.releases.find(x=>x.tag_name===REVIEW.releaseTag);
  release.body='bad metadata';for(const a of release.assets)delete a.digest;
  const unsafe=releaseRecord(damaged);assert.equal(unsafe.revision,null);
- assert.ok(unsafe.packages.every(x=>!x.pkg));
+ assert.ok(unsafe.packages.every(x=>!x.pkg || x.release.tag_name!==REVIEW.releaseTag));
 });
 test('no new automatic third-party runtime or video autoplay',()=>{
  for(const file of reviewFiles){const html=read(file);
@@ -77,4 +79,18 @@ test('no new automatic third-party runtime or video autoplay',()=>{
  assert.ok(js.includes('check.addEventListener("click"'));
  assert.ok(js.includes('review.refresh.start'));
  assert.ok(js.includes('review.refresh.ready'));
+});
+
+
+test('overview leads with unsigned distribution and specifications before film',()=>{
+ const html=read('review/index.html');
+ assert.ok(html.indexOf(distributionStatus(releaseRecord(JSON.parse(read('assets/releases.json')))).label)<html.indexOf('<h1>'));
+ assert.ok(html.indexOf('Specifications')<html.indexOf('<video'));
+ assert.ok(html.includes('one-time proposal'));
+ assert.ok(html.includes('data-review-signing'));
+});
+test('historical measurements remain pinned when downloads advance',()=>{
+ const html=read('review/performance/index.html');
+ assert.ok(html.includes('/blob/'+REVIEW.measurementRevision+'/docs/performance/2026-09-20-m4-pro.json'));
+ assert.ok(html.includes('September 20 M4 Pro reference run'));
 });

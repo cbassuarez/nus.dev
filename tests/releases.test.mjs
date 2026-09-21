@@ -47,3 +47,9 @@ test('Intel Macs are not a target',()=>{
  assert.ok(!TARGETS.some(t=>t[0]==='macos-x86_64'));
  assert.equal(packageFor(fixture(),'macos-x86_64'),null);
 });
+
+
+test('conflicting API and manifest hashes never create a download button',()=>{
+ const r=fixture();r.assets[0].digest='sha256:'+'b'.repeat(64);
+ assert.equal(packageFor(r,'macos-arm64'),null);
+});

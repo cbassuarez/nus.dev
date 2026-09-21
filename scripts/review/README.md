@@ -30,10 +30,14 @@ Use `{{budget:bounties}}`, `{{budget:cef}}`, `{{budget:automated}}` and
 `{{request}}` in Markdown instead of duplicating amounts. `{{source}}` expands
 to the packet's pinned application source revision. Unknown tokens fail the build.
 
-Refresh `assets/releases.json` through `npm run releases`. Updating the general
-snapshot does not switch the review candidate: deliberately change
-`REVIEW.releaseTag` and review its evidence before sending a revised packet.
-The optional browser check reports newer releases but leaves the packet intact.
+Refresh `assets/releases.json` through `npm run releases`. The latest published
+release is selected automatically; each platform keeps its newest validated package
+in that channel, with its own version, source, signing label and checksum. Live pages
+check on entry, when returning after a minute, and every five minutes while visible.
+An unavailable API leaves the displayed packages intact with an explicit status.
+The release-snapshot workflow rebuilds and tests the review output before committing
+it, so the no-JavaScript fallback advances too. Historical performance evidence uses
+`REVIEW.measurementRevision` and never advances with the download snapshot.
 
 The present movie is an existing paced recording of the app building this site,
 not a new full workflow demo or latency test. Budget rows are proposed ceilings;

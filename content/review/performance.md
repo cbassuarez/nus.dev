@@ -18,6 +18,6 @@ The earlier 2.8 ms figure belongs to a historical spike. Current submission coun
 
 The funded validation would cover lower-spec machines and native Windows/Linux packaged behavior, sustained resource use, and clean launch conditions. CPU submission, OS launch and physical presentation should be measured and named separately.
 
-- [Measurement method, raw-data link and unmet targets]({{source}}/docs/PERFORMANCE_BUDGETS.md)
-- [Resource ownership and retention budgets]({{source}}/docs/RESOURCE_BUDGETS.md)
+- [Measurement method, raw-data link and unmet targets]({{measurementSource}}/docs/PERFORMANCE_BUDGETS.md)
+- [Resource ownership and retention budgets]({{measurementSource}}/docs/RESOURCE_BUDGETS.md)
 - [Published package provenance](../releases/)
