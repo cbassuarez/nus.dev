@@ -33,7 +33,7 @@
 /* --- tokens: paper (light) ------------------------------------------------ */
 
 :root {
-  --paper:     #f4f1ea;
+  --paper:     #ffffff;
   --ink:       #141414;
   --tint:      rgba(20, 20, 20, 0.06);
   --hot:       rgba(20, 20, 20, 0.12);
@@ -41,7 +41,7 @@
   --rule:      var(--hot);
   --muted:     var(--dim);
   --page:      #ffffff;
-  --scrim:     rgba(244, 241, 234, 0.55);
+  --scrim:     rgba(255, 255, 255, 0.55);
 
   /* the Space's signal — the one colour on screen. Swappable at runtime. */
   --signal:    #c8102e;
