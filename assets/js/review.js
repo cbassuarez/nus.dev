@@ -55,7 +55,7 @@ function wireReleaseCheck(root) {
       if(!Array.isArray(data))throw new Error("Invalid release listing");
       const record=reviewReleaseRecord(data);
       if(!record.release || !record.packages.some(x=>x.pkg))throw new Error("No verified published package");
-      const key=JSON.stringify([record.release.tag_name,record.revision,record.packages]);
+      const key=JSON.stringify([record.release.tag_name,record.revision,record.packages.map(x=>[x.id,x.pkg,x.release?.tag_name,x.revision])]);
       if(key!==rendered){
         for(const el of root.querySelectorAll("[data-review-packages]"))el.innerHTML=packageCards(record);
         for(const el of root.querySelectorAll("[data-review-record]"))el.innerHTML=releaseSummary(record);
