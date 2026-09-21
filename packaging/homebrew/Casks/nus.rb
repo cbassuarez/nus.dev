@@ -1,6 +1,6 @@
 cask "nus" do
-  version "0.0.1-preview.4"
-  sha256 "8a5198f8d4343b0634b2e4686cedcaa3ede24025dedbad2e3676b20df201f9e6"
+  version "0.0.1-preview.6"
+  sha256 "89570007662339715614ee1f64b49223ebc428836ca64e51c4309eba89d2978d"
 
   url "https://github.com/cbassuarez/nus/releases/download/v#{version}/nus-#{version}-macos-arm64.zip"
   name "nus"
