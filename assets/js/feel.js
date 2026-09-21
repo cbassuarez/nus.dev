@@ -30,7 +30,8 @@ export const feel = createFeel({
 
 function soundButton(root) {
   const button = root.querySelector("[data-sound-toggle]");
-  if (!button) return;
+  if (!button || button.dataset.feelBound) return;
+  button.dataset.feelBound="true";
   const on = button.querySelector("[data-sound-on]");
   const off = button.querySelector("[data-sound-off]");
   const paint = () => {
@@ -72,7 +73,10 @@ function primitiveBindings(root) {
   }
 }
 
+const semanticRoots=new WeakSet();
 function semanticBindings(root) {
+  if(semanticRoots.has(root))return;
+  semanticRoots.add(root);
   root.addEventListener("click", event => {
     const nav = event.target instanceof Element ? event.target.closest("[data-review-nav]") : null;
     if (nav) feel.emit("review.navigate", { target: nav });
@@ -91,7 +95,9 @@ export function mountFeel(root = document) {
   return feel;
 }
 
-if (typeof document !== "undefined") mountFeel(document);
+
+
+if(typeof document!=="undefined")mountFeel(document);
 
 export const audioDiagnostics = {
   get backend() { return audioBackend(); },

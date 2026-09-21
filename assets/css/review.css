@@ -57,64 +57,7 @@
 @media print{.review-page{background:#fff;color:#000}.reviewhead,.review__rail,.review-foot,.review-pager,.review-actions,.review-copy{display:none!important}.review{display:block}.review__main{border:0;padding:0}.review-film{box-shadow:none}.review-allocation details,.review-package{break-inside:avoid}.review-allocation details::details-content{display:block}.review__main h2{break-after:avoid}}
 
 
-/* --- Feel / Review motion -------------------------------------------------
-   Same desk, next document. Unsupported browsers get normal navigation. */
-@view-transition { navigation: auto; }
-
-/* Keep the desk stationary; only the document changes. */
-::view-transition-old(root),
-::view-transition-new(root) { animation:none; mix-blend-mode:normal; }
-
-.reviewhead { view-transition-name: review-head; }
-.review__rail { view-transition-name: review-rail; }
-.review__main { view-transition-name: review-main; }
-
-::view-transition-old(review-head),
-::view-transition-new(review-head),
-::view-transition-old(review-rail),
-::view-transition-new(review-rail) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-
-::view-transition-old(review-main) {
-  animation: review-leave var(--t-fast) var(--ease) both;
-  mix-blend-mode: normal;
-}
-::view-transition-new(review-main) {
-  animation: review-arrive var(--t-base) var(--ease) both;
-  mix-blend-mode: normal;
-}
-@keyframes review-leave {
-  to { opacity: .68; transform: translateY(-4px); }
-}
-@keyframes review-arrive {
-  from { opacity: .68; transform: translateY(6px); }
-  to { opacity: 1; transform: none; }
-}
-
-/* Initial loads are already complete and readable. JS only describes arrival. */
-.review-enter .review-kicker { animation: feel-settle var(--t-base) var(--ease) both; }
-.review-enter .review__main > h1,
-.review-enter .review-hero {
-  animation: feel-settle var(--t-base) var(--ease) 35ms both;
-}
-.review-enter .review__main > .lede,
-.review-enter .review-hero__line {
-  animation: feel-settle var(--t-base) var(--ease) 55ms both;
-}
-.review-enter .review-allocation__bar {
-  transform-origin: left;
-  animation: feel-rule-write 140ms var(--ease) both;
-}
-.review-enter .review-allocation details:nth-child(2) .review-allocation__bar { animation-delay:20ms; }
-.review-enter .review-allocation details:nth-child(3) .review-allocation__bar { animation-delay:40ms; }
-.review-enter .review-allocation details:nth-child(4) .review-allocation__bar { animation-delay:60ms; }
-.review-enter .review-allocation details:nth-child(5) .review-allocation__bar { animation-delay:80ms; }
-.review-enter .review-allocation details:nth-child(6) .review-allocation__bar { animation-delay:100ms; }
-.review-enter .review-allocation details:nth-child(7) .review-allocation__bar { animation-delay:120ms; }
-.review-enter .review-allocation details:nth-child(8) .review-allocation__bar { animation-delay:140ms; }
-
+/* Disclosure and control feedback; page transitions are owned by Swup. */
 @keyframes feel-settle {
   from { opacity:.72; transform:translateY(6px); }
   to { opacity:1; transform:none; }
@@ -161,10 +104,6 @@
 [data-feel-motion="ready"] { animation:feel-confirm var(--t-base) var(--ease) both; }
 
 @media(prefers-reduced-motion:reduce) {
-  @view-transition { navigation:none; }
-  ::view-transition-old(*),
-  ::view-transition-new(*) { animation-duration:.01ms!important; }
-  .review-enter *,
   [data-feel-motion],
   [data-feel-disclosure][open] > :not(summary) {
     animation-duration:.01ms!important;

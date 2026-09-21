@@ -33,6 +33,7 @@ function place(theta, a, c) {
 }
 
 export function mountOrbit(root) {
+  if(!root)return null;
   const stage = root.querySelector('[data-orbit-stage]');
   const bodies = [...root.querySelectorAll('[data-orbit-body]')];
   const dial = root.querySelector('[data-orbit-dial]');
@@ -116,5 +117,9 @@ export function mountOrbit(root) {
   narrow.addEventListener('change', apply);
   apply();
 
-  return { refresh: schedule };
+  return { refresh: schedule, destroy(){
+    window.removeEventListener("scroll",schedule);window.removeEventListener("resize",schedule);
+    reduced.removeEventListener("change",apply);narrow.removeEventListener("change",apply);
+    if(raf!==null)cancelAnimationFrame(raf);
+  } };
 }

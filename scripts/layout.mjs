@@ -182,16 +182,13 @@ ${head}</head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
 <a class="skip" href="#main">Skip to content</a>
 <div class="band"></div>
-${chrome ? chrome.header : masthead(depth)}
-<main id="main">
+<div id="site-header">${chrome ? chrome.header : masthead(depth)}</div>
+<main id="main"${chrome ? '' : ' data-page-transition'}>
 ${body}
 </main>
-${chrome ? chrome.footer : footer(depth)}
-<script src="${r}/assets/js/site.js?v=${assetVersion('assets/js/site.js')}" defer></script>
-<script type="module" src="${r}/assets/js/feel.js?v=${assetVersion('assets/js/feel.js')}"></script>
-${module ? `<script type="module">
-${module}
-</script>` : ''}
+<div id="site-footer">${chrome ? chrome.footer : footer(depth)}</div>
+<div id="page-announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+<script type="module" src="${r}/assets/js/navigation.js?v=${assetVersion('assets/js/navigation.js')}"></script>
 </body>
 </html>
 `;

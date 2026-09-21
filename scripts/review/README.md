@@ -51,3 +51,13 @@ no-JavaScript content. Check all eleven routes at 390, 768 and 1440 pixels;
 exercise paper/ink, every signal, native details, keyboard focus, reduced motion
 and a failed release check. Local overflow can be allowed inside a code/table
 viewport, never on the page itself.
+
+## Site navigation
+
+All generated pages use the shared Swup 4.10.0 router and Head Plugin 2.3.1,
+served locally with their licenses and integrity manifests. Swup swaps the header,
+main content and footer. The document uses a short clip-and-slide transition with
+no opacity fade; reduced motion disables it. The head plugin updates route metadata
+and waits for stylesheets. Page setup returns cleanup functions for observers,
+refresh timers and global event listeners. The router never re-executes fetched
+page scripts. Downloads and external destinations retain normal browser navigation.

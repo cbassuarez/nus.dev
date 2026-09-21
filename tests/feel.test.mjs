@@ -72,7 +72,7 @@ test("the built site uses only local Cuelume runtime assets",()=>{
     assert.ok(!/cdn\.jsdelivr\.net\/npm\/cuelume|unpkg\.com\/cuelume|<script[^>]+src="https?:/i.test(html),relative(ROOT,file));
     if(!html.includes("http-equiv=\"refresh\"")){
       assert.ok(html.includes("data-sound-toggle"),relative(ROOT,file));
-      assert.ok(html.includes("/assets/js/feel.js")||html.includes("../assets/js/feel.js")||html.includes("./assets/js/feel.js"),relative(ROOT,file));
+      assert.ok(html.includes("/assets/js/navigation.js"),relative(ROOT,file));
     }
   }
 });

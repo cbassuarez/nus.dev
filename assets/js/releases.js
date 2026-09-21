@@ -43,13 +43,13 @@ export function packageFor(release, target) {
 }
 export const signingLabel = value => ({notarized:'Developer ID signed · Apple notarized', authenticode:'Signed for Windows', unsigned:'Unsigned preview', 'ad-hoc':'Ad-hoc signed · not notarized', unverified:'Signing not verified', checksum:'SHA-256 checksum provided'})[value] || 'Signing not verified';
 
-export async function mountDownloads(root = document.querySelector('[data-downloads]')) {
+export function mountDownloads(root = document.querySelector('[data-downloads]')) {
   if (!root) return;
   const q = s => root.querySelector(s);
   const target = q('[data-target]');
   const platform = navigator.userAgentData?.platform || navigator.platform;
   target.value = /Win/i.test(platform) ? 'windows-x86_64' : /Linux/i.test(platform) ? 'linux-x86_64' : 'macos-arm64';
-  let releases = [], source = '', loading = false, lastCheck = 0;
+  let releases = [], source = '', loading = false, lastCheck = 0, disposed = false;
   const render = () => {
     const channel = q('[name=channel]:checked').value;
     const selected = latestPackageFor(releases, channel, target.value);
@@ -83,19 +83,22 @@ export async function mountDownloads(root = document.querySelector('[data-downlo
       const response=await fetch(API,{cache:'no-store',headers:{Accept:'application/vnd.github+json'},signal:AbortSignal.timeout(12000)});
       if (!response.ok) throw new Error('Release service unavailable');
       const data=await response.json();
+      if(disposed)return;
       if (!Array.isArray(data)) throw new Error('Unexpected release response');
       releases=publishedReleases(data); source='';
     } catch {
+      if(disposed)return;
       try { const response=await fetch('../assets/releases.json',{cache:'no-store'}); if (!response.ok) throw new Error(); const cached=await response.json(); releases=publishedReleases(cached.releases); source=cached.checked_at ? `Last checked ${new Date(cached.checked_at).toLocaleDateString()}.` : 'GitHub could not be reached. Try again or visit Releases.'; }
       catch { source='GitHub could not be reached. Try again or visit Releases.'; }
-    } finally { loading=false; q('[data-retry]').disabled=false; render(); }
+    } finally { if(disposed)return; loading=false; q('[data-retry]').disabled=false; render(); }
   };
   root.addEventListener('change', render);
   q('[data-retry]').addEventListener('click',refresh);
   q('[data-copy]').addEventListener('click',async () => { try { await navigator.clipboard.writeText(q('[data-hash]').textContent); q('[data-copy]').textContent='Copied'; } catch { q('[data-copy]').textContent='Select the hash to copy'; } });
-  await refresh();
+  refresh();
   const recheck=()=>{if(!document.hidden && Date.now()-lastCheck>60000)refresh();};
   document.addEventListener('visibilitychange',recheck);
   window.addEventListener('focus',recheck);
-  setInterval(()=>{if(!document.hidden)refresh();},300000);
+  const timer=setInterval(()=>{if(!document.hidden)refresh();},300000);
+  return ()=>{disposed=true;clearInterval(timer);document.removeEventListener("visibilitychange",recheck);window.removeEventListener("focus",recheck);};
 }

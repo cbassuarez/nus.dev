@@ -62,7 +62,7 @@ export function buildReview() {
   return REVIEW_PAGES.map(entry=>{
     const shell=reviewShell(entry,record.release),r=rel(entry.depth);
     const content=special[entry.slug]?special[entry.slug](entry,record):`<h1>${entry.slug==='limitations'?'Not claimed':entry.title}</h1>${entry.slug==='architecture'?architecture():entry.slug==='performance'?measurements():''}${prose(entry.slug)}`;
-    const body=`<div class="review">${shell.rail}<article class="review__main"><div class="review-kicker cap"><span>${entry.number} / ${entry.title}</span><span>${REVIEW.date}</span></div>${content}<p class="small dim" data-review-live-status role="status" aria-live="polite">Release snapshot checked ${e(record.checkedAt||'at build time')}. <a href="${SITE.repo}/releases">All releases ↗</a></p>${shell.pager}</article></div>`;
+    const body=`<div class="review">${shell.rail}<article class="review__main" data-page-transition><div class="review-kicker cap"><span>${entry.number} / ${entry.title}</span><span>${REVIEW.date}</span></div>${content}<p class="small dim" data-review-live-status role="status" aria-live="polite">Release snapshot checked ${e(record.checkedAt||'at build time')}. <a href="${SITE.repo}/releases">All releases ↗</a></p>${shell.pager}</article></div>`;
     const output=join('review',entry.slug,'index.html');
     mkdirSync(dirname(join(ROOT,output)),{recursive:true});
     writeFileSync(join(ROOT,output),page({title:`${entry.title} / review`,description:entry.blurb,path:entry.path,depth:entry.depth,body,bodyClass:'review-page',indexed:false,chrome:shell,head:`<meta name="referrer" content="no-referrer"><link rel="stylesheet" href="${r}/assets/css/review.css?v=${assetVersion('assets/css/review.css')}">`,module:`import '${r}/assets/js/review.js';`}));

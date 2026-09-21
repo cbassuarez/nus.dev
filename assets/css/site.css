@@ -2007,3 +2007,12 @@ h1 em,h2 em { font-family:var(--serif); font-weight:500; letter-spacing:-.035em;
 .install-lines { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 18px 0 12px; }
 .install-lines .cap { display: block; margin-bottom: 8px; color: var(--dim); }
 .install-lines pre { margin: 0; }
+
+/* Swup owns page changes. The document wipes sideways; it never fades. */
+#site-header,#site-footer{display:contents}
+#main{overflow-x:clip}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+html.is-changing [data-page-transition]{transition:transform 180ms var(--ease),clip-path 180ms var(--ease);clip-path:inset(0);transform:translateX(0);opacity:1}
+html.is-animating [data-page-transition]{clip-path:inset(0 0 0 100%);transform:translateX(18px)}
+html.is-leaving.is-animating [data-page-transition]{clip-path:inset(0 100% 0 0);transform:translateX(-18px)}
+@media(prefers-reduced-motion:reduce){html.is-changing [data-page-transition]{transition:none!important;clip-path:none!important;transform:none!important}}

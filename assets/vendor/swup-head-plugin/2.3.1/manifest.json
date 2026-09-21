@@ -1,0 +1,10 @@
+{
+  "name": "swup-head-plugin",
+  "version": "2.3.1",
+  "source": "npm:@swup/head-plugin@2.3.1",
+  "license": "MIT",
+  "hashes": {
+    "LICENSE": "8f683a9b50b1144c1292b956a4e447faa48960f1474b51bbaff84bba36c9dada",
+    "index.umd.js": "24dfd922c0195dcef96550a02a70c5c2785c7176802617f76b699d384e277d17"
+  }
+}

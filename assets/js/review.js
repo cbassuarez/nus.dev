@@ -1,7 +1,7 @@
 /* Review Room progressive enhancements. The packet remains complete without JavaScript. */
-import {API} from "./releases.js";
-import {reviewReleaseRecord,packageCards,releaseSummary,distributionNotice,distributionStatus} from "./review-releases.js";
-import {feel} from "./feel.js";
+import {API} from "./releases.js?v=swup-1";
+import {reviewReleaseRecord,packageCards,releaseSummary,distributionNotice,distributionStatus} from "./review-releases.js?v=swup-1";
+import {feel} from "./feel.js?v=swup-1";
 
 function wireCopy(root) {
   for (const button of root.querySelectorAll("[data-copy-hash]")) {
@@ -39,7 +39,7 @@ function wireDisclosures(root) {
 
 function wireReleaseCheck(root) {
   const check=root.querySelector("[data-check-releases]");
-  let loading=false,lastCheck=0,rendered=null;
+  let loading=false,lastCheck=0,rendered=null,disposed=false;
   const status=text=>{
     for(const el of root.querySelectorAll("[data-release-check-status],[data-review-live-status]"))el.textContent=text;
   };
@@ -52,6 +52,7 @@ function wireReleaseCheck(root) {
       const response=await fetch(API,{cache:"no-store",headers:{Accept:"application/vnd.github+json"},signal:AbortSignal.timeout(12000),referrerPolicy:"no-referrer"});
       if(!response.ok)throw new Error("Release service unavailable");
       const data=await response.json();
+      if(disposed)return;
       if(!Array.isArray(data))throw new Error("Invalid release listing");
       const record=reviewReleaseRecord(data);
       if(!record.release || !record.packages.some(x=>x.pkg))throw new Error("No verified published package");
@@ -68,6 +69,7 @@ function wireReleaseCheck(root) {
       status("Downloads checked against GitHub Releases just now. Each platform shows its newest verified package; historical measurements are unchanged.");
       if(manual)feel.emit("review.refresh.ready",{target:check});
     } catch {
+      if(disposed)return;
       status("The live release check is unavailable. Previously displayed packages have been kept; use GitHub Releases to check for a newer version.");
       if(manual)feel.emit("review.refresh.error",{target:check});
     } finally {loading=false;if(check)check.disabled=false;}
@@ -77,37 +79,22 @@ function wireReleaseCheck(root) {
   const recheck=()=>{if(!document.hidden && Date.now()-lastCheck>60000)refresh();};
   document.addEventListener("visibilitychange",recheck);
   window.addEventListener("focus",recheck);
-  setInterval(()=>{if(!document.hidden)refresh();},300000);
+  const timer=setInterval(()=>{if(!document.hidden)refresh();},300000);
+  return ()=>{disposed=true;clearInterval(timer);document.removeEventListener("visibilitychange",recheck);window.removeEventListener("focus",recheck);};
 }
 
 function wireHeaderHeight(root) {
   const header=root.querySelector(".reviewhead");
   if(header && "ResizeObserver" in window) {
-    new ResizeObserver(()=>document.documentElement.style.setProperty("--review-head",header.getBoundingClientRect().height+"px")).observe(header);
+    const observer=new ResizeObserver(()=>document.documentElement.style.setProperty("--review-head",header.getBoundingClientRect().height+"px"));
+    observer.observe(header);return ()=>observer.disconnect();
   }
 }
 
-let arrivedByTransition=false;
-window.addEventListener("pagereveal",event=>{
-  if(event.viewTransition){
-    arrivedByTransition=true;
-    document.documentElement.classList.remove("review-enter");
-  }
-});
-
-function enter() {
-  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    if(!arrivedByTransition) document.documentElement.classList.add("review-enter");
-  }));
-}
-
+let disclosuresBound=false;
 export function mountReview(root=document) {
   wireCopy(root);
-  wireDisclosures(root);
-  wireReleaseCheck(root);
-  wireHeaderHeight(root);
-  enter();
+  if(!disclosuresBound){wireDisclosures(root);disclosuresBound=true;}
+  const stopReleases=wireReleaseCheck(root),stopHeader=wireHeaderHeight(root);
+  return ()=>{stopReleases?.();stopHeader?.();};
 }
-
-mountReview();

@@ -1,5 +1,5 @@
 /* Shared by the static build and live review pages: one verified release model. */
-import {publishedReleases,latestPackageFor,TARGETS,signingLabel} from './releases.js';
+import {publishedReleases,latestPackageFor,TARGETS,signingLabel} from './releases.js?v=swup-1';
 const REPO='https://github.com/cbassuarez/nus';
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function revisionFor(release) {
