@@ -1,0 +1,56 @@
+{
+  "take": "take-03",
+  "fps": 60,
+  "duration_seconds": 12,
+  "frames": 720,
+  "window_logical": [
+    1120,
+    760
+  ],
+  "capture_pixels": [
+    2240,
+    1520
+  ],
+  "capture": "NUS_SHOT native renderer",
+  "paced_demonstration": true,
+  "app_sha256": "244f663437bca8c7bbf1b01eae3972ff612c5ebf77ee52dc72927e09b9706109",
+  "events": [
+    {
+      "t": 0.5,
+      "action": "type npm run dev"
+    },
+    {
+      "t": 2.2,
+      "action": "press Enter"
+    },
+    {
+      "t": 5,
+      "action": "open served page beside shell"
+    }
+  ],
+  "project": "hero/project",
+  "outputs": [
+    {
+      "file": "hero-desktop.mp4",
+      "poster": "hero-desktop.png",
+      "width": 1440,
+      "height": 1080,
+      "bytes": 1213580,
+      "sha256": "46dbd867f13173443b30ac0b8db57e7747aec60bff098d556df45000d842f008"
+    },
+    {
+      "file": "hero-mobile.mp4",
+      "poster": "hero-mobile.png",
+      "width": 1080,
+      "height": 1350,
+      "bytes": 824141,
+      "sha256": "e048167efeb6acc1ff02f2d95e08ee74830f04aca19fa3bcbe809581699e1b44"
+    }
+  ],
+  "poster_frame": 540,
+  "codec": "H.264",
+  "crf": 17,
+  "pixel_format": "yuv420p",
+  "editor": "Remotion",
+  "audio": false
+}

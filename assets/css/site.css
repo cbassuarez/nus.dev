@@ -2016,3 +2016,7 @@ html.is-changing [data-page-transition]{transition:transform 180ms var(--ease),c
 html.is-animating [data-page-transition]{clip-path:inset(0 0 0 100%);transform:translateX(18px)}
 html.is-leaving.is-animating [data-page-transition]{clip-path:inset(0 100% 0 0);transform:translateX(-18px)}
 @media(prefers-reduced-motion:reduce){html.is-changing [data-page-transition]{transition:none!important;clip-path:none!important;transform:none!important}}
+
+/* A directed desktop take and a readable phone cut share one player. */
+.orbit-film--hero video {aspect-ratio:4/3;}
+@media(max-width:700px){.orbit-film--hero video{aspect-ratio:4/5;}.orbit-film--hero figcaption{align-items:flex-start;}.orbit-film--hero .film-toggle{font-size:11px;white-space:nowrap;}}

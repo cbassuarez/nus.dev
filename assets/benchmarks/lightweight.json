@@ -1,0 +1,553 @@
+{
+  "schema": 1,
+  "recorded_at": "2026-09-23T08:40:06.767121+00:00",
+  "hardware": {
+    "model": "Mac16,8",
+    "memory_bytes": "51539607552",
+    "logical_cpus": "14",
+    "cpu": "Apple M4 Pro"
+  },
+  "binary_sha256": "ef3c08021ff3b29bc7168b05a28bd0c14432772d18fca94301868ee6d54f1422",
+  "baseline_binary_sha256": "5df12534bd1da2dbb6f44df453116c1b31ac929c2927c5b0e23313feed5d2676",
+  "startup_ms": {
+    "before": {
+      "median": 388.748666,
+      "min": 379.0685,
+      "max": 409.588042,
+      "count": 5,
+      "observations": [
+        {
+          "run": 1,
+          "value": 388.748666
+        },
+        {
+          "run": 2,
+          "value": 395.662625
+        },
+        {
+          "run": 3,
+          "value": 379.543042
+        },
+        {
+          "run": 4,
+          "value": 379.0685
+        },
+        {
+          "run": 5,
+          "value": 409.588042
+        }
+      ]
+    },
+    "after": {
+      "median": 270.980271,
+      "min": 255.364667,
+      "max": 280.346,
+      "count": 10,
+      "observations": [
+        {
+          "run": 1,
+          "value": 277.45599999999996
+        },
+        {
+          "run": 2,
+          "value": 268.16341700000004
+        },
+        {
+          "run": 3,
+          "value": 273.797125
+        },
+        {
+          "run": 4,
+          "value": 275.173417
+        },
+        {
+          "run": 5,
+          "value": 280.346
+        },
+        {
+          "run": 6,
+          "value": 266.846
+        },
+        {
+          "run": 7,
+          "value": 258.26979100000005
+        },
+        {
+          "run": 8,
+          "value": 255.364667
+        },
+        {
+          "run": 9,
+          "value": 274.08441700000003
+        },
+        {
+          "run": 10,
+          "value": 263.41845800000004
+        }
+      ]
+    }
+  },
+  "file10_ms": {
+    "before": {
+      "median": 16.424167,
+      "min": 14.519542,
+      "max": 16.80525,
+      "count": 5,
+      "observations": [
+        {
+          "run": 1,
+          "value": 16.80525
+        },
+        {
+          "run": 2,
+          "value": 15.679875
+        },
+        {
+          "run": 3,
+          "value": 16.464
+        },
+        {
+          "run": 4,
+          "value": 14.519542
+        },
+        {
+          "run": 5,
+          "value": 16.424167
+        }
+      ]
+    },
+    "after": {
+      "median": 15.081125,
+      "min": 14.221875,
+      "max": 16.638333000000003,
+      "count": 20,
+      "observations": [
+        {
+          "run": 1,
+          "value": 14.854792
+        },
+        {
+          "run": 2,
+          "value": 15.423916
+        },
+        {
+          "run": 3,
+          "value": 15.876999999999999
+        },
+        {
+          "run": 4,
+          "value": 15.367917
+        },
+        {
+          "run": 5,
+          "value": 14.663458
+        },
+        {
+          "run": 6,
+          "value": 15.700124999999998
+        },
+        {
+          "run": 7,
+          "value": 15.843124999999999
+        },
+        {
+          "run": 8,
+          "value": 14.873958
+        },
+        {
+          "run": 9,
+          "value": 14.525583
+        },
+        {
+          "run": 10,
+          "value": 15.723458999999998
+        },
+        {
+          "run": 11,
+          "value": 16.103959
+        },
+        {
+          "run": 12,
+          "value": 14.631165999999999
+        },
+        {
+          "run": 13,
+          "value": 14.797459
+        },
+        {
+          "run": 14,
+          "value": 14.869959
+        },
+        {
+          "run": 15,
+          "value": 15.288292
+        },
+        {
+          "run": 16,
+          "value": 14.221875
+        },
+        {
+          "run": 17,
+          "value": 15.417
+        },
+        {
+          "run": 18,
+          "value": 16.638333000000003
+        },
+        {
+          "run": 19,
+          "value": 14.795041999999999
+        },
+        {
+          "run": 20,
+          "value": 14.633999999999999
+        }
+      ]
+    }
+  },
+  "idle": {
+    "before": {
+      "tree_rss_mib": {
+        "median": 392.96875,
+        "min": 392.78125,
+        "max": 393.828125,
+        "count": 3,
+        "observations": [
+          {
+            "run": 1,
+            "value": 393.828125
+          },
+          {
+            "run": 2,
+            "value": 392.96875
+          },
+          {
+            "run": 3,
+            "value": 392.78125
+          }
+        ]
+      },
+      "main_rss_mib": {
+        "median": 197.515625,
+        "min": 197.40625,
+        "max": 198.328125,
+        "count": 3,
+        "observations": [
+          {
+            "run": 1,
+            "value": 198.328125
+          },
+          {
+            "run": 2,
+            "value": 197.40625
+          },
+          {
+            "run": 3,
+            "value": 197.515625
+          }
+        ]
+      },
+      "ui_turns_per_fixture": {
+        "median": 8220,
+        "min": 8184,
+        "max": 8233,
+        "count": 3,
+        "observations": [
+          {
+            "run": 1,
+            "value": 8184
+          },
+          {
+            "run": 2,
+            "value": 8220
+          },
+          {
+            "run": 3,
+            "value": 8233
+          }
+        ]
+      }
+    },
+    "after": {
+      "tree_rss_mib": {
+        "median": 127.46875,
+        "min": 124.640625,
+        "max": 165.046875,
+        "count": 3,
+        "observations": [
+          {
+            "run": 1,
+            "value": 165.046875
+          },
+          {
+            "run": 2,
+            "value": 127.46875
+          },
+          {
+            "run": 3,
+            "value": 124.640625
+          }
+        ]
+      },
+      "main_rss_mib": {
+        "median": 127.46875,
+        "min": 124.640625,
+        "max": 165.046875,
+        "count": 3,
+        "observations": [
+          {
+            "run": 1,
+            "value": 165.046875
+          },
+          {
+            "run": 2,
+            "value": 127.46875
+          },
+          {
+            "run": 3,
+            "value": 124.640625
+          }
+        ]
+      },
+      "ui_turns_per_fixture": {
+        "median": 391,
+        "min": 389,
+        "max": 2951,
+        "count": 3,
+        "observations": [
+          {
+            "run": 1,
+            "value": 2951
+          },
+          {
+            "run": 2,
+            "value": 389
+          },
+          {
+            "run": 3,
+            "value": 391
+          }
+        ]
+      }
+    }
+  },
+  "mercury_idle": {
+    "before": {
+      "tree_rss_mib": {
+        "median": 674.484375,
+        "min": 674.1875,
+        "max": 677.40625,
+        "count": 3,
+        "observations": [
+          {
+            "run": 1,
+            "value": 674.1875
+          },
+          {
+            "run": 2,
+            "value": 674.484375
+          },
+          {
+            "run": 3,
+            "value": 677.40625
+          }
+        ]
+      },
+      "main_rss_mib": {
+        "median": 478.75,
+        "min": 478.34375,
+        "max": 480.359375,
+        "count": 3,
+        "observations": [
+          {
+            "run": 1,
+            "value": 478.34375
+          },
+          {
+            "run": 2,
+            "value": 478.75
+          },
+          {
+            "run": 3,
+            "value": 480.359375
+          }
+        ]
+      },
+      "ui_turns_per_fixture": {
+        "median": 8146,
+        "min": 8136,
+        "max": 8147,
+        "count": 3,
+        "observations": [
+          {
+            "run": 1,
+            "value": 8146
+          },
+          {
+            "run": 2,
+            "value": 8136
+          },
+          {
+            "run": 3,
+            "value": 8147
+          }
+        ]
+      }
+    },
+    "after": {
+      "tree_rss_mib": {
+        "median": 334.390625,
+        "min": 253.828125,
+        "max": 687.421875,
+        "count": 3,
+        "observations": [
+          {
+            "run": 1,
+            "value": 334.390625
+          },
+          {
+            "run": 2,
+            "value": 253.828125
+          },
+          {
+            "run": 3,
+            "value": 687.421875
+          }
+        ]
+      },
+      "main_rss_mib": {
+        "median": 334.390625,
+        "min": 253.828125,
+        "max": 687.421875,
+        "count": 3,
+        "observations": [
+          {
+            "run": 1,
+            "value": 334.390625
+          },
+          {
+            "run": 2,
+            "value": 253.828125
+          },
+          {
+            "run": 3,
+            "value": 687.421875
+          }
+        ]
+      },
+      "ui_turns_per_fixture": {
+        "median": 7578,
+        "min": 589,
+        "max": 7876,
+        "count": 3,
+        "observations": [
+          {
+            "run": 1,
+            "value": 7578
+          },
+          {
+            "run": 2,
+            "value": 589
+          },
+          {
+            "run": 3,
+            "value": 7876
+          }
+        ]
+      }
+    }
+  },
+  "sleep_wake": {
+    "trials": 1,
+    "states": {
+      "awake": {
+        "available": true,
+        "main_rss_kib": 237824,
+        "method": "sum RSS, includes shared pages",
+        "processes": 10,
+        "tree_rss_kib": 1066016
+      },
+      "sleeping": {
+        "available": true,
+        "main_rss_kib": 244512,
+        "method": "sum RSS, includes shared pages",
+        "processes": 9,
+        "tree_rss_kib": 959968
+      },
+      "rewake-0": {
+        "available": true,
+        "main_rss_kib": 254576,
+        "method": "sum RSS, includes shared pages",
+        "processes": 10,
+        "tree_rss_kib": 1078656
+      },
+      "rewake-1": {
+        "available": true,
+        "main_rss_kib": 261840,
+        "method": "sum RSS, includes shared pages",
+        "processes": 10,
+        "tree_rss_kib": 1085584
+      },
+      "rewake-2": {
+        "available": true,
+        "main_rss_kib": 268496,
+        "method": "sum RSS, includes shared pages",
+        "processes": 10,
+        "tree_rss_kib": 1092272
+      }
+    },
+    "browser_initialization_ms": {
+      "count": 1,
+      "max_ms": 63.08920799999999,
+      "over_16_67_ms": 1,
+      "p50_ms": 63.08920799999999,
+      "p95_ms": 63.08920799999999,
+      "p99_ms": 63.08920799999999
+    },
+    "method": "Five local pages. Plain page disposed; forms, media and Back/Forward history protected. Recreated page cookie and scroll checked; three further sleep/wake cycles retain five live browsers. This is a functional fixture, not a population estimate."
+  },
+  "dock_asset": {
+    "before": {
+      "bytes": 13826538,
+      "intro_frames": 84,
+      "idle_frames": 128,
+      "sha256": "4c63a65bde56ae3b2d778d10c431818f20ebb61f8fe634513b4dfd6572c299fb"
+    },
+    "after": {
+      "bytes": 5384341,
+      "intro_frames": 84,
+      "idle_frames": 0,
+      "sha256": "e14da09f4b3a02a5bb753aafe12f4d5eebc16b6fa0eaadf5497c25ded9a6f541"
+    },
+    "method": "Exact embedded lossless PNG bank bytes. Before extracted from the frozen executable; after checked against the built source asset. This is asset size, not measured RSS."
+  },
+  "cache_policy": {
+    "disposable_browser_retention_bytes": 268435456,
+    "enforcement": "After graceful shutdown, oldest complete HTTP/code/GPU cache stores first, across containers. Not a hard live-session limit or a cap on the whole profile.",
+    "protected": "Cookies, IndexedDB, service-worker storage, user projects/downloads and recovery generations excluded.",
+    "replay_retention_bytes": 134217728,
+    "replay_enforcement": "Active bytes count toward retention. Active recordings are preserved and can exceed this budget while per-window limits apply."
+  },
+  "boundaries": [
+    "Release builds on one Apple M4 Pro; fresh profiles; background activity, thermals and OS caches uncontrolled.",
+    "Startup ends at the present-call return, not display scanout. Framework loading and browser initialization move to first browser use.",
+    "File-open values end at loaded-content submission. Before/after summaries here use medians; homepage keeps p95 over 20 opens and maximum over five 100 MiB opens.",
+    "Idle fixtures wait ten seconds after settling. UI loop turns are not kernel wakeups, CPU usage or energy.",
+    "RSS includes shared-page double counting. Mercury-idle compares the full app after claiming and returning home; it does not isolate the Dock change.",
+    "Binary identities include uncommitted work. These are local optimized builds, not measurements of every published download."
+  ],
+  "source_hashes": {
+    "before-startup.json": "1aa39f36e960e20980f2577066fc3f4783981a2573a3c249f5849de7c5f8071c",
+    "startup.json": "a5c1cb77ce96f57dac93b62b4b9ee8096934cfdf4579a2c1b34c711d6abe7603",
+    "home-memory-v1.json": "5b8a1fee3f966d9eeb284551e381896e7f2d5af6c9ff20dcbdbf5c1a26911d95",
+    "before-editor10.json": "6c7336f47d855542913d68e3a047a26b54b497f4d0434100b42f0961b9375765",
+    "home-file-10m-v1.json": "da4ac061b939f6198fffb7ab4d9cb31ae0576ffbca1836adae7bdd9c48567fb0",
+    "before-idle/results.json": "3273ac8d55c88ba2b7d06d58255842cdcf2c98489307677da54bfccf961f25c3",
+    "after-idle/results.json": "91e4836c5f1286f71e95264aab88b902f1fc55fa8fcc95f9b3bde36d3e0890b2",
+    "before-mercury-idle/results.json": "0d58e5d6bf45be7958b6a07f6629a6ff6b766292fc1765df7a5763b707ec0219",
+    "after-mercury-idle/results.json": "356f240b5e5aba13db4d5c0044e10def03c1221a961df4e3d39d85585acd91cf",
+    "lifecycle/results.json": "0ffa5ce7138b3fda019dfcb0a0749900f917f33b7af349cc9f852b95d2d6f40b",
+    "dock-bank.json": "b970fc8973e24d3b8900555a1b5657a868826a9f5f72c329c2e8ec6b6670b0c9"
+  },
+  "harness_sha256": "c68507b20a32d67106438a6e3c806bd7475b2b5a5423eb277ceb2303436568bd"
+}

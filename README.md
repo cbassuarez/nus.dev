@@ -139,8 +139,24 @@ no dates, passes or working notes — and are written here, not copied from
 the app repo's `docs/`, which are its working notes. When the app changes,
 change the page that describes it and rebuild.
 
-`content/MEASUREMENTS.md` carries every number the site quotes, with how it
-was taken; the home page's figures come from there.
+`assets/benchmarks/homepage.json` is the measured data source for the homepage,
+measurements document and review figures. `scripts/benchmarks/facts.mjs` formats
+those values consistently; markdown uses `{{figure:key}}` tokens. Regenerate
+this registry with the NUS repository's `scripts/benchmarks/export-homepage.py`,
+then run `npm run build` and `npm test`. Preserve the original reported statistic
+when refreshing a value (10 MiB p95, 100 MiB maximum, tab median/range, window
+range, and package sizes).
+
+`/benchmarks/` adds complete-stack size/RSS and Speedometer comparisons. All
+series use declared axes in `scripts/benchmarks/scales.mjs`, with explicit
+reference lines and overflow disclosure. Never derive an axis ceiling from the
+largest observation. Publication rejects incomplete comparison trials and
+mismatched binaries. Arc follow-up results reuse the user-prepared empty account
+in the existing macOS session; they are visually separated and do not claim
+fresh-profile isolation or independent process repetitions.
+Downloadable raw observations, calibration failures and collector sources live
+under `assets/benchmarks/`. Local dirty-build measurements are distinct from
+published-package size measurements.
 
 ## Installing
 

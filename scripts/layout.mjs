@@ -98,7 +98,8 @@ function footer(depth) {
       ['Architecture', `${r}/docs/architecture/`],
       ['Design', `${r}/docs/design/`],
       ['Product', `${r}/docs/product/`],
-      ['Measurements', `${r}/docs/measurements/`]
+      ['Measurements', `${r}/docs/measurements/`],
+      ['Benchmarks', `${r}/benchmarks/`]
     ]],
     ['More', [
       ['About', `${r}/about/`],
@@ -162,7 +163,7 @@ ${indexed ? '' : '<meta name="robots" content="noindex,nofollow,noarchive">'}
 <meta property="og:image" content="${SITE.url}/assets/icon/nus-512.png">
 <meta name="twitter:card" content="summary">
 
-<link rel="icon" type="image/svg+xml" href="${r}/assets/icon/nus-paper.svg" data-nus-favicon data-icon-root="${r}/assets/icon/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,${encodeURIComponent(readFileSync(join(ROOT, 'assets/icon/nus-paper.svg'), 'utf8'))}" data-nus-favicon>
 <link rel="apple-touch-icon" href="${r}/assets/icon/nus-256.png">
 
 <link rel="preload" as="font" type="font/woff2" href="${r}/assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>

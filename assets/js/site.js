@@ -7,7 +7,7 @@ export function mountSite() {
  const set=(k,v)=>{try{localStorage.setItem(k,v);}catch{}};
  const dark=matchMedia('(prefers-color-scheme: dark)');
  const ink=()=>root.getAttribute('data-theme')?root.getAttribute('data-theme')==='ink':dark.matches;
- const favicon=()=>{const el=document.querySelector('[data-nus-favicon]');if(el)el.href=el.dataset.iconRoot+'nus-'+(ink()?'ink':'paper')+'.svg';};
+ const favicon=()=>{const el=document.querySelector('[data-nus-favicon]');if(el)el.href=new URL('../icon/nus-'+(ink()?'ink':'paper')+'.svg',import.meta.url).href;};
  const theme=mode=>{if(['paper','ink'].includes(mode))root.setAttribute('data-theme',mode);else root.removeAttribute('data-theme');favicon();window.dispatchEvent(new CustomEvent('nus:theme'));};
  const signal=hex=>{root.style.setProperty('--signal',hex);root.style.setProperty('--on-signal',hex==='#d9a400'?'#141414':'#ffffff');document.querySelector('meta[name="theme-color"]')?.setAttribute('content',hex);};
  const saved=get('nus.signal');if(signals.some(x=>x[1]===saved))signal(saved);

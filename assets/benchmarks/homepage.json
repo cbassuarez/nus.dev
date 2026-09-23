@@ -1,0 +1,1393 @@
+{
+  "schema": 1,
+  "recorded_at": "2026-09-23T08:40:06.767121+00:00",
+  "hardware": {
+    "model": "Mac16,8",
+    "memory_bytes": "51539607552",
+    "logical_cpus": "14",
+    "cpu": "Apple M4 Pro"
+  },
+  "runtime_binary_sha256": "ef3c08021ff3b29bc7168b05a28bd0c14432772d18fca94301868ee6d54f1422",
+  "runtime_version": "nus 0.0.1-dev (4740af3)",
+  "package_release": "v0.0.1-preview.7",
+  "source_hashes": {
+    "home-file-10m-v1.json": "da4ac061b939f6198fffb7ab4d9cb31ae0576ffbca1836adae7bdd9c48567fb0",
+    "home-file-100m-v1.json": "be773c210eec05a3418b400f8f238d813d7d0776f84feed94d7fbe2c643adf8d",
+    "home-memory-v1.json": "5b8a1fee3f966d9eeb284551e381896e7f2d5af6c9ff20dcbdbf5c1a26911d95",
+    "package-evidence-v2.json": "3aff57c55ead0c286a8a8aae2c7d0a65b8269c379278f70038540aa050acc770"
+  },
+  "figures": {
+    "file10": {
+      "value": 16.103959,
+      "unit": "ms",
+      "statistic": "p95",
+      "count": 20,
+      "observations": [
+        {
+          "run": 1,
+          "value": 14.854792
+        },
+        {
+          "run": 2,
+          "value": 15.423916
+        },
+        {
+          "run": 3,
+          "value": 15.876999999999999
+        },
+        {
+          "run": 4,
+          "value": 15.367917
+        },
+        {
+          "run": 5,
+          "value": 14.663458
+        },
+        {
+          "run": 6,
+          "value": 15.700124999999998
+        },
+        {
+          "run": 7,
+          "value": 15.843124999999999
+        },
+        {
+          "run": 8,
+          "value": 14.873958
+        },
+        {
+          "run": 9,
+          "value": 14.525583
+        },
+        {
+          "run": 10,
+          "value": 15.723458999999998
+        },
+        {
+          "run": 11,
+          "value": 16.103959
+        },
+        {
+          "run": 12,
+          "value": 14.631165999999999
+        },
+        {
+          "run": 13,
+          "value": 14.797459
+        },
+        {
+          "run": 14,
+          "value": 14.869959
+        },
+        {
+          "run": 15,
+          "value": 15.288292
+        },
+        {
+          "run": 16,
+          "value": 14.221875
+        },
+        {
+          "run": 17,
+          "value": 15.417
+        },
+        {
+          "run": 18,
+          "value": 16.638333000000003
+        },
+        {
+          "run": 19,
+          "value": 14.795041999999999
+        },
+        {
+          "run": 20,
+          "value": 14.633999999999999
+        }
+      ],
+      "median": 15.081125,
+      "min": 14.221875,
+      "max": 16.638333000000003,
+      "boundary": "File open request to first loaded-content submission; independent launches, one excluded warmup; OS caches uncontrolled; not display scanout."
+    },
+    "file100": {
+      "value": 65.491209,
+      "unit": "ms",
+      "statistic": "max",
+      "count": 5,
+      "observations": [
+        {
+          "run": 1,
+          "value": 64.999
+        },
+        {
+          "run": 2,
+          "value": 64.76404199999999
+        },
+        {
+          "run": 3,
+          "value": 64.55291700000001
+        },
+        {
+          "run": 4,
+          "value": 65.491209
+        },
+        {
+          "run": 5,
+          "value": 64.522458
+        }
+      ],
+      "median": 64.76404199999999,
+      "min": 64.522458,
+      "max": 65.491209,
+      "boundary": "File open request to first loaded-content submission; independent launches, one excluded warmup; OS caches uncontrolled; not display scanout."
+    },
+    "tabs": {
+      "value": 107.171875,
+      "unit": "MiB",
+      "min": 96.390625,
+      "max": 111.5625,
+      "count": 35,
+      "trials": 5,
+      "observations": [
+        {
+          "run": "1:tabs-2",
+          "value": 109.078125
+        },
+        {
+          "run": "1:tabs-3",
+          "value": 107.421875
+        },
+        {
+          "run": "1:tabs-4",
+          "value": 107.078125
+        },
+        {
+          "run": "1:tabs-5",
+          "value": 108.015625
+        },
+        {
+          "run": "1:tabs-6",
+          "value": 106.84375
+        },
+        {
+          "run": "1:tabs-7",
+          "value": 107.234375
+        },
+        {
+          "run": "1:tabs-8",
+          "value": 96.390625
+        },
+        {
+          "run": "2:tabs-2",
+          "value": 110.125
+        },
+        {
+          "run": "2:tabs-3",
+          "value": 96.453125
+        },
+        {
+          "run": "2:tabs-4",
+          "value": 106.859375
+        },
+        {
+          "run": "2:tabs-5",
+          "value": 106.984375
+        },
+        {
+          "run": "2:tabs-6",
+          "value": 107.171875
+        },
+        {
+          "run": "2:tabs-7",
+          "value": 108.78125
+        },
+        {
+          "run": "2:tabs-8",
+          "value": 106.640625
+        },
+        {
+          "run": "3:tabs-2",
+          "value": 109.828125
+        },
+        {
+          "run": "3:tabs-3",
+          "value": 96.625
+        },
+        {
+          "run": "3:tabs-4",
+          "value": 107.96875
+        },
+        {
+          "run": "3:tabs-5",
+          "value": 106.953125
+        },
+        {
+          "run": "3:tabs-6",
+          "value": 105.90625
+        },
+        {
+          "run": "3:tabs-7",
+          "value": 107.109375
+        },
+        {
+          "run": "3:tabs-8",
+          "value": 107.265625
+        },
+        {
+          "run": "4:tabs-2",
+          "value": 110.859375
+        },
+        {
+          "run": "4:tabs-3",
+          "value": 97.1875
+        },
+        {
+          "run": "4:tabs-4",
+          "value": 111.5625
+        },
+        {
+          "run": "4:tabs-5",
+          "value": 107.1875
+        },
+        {
+          "run": "4:tabs-6",
+          "value": 107.875
+        },
+        {
+          "run": "4:tabs-7",
+          "value": 106.59375
+        },
+        {
+          "run": "4:tabs-8",
+          "value": 106.9375
+        },
+        {
+          "run": "5:tabs-2",
+          "value": 105.390625
+        },
+        {
+          "run": "5:tabs-3",
+          "value": 100.859375
+        },
+        {
+          "run": "5:tabs-4",
+          "value": 107.40625
+        },
+        {
+          "run": "5:tabs-5",
+          "value": 107.984375
+        },
+        {
+          "run": "5:tabs-6",
+          "value": 106.828125
+        },
+        {
+          "run": "5:tabs-7",
+          "value": 107.265625
+        },
+        {
+          "run": "5:tabs-8",
+          "value": 107.1875
+        }
+      ],
+      "states": [
+        {
+          "trial": 1,
+          "status": "complete",
+          "states": [
+            {
+              "stage": "tabs-0",
+              "available": true,
+              "main_rss_kib": 128688,
+              "method": "sum RSS, includes shared pages",
+              "processes": 1,
+              "tree_rss_kib": 128688
+            },
+            {
+              "stage": "tabs-1",
+              "available": true,
+              "main_rss_kib": 227952,
+              "method": "sum RSS, includes shared pages",
+              "processes": 6,
+              "tree_rss_kib": 636192
+            },
+            {
+              "stage": "tabs-2",
+              "available": true,
+              "main_rss_kib": 237552,
+              "method": "sum RSS, includes shared pages",
+              "processes": 7,
+              "tree_rss_kib": 747888
+            },
+            {
+              "stage": "tabs-3",
+              "available": true,
+              "main_rss_kib": 245248,
+              "method": "sum RSS, includes shared pages",
+              "processes": 8,
+              "tree_rss_kib": 857888
+            },
+            {
+              "stage": "tabs-4",
+              "available": true,
+              "main_rss_kib": 252640,
+              "method": "sum RSS, includes shared pages",
+              "processes": 9,
+              "tree_rss_kib": 967536
+            },
+            {
+              "stage": "tabs-5",
+              "available": true,
+              "main_rss_kib": 259952,
+              "method": "sum RSS, includes shared pages",
+              "processes": 10,
+              "tree_rss_kib": 1078144
+            },
+            {
+              "stage": "tabs-6",
+              "available": true,
+              "main_rss_kib": 267120,
+              "method": "sum RSS, includes shared pages",
+              "processes": 11,
+              "tree_rss_kib": 1187552
+            },
+            {
+              "stage": "tabs-7",
+              "available": true,
+              "main_rss_kib": 274512,
+              "method": "sum RSS, includes shared pages",
+              "processes": 12,
+              "tree_rss_kib": 1297360
+            },
+            {
+              "stage": "tabs-8",
+              "available": true,
+              "main_rss_kib": 277104,
+              "method": "sum RSS, includes shared pages",
+              "processes": 13,
+              "tree_rss_kib": 1396064
+            },
+            {
+              "stage": "tabs-closed",
+              "available": true,
+              "main_rss_kib": 297136,
+              "method": "sum RSS, includes shared pages",
+              "processes": 5,
+              "tree_rss_kib": 595408
+            }
+          ],
+          "increments": [
+            {
+              "from": "tabs-1",
+              "to": "tabs-2",
+              "mib": 109.078125
+            },
+            {
+              "from": "tabs-2",
+              "to": "tabs-3",
+              "mib": 107.421875
+            },
+            {
+              "from": "tabs-3",
+              "to": "tabs-4",
+              "mib": 107.078125
+            },
+            {
+              "from": "tabs-4",
+              "to": "tabs-5",
+              "mib": 108.015625
+            },
+            {
+              "from": "tabs-5",
+              "to": "tabs-6",
+              "mib": 106.84375
+            },
+            {
+              "from": "tabs-6",
+              "to": "tabs-7",
+              "mib": 107.234375
+            },
+            {
+              "from": "tabs-7",
+              "to": "tabs-8",
+              "mib": 96.390625
+            }
+          ],
+          "log_sha256": "7f09a740570657ae4a8b9c77c89d382e047aa54d227413c2fc68e281d9dd6a96"
+        },
+        {
+          "trial": 2,
+          "status": "complete",
+          "states": [
+            {
+              "stage": "tabs-0",
+              "available": true,
+              "main_rss_kib": 131920,
+              "method": "sum RSS, includes shared pages",
+              "processes": 1,
+              "tree_rss_kib": 131920
+            },
+            {
+              "stage": "tabs-1",
+              "available": true,
+              "main_rss_kib": 229680,
+              "method": "sum RSS, includes shared pages",
+              "processes": 6,
+              "tree_rss_kib": 636064
+            },
+            {
+              "stage": "tabs-2",
+              "available": true,
+              "main_rss_kib": 239616,
+              "method": "sum RSS, includes shared pages",
+              "processes": 7,
+              "tree_rss_kib": 748832
+            },
+            {
+              "stage": "tabs-3",
+              "available": true,
+              "main_rss_kib": 242160,
+              "method": "sum RSS, includes shared pages",
+              "processes": 8,
+              "tree_rss_kib": 847600
+            },
+            {
+              "stage": "tabs-4",
+              "available": true,
+              "main_rss_kib": 249488,
+              "method": "sum RSS, includes shared pages",
+              "processes": 9,
+              "tree_rss_kib": 957024
+            },
+            {
+              "stage": "tabs-5",
+              "available": true,
+              "main_rss_kib": 256816,
+              "method": "sum RSS, includes shared pages",
+              "processes": 10,
+              "tree_rss_kib": 1066576
+            },
+            {
+              "stage": "tabs-6",
+              "available": true,
+              "main_rss_kib": 263984,
+              "method": "sum RSS, includes shared pages",
+              "processes": 11,
+              "tree_rss_kib": 1176320
+            },
+            {
+              "stage": "tabs-7",
+              "available": true,
+              "main_rss_kib": 271264,
+              "method": "sum RSS, includes shared pages",
+              "processes": 12,
+              "tree_rss_kib": 1287712
+            },
+            {
+              "stage": "tabs-8",
+              "available": true,
+              "main_rss_kib": 278448,
+              "method": "sum RSS, includes shared pages",
+              "processes": 13,
+              "tree_rss_kib": 1396912
+            },
+            {
+              "stage": "tabs-closed",
+              "available": true,
+              "main_rss_kib": 299920,
+              "method": "sum RSS, includes shared pages",
+              "processes": 5,
+              "tree_rss_kib": 597984
+            }
+          ],
+          "increments": [
+            {
+              "from": "tabs-1",
+              "to": "tabs-2",
+              "mib": 110.125
+            },
+            {
+              "from": "tabs-2",
+              "to": "tabs-3",
+              "mib": 96.453125
+            },
+            {
+              "from": "tabs-3",
+              "to": "tabs-4",
+              "mib": 106.859375
+            },
+            {
+              "from": "tabs-4",
+              "to": "tabs-5",
+              "mib": 106.984375
+            },
+            {
+              "from": "tabs-5",
+              "to": "tabs-6",
+              "mib": 107.171875
+            },
+            {
+              "from": "tabs-6",
+              "to": "tabs-7",
+              "mib": 108.78125
+            },
+            {
+              "from": "tabs-7",
+              "to": "tabs-8",
+              "mib": 106.640625
+            }
+          ],
+          "log_sha256": "a0790462025d15ca04e6489eb81399e70d5eeca0dff2fd2f99c06e739657dd7c"
+        },
+        {
+          "trial": 3,
+          "status": "complete",
+          "states": [
+            {
+              "stage": "tabs-0",
+              "available": true,
+              "main_rss_kib": 130528,
+              "method": "sum RSS, includes shared pages",
+              "processes": 1,
+              "tree_rss_kib": 130528
+            },
+            {
+              "stage": "tabs-1",
+              "available": true,
+              "main_rss_kib": 232592,
+              "method": "sum RSS, includes shared pages",
+              "processes": 6,
+              "tree_rss_kib": 640560
+            },
+            {
+              "stage": "tabs-2",
+              "available": true,
+              "main_rss_kib": 242832,
+              "method": "sum RSS, includes shared pages",
+              "processes": 7,
+              "tree_rss_kib": 753024
+            },
+            {
+              "stage": "tabs-3",
+              "available": true,
+              "main_rss_kib": 245568,
+              "method": "sum RSS, includes shared pages",
+              "processes": 8,
+              "tree_rss_kib": 851968
+            },
+            {
+              "stage": "tabs-4",
+              "available": true,
+              "main_rss_kib": 253072,
+              "method": "sum RSS, includes shared pages",
+              "processes": 9,
+              "tree_rss_kib": 962528
+            },
+            {
+              "stage": "tabs-5",
+              "available": true,
+              "main_rss_kib": 260304,
+              "method": "sum RSS, includes shared pages",
+              "processes": 10,
+              "tree_rss_kib": 1072048
+            },
+            {
+              "stage": "tabs-6",
+              "available": true,
+              "main_rss_kib": 267456,
+              "method": "sum RSS, includes shared pages",
+              "processes": 11,
+              "tree_rss_kib": 1180496
+            },
+            {
+              "stage": "tabs-7",
+              "available": true,
+              "main_rss_kib": 274816,
+              "method": "sum RSS, includes shared pages",
+              "processes": 12,
+              "tree_rss_kib": 1290176
+            },
+            {
+              "stage": "tabs-8",
+              "available": true,
+              "main_rss_kib": 282416,
+              "method": "sum RSS, includes shared pages",
+              "processes": 13,
+              "tree_rss_kib": 1400016
+            },
+            {
+              "stage": "tabs-closed",
+              "available": true,
+              "main_rss_kib": 298432,
+              "method": "sum RSS, includes shared pages",
+              "processes": 5,
+              "tree_rss_kib": 596544
+            }
+          ],
+          "increments": [
+            {
+              "from": "tabs-1",
+              "to": "tabs-2",
+              "mib": 109.828125
+            },
+            {
+              "from": "tabs-2",
+              "to": "tabs-3",
+              "mib": 96.625
+            },
+            {
+              "from": "tabs-3",
+              "to": "tabs-4",
+              "mib": 107.96875
+            },
+            {
+              "from": "tabs-4",
+              "to": "tabs-5",
+              "mib": 106.953125
+            },
+            {
+              "from": "tabs-5",
+              "to": "tabs-6",
+              "mib": 105.90625
+            },
+            {
+              "from": "tabs-6",
+              "to": "tabs-7",
+              "mib": 107.109375
+            },
+            {
+              "from": "tabs-7",
+              "to": "tabs-8",
+              "mib": 107.265625
+            }
+          ],
+          "log_sha256": "c85849cc8b901a3b47f9c5a3d35c8016ccee37a9a03d8e3d036c0a53250cd83e"
+        },
+        {
+          "trial": 4,
+          "status": "complete",
+          "states": [
+            {
+              "stage": "tabs-0",
+              "available": true,
+              "main_rss_kib": 131488,
+              "method": "sum RSS, includes shared pages",
+              "processes": 1,
+              "tree_rss_kib": 131488
+            },
+            {
+              "stage": "tabs-1",
+              "available": true,
+              "main_rss_kib": 221392,
+              "method": "sum RSS, includes shared pages",
+              "processes": 7,
+              "tree_rss_kib": 624992
+            },
+            {
+              "stage": "tabs-2",
+              "available": true,
+              "main_rss_kib": 233648,
+              "method": "sum RSS, includes shared pages",
+              "processes": 7,
+              "tree_rss_kib": 738512
+            },
+            {
+              "stage": "tabs-3",
+              "available": true,
+              "main_rss_kib": 236240,
+              "method": "sum RSS, includes shared pages",
+              "processes": 8,
+              "tree_rss_kib": 838032
+            },
+            {
+              "stage": "tabs-4",
+              "available": true,
+              "main_rss_kib": 243984,
+              "method": "sum RSS, includes shared pages",
+              "processes": 9,
+              "tree_rss_kib": 952272
+            },
+            {
+              "stage": "tabs-5",
+              "available": true,
+              "main_rss_kib": 251504,
+              "method": "sum RSS, includes shared pages",
+              "processes": 10,
+              "tree_rss_kib": 1062032
+            },
+            {
+              "stage": "tabs-6",
+              "available": true,
+              "main_rss_kib": 259616,
+              "method": "sum RSS, includes shared pages",
+              "processes": 11,
+              "tree_rss_kib": 1172496
+            },
+            {
+              "stage": "tabs-7",
+              "available": true,
+              "main_rss_kib": 266656,
+              "method": "sum RSS, includes shared pages",
+              "processes": 12,
+              "tree_rss_kib": 1281648
+            },
+            {
+              "stage": "tabs-8",
+              "available": true,
+              "main_rss_kib": 274048,
+              "method": "sum RSS, includes shared pages",
+              "processes": 13,
+              "tree_rss_kib": 1391152
+            },
+            {
+              "stage": "tabs-closed",
+              "available": true,
+              "main_rss_kib": 294368,
+              "method": "sum RSS, includes shared pages",
+              "processes": 5,
+              "tree_rss_kib": 592672
+            }
+          ],
+          "increments": [
+            {
+              "from": "tabs-1",
+              "to": "tabs-2",
+              "mib": 110.859375
+            },
+            {
+              "from": "tabs-2",
+              "to": "tabs-3",
+              "mib": 97.1875
+            },
+            {
+              "from": "tabs-3",
+              "to": "tabs-4",
+              "mib": 111.5625
+            },
+            {
+              "from": "tabs-4",
+              "to": "tabs-5",
+              "mib": 107.1875
+            },
+            {
+              "from": "tabs-5",
+              "to": "tabs-6",
+              "mib": 107.875
+            },
+            {
+              "from": "tabs-6",
+              "to": "tabs-7",
+              "mib": 106.59375
+            },
+            {
+              "from": "tabs-7",
+              "to": "tabs-8",
+              "mib": 106.9375
+            }
+          ],
+          "log_sha256": "9404b3ffe890ed08ab6685ecb6fcd8f886c6833f27dfd89455cd4cf445574536"
+        },
+        {
+          "trial": 5,
+          "status": "complete",
+          "states": [
+            {
+              "stage": "tabs-0",
+              "available": true,
+              "main_rss_kib": 131376,
+              "method": "sum RSS, includes shared pages",
+              "processes": 1,
+              "tree_rss_kib": 131376
+            },
+            {
+              "stage": "tabs-1",
+              "available": true,
+              "main_rss_kib": 229680,
+              "method": "sum RSS, includes shared pages",
+              "processes": 6,
+              "tree_rss_kib": 639328
+            },
+            {
+              "stage": "tabs-2",
+              "available": true,
+              "main_rss_kib": 239680,
+              "method": "sum RSS, includes shared pages",
+              "processes": 7,
+              "tree_rss_kib": 747248
+            },
+            {
+              "stage": "tabs-3",
+              "available": true,
+              "main_rss_kib": 242992,
+              "method": "sum RSS, includes shared pages",
+              "processes": 8,
+              "tree_rss_kib": 850528
+            },
+            {
+              "stage": "tabs-4",
+              "available": true,
+              "main_rss_kib": 250800,
+              "method": "sum RSS, includes shared pages",
+              "processes": 9,
+              "tree_rss_kib": 960512
+            },
+            {
+              "stage": "tabs-5",
+              "available": true,
+              "main_rss_kib": 258880,
+              "method": "sum RSS, includes shared pages",
+              "processes": 10,
+              "tree_rss_kib": 1071088
+            },
+            {
+              "stage": "tabs-6",
+              "available": true,
+              "main_rss_kib": 266336,
+              "method": "sum RSS, includes shared pages",
+              "processes": 11,
+              "tree_rss_kib": 1180480
+            },
+            {
+              "stage": "tabs-7",
+              "available": true,
+              "main_rss_kib": 273888,
+              "method": "sum RSS, includes shared pages",
+              "processes": 12,
+              "tree_rss_kib": 1290320
+            },
+            {
+              "stage": "tabs-8",
+              "available": true,
+              "main_rss_kib": 281536,
+              "method": "sum RSS, includes shared pages",
+              "processes": 13,
+              "tree_rss_kib": 1400080
+            },
+            {
+              "stage": "tabs-closed",
+              "available": true,
+              "main_rss_kib": 302176,
+              "method": "sum RSS, includes shared pages",
+              "processes": 5,
+              "tree_rss_kib": 601696
+            }
+          ],
+          "increments": [
+            {
+              "from": "tabs-1",
+              "to": "tabs-2",
+              "mib": 105.390625
+            },
+            {
+              "from": "tabs-2",
+              "to": "tabs-3",
+              "mib": 100.859375
+            },
+            {
+              "from": "tabs-3",
+              "to": "tabs-4",
+              "mib": 107.40625
+            },
+            {
+              "from": "tabs-4",
+              "to": "tabs-5",
+              "mib": 107.984375
+            },
+            {
+              "from": "tabs-5",
+              "to": "tabs-6",
+              "mib": 106.828125
+            },
+            {
+              "from": "tabs-6",
+              "to": "tabs-7",
+              "mib": 107.265625
+            },
+            {
+              "from": "tabs-7",
+              "to": "tabs-8",
+              "mib": 107.1875
+            }
+          ],
+          "log_sha256": "68c2547e8f9c3d353f42525c6d4d12cc75bbc97184e072a7845a7014c7f9e619"
+        }
+      ],
+      "boundary": "Additional process-tree RSS, tabs 2\u20138; first-tab initialization excluded."
+    },
+    "windows": {
+      "value": 2.078125,
+      "unit": "MiB",
+      "min": -19.984375,
+      "max": 29.578125,
+      "count": 15,
+      "trials": 5,
+      "observations": [
+        {
+          "run": "1:windows-2",
+          "value": 3.859375
+        },
+        {
+          "run": "1:windows-3",
+          "value": 2.015625
+        },
+        {
+          "run": "1:windows-4",
+          "value": 2.109375
+        },
+        {
+          "run": "2:windows-2",
+          "value": 3.203125
+        },
+        {
+          "run": "2:windows-3",
+          "value": 1.921875
+        },
+        {
+          "run": "2:windows-4",
+          "value": 2.09375
+        },
+        {
+          "run": "3:windows-2",
+          "value": 3.21875
+        },
+        {
+          "run": "3:windows-3",
+          "value": 1.515625
+        },
+        {
+          "run": "3:windows-4",
+          "value": 1.921875
+        },
+        {
+          "run": "4:windows-2",
+          "value": 29.578125
+        },
+        {
+          "run": "4:windows-3",
+          "value": -19.984375
+        },
+        {
+          "run": "4:windows-4",
+          "value": 1.71875
+        },
+        {
+          "run": "5:windows-2",
+          "value": 2.71875
+        },
+        {
+          "run": "5:windows-3",
+          "value": 2.078125
+        },
+        {
+          "run": "5:windows-4",
+          "value": 1.734375
+        }
+      ],
+      "states": [
+        {
+          "trial": 1,
+          "status": "complete",
+          "states": [
+            {
+              "stage": "windows-1",
+              "available": true,
+              "main_rss_kib": 127632,
+              "method": "sum RSS, includes shared pages",
+              "processes": 1,
+              "tree_rss_kib": 127632
+            },
+            {
+              "stage": "windows-2",
+              "available": true,
+              "main_rss_kib": 131584,
+              "method": "sum RSS, includes shared pages",
+              "processes": 3,
+              "tree_rss_kib": 133920
+            },
+            {
+              "stage": "windows-3",
+              "available": true,
+              "main_rss_kib": 133648,
+              "method": "sum RSS, includes shared pages",
+              "processes": 3,
+              "tree_rss_kib": 136176
+            },
+            {
+              "stage": "windows-4",
+              "available": true,
+              "main_rss_kib": 135808,
+              "method": "sum RSS, includes shared pages",
+              "processes": 3,
+              "tree_rss_kib": 138432
+            }
+          ],
+          "increments": [
+            {
+              "from": "windows-1",
+              "to": "windows-2",
+              "mib": 3.859375
+            },
+            {
+              "from": "windows-2",
+              "to": "windows-3",
+              "mib": 2.015625
+            },
+            {
+              "from": "windows-3",
+              "to": "windows-4",
+              "mib": 2.109375
+            }
+          ],
+          "log_sha256": "0e3abe488230c8f9fda66a66126ebac6978dece739f984b0f288b7a86ea6a7de"
+        },
+        {
+          "trial": 2,
+          "status": "complete",
+          "states": [
+            {
+              "stage": "windows-1",
+              "available": true,
+              "main_rss_kib": 132048,
+              "method": "sum RSS, includes shared pages",
+              "processes": 1,
+              "tree_rss_kib": 132048
+            },
+            {
+              "stage": "windows-2",
+              "available": true,
+              "main_rss_kib": 135328,
+              "method": "sum RSS, includes shared pages",
+              "processes": 3,
+              "tree_rss_kib": 137696
+            },
+            {
+              "stage": "windows-3",
+              "available": true,
+              "main_rss_kib": 137296,
+              "method": "sum RSS, includes shared pages",
+              "processes": 3,
+              "tree_rss_kib": 139792
+            },
+            {
+              "stage": "windows-4",
+              "available": true,
+              "main_rss_kib": 139440,
+              "method": "sum RSS, includes shared pages",
+              "processes": 3,
+              "tree_rss_kib": 141904
+            }
+          ],
+          "increments": [
+            {
+              "from": "windows-1",
+              "to": "windows-2",
+              "mib": 3.203125
+            },
+            {
+              "from": "windows-2",
+              "to": "windows-3",
+              "mib": 1.921875
+            },
+            {
+              "from": "windows-3",
+              "to": "windows-4",
+              "mib": 2.09375
+            }
+          ],
+          "log_sha256": "5f2b7f2beabeabc9e66be0366b566ffa772a82cfe85e1d300a9b71d542220764"
+        },
+        {
+          "trial": 3,
+          "status": "complete",
+          "states": [
+            {
+              "stage": "windows-1",
+              "available": true,
+              "main_rss_kib": 131872,
+              "method": "sum RSS, includes shared pages",
+              "processes": 1,
+              "tree_rss_kib": 131872
+            },
+            {
+              "stage": "windows-2",
+              "available": true,
+              "main_rss_kib": 135168,
+              "method": "sum RSS, includes shared pages",
+              "processes": 3,
+              "tree_rss_kib": 137472
+            },
+            {
+              "stage": "windows-3",
+              "available": true,
+              "main_rss_kib": 136720,
+              "method": "sum RSS, includes shared pages",
+              "processes": 3,
+              "tree_rss_kib": 139184
+            },
+            {
+              "stage": "windows-4",
+              "available": true,
+              "main_rss_kib": 138688,
+              "method": "sum RSS, includes shared pages",
+              "processes": 3,
+              "tree_rss_kib": 141328
+            }
+          ],
+          "increments": [
+            {
+              "from": "windows-1",
+              "to": "windows-2",
+              "mib": 3.21875
+            },
+            {
+              "from": "windows-2",
+              "to": "windows-3",
+              "mib": 1.515625
+            },
+            {
+              "from": "windows-3",
+              "to": "windows-4",
+              "mib": 1.921875
+            }
+          ],
+          "log_sha256": "a6feaaec853802a6a9e3d0e2b71d6472fac0e880fd15ed18e0d8c3949f70c2a2"
+        },
+        {
+          "trial": 4,
+          "status": "complete",
+          "states": [
+            {
+              "stage": "windows-1",
+              "available": true,
+              "main_rss_kib": 129248,
+              "method": "sum RSS, includes shared pages",
+              "processes": 1,
+              "tree_rss_kib": 129248
+            },
+            {
+              "stage": "windows-2",
+              "available": true,
+              "main_rss_kib": 159536,
+              "method": "sum RSS, includes shared pages",
+              "processes": 3,
+              "tree_rss_kib": 161904
+            },
+            {
+              "stage": "windows-3",
+              "available": true,
+              "main_rss_kib": 139072,
+              "method": "sum RSS, includes shared pages",
+              "processes": 3,
+              "tree_rss_kib": 141744
+            },
+            {
+              "stage": "windows-4",
+              "available": true,
+              "main_rss_kib": 140832,
+              "method": "sum RSS, includes shared pages",
+              "processes": 3,
+              "tree_rss_kib": 143504
+            }
+          ],
+          "increments": [
+            {
+              "from": "windows-1",
+              "to": "windows-2",
+              "mib": 29.578125
+            },
+            {
+              "from": "windows-2",
+              "to": "windows-3",
+              "mib": -19.984375
+            },
+            {
+              "from": "windows-3",
+              "to": "windows-4",
+              "mib": 1.71875
+            }
+          ],
+          "log_sha256": "4487f08b3af0f06a97f58f53e3f010991d3323520ab46336036a60afcff7d198"
+        },
+        {
+          "trial": 5,
+          "status": "complete",
+          "states": [
+            {
+              "stage": "windows-1",
+              "available": true,
+              "main_rss_kib": 130080,
+              "method": "sum RSS, includes shared pages",
+              "processes": 1,
+              "tree_rss_kib": 130080
+            },
+            {
+              "stage": "windows-2",
+              "available": true,
+              "main_rss_kib": 132864,
+              "method": "sum RSS, includes shared pages",
+              "processes": 3,
+              "tree_rss_kib": 135360
+            },
+            {
+              "stage": "windows-3",
+              "available": true,
+              "main_rss_kib": 134992,
+              "method": "sum RSS, includes shared pages",
+              "processes": 3,
+              "tree_rss_kib": 137584
+            },
+            {
+              "stage": "windows-4",
+              "available": true,
+              "main_rss_kib": 136768,
+              "method": "sum RSS, includes shared pages",
+              "processes": 3,
+              "tree_rss_kib": 139392
+            }
+          ],
+          "increments": [
+            {
+              "from": "windows-1",
+              "to": "windows-2",
+              "mib": 2.71875
+            },
+            {
+              "from": "windows-2",
+              "to": "windows-3",
+              "mib": 2.078125
+            },
+            {
+              "from": "windows-3",
+              "to": "windows-4",
+              "mib": 1.734375
+            }
+          ],
+          "log_sha256": "73a552edc3ea2aba8e505e1af7bb3501efe4406a18d67eeee9e84e59b7d9c91f"
+        }
+      ],
+      "boundary": "Observed parent-process RSS change, windows 2\u20134; not total GPU memory. Negative deltas can reflect concurrent page reclamation, not negative window allocation."
+    }
+  },
+  "package_sizes": {
+    "mac": {
+      "value": 379.30078125,
+      "unit": "MiB",
+      "statistic": "allocated bundle size on APFS",
+      "allocated_kib": 388404,
+      "download_mib": 154.07659530639648,
+      "unpacked_mib": 374.21734142303467,
+      "sha256": "ee23b6c631f114bfe630f86848e624120186700f360b1c876b40960167f8c6ee"
+    },
+    "windows": {
+      "download_mib": 190.7494239807129,
+      "unpacked_mib": 458.2684106826782,
+      "sha256": "278e63fcdb93bc3345ae116b6649746c87cb378ae3c56a71989d382e0841e3ec"
+    },
+    "linux": {
+      "download_mib": 358.3417778015137,
+      "unpacked_mib": 1526.4150257110596,
+      "sha256": "ad763bc83a5c70cb9870609613fb4779634d74364a2753059a2c8366628665c8"
+    }
+  },
+  "packages": {
+    "schema": 1,
+    "recorded_at": "2026-09-23T05:00:40.602703+00:00",
+    "release": "v0.0.1-preview.7",
+    "packages": [
+      {
+        "name": "nus-0.0.1-preview.7-linux-x86_64.tar.gz",
+        "download_bytes": 375748588,
+        "unpacked_file_bytes": 1600562162,
+        "sha256": "ad763bc83a5c70cb9870609613fb4779634d74364a2753059a2c8366628665c8",
+        "url": "https://github.com/cbassuarez/nus/releases/download/v0.0.1-preview.7/nus-0.0.1-preview.7-linux-x86_64.tar.gz"
+      },
+      {
+        "name": "nus-0.0.1-preview.7-macos-arm64.zip",
+        "download_bytes": 161561020,
+        "unpacked_file_bytes": 392395323,
+        "sha256": "ee23b6c631f114bfe630f86848e624120186700f360b1c876b40960167f8c6ee",
+        "url": "https://github.com/cbassuarez/nus/releases/download/v0.0.1-preview.7/nus-0.0.1-preview.7-macos-arm64.zip"
+      },
+      {
+        "name": "nus-0.0.1-preview.7-windows-x86_64.zip",
+        "download_bytes": 200015268,
+        "unpacked_file_bytes": 480529257,
+        "sha256": "278e63fcdb93bc3345ae116b6649746c87cb378ae3c56a71989d382e0841e3ec",
+        "url": "https://github.com/cbassuarez/nus/releases/download/v0.0.1-preview.7/nus-0.0.1-preview.7-windows-x86_64.zip"
+      }
+    ],
+    "applications": [
+      {
+        "product": "NUS",
+        "version": "0.0.1",
+        "build": "0.0.1",
+        "logical_bytes": 410246155,
+        "allocated_kib": 401496,
+        "executable_sha256": "ef3c08021ff3b29bc7168b05a28bd0c14432772d18fca94301868ee6d54f1422"
+      },
+      {
+        "product": "VS Code",
+        "version": "1.138.0",
+        "build": "1.138.0",
+        "logical_bytes": 937166722,
+        "allocated_kib": 937916,
+        "executable_sha256": "e514b1aa3b89772ceac388582e30c3c76303fdba8c8b4df9292ae52fb0f2bada"
+      },
+      {
+        "product": "Arc",
+        "version": "1.165.1",
+        "build": "87405",
+        "logical_bytes": 893081953,
+        "allocated_kib": 876200,
+        "executable_sha256": "8e435466264211767801f9977545fd1f07ff5fc713be345890864ea0e23d596e"
+      },
+      {
+        "product": "Zen",
+        "version": "1.22.2b",
+        "build": "126.9.15",
+        "logical_bytes": 600922338,
+        "allocated_kib": 587116,
+        "executable_sha256": "4c10b49bb5768822e637748fa6e1134622d12daccb1e0d78c0f1c7822fb73d2b"
+      },
+      {
+        "product": "Ghostty",
+        "version": "1.2.3",
+        "build": "12214",
+        "logical_bytes": 49681679,
+        "allocated_kib": 50552,
+        "executable_sha256": "e400ce11ab650f7599d6e6ab7d2b0273ef33bb10b92ba4266ea0ca0177fadbe7"
+      },
+      {
+        "product": "Kitty",
+        "version": "0.49.0",
+        "build": "0.49.0",
+        "logical_bytes": 251175931,
+        "allocated_kib": 246708,
+        "executable_sha256": "87024db3e4e5c47098fa47c75d1c1664b8cbd3175aaa93e00321c614ba32f6dc"
+      },
+      {
+        "product": "WezTerm",
+        "version": "0.1.0",
+        "build": "1",
+        "logical_bytes": 266056365,
+        "allocated_kib": 259840,
+        "executable_sha256": "994efe1b96a5d02df9405ef95f22f1836d34f9474a99b7c768b152e47e0dca7b"
+      }
+    ],
+    "published_mac": {
+      "product": "NUS published macOS",
+      "version": "0.0.1",
+      "build": "0.0.1",
+      "logical_bytes": 392395323,
+      "allocated_kib": 388404,
+      "executable_sha256": "a9dde4a8e912bd1d31052e896705eaa9780e33d9d3fb780789c12bbe57022e43"
+    },
+    "harness_sha256": "b22ddfba30ede428fe1b10a35d1207125b8f39ffb10d864c95136a09e72fe3e9",
+    "release_metadata_sha256": "7d35bcac549f0e28a0239ca44e058f1fa40357a6886fe51668fa3185d15da7b1",
+    "method": "Application bundle regular-file bytes, unique inode once; symlinks excluded. Allocated KiB from du -sk on APFS. Archive unpacked sizes are file payload bytes excluding symlinks, not native Windows/Linux disk allocation.",
+    "baseline_source_sha256": "4f90d0557d684a41e59238b49a48ba081016cae3d8a53cfb6bf29c1c6593714e",
+    "application_refreshes": {
+      "NUS": "2026-09-23T08:55:49.939583+00:00"
+    }
+  }
+}

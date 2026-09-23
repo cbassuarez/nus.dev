@@ -13,6 +13,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { buildReview } from './review/build.mjs';
+import {applyFacts} from './benchmarks/facts.mjs';
 import { render } from './markdown.mjs';
 import { page, icon, SITE } from './layout.mjs';
 
@@ -59,7 +60,7 @@ function docNav(current) {
 }
 
 function buildDoc(d) {
-  const md = read(join('content', d.file));
+  const md = applyFacts(read(join('content', d.file)));
   const { html, title, toc } = render(md);
 
   const body = `<div class="doc">

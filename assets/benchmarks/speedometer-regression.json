@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "limits": "Single diagnostic trials, ten correlated internal iterations each; not independent population estimates. Workload unchanged.",
+  "experiments": {
+    "original": {
+      "score": 42.54216806300757,
+      "binary_sha256": "5df12534bd1da2dbb6f44df453116c1b31ac929c2927c5b0e23313feed5d2676",
+      "source_sha256": "9b6faf1bbc8152808d521c4591eb796fd2a85387d31a6859cc5f2fe5c8d6c053",
+      "suite_medians_ms": {
+        "TodoMVC-JavaScript-ES5": 25.099999997764826,
+        "TodoMVC-JavaScript-ES6-Webpack-Complex-DOM": 24.399999998509884,
+        "TodoMVC-WebComponents": 11.949999999254942,
+        "TodoMVC-React-Complex-DOM": 21.349999994039536,
+        "TodoMVC-React-Redux": 22.099999997764826,
+        "TodoMVC-Backbone": 16.50000000372529,
+        "TodoMVC-Angular-Complex-DOM": 20.00000000745058,
+        "TodoMVC-Vue": 14.200000006705523,
+        "TodoMVC-jQuery": 70.75,
+        "TodoMVC-Preact-Complex-DOM": 8.800000004470348,
+        "TodoMVC-Svelte-Complex-DOM": 7.900000002235174,
+        "TodoMVC-Lit-Complex-DOM": 11.950000006705523,
+        "NewsSite-Next": 50.29999999329448,
+        "NewsSite-Nuxt": 41.95000000670552,
+        "Editor-CodeMirror": 15.00000000372529,
+        "Editor-TipTap": 43.44999999552965,
+        "Charts-observable-plot": 30.350000005215406,
+        "Charts-chartjs": 27.100000001490116,
+        "React-Stockcharts-SVG": 52.849999997764826,
+        "Perf-Dashboard": 30.55000000447035
+      }
+    },
+    "deadline_only": {
+      "score": 28.99942743796806,
+      "binary_sha256": "560ab4fc1bb19a4f47d56c347b95a3ef9250d0e5c1677edcd9d32117d8c3984b",
+      "source_sha256": "3eb9877396b8576b258f4b67ed057145edd59658613358110760055c631e20e6",
+      "suite_medians_ms": {
+        "TodoMVC-JavaScript-ES5": 29.350000001490116,
+        "TodoMVC-JavaScript-ES6-Webpack-Complex-DOM": 44.399999998509884,
+        "TodoMVC-WebComponents": 14.550000004470348,
+        "TodoMVC-React-Complex-DOM": 61.400000009685755,
+        "TodoMVC-React-Redux": 26.30000000447035,
+        "TodoMVC-Backbone": 16.899999998509884,
+        "TodoMVC-Angular-Complex-DOM": 70.94999999552965,
+        "TodoMVC-Vue": 19.100000001490116,
+        "TodoMVC-jQuery": 196.54999999701977,
+        "TodoMVC-Preact-Complex-DOM": 24.0,
+        "TodoMVC-Svelte-Complex-DOM": 23.049999997019768,
+        "TodoMVC-Lit-Complex-DOM": 26.049999997019768,
+        "NewsSite-Next": 54.350000001490116,
+        "NewsSite-Nuxt": 47.55000000447035,
+        "Editor-CodeMirror": 14.99999999627471,
+        "Editor-TipTap": 43.400000002235174,
+        "Charts-observable-plot": 30.050000000745058,
+        "Charts-chartjs": 27.600000001490116,
+        "React-Stockcharts-SVG": 52.69999999925494,
+        "Perf-Dashboard": 31.25000000372529
+      }
+    },
+    "input_once": {
+      "score": 42.40149269841899,
+      "binary_sha256": "ef3c08021ff3b29bc7168b05a28bd0c14432772d18fca94301868ee6d54f1422",
+      "source_sha256": "40b4b08db3b208f912200c653ba8cd05c488e1ebc2711e5314016b5f99ef9ad6",
+      "suite_medians_ms": {
+        "TodoMVC-JavaScript-ES5": 25.19999998807907,
+        "TodoMVC-JavaScript-ES6-Webpack-Complex-DOM": 24.600000001490116,
+        "TodoMVC-WebComponents": 12.100000001490116,
+        "TodoMVC-React-Complex-DOM": 21.900000002235174,
+        "TodoMVC-React-Redux": 22.349999990314245,
+        "TodoMVC-Backbone": 16.650000005960464,
+        "TodoMVC-Angular-Complex-DOM": 20.200000006705523,
+        "TodoMVC-Vue": 14.550000008195639,
+        "TodoMVC-jQuery": 70.34999999776483,
+        "TodoMVC-Preact-Complex-DOM": 9.099999997764826,
+        "TodoMVC-Svelte-Complex-DOM": 8.349999997764826,
+        "TodoMVC-Lit-Complex-DOM": 12.050000004470348,
+        "NewsSite-Next": 49.350000005215406,
+        "NewsSite-Nuxt": 42.24999999627471,
+        "Editor-CodeMirror": 14.850000005215406,
+        "Editor-TipTap": 43.04999999701977,
+        "Charts-observable-plot": 30.899999998509884,
+        "Charts-chartjs": 27.5,
+        "React-Stockcharts-SVG": 51.99999999627471,
+        "Perf-Dashboard": 30.300000000745058
+      }
+    }
+  }
+}

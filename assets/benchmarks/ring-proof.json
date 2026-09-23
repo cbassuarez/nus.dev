@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "status": "verified",
+  "recorded_at": "2026-09-23T04:21:22.920802+00:00",
+  "scope": "Ring::new, Ring::push, Ring::bytes; exact bounded suffix and capacity preservation",
+  "verus": {
+    "profile": "release",
+    "version": "0.2026.09.20.aef82ed",
+    "platform": {
+      "os": "macos",
+      "arch": "aarch64"
+    },
+    "toolchain": "1.98.1-aarch64-apple-darwin (overridden by environment variable RUSTUP_TOOLCHAIN)",
+    "commit": "aef82eda71838deef4a8cd0260fda6c9504be9b9"
+  },
+  "flags": [
+    "--crate-type",
+    "lib",
+    "--no-cheating",
+    "--output-json",
+    "--num-threads",
+    "1"
+  ],
+  "verification": {
+    "encountered-error": false,
+    "encountered-vir-error": false,
+    "success": true,
+    "verified": 3,
+    "errors": 0,
+    "is-verifying-entire-crate": true
+  },
+  "mutation_rejected": true,
+  "source_hashes": {
+    "crates/pty/src/ring.rs": "7124d59e9963b47073440a3042adc63277bf2758d54e311fe41abb8bf457908d",
+    "crates/pty/src/hold.rs": "c807dcd9da8753d95da22ca34d9ec1a6f80b639f53ae946a5bdb34909adc2fda",
+    "crates/pty/src/lib.rs": "4600c18144612d7315ac56f689dc65466d7d4f3bf178c04620e3aef4c31e912f",
+    "crates/pty/Cargo.toml": "9eecc7472ee2054e4d0ec2d99e9991643c8739f522f3031a9b9c2b4dd10dba21",
+    "Cargo.lock": "a51052f476ccda6daa2a263b8759f935aeeb971a9f063f11f0a0643f93bd42aa"
+  },
+  "assumptions": [
+    "Verus, SMT solver and Rust compiler correctness",
+    "Pinned vstd contracts for Vec and slice operations",
+    "Successful allocation; no claim about allocator failure or physical footprint",
+    "Private ring fields; state created by new and mutated only by push"
+  ],
+  "excludes": [
+    "PTY and socket delivery",
+    "Replay screen reconstruction",
+    "Whole-application correctness",
+    "Timing and performance"
+  ]
+}

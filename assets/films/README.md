@@ -1,11 +1,17 @@
 # Real app footage
 
-Recorded from the macOS nus app using its built-in `NUS_SHOT` recorder, September 20, 2026. The window controls and all application chrome come from the running app. These are paced demonstrations, not performance measurements. Shell commands run in a real PTY.
+## Shell → page hero · September 23, 2026
 
-The hero uses an 880 × 580 logical-pixel window (2× capture), downsampled to 1320 × 870. The terminal runs this site's build and release tests. The second window shows the Memphis home background. Other stills and the history recording use a 1280 × 800 window, downsampled to 1600 × 1000.
+`hero-desktop.mp4` (1440 × 1080) and `hero-mobile.mp4` (1080 × 1350) are twelve-second, 60-fps edits of a real nus workflow. A zsh PTY starts the included Fieldnotes development server with `npm run dev`; Command–Enter opens its page beside the same shell. The phone composition reframes the desktop recording; it does not depict a mobile app. These are paced demonstrations, not performance measurements.
 
-Capture with an isolated profile (`NUS_SHOT_DIR`) and an onboarded marker, never a personal browser profile. Set `NUS_MODE=paper`, `NUS_SHOT_SIZE=880x580`, `NUS_SHOT_OUT` to a temporary folder and `NUS_SHOT` to a script using the app's documented recorder commands. The Memphis script opens `home`, chooses `homelook art memphis`, waits for the scene to settle, takes `shot memphis`, then uses `record memphis 5`. The shell script builds this repository, then runs its tests during a five-second recording.
+The native master is 720 lossless PNG frames at 2240 × 1520, captured from an isolated 1120 × 760 logical-pixel window at 2×. Remotion reads those frames directly and adds framing and captions. Final web exports use H.264, CRF 17, yuv420p, 60 fps and faststart. Posters come from frame 540 of the same final compositions. No intermediate video is enlarged.
 
-Encode frame sequences with FFmpeg: H.264, CRF 24, yuv420p, 60 fps, faststart. Posters use the corresponding app-generated PNG. Keep the full window in frame. Videos are loaded only when the visitor requests playback, and pause when hidden or offscreen.
+Source, fixture, capture runner, compositions and reproduction instructions live in the sibling `nus-promo` repository: `hero/README.md`, `hero/scripts/capture.py`, `hero/project/`, and `src/HeroPilot.tsx`. The selected take is `out/hero/take-03`; its `take.json` records the application binary hash and capture parameters. Retain its PNG masters locally. Only the final video, posters and provenance JSON belong here.
 
-Delete temporary frame sequences and demo profiles after reviewing the encoded result. Only final footage belongs in the repository.
+Videos load only on explicit Play, select the phone edit at widths up to 700 px, pause when hidden/offscreen, and end with Replay. There is no autoplay. Switching to reduced motion stops playback. The second Memphis recording retains its existing loop behavior.
+
+## Earlier captures · September 20, 2026
+
+`shell.mp4` / `shell.png` are the previous five-second build/test-output hero, retained as source history. They were captured through `NUS_SHOT` at 880 × 580 logical (2×), then downsampled to 1320 × 870. The Memphis clip shows the actual home background, with the same capture dimensions. Other stills and the history recording use a 1280 × 800 logical window, downsampled to 1600 × 1000. Those earlier files use H.264, CRF 24, yuv420p, 60 fps and faststart.
+
+All captures use disposable profiles, never personal browser state or terminal history. The earlier scored promo is separate from these silent site demonstrations.

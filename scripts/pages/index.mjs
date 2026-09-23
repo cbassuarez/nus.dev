@@ -1,4 +1,5 @@
 import {icon,SITE} from '../layout.mjs';
+import {tokens as figures} from '../benchmarks/facts.mjs';
 export default {
  title:'nus',path:'/',depth:0,
  description:'A terminal with room for the rest of your work. Shells, web pages, projects and assistants, together in a workspace you can make your own.',
@@ -7,7 +8,7 @@ export default {
 <section class="orbit orbit--flat" data-orbit>
  <div class="orbit__rail" data-orbit-rail><div class="orbit__stage" data-orbit-stage>
  <div class="orbit__core">nus unified environment</p><h1>A little less<br><em>back and forth.</em></h1><p class="orbit__lede">Say hello to never again switching between IDEs, terminals, and broswers just to design one app. <br>Say hello to <i><b>nus</i></b>.</p><div class="orbit__acts"><a class="btn btn--signal" href="./download/">${icon('download-simple')}Get nus</a><a class="source-cta" href="${SITE.repo}">Read the source <span aria-hidden="true">↗</span></a></div><div class="orbit__meta"><span>Independent software</span><span>macOS / Windows / Linux</span></div></div>
-  <div class="orbit__body" data-orbit-body><figure class="orbit-film" data-film><video width="1320" height="870" poster="./assets/films/shell.png" preload="none" muted playsinline loop aria-label="A nus window on a Mac: the shell building and testing this site." data-src="./assets/films/shell.mp4"></video><figcaption><span><b>The shell</b> · Building this site, on a Mac.</span><button class="film-toggle" data-film-toggle>Play recording ↗</button></figcaption><p class="film-error small" data-film-error hidden>The recording didn’t load. The still is a frame from the same take.</p></figure></div>
+  <div class="orbit__body" data-orbit-body><figure class="orbit-film orbit-film--hero" data-film><video width="1440" height="1080" poster="./assets/films/hero-desktop.png" data-poster-desktop="./assets/films/hero-desktop.png" data-poster-mobile="./assets/films/hero-mobile.png" preload="none" muted playsinline aria-label="A real nus workflow: npm run dev starts Fieldnotes, then opens its page beside the same shell." data-src="./assets/films/hero-desktop.mp4" data-src-mobile="./assets/films/hero-mobile.mp4"></video><figcaption><span><b>Shell → page</b> · One command. One workspace.</span><button class="film-toggle" data-film-toggle data-play-label="Play 12-second demo ↗">Play 12-second demo ↗</button></figcaption><p class="film-error small" data-film-error hidden>The recording didn’t load. The still is a frame from the same take.</p></figure></div>
   <div class="orbit__body" data-orbit-body><figure class="orbit-film" data-film><video width="1320" height="870" poster="./assets/films/memphis.png" preload="none" muted playsinline loop aria-label="A nus window on a Mac: the home prompt over the Memphis art." data-src="./assets/films/memphis.mp4"></video><figcaption><span><b>Your home</b> · The Memphis art behind the prompt.</span><button class="film-toggle" data-film-toggle>Play recording ↗</button></figcaption><p class="film-error small" data-film-error hidden>The recording didn’t load. The still is a frame from the same take.</p></figure></div>
   <div class="orbit__dial" data-orbit-dial><span>Scroll to orbit</span><span class="orbit__track"><i></i></span><a href="#work">Explore nus ↓</a></div>
  </div></div>
@@ -16,13 +17,13 @@ export default {
 <section class="section section--tight" id="measured"><div class="section__in">
  <div class="sectionhead"><h2>Light on its feet.</h2><span class="cap">Measured on release builds</span></div>
  <div class="figs figs--lead">
-  <div><b>355<small> MiB</small></b><span>The Mac app, on disk</span><em>154 MiB to download · Windows 457 MiB · Linux 1.49 GiB</em></div>
-  <div><b>28.9<small> ms</small></b><span>Opening a 10 MiB file</span><em>p95 across 20 opens</em></div>
-  <div><b>63<small> ms</small></b><span>Opening a 100 MiB file</span><em>maximum across five opens</em></div>
-  <div><b>101<small> MiB</small></b><span>Each idle browser tab</span><em>101–102 MiB, after initialization</em></div>
-  <div><b>1.5–19<small> MiB</small></b><span>Each empty window</span><em>added per extra window</em></div>
+  <div><b>${figures['mac.disk']}<small> MiB</small></b><span>The Mac app, on disk</span><em>${figures['mac.download']} MiB to download · Windows ${figures['windows.disk']} MiB · Linux ${figures['linux.disk']} GiB</em></div>
+  <div><b>${figures['file10.p95']}<small> ms</small></b><span>Opening a 10 MiB file</span><em>p95 across 20 opens</em></div>
+  <div><b>${figures['file100.max']}<small> ms</small></b><span>Opening a 100 MiB file</span><em>maximum across five opens</em></div>
+  <div><b>${figures['tabs.median']}<small> MiB</small></b><span>Each idle browser tab</span><em>${figures['tabs.range']} MiB, after initialization</em></div>
+  <div><b>${figures['windows.range']}<small> MiB</small></b><span>Each empty window</span><em>added per extra window</em></div>
  </div>
- <p class="small dim figs__note">A whole Chromium and a whole terminal in one process, and it still opens like a terminal. File opens are the editor pane on real files; memory is what each further tab or window adds once it has settled. <a href="./docs/measurements/">How each number was taken →</a></p>
+ <p class="small dim figs__note">A whole Chromium and a whole terminal in one process, and it still opens like a terminal. File opens are the editor pane on real files; memory is what each further tab or window adds once it has settled. <a href="./benchmarks/">Measurements and comparisons →</a></p>
 </div></section>
 <section class="section" id="work"><div class="section__in">
  <div class="sectionhead"><h2>The work has a few moving parts.</h2><span class="cap">Keep them close</span></div>

@@ -53,3 +53,15 @@ test('conflicting API and manifest hashes never create a download button',()=>{
  const r=fixture();r.assets[0].digest='sha256:'+'b'.repeat(64);
  assert.equal(packageFor(r,'macos-arm64'),null);
 });
+
+test('withdrawn releases disappear and maintenance patches never downgrade the recommended line',()=>{
+ const current=fixture('v0.8.0'), patch=fixture('v0.7.40');
+ patch.published_at='2026-09-23T12:00:00Z';
+ assert.equal(latestFor([patch,current],'stable'),current);
+ assert.equal(latestPackageFor([patch,current],'stable','macos-arm64').release,current);
+ const manifest=JSON.parse(current.body.match(/<!-- nus-release:(.*?) -->/s)[1]);
+ manifest.state='withdrawn';current.body=`<!-- nus-release:${JSON.stringify(manifest)} -->`;
+ assert.equal(packageFor(current,'macos-arm64'),null);
+ assert.equal(latestFor([patch,current],'stable'),patch);
+ assert.equal(latestFor([fixture('v0.8.0-preview.9'),fixture('v0.8.0-preview.10')],'preview').tag_name,'v0.8.0-preview.10');
+});

@@ -5,11 +5,30 @@ export const TARGETS = [
   ['windows-x86_64', 'Windows', 'Intel / AMD 64-bit', 'zip'],
   ['linux-x86_64', 'Linux', 'Intel / AMD 64-bit', 'tar.gz']
 ];
+function activeRelease(release) {
+  const embedded = (release.body || '').match(/<!-- nus-release:(.*?) -->/s)?.[1];
+  if (!embedded) return true; // Historical releases predate this metadata.
+  try {
+    const manifest = JSON.parse(embedded);
+    return manifest.state === undefined || (manifest.version === release.tag_name && manifest.state === 'active');
+  } catch { return false; }
+}
+function versionOrder(a, b) {
+  const parts = release => release.tag_name.match(/^v(\d+)\.(\d+)\.(\d+)(?:-preview\.(\d+))?$/).slice(1);
+  const x = parts(a), y = parts(b);
+  for (let i = 0; i < 3; i++) {
+    const difference = BigInt(y[i]) - BigInt(x[i]);
+    if (difference) return difference > 0n ? 1 : -1;
+  }
+  if (x[3] === undefined || y[3] === undefined) return x[3] === y[3] ? 0 : x[3] === undefined ? -1 : 1;
+  const difference = BigInt(y[3]) - BigInt(x[3]);
+  return difference === 0n ? 0 : difference > 0n ? 1 : -1;
+}
 export function publishedReleases(input) {
   return (Array.isArray(input) ? input : []).filter(r => r && !r.draft &&
     /^v\d+\.\d+\.\d+(?:-preview\.\d+)?$/.test(r.tag_name) &&
-    r.prerelease === r.tag_name.includes('-preview.') && Number.isFinite(Date.parse(r.published_at)) && Array.isArray(r.assets)
-  ).sort((a,b) => Date.parse(b.published_at) - Date.parse(a.published_at));
+    r.prerelease === r.tag_name.includes('-preview.') && Number.isFinite(Date.parse(r.published_at)) && Array.isArray(r.assets) && activeRelease(r)
+  ).sort(versionOrder);
 }
 export function latestFor(releases, channel) {
   return publishedReleases(releases).find(r => r.prerelease === (channel === 'preview'));

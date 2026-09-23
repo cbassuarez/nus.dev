@@ -1,7 +1,7 @@
 /* One Swup instance for the site. No fetched page scripts are re-executed. */
 import '../vendor/swup/4.10.0/Swup.umd.js';
 import '../vendor/swup-head-plugin/2.3.1/index.umd.js';
-import {mountSite} from './site.js?v=swup-1';
+import {mountSite} from './site.js?v=benchmarks-1';
 import {mountFeel} from './feel.js?v=swup-1';
 import {mountFilms} from './films.js?v=swup-1';
 import {mountOrbit} from './orbit.js?v=swup-1';

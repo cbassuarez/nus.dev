@@ -1,0 +1,799 @@
+{
+  "schema": 1,
+  "status": "complete",
+  "recorded_at": "2026-09-23T04:57:23.142588+00:00",
+  "platform": "macOS-15.6-arm64-arm-64bit-Mach-O",
+  "apps": {
+    "NUS": {
+      "binary_sha256": "29907e1266d005107557d7d5dbe755b7a757763836456a2cbb250ff07ed08fff"
+    },
+    "Zen": {
+      "binary_sha256": "4c10b49bb5768822e637748fa6e1134622d12daccb1e0d78c0f1c7822fb73d2b"
+    },
+    "VS Code": {
+      "binary_sha256": "e514b1aa3b89772ceac388582e30c3c76303fdba8c8b4df9292ae52fb0f2bada"
+    },
+    "Ghostty": {
+      "binary_sha256": "e400ce11ab650f7599d6e6ab7d2b0273ef33bb10b92ba4266ea0ca0177fadbe7"
+    },
+    "Kitty": {
+      "binary_sha256": "87024db3e4e5c47098fa47c75d1c1664b8cbd3175aaa93e00321c614ba32f6dc"
+    },
+    "WezTerm": {
+      "binary_sha256": "ab71a230b6c65d52b611deadcb7188a79fb4b87831d88647c75b641afebfa920"
+    }
+  },
+  "requested_trials": 5,
+  "attempts": [
+    {
+      "product": "NUS",
+      "trial": 1,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 611.28125,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 611.53125,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 611.6875,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 611.78125,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 611.8125,
+          "processes": 7,
+          "root_count": 1
+        }
+      ],
+      "rss_mib": 611.6875,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + Ghostty",
+      "trial": 1,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 4493.171875,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4456.1875,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4410.59375,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4381.078125,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4538.4375,
+          "processes": 24,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 4456.1875,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + Kitty",
+      "trial": 1,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 4514.96875,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4486.296875,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4433.609375,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4398.40625,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4512.46875,
+          "processes": 24,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 4486.296875,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + WezTerm",
+      "trial": 1,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 4457.859375,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4437.0625,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4379.84375,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4376.765625,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4379.9375,
+          "processes": 23,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 4379.9375,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + Ghostty",
+      "trial": 2,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 4524.59375,
+          "processes": 27,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4527.453125,
+          "processes": 29,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4465.484375,
+          "processes": 29,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4456.203125,
+          "processes": 29,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4595.484375,
+          "processes": 29,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 4524.59375,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + Kitty",
+      "trial": 2,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 4508.75,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4486.0,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4436.1875,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4432.046875,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4493.21875,
+          "processes": 24,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 4486.0,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + WezTerm",
+      "trial": 2,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 4490.6875,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4467.65625,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4366.640625,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4365.296875,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4479.75,
+          "processes": 23,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 4467.65625,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "NUS",
+      "trial": 2,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 610.984375,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 611.21875,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 611.328125,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 611.359375,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 611.359375,
+          "processes": 7,
+          "root_count": 1
+        }
+      ],
+      "rss_mib": 611.328125,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + Kitty",
+      "trial": 3,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 4486.640625,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4456.375,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4376.171875,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4376.859375,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4495.921875,
+          "processes": 24,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 4456.375,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + WezTerm",
+      "trial": 3,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 4488.6875,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4462.1875,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4411.53125,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4411.546875,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4416.703125,
+          "processes": 23,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 4416.703125,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "NUS",
+      "trial": 3,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 612.796875,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 612.859375,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 613.046875,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 613.0625,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 613.265625,
+          "processes": 7,
+          "root_count": 1
+        }
+      ],
+      "rss_mib": 613.046875,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + Ghostty",
+      "trial": 3,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 4438.875,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4412.265625,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4357.90625,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4358.6875,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4504.03125,
+          "processes": 24,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 4412.265625,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + WezTerm",
+      "trial": 4,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 4511.75,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4483.578125,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4425.96875,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4412.640625,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4432.609375,
+          "processes": 23,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 4432.609375,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "NUS",
+      "trial": 4,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 611.703125,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 611.984375,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 612.03125,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 612.03125,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 612.046875,
+          "processes": 7,
+          "root_count": 1
+        }
+      ],
+      "rss_mib": 612.03125,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + Ghostty",
+      "trial": 4,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 4510.171875,
+          "processes": 32,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4483.296875,
+          "processes": 29,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4423.4375,
+          "processes": 29,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4438.796875,
+          "processes": 29,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4599.28125,
+          "processes": 29,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 4483.296875,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + Kitty",
+      "trial": 4,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 4501.203125,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4477.90625,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4422.09375,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4343.53125,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4460.5,
+          "processes": 24,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 4460.5,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "NUS",
+      "trial": 5,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 610.890625,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 610.953125,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 611.265625,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 611.28125,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 611.375,
+          "processes": 7,
+          "root_count": 1
+        }
+      ],
+      "rss_mib": 611.265625,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + Ghostty",
+      "trial": 5,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 4557.234375,
+          "processes": 29,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4537.109375,
+          "processes": 29,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4482.9375,
+          "processes": 29,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4488.03125,
+          "processes": 29,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4635.25,
+          "processes": 29,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 4537.109375,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + Kitty",
+      "trial": 5,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 4491.6875,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4466.953125,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4415.140625,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4403.890625,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4451.9375,
+          "processes": 24,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 4451.9375,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + WezTerm",
+      "trial": 5,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 4499.40625,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4478.40625,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4355.046875,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4358.90625,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 4359.234375,
+          "processes": 23,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 4359.234375,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    }
+  ],
+  "harness_sha256": "1f448afb76f695aee893986f495f5cb24684a9ca7b2eb0a6f5d8e3034716419c",
+  "fixture": "100 KiB plaintext file + simple local HTML page + idle Python terminal command; editor foreground; no third-party extensions",
+  "sampling": "Median of five process-tree RSS snapshots, one second apart, after all three readiness oracles and 3 seconds settling",
+  "limits": "Sum of the unique descendant PID union, RSS still double-counts shared pages across processes. Same tasks, NUS one window versus three app windows. VS Code includes a small readiness-only development extension; helper Python process present in every configuration. Fresh profiles/configs; OS caches and background activity uncontrolled.",
+  "historical_baseline": {
+    "binary_sha256": "29907e1266d005107557d7d5dbe755b7a757763836456a2cbb250ff07ed08fff",
+    "recorded_at": "2026-09-23T04:57:23.142588+00:00",
+    "source_sha256": "b095b4af1cac0f48a4634c38e05bd78ace65b9841948f4a2c05b5af35bccd0dc",
+    "reason": "Earlier complete workspace baseline retained. Current NUS workspace rerun was stopped at user request; all displayed workspace figures belong to the earlier build."
+  }
+}

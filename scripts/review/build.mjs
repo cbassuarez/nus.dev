@@ -1,3 +1,4 @@
+import {applyFacts} from '../benchmarks/facts.mjs';
 import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
 import {join,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -11,7 +12,7 @@ import {distributionNotice,distributionStatus} from '../../assets/js/review-rele
 const ROOT=fileURLToPath(new URL('../..',import.meta.url));
 const read=p=>readFileSync(join(ROOT,p),'utf8');
 function prose(slug) {
-  const md=read(`content/review/${slug}.md`).replace(/\{\{budget:([a-z]+)\}\}/g,(_,id)=>allowance(id)).replaceAll('{{measurementSource}}',`${SITE.repo}/blob/${REVIEW.measurementRevision}`).replaceAll('{{source}}',`${SITE.repo}/blob/${REVIEW.evidenceRevision}`).replaceAll('{{request}}',money(REVIEW.request));
+  const md=applyFacts(read(`content/review/${slug}.md`)).replace(/\{\{budget:([a-z]+)\}\}/g,(_,id)=>allowance(id)).replaceAll('{{measurementSource}}',`${SITE.repo}/blob/${REVIEW.measurementRevision}`).replaceAll('{{source}}',`${SITE.repo}/blob/${REVIEW.evidenceRevision}`).replaceAll('{{request}}',money(REVIEW.request));
   if(/\{\{/.test(md))throw new Error(`Unresolved review content token: ${slug}`);
   return render(md).html;
 }

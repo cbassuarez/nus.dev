@@ -92,5 +92,7 @@ test('overview leads with unsigned distribution and specifications before film',
 test('historical measurements remain pinned when downloads advance',()=>{
  const html=read('review/performance/index.html');
  assert.ok(html.includes('/blob/'+REVIEW.measurementRevision+'/docs/performance/2026-09-20-m4-pro.json'));
- assert.ok(html.includes('September 20 M4 Pro reference run'));
+ assert.ok(html.includes('September 20 source report'));
+ assert.ok(html.includes('../../assets/benchmarks/homepage.json'));
+ assert.ok(html.includes('September 23 M4 Pro measurements'));
 });

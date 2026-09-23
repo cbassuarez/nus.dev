@@ -1,3 +1,4 @@
+import {F,HOME,rounded,range} from '../benchmarks/facts.mjs';
 import {SITE, rel} from '../layout.mjs';
 import {REVIEW, money} from './data.mjs';
 import {escape as e} from './layout.mjs';
@@ -28,10 +29,10 @@ export function architecture() {
 }
 export function measurements() {
  const rows=[
-  ['28.9','ms','10 MiB file open','p95 · 20 opens','Open request → first content-frame submission.','Warm/uncontrolled filesystem caches; not disk-cold.'],
-  ['63.0','ms','100 MiB file open','Observed maximum · 5 opens','Open request → first content-frame submission.','An observed maximum, not a worst-case guarantee.'],
-  ['101–102','MiB','Each further idle browser tab','After initialization','Additional whole-process-tree RSS in this fixture.','Not the first browser tab; RSS can double-count shared pages.'],
-  ['1.5–19','MiB','Each further empty window','Four-window run','Change in parent-process RSS.','Not total GPU allocation or private physical footprint.']
+  [rounded(F.file10.value),'ms','10 MiB file open','p95 · 20 opens','Open request → first content-frame submission.','Warm/uncontrolled filesystem caches; not disk-cold.'],
+  [rounded(F.file100.value),'ms','100 MiB file open','Observed maximum · 5 opens','Open request → first content-frame submission.','An observed maximum, not a worst-case guarantee.'],
+  [range(F.tabs),'MiB','Each further idle browser tab','After initialization · five trials','Additional whole-process-tree RSS in this fixture.','Not the first browser tab; RSS can double-count shared pages.'],
+  [range(F.windows),'MiB','Each further empty window','Five four-window trials','Change in parent-process RSS.','Not total GPU allocation or private physical footprint.']
  ];
- return `<div class="review-measurements">${rows.map(([v,u,t,s,scope,limit])=>`<section class="review-measurement"><p class="cap">${t}</p><div class="review-measurement__value">${v} <small>${u}</small></div><p>${s}</p>${ledger([['Scope',e(scope)],['Machine','Apple M4 Pro · 48 GiB RAM'],['Boundary',e(limit)]])}<a href="${source('docs/PERFORMANCE_BUDGETS.md',REVIEW.measurementRevision)}">Method ↗</a> · <a href="${source('docs/performance/2026-09-20-m4-pro.json',REVIEW.measurementRevision)}">Raw report ↗</a></section>`).join('')}</div>`;
+ return `<div class="review-measurements">${rows.map(([v,u,t,s,scope,limit])=>`<section class="review-measurement"><p class="cap">${t}</p><div class="review-measurement__value">${v} <small>${u}</small></div><p>${s}</p>${ledger([['Scope',e(scope)],['Machine','Apple M4 Pro · 48 GiB RAM'],['Boundary',e(limit)]])}<a href="../../benchmarks/">Method ↗</a> · <a href="../../assets/benchmarks/homepage.json">Raw report ↗</a></section>`).join('')}</div>`;
 }

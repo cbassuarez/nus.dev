@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "status": "failed",
+  "recorded_at": "2026-09-23T04:54:18.519943+00:00",
+  "platform": "macOS-15.6-arm64-arm-64bit-Mach-O",
+  "apps": {
+    "NUS": {
+      "binary_sha256": "29907e1266d005107557d7d5dbe755b7a757763836456a2cbb250ff07ed08fff"
+    },
+    "Zen": {
+      "binary_sha256": "4c10b49bb5768822e637748fa6e1134622d12daccb1e0d78c0f1c7822fb73d2b"
+    },
+    "VS Code": {
+      "binary_sha256": "e514b1aa3b89772ceac388582e30c3c76303fdba8c8b4df9292ae52fb0f2bada"
+    },
+    "Ghostty": {
+      "binary_sha256": "e400ce11ab650f7599d6e6ab7d2b0273ef33bb10b92ba4266ea0ca0177fadbe7"
+    },
+    "Kitty": {
+      "binary_sha256": "87024db3e4e5c47098fa47c75d1c1664b8cbd3175aaa93e00321c614ba32f6dc"
+    },
+    "WezTerm": {
+      "binary_sha256": "ab71a230b6c65d52b611deadcb7188a79fb4b87831d88647c75b641afebfa920"
+    }
+  },
+  "requested_trials": 5,
+  "attempts": [
+    {
+      "product": "NUS",
+      "trial": 1,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 613.015625,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 613.15625,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 613.359375,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 613.390625,
+          "processes": 7,
+          "root_count": 1
+        },
+        {
+          "rss_mib": 613.4375,
+          "processes": 7,
+          "root_count": 1
+        }
+      ],
+      "rss_mib": 613.359375,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Zen + Ghostty",
+      "trial": 1,
+      "status": "failed",
+      "error": "readiness failed: browser=True, terminal=False, editor=True"
+    }
+  ],
+  "harness_sha256": "90a472e43ef8b5ddfd4518fb6f7826958bcb87d363fb3a1e2a94d1d7bc159cb9",
+  "fixture": "100 KiB plaintext file + simple local HTML page + idle Python terminal command; editor foreground; no third-party extensions",
+  "sampling": "Median of five process-tree RSS snapshots, one second apart, after all three readiness oracles and 3 seconds settling",
+  "limits": "Sum of the unique descendant PID union, RSS still double-counts shared pages across processes. Same tasks, NUS one window versus three app windows. VS Code includes a small readiness-only development extension; helper Python process present in every configuration. Fresh profiles/configs; OS caches and background activity uncontrolled."
+}

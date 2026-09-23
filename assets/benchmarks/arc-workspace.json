@@ -1,0 +1,602 @@
+{
+  "schema": 1,
+  "status": "complete",
+  "recorded_at": "2026-09-23T05:18:33.748906+00:00",
+  "platform": "macOS-15.6-arm64-arm-64bit-Mach-O",
+  "apps": {
+    "VS Code": {
+      "binary_sha256": "e514b1aa3b89772ceac388582e30c3c76303fdba8c8b4df9292ae52fb0f2bada"
+    },
+    "Ghostty": {
+      "binary_sha256": "e400ce11ab650f7599d6e6ab7d2b0273ef33bb10b92ba4266ea0ca0177fadbe7"
+    },
+    "Kitty": {
+      "binary_sha256": "87024db3e4e5c47098fa47c75d1c1664b8cbd3175aaa93e00321c614ba32f6dc"
+    },
+    "WezTerm": {
+      "binary_sha256": "ab71a230b6c65d52b611deadcb7188a79fb4b87831d88647c75b641afebfa920"
+    },
+    "Arc": {
+      "binary_sha256": "8e435466264211767801f9977545fd1f07ff5fc713be345890864ea0e23d596e"
+    }
+  },
+  "requested_trials": 5,
+  "attempts": [
+    {
+      "product": "VS Code + Arc + Ghostty",
+      "trial": 1,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 3862.09375,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3861.0625,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3860.9375,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3826.90625,
+          "processes": 24,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3820.796875,
+          "processes": 24,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 3860.9375,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Arc + Kitty",
+      "trial": 1,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 3578.703125,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3572.875,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3524.609375,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3520.359375,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3515.78125,
+          "processes": 18,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 3524.609375,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Arc + WezTerm",
+      "trial": 1,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 3419.40625,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3492.25,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3552.515625,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3589.21875,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3617.859375,
+          "processes": 17,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 3552.515625,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Arc + Kitty",
+      "trial": 2,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 3366.59375,
+          "processes": 21,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3478.46875,
+          "processes": 20,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3521.109375,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3556.203125,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3581.890625,
+          "processes": 18,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 3521.109375,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Arc + WezTerm",
+      "trial": 2,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 3435.640625,
+          "processes": 19,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3533.5,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3563.4375,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3581.296875,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3620.53125,
+          "processes": 17,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 3563.4375,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Arc + Ghostty",
+      "trial": 2,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 3572.484375,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3558.140625,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3579.984375,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3589.109375,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3589.171875,
+          "processes": 23,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 3579.984375,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Arc + WezTerm",
+      "trial": 3,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 3619.375,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3620.515625,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3572.5,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3572.171875,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3565.453125,
+          "processes": 17,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 3572.5,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Arc + Ghostty",
+      "trial": 3,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 3599.359375,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3609.046875,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3604.0,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3609.8125,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3609.71875,
+          "processes": 23,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 3609.046875,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Arc + Kitty",
+      "trial": 3,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 3543.96875,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3543.734375,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3543.5,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3545.609375,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3545.609375,
+          "processes": 18,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 3543.96875,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Arc + Ghostty",
+      "trial": 4,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 3598.703125,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3612.21875,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3600.203125,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3595.734375,
+          "processes": 23,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3595.6875,
+          "processes": 23,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 3598.703125,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Arc + Kitty",
+      "trial": 4,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 3555.171875,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3555.09375,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3548.890625,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3550.140625,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3550.078125,
+          "processes": 18,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 3550.140625,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Arc + WezTerm",
+      "trial": 4,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 3538.1875,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3537.9375,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3530.109375,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3522.296875,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3522.296875,
+          "processes": 17,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 3530.109375,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Arc + Kitty",
+      "trial": 5,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 3561.28125,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3561.328125,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3561.109375,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3563.59375,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3563.5,
+          "processes": 18,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 3561.328125,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Arc + WezTerm",
+      "trial": 5,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 3562.921875,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3500.4375,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3496.625,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3496.625,
+          "processes": 17,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3496.625,
+          "processes": 17,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 3496.625,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    },
+    {
+      "product": "VS Code + Arc + Ghostty",
+      "trial": 5,
+      "status": "complete",
+      "samples": [
+        {
+          "rss_mib": 3515.5625,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3515.34375,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3514.984375,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3477.59375,
+          "processes": 18,
+          "root_count": 3
+        },
+        {
+          "rss_mib": 3477.5,
+          "processes": 18,
+          "root_count": 3
+        }
+      ],
+      "rss_mib": 3514.984375,
+      "oracles": {
+        "page": true,
+        "editor_bytes": 102400,
+        "terminal": true
+      }
+    }
+  ],
+  "harness_sha256": "6edd24f288edc3b4d16588895d7c6af9be8055df136739a03f2833deaa866d92",
+  "fixture": "100 KiB plaintext file + simple local HTML page + idle Python terminal command; editor foreground; no third-party extensions",
+  "sampling": "Median of five process-tree RSS snapshots, one second apart, after all three readiness oracles and 3 seconds settling",
+  "limits": "Arc uses the user-prepared empty account in the existing macOS session; process, browser storage and caches retained, no app restarts. Account change is not filesystem profile isolation. VS Code and terminals use fresh profiles/configs. Follow-up batch, not paired with the earlier NUS/Zen runs. RSS sums unique descendant PIDs, double-counts shared pages; not physical footprint. Editor foreground, three windows. Small readiness extension and common Python helper included. Background activity uncontrolled.",
+  "session_reused": true,
+  "sampling_unit": "Five fresh editor/terminal trials sharing one existing Arc session"
+}
