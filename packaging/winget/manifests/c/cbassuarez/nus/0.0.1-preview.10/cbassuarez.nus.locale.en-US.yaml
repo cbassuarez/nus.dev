@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.6.0.schema.json
+PackageIdentifier: cbassuarez.nus
+PackageVersion: 0.0.1-preview.10
+PackageLocale: en-US
+Publisher: Sebastian Suarez-Solis
+PublisherUrl: https://github.com/cbassuarez/nus
+PublisherSupportUrl: https://github.com/cbassuarez/nus/issues
+PackageName: nus
+PackageUrl: https://cbassuarez.com/nus.dev/
+License: MIT
+LicenseUrl: https://github.com/cbassuarez/nus/blob/main/LICENSE
+ShortDescription: A terminal emulator that is also a browser.
+Description: |-
+  nus puts a terminal and a browser in one window: one tab list, one set of
+  splits, one config. Its own VT core, Chromium composited by the app, an
+  editor pane, an assistant panel, a ports board and a quick terminal.
+Tags:
+  - terminal
+  - browser
+  - developer-tools
+ManifestType: defaultLocale
+ManifestVersion: 1.6.0
