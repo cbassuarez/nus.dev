@@ -23,7 +23,7 @@
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/Newsreader-Italic.woff2" crossorigin>
 <link rel="stylesheet" href="../assets/css/site.css?v=5d0ee1cbfb6d">
-<link rel="stylesheet" href="../assets/css/continuum.css?v=98384bb15ec1">
+<link rel="stylesheet" href="../assets/css/continuum.css?v=9b3cde986b00">
 <script>
 /* Apply the stored theme and signal before first paint, so the page never flashes. */
 (function(){try{
@@ -67,38 +67,84 @@
 
 <section class="panels-intro">
  <div class="panels-intro__copy"><p class="cap">A look around nus</p><h1>One project.<br><em>A few good neighbours.</em></h1><p>Run the command. Read the page. Open the source.<br>Keep the work together, and make the space your own.</p></div>
- <nav class="panels-index" aria-label="Workspace features"><a href="#home">Your home</a><a href="#workspace">Shells &amp; pages</a><a href="#editor">The editor</a><a href="#history">History</a><a href="#hatch">Hatch</a></nav>
 </section>
 
-<section class="section panels-home" id="home"><div class="section__in">
- <figure class="shell-capture"><a href="../assets/films/nus-home-2026-09-26.png" target="_blank" rel="noopener" aria-label="View the full-size nus home screenshot"><img src="../assets/films/nus-home-2026-09-26.png" width="3204" height="1912" fetchpriority="high" alt="The current nus home: a prompt and saved commands, with projects and resumable sessions beneath, surrounded by Memphis artwork."></a></figure>
- <div class="panels-section-copy"><div><p class="cap">01 / Your home</p><h2>A place to begin.<br>A place to come back to.</h2></div><div><p>Start at the prompt, open a project, or resume a session. Saved commands, links, and prompts keep the things you use close at hand.</p><p>The background, type, colours, and suggestions are yours to choose. Keep it quiet, or give your workspace a little personality.</p><a href="../docs/product/">Explore the product guide ↗</a></div></div>
-</div></section>
-
-<section class="section" id="workspace"><div class="section__in">
- <div class="panels-section-copy"><div><p class="cap">02 / Shells &amp; pages</p><h2>Your shell,<br>with a view.</h2></div><div><p>Keep your shell configuration, aliases, and command-line tools. Start a server and open its page beside the output. Keep documentation nearby while a command runs.</p><p>Tabs, splits, and named Spaces let each project keep its own arrangement.</p></div></div>
- <div class="panels-features">
-  <article><span class="panels-feature-icon"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M69.12,94.15,28.5,128l40.62,33.85a8,8,0,1,1-10.24,12.29l-48-40a8,8,0,0,1,0-12.29l48-40a8,8,0,0,1,10.24,12.3Zm176,27.7-48-40a8,8,0,1,0-10.24,12.3L227.5,128l-40.62,33.85a8,8,0,1,0,10.24,12.29l48-40a8,8,0,0,0,0-12.29ZM162.73,32.48a8,8,0,0,0-10.25,4.79l-64,176a8,8,0,0,0,4.79,10.26A8.14,8.14,0,0,0,96,224a8,8,0,0,0,7.52-5.27l64-176A8,8,0,0,0,162.73,32.48Z"/></svg></span><h3>A real terminal.</h3><p>Your commands run in a shell. Follow their output, select text, and return to the session when you need it.</p></article>
-  <article><span class="panels-feature-icon"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,187a113.4,113.4,0,0,1-20.39-35h40.82a116.94,116.94,0,0,1-10,20.77A108.61,108.61,0,0,1,128,207Zm-26.49-59a135.42,135.42,0,0,1,0-40h53a135.42,135.42,0,0,1,0,40ZM44,128a83.49,83.49,0,0,1,2.43-20H77.25a160.63,160.63,0,0,0,0,40H46.43A83.49,83.49,0,0,1,44,128Zm84-79a113.4,113.4,0,0,1,20.39,35H107.59a116.94,116.94,0,0,1,10-20.77A108.61,108.61,0,0,1,128,49Zm50.73,59h30.82a83.52,83.52,0,0,1,0,40H178.75a160.63,160.63,0,0,0,0-40Zm20.77-24H173.71a140.82,140.82,0,0,0-15.5-34.36A84.51,84.51,0,0,1,199.52,84ZM97.79,49.64A140.82,140.82,0,0,0,82.29,84H56.48A84.51,84.51,0,0,1,97.79,49.64ZM56.48,172H82.29a140.82,140.82,0,0,0,15.5,34.36A84.51,84.51,0,0,1,56.48,172Zm101.73,34.36A140.82,140.82,0,0,0,173.71,172h25.81A84.51,84.51,0,0,1,158.21,206.36Z"/></svg></span><h3>A browser beside it.</h3><p>Chromium pages have navigation, search, downloads, and developer tools. Open a detected localhost address straight from the shell.</p></article>
-  <article><span class="panels-feature-icon"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"/></svg></span><h3>Room for the whole job.</h3><p>Keep the server, documentation, and assistant in the same project. Move between them without losing your place.</p></article>
+<section class="section tour" data-tour aria-label="A look around nus"><div class="section__in">
+ <div class="tour__bar">
+  <button class="tour__btn tour__play" type="button" data-tour-play data-tour-controls hidden aria-label="Pause the tour"><span data-tour-playing><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M200,32H160a16,16,0,0,0-16,16V208a16,16,0,0,0,16,16h40a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm0,176H160V48h40ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Zm0,176H56V48H96Z"/></svg></span><span data-tour-paused hidden><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232.4,114.49,88.32,26.35a16,16,0,0,0-16.2-.3A15.86,15.86,0,0,0,64,39.87V216.13A15.94,15.94,0,0,0,80,232a16.07,16.07,0,0,0,8.36-2.35L232.4,141.51a15.81,15.81,0,0,0,0-27ZM80,215.94V40l143.83,88Z"/></svg></span></button>
+  <nav class="tour__tabs" aria-label="Workspace features" data-tour-tabs><a class="tour__tab" href="#home" data-tour-tab data-no-swup><span class="tour__n">01</span>Your home<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a><a class="tour__tab" href="#workspace" data-tour-tab data-no-swup><span class="tour__n">02</span>Shells &amp; pages<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a><a class="tour__tab" href="#editor" data-tour-tab data-no-swup><span class="tour__n">03</span>The editor<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a><a class="tour__tab" href="#history" data-tour-tab data-no-swup><span class="tour__n">04</span>History<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a><a class="tour__tab" href="#hatch" data-tour-tab data-no-swup><span class="tour__n">05</span>Hatch<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a></nav>
+  <div class="tour__step" data-tour-controls hidden><button class="tour__btn" type="button" data-tour-prev aria-label="Previous slide"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"/></svg></button><span class="tour__count" data-tour-count aria-hidden="true">01 / 05</span><button class="tour__btn" type="button" data-tour-next aria-label="Next slide"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg></button></div>
+ </div>
+ <div class="tour__slides" data-tour-slides>
+  <article class="tour__slide" id="home" data-tour-slide>
+   <figure class="tour__shot"><a href="../assets/films/nus-home-2026-09-26.png" target="_blank" rel="noopener" aria-label="View the full-size capture: Your home"><img src="../assets/films/nus-home-2026-09-26.png" width="3204" height="1912" fetchpriority="high" decoding="async" alt="The current nus home: a prompt and saved commands, with projects and resumable sessions beneath, surrounded by Memphis artwork."></a><figcaption>Home: the prompt and saved commands, with Memphis artwork behind them.</figcaption></figure>
+   <div class="tour__copy">
+    <p class="cap">01 / Your home</p>
+    <h2>A place to begin.<br>A place to come back to.</h2>
+    <p>Start at the prompt, open a project, or resume a session. Saved commands, links, and prompts keep the things you use close at hand.</p><p>The background, type, colours, and suggestions are yours to choose. Keep it quiet, or give your workspace a little personality.</p>
+    
+    
+    <a class="tour__more" href="../docs/product/">Explore the product guide ↗</a>
+   </div>
+  </article>
+  <article class="tour__slide" id="workspace" data-tour-slide>
+   <figure class="tour__shot"><a href="../assets/films/nus-shell-page-2026-09-26.webp" target="_blank" rel="noopener" aria-label="View the full-size capture: Shells &amp; pages"><img src="../assets/films/nus-shell-page-2026-09-26.webp" width="2000" height="1194" loading="lazy" decoding="async" alt="A zsh session that has just committed and pushed the site, beside a browser pane open on the nus.dev repository on GitHub."></a><figcaption>A zsh session beside the page it just pushed to.</figcaption></figure>
+   <div class="tour__copy">
+    <p class="cap">02 / Shells &amp; pages</p>
+    <h2>Your shell,<br>with a view.</h2>
+    <p>Keep your shell configuration, aliases, and command-line tools. Start a server and open its page beside the output. Keep documentation nearby while a command runs.</p><p>Tabs, splits, and named Spaces let each project keep its own arrangement.</p>
+    <ul class="tour__points"><li><b>A real terminal.</b>Your commands run in a shell. Follow their output, select text, and return to the session when you need it.</li><li><b>A browser beside it.</b>Chromium pages have navigation, search, downloads, and developer tools. Open a detected localhost address straight from the shell.</li><li><b>Room for the whole job.</b>Keep the server, documentation, and assistant in the same project. Move between them without losing your place.</li></ul>
+    
+    
+   </div>
+  </article>
+  <article class="tour__slide" id="editor" data-tour-slide>
+   <figure class="tour__shot"><a href="../assets/films/nus-split-2026-09-26.webp" target="_blank" rel="noopener" aria-label="View the full-size capture: The editor"><img src="../assets/films/nus-split-2026-09-26.webp" width="2000" height="1194" loading="lazy" decoding="async" alt="One tab split into two zsh sessions: the pushed site on the left, a fresh prompt on the right."></a><figcaption>One tab, split in two. A file opens the same way, beside the running shell.</figcaption></figure>
+   <div class="tour__copy">
+    <p class="cap">03 / The editor</p>
+    <h2>From the output<br>to the source.</h2>
+    <p>Open a file beside the terminal. Follow a file-and-line reference from command output into the editor, then return to the running shell.</p><p>Keep the source close to the page you’re building, with dedicated text selection and editing controls.</p>
+    
+    
+    <a class="tour__more" href="../docs/product/">Read about the editor ↗</a>
+   </div>
+  </article>
+  <article class="tour__slide" id="history" data-tour-slide>
+   <figure class="tour__shot"><a href="../assets/films/nus-history-2026-09-26.webp" target="_blank" rel="noopener" aria-label="View the full-size capture: History"><img src="../assets/films/nus-history-2026-09-26.webp" width="2000" height="1194" loading="lazy" decoding="async" alt="Command history for a session: four commands, each with its status, duration and folder, the output of git push, and a map of the session down the right edge."></a><figcaption>Command history: every command, its status and folder, and a map of the session.</figcaption></figure>
+   <div class="tour__copy">
+    <p class="cap">04 / History</p>
+    <h2>Find your<br>way back.</h2>
+    <p>A session is more than its last screen. Move through commands and their output, find an earlier result, or follow a recording when the sequence matters.</p><p>Keep useful commands in your saved collection so you can find them again without digging through a whole session.</p>
+    <ul class="tour__points"><li><b>Commands &amp; output</b>Navigate the work by command, with its output close at hand.</li><li><b>Session playback</b>Revisit a recorded session in order, at your own pace.</li><li><b>Saved commands</b>Keep recurring commands, links, and prompts together.</li></ul>
+    
+    
+   </div>
+  </article>
+  <article class="tour__slide" id="hatch" data-tour-slide>
+   <figure class="tour__shot tour__shot--art"><div class="hatch-art" role="img" aria-label="Hatch, ready. The work list shows git push, finished, in nus-site, and a zsh shell in the home folder; Enter opens the existing session.">
+   <div class="hatch-art__sheet" aria-hidden="true">
+    <div class="hatch-art__head"><span class="hatch-art__mark">hatch</span><span class="hatch-art__state">Hatch · ready</span><span class="hatch-art__acts"><span>Expand</span><span>Pin</span><span>Hide</span></span></div>
+    <div class="hatch-art__tabs"><span class="on">Work</span><span>Terminal</span><span>+ Shell</span><span>‹</span><span>›</span></div>
+    <div class="hatch-art__row on"><i></i><span><b>git push</b><small>nus · /Users/seb/nus-site</small></span><em>Finished</em></div>
+    <div class="hatch-art__row"><i></i><span><b>zsh</b><small>nus · /Users/seb</small></span><em>Shell</em></div>
+    <div class="hatch-art__foot"><span>↑ ↓ select · Enter opens the existing session</span><span class="hatch-art__acts"><span>nus</span><span>Quit</span></span></div>
+   </div>
+  </div><figcaption>Hatch, redrawn from a capture of the app: finished work and open shells, a keypress away.</figcaption></figure>
+   <div class="tour__copy">
+    <p class="cap">05 / Hatch</p>
+    <h2>Ongoing work.<br>Within reach.</h2>
+    <p>Bring up an overview of terminal work across your Spaces. See what’s running, finished, or needs your attention, then return to the original session.</p><p>Use a dropdown from the top edge or a centred panel. Move the same shell into the full workspace when you need more room.</p>
+    
+    <p class="small">Shortcuts, window placement, and focus behaviour vary by platform and desktop. Native-platform testing is ongoing.</p>
+    
+   </div>
+  </article>
  </div>
 </div></section>
 
-<section class="section panels-editor" id="editor"><div class="section__in panels-section-copy">
- <div><p class="cap">03 / The editor</p><h2>From the output<br>to the source.</h2></div><div><p>Open a file beside the terminal. Follow a file-and-line reference from command output into the editor, then return to the running shell.</p><p>Keep the source close to the page you’re building, with dedicated text selection and editing controls.</p><a href="../docs/product/">Read about the editor ↗</a></div>
-</div></section>
-
-<section class="section" id="history"><div class="section__in">
- <div class="panels-section-copy"><div><p class="cap">04 / History</p><h2>Find your<br>way back.</h2></div><div><p>A session is more than its last screen. Move through commands and their output, find an earlier result, or follow a recording when the sequence matters.</p><p>Keep useful commands in your saved collection so you can find them again without digging through a whole session.</p></div></div>
- <div class="panels-detail-row"><div><h3>Commands &amp; output</h3><p>Navigate the work by command, with its output close at hand.</p></div><div><h3>Session playback</h3><p>Revisit a recorded session in order, at your own pace.</p></div><div><h3>Saved commands</h3><p>Keep recurring commands, links, and prompts together.</p></div></div>
-</div></section>
-
-<section class="section panels-hatch" id="hatch"><div class="section__in panels-section-copy">
- <div><p class="cap">05 / Hatch</p><h2>Ongoing work.<br>Within reach.</h2></div><div><p>Bring up an overview of terminal work across your Spaces. See what’s running, finished, or needs your attention, then return to the original session.</p><p>Use a dropdown from the top edge or a centred panel. Move the same shell into the full workspace when you need more room.</p><p class="small dim">Shortcuts, window placement, and focus behaviour vary by platform and desktop. Native-platform testing is ongoing.</p></div>
-</div></section>
-
-<section class="section panels-assistants"><div class="section__in panels-section-copy">
- <div><p class="cap">Your tools, your choice</p><h2>Keep your assistant<br>in the workspace.</h2></div><div><p>Configure Claude, Codex, or Ollama and send work to a shell you can return to. Inspect how each tool is launched, and keep the project context nearby.</p><p class="small dim">Provider tools need to be installed and authenticated separately. Review what context is shared with external services.</p><a href="https://github.com/cbassuarez/nus/blob/main/SECURITY.md">Security &amp; data handling ↗</a></div>
+<section class="section panels-assistants"><div class="section__in">
+ <div class="panels-assistants__copy"><p class="cap">Your tools, your choice</p><h2>Keep your assistant<br>in the workspace.</h2><p>Configure Claude, Codex, or Ollama and send work to a shell you can return to. Inspect how each tool is launched, and keep the project context nearby.</p><p class="small">Provider tools need to be installed and authenticated separately. Review what context is shared with external services.</p><a href="https://github.com/cbassuarez/nus/blob/main/SECURITY.md">Security &amp; data handling ↗</a></div>
+ <figure class="tour__shot"><a href="../assets/films/nus-assistants-2026-09-26.webp" target="_blank" rel="noopener" aria-label="View the full-size capture: Assistants settings"><img src="../assets/films/nus-assistants-2026-09-26.webp" width="2000" height="1194" loading="lazy" decoding="async" alt="Settings open on Assistants: Claude and Codex signed in and ready to start a session, an intelligence dial, and a live preview beside them."></a><figcaption>Settings · Assistants: Claude and Codex signed in, ready to start a session.</figcaption></figure>
 </div></section>
 
 <section class="section"><div class="section__in closing-note"><span class="wordmark">nus</span><h2>Make room for your work.</h2><div class="row"><a class="btn btn--signal" href="../download/"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"/></svg>Get nus</a><a class="source-cta" href="https://github.com/cbassuarez/nus">Read the source <span aria-hidden="true">↗</span></a></div><p class="small dim">Preview software for macOS, Windows, and Linux.</p></div></section>
@@ -132,6 +178,6 @@
   </div>
 </footer></div>
 <div id="page-announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
-<script type="module" src="../assets/js/navigation.js?v=22540548ee75"></script>
+<script type="module" src="../assets/js/navigation.js?v=9bb812e4dece"></script>
 </body>
 </html>

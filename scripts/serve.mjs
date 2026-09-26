@@ -4,7 +4,7 @@ import {resolve, sep, extname} from 'node:path';
 
 const TYPES = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8',
  '.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8',
- '.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.ico':'image/x-icon',
+ '.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp','.ico':'image/x-icon',
  '.woff2':'font/woff2','.ttf':'font/ttf','.mp4':'video/mp4','.xml':'application/xml',
  '.txt':'text/plain; charset=utf-8','.cast':'text/plain; charset=utf-8','.wasm':'application/wasm'};
 
