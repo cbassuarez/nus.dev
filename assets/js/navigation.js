@@ -5,7 +5,7 @@ import {mountSite} from './site.js?v=benchmarks-1';
 import {mountFeel} from './feel.js?v=swup-1';
 import {mountFilms} from './films.js?v=swup-1';
 import {mountOrbit} from './orbit.js?v=swup-1';
-import {mountDownloads} from './releases.js?v=swup-1';
+import {mountDownloads} from './releases.js?v=tiles-1';
 import {mountReview} from './review.js?v=swup-1';
 
 let cleanups=[];

@@ -1,4 +1,21 @@
 import { icon, SITE } from '../layout.mjs';
+import { TARGETS } from '../../assets/js/releases.js';
+
+const LOGOS = { macos: 'apple-logo', windows: 'windows-logo', linux: 'linux-logo' };
+
+/* One tile per published target. The first is checked so the page works
+   before the script runs; releases.js then checks the visitor's own OS. */
+const tiles = TARGETS.map(([id, os, arch], i) => `
+        <label class="platform-tile">
+          <input type="radio" name="platform" value="${id}"${i === 0 ? ' checked' : ''}>
+          <span class="platform-tile__here" data-detected hidden>Detected</span>
+          <span class="platform-tile__logo">${icon(LOGOS[id.split('-')[0]])}</span>
+          <span class="platform-tile__dot" aria-hidden="true"></span>
+          <span class="platform-tile__os">${os}</span>
+          <span class="platform-tile__arch">${arch}</span>
+          <span class="platform-tile__pkg" data-tile-pkg>Checking…</span>
+        </label>`).join('');
+
 export default {
   title: 'Download', path: '/download/', depth: 1,
   description: 'Get nus for macOS, Windows and Linux. Published releases, signing details, checksums and installation instructions in one place.',
@@ -18,13 +35,11 @@ export default {
         <label><input type="radio" name="channel" value="stable"> Stable</label>
       </fieldset>
       <p class="small dim">Preview is where new work lands. Stable appears after a release has cleared its checks.</p>
-      <label class="cap" for="download-platform">Your machine</label>
-      <select id="download-platform" data-target>
-        <option value="macos-arm64">macOS · Apple silicon (M-series)</option>
-        <option value="windows-x86_64">Windows · Intel / AMD 64-bit</option>
-        <option value="linux-x86_64">Linux · Intel / AMD 64-bit</option>
-      </select>
-      <p class="small dim">Apple silicon only on the Mac; Intel Macs are not a target.</p>
+      <fieldset class="platform-tiles" data-target><legend class="cap">Your machine</legend>
+        <div class="platform-tiles__grid">${tiles}
+        </div>
+      </fieldset>
+      <p class="small dim" data-platform-note>Apple silicon only on the Mac; Intel Macs are not a target.</p>
       <a class="btn btn--fill download-primary" data-download hidden>Download nus</a>
       <p class="download-status small" data-status role="status" aria-live="polite">Checking published releases…</p>
       <div class="row"><a data-notes href="${SITE.repo}/releases">Release notes ↗</a><button class="text-button" data-retry>Check again</button></div>

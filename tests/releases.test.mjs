@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {publishedReleases,latestFor,latestPackageFor,packageFor,TARGETS} from '../assets/js/releases.js';
+import {readFileSync} from 'node:fs';
+import {publishedReleases,latestFor,latestPackageFor,packageFor,detectTarget,TARGETS} from '../assets/js/releases.js';
 function fixture(tag='v0.0.1-preview.1', signing='notarized') {
  const name=`nus-${tag.slice(1)}-macos-arm64.zip`, hash='a'.repeat(64);
  const entry={name,target:'macos-arm64',size:100,sha256:hash,signing};
@@ -64,4 +65,30 @@ test('withdrawn releases disappear and maintenance patches never downgrade the r
  assert.equal(packageFor(current,'macos-arm64'),null);
  assert.equal(latestFor([patch,current],'stable'),patch);
  assert.equal(latestFor([fixture('v0.8.0-preview.9'),fixture('v0.8.0-preview.10')],'preview').tag_name,'v0.8.0-preview.10');
+});
+
+test('the visitor\'s own computer is detected; phones, tablets and unknowns are not guessed',()=>{
+ const agent=(userAgent,platform,extra={})=>({userAgent,platform,maxTouchPoints:0,...extra});
+ assert.equal(detectTarget(agent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Version/18.5 Safari/605.1.15','MacIntel')),'macos-arm64');
+ assert.equal(detectTarget(agent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/140.0.0.0','Win32')),'windows-x86_64');
+ assert.equal(detectTarget(agent('Mozilla/5.0 (X11; Linux x86_64) Firefox/143.0','Linux x86_64')),'linux-x86_64');
+ assert.equal(detectTarget(agent('Mozilla/5.0 (X11; Linux x86_64) Chrome/140.0.0.0','',{userAgentData:{platform:'Linux',mobile:false}})),'linux-x86_64');
+ assert.equal(detectTarget(agent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/140.0.0.0','Win32',{userAgentData:{platform:'Windows',mobile:false}})),'windows-x86_64');
+ for (const phone of [
+  agent('Mozilla/5.0 (iPhone; CPU iPhone OS 18_5 like Mac OS X) Mobile/15E148 Safari/604.1','iPhone'),
+  agent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Version/18.5 Safari/605.1.15','MacIntel',{maxTouchPoints:5}),
+  agent('Mozilla/5.0 (Linux; Android 15; Pixel 9) Chrome/140.0.0.0 Mobile Safari/537.36','Linux armv8l'),
+  agent('Mozilla/5.0 (X11; CrOS x86_64 16181.61.0) Chrome/140.0.0.0','Linux x86_64'),
+  agent('Mozilla/5.0 (X11; Linux x86_64) Chrome/140.0.0.0','Linux x86_64',{userAgentData:{platform:'Android',mobile:true}}),
+  agent('','')
+ ]) assert.equal(detectTarget(phone),null,phone.userAgent);
+ assert.equal(detectTarget(null),null);
+});
+test('the download page offers one tile per target instead of a dropdown',()=>{
+ const html=readFileSync(new URL('../download/index.html',import.meta.url),'utf8');
+ assert.ok(!/<select\b/.test(html));
+ const values=[...html.matchAll(/<input type="radio" name="platform" value="([^"]+)"/g)].map(m=>m[1]);
+ assert.deepEqual(values,TARGETS.map(t=>t[0]));
+ assert.equal((html.match(/name="platform" value="[^"]+" checked/g)||[]).length,1);
+ assert.equal((html.match(/data-detected hidden/g)||[]).length,TARGETS.length);
 });

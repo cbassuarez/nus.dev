@@ -60,18 +60,36 @@ export function packageFor(release, target) {
   if (!release.prerelease && ((target.startsWith('macos') && signing !== 'notarized') || (target.startsWith('windows') && signing !== 'authenticode'))) return null;
   return {name, url, size:asset.size, hash, signing};
 }
-export const signingLabel = value => ({notarized:'Developer ID signed · Apple notarized', authenticode:'Signed for Windows', unsigned:'Unsigned preview', 'ad-hoc':'Ad-hoc signed · not notarized', unverified:'Signing not verified', checksum:'SHA-256 checksum provided'})[value] || 'Signing not verified';
+/** The target for the visitor's computer, or null for phones, tablets and anything unrecognised. */
+export function detectTarget(nav = globalThis.navigator) {
+  if (!nav) return null;
+  const ua = String(nav.userAgent || ''), platform = String(nav.userAgentData?.platform || nav.platform || '');
+  // iPadOS asks for desktop sites as a Mac; only the touch points give it away.
+  if (nav.userAgentData?.mobile || /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || /^(Android|iOS)$/i.test(platform) || (/Mac/i.test(platform) && nav.maxTouchPoints > 1)) return null;
+  if (/Win/i.test(platform) || /Windows NT/i.test(ua)) return 'windows-x86_64';
+  if (/Mac/i.test(platform) || /Macintosh/i.test(ua)) return 'macos-arm64';
+  if (/CrOS|Chrome OS/i.test(ua + ' ' + platform)) return null;
+  if (/Linux|X11/i.test(platform + ' ' + ua)) return 'linux-x86_64';
+  return null;
+}
+export const signingLabel = value =>({notarized:'Developer ID signed · Apple notarized', authenticode:'Signed for Windows', unsigned:'Unsigned preview', 'ad-hoc':'Ad-hoc signed · not notarized', unverified:'Signing not verified', checksum:'SHA-256 checksum provided'})[value] || 'Signing not verified';
 
 export function mountDownloads(root = document.querySelector('[data-downloads]')) {
   if (!root) return;
   const q = s => root.querySelector(s);
-  const target = q('[data-target]');
-  const platform = navigator.userAgentData?.platform || navigator.platform;
-  target.value = /Win/i.test(platform) ? 'windows-x86_64' : /Linux/i.test(platform) ? 'linux-x86_64' : 'macos-arm64';
+  const tiles = [...root.querySelectorAll('[name=platform]')];
+  const target = () => (tiles.find(t => t.checked) || tiles[0]).value;
+  const detected = detectTarget();
+  for (const tile of tiles) {
+    const mine = tile.value === detected;
+    if (mine) tile.checked = true;
+    tile.closest('label').querySelector('[data-detected]').hidden = !mine;
+  }
+  if (!detected) q('[data-platform-note]').textContent = 'nus is a desktop app: pick the computer you’ll install it on. Apple silicon only on the Mac.';
   let releases = [], source = '', loading = false, lastCheck = 0, disposed = false;
   const render = () => {
-    const channel = q('[name=channel]:checked').value;
-    const selected = latestPackageFor(releases, channel, target.value);
+    const channel = q('[name=channel]:checked').value, id = target();
+    const selected = latestPackageFor(releases, channel, id);
     const release = selected?.release, pkg = selected?.pkg;
     q('[data-version]').textContent = release?.tag_name || 'Awaiting first release';
     q('[data-date]').textContent = release ? new Date(release.published_at).toLocaleDateString(undefined, {year:'numeric',month:'short',day:'numeric'}) : '—';
@@ -79,13 +97,18 @@ export function mountDownloads(root = document.querySelector('[data-downloads]')
     q('[data-signing]').textContent = pkg ? signingLabel(pkg.signing) : 'Shown with each published package';
     const link = q('[data-download]');
     link.hidden = !pkg;
-    if (pkg) { link.href = pkg.url; link.textContent = `Download for ${TARGETS.find(t=>t[0]===target.value)[1]} · ${(pkg.size/1048576).toFixed(0)} MB`; }
+    if (pkg) { link.href = pkg.url; link.textContent = `Download for ${TARGETS.find(t=>t[0]===id)[1]} · ${(pkg.size/1048576).toFixed(0)} MB`; }
     else link.removeAttribute('href');
     q('[data-hash-section]').hidden = !pkg;
     q('[data-hash]').textContent = pkg?.hash || '';
     q('[data-copy]').textContent = 'Copy SHA-256';
     q('[data-notes]').href = release ? `${REPO}/releases/tag/${release.tag_name}` : `${REPO}/releases`;
-    for (const note of root.querySelectorAll('[data-install]')) note.hidden = !target.value.startsWith(note.dataset.install);
+    for (const note of root.querySelectorAll('[data-install]')) note.hidden = !id.startsWith(note.dataset.install);
+    for (const tile of tiles) {
+      const found = latestPackageFor(releases, channel, tile.value)?.pkg, format = TARGETS.find(t => t[0] === tile.value)[3];
+      tile.closest('label').querySelector('[data-tile-pkg]').textContent = found ? `${format} · ${(found.size/1048576).toFixed(0)} MB` : loading && !releases.length ? 'Checking…' : `No ${channel} yet`;
+      tile.closest('label').classList.toggle('is-unpublished', !found && !(loading && !releases.length));
+    }
     const tbody = q('[data-packages]');
     tbody.replaceChildren(...TARGETS.map(([id,os,arch]) => {
       const row = document.createElement('tr'), available = latestPackageFor(releases,channel,id), p = available?.pkg;
