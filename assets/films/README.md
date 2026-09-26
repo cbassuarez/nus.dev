@@ -1,5 +1,14 @@
 # Real app footage
 
+## Homepage still · September 26, 2026
+
+`nus-home-2026-09-26.png` is the author's supplied 3204 × 1912 screenshot of
+the current nus home, with the dark Memphis background and sidebar. It is
+displayed intact at its original proportions, with a full-size link. It is a
+still image, not an interactive terminal or a recording of the older build.
+The original pixels, including the session rows, are preserved. The earlier
+recordings below remain available on the product pages and as source history.
+
 ## Shell → page hero · September 23, 2026
 
 `hero-desktop.mp4` (1440 × 1080) and `hero-mobile.mp4` (1080 × 1350) are twelve-second, 60-fps edits of a real nus workflow. A zsh PTY starts the included Fieldnotes development server with `npm run dev`; Command–Enter opens its page beside the same shell. The phone composition reframes the desktop recording; it does not depict a mobile app. These are paced demonstrations, not performance measurements.

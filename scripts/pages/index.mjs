@@ -1,38 +1,52 @@
 import {icon,SITE} from '../layout.mjs';
 import {tokens as figures} from '../benchmarks/facts.mjs';
+
 export default {
- title:'nus',path:'/',depth:0,
+ title:'nus',path:'/',depth:0,bodyClass:'home-page',
  description:'A terminal with room for the rest of your work. Shells, web pages, projects and assistants, together in a workspace you can make your own.',
- module:"import { mountFilms } from './assets/js/films.js'; import { mountOrbit } from './assets/js/orbit.js'; mountFilms(); mountOrbit(document.querySelector('[data-orbit]'));",
  body:`
-<section class="orbit orbit--flat" data-orbit>
- <div class="orbit__rail" data-orbit-rail><div class="orbit__stage" data-orbit-stage>
- <div class="orbit__core">nus unified environment</p><h1>A little less<br><em>back and forth.</em></h1><p class="orbit__lede">Say hello to never again switching between IDEs, terminals, and broswers just to design one app. <br>Say hello to <i><b>nus</i></b>.</p><div class="orbit__acts"><a class="btn btn--signal" href="./download/">${icon('download-simple')}Get nus</a><a class="source-cta" href="${SITE.repo}">Read the source <span aria-hidden="true">↗</span></a></div><div class="orbit__meta"><span>Independent software</span><span>macOS / Windows / Linux</span></div></div>
-  <div class="orbit__body" data-orbit-body><figure class="orbit-film orbit-film--hero" data-film><video width="1440" height="1080" poster="./assets/films/hero-desktop.png" data-poster-desktop="./assets/films/hero-desktop.png" data-poster-mobile="./assets/films/hero-mobile.png" preload="none" muted playsinline aria-label="A real nus workflow: npm run dev starts Fieldnotes, then opens its page beside the same shell." data-src="./assets/films/hero-desktop.mp4" data-src-mobile="./assets/films/hero-mobile.mp4"></video><figcaption><span><b>Shell → page</b> · One command. One workspace.</span><button class="film-toggle" data-film-toggle data-play-label="Play 12-second demo ↗">Play 12-second demo ↗</button></figcaption><p class="film-error small" data-film-error hidden>The recording didn’t load. The still is a frame from the same take.</p></figure></div>
-  <div class="orbit__body" data-orbit-body><figure class="orbit-film" data-film><video width="1320" height="870" poster="./assets/films/memphis.png" preload="none" muted playsinline loop aria-label="A nus window on a Mac: the home prompt over the Memphis art." data-src="./assets/films/memphis.mp4"></video><figcaption><span><b>Your home</b> · The Memphis art behind the prompt.</span><button class="film-toggle" data-film-toggle>Play recording ↗</button></figcaption><p class="film-error small" data-film-error hidden>The recording didn’t load. The still is a frame from the same take.</p></figure></div>
-  <div class="orbit__dial" data-orbit-dial><span>Scroll to orbit</span><span class="orbit__track"><i></i></span><a href="#work">Explore nus ↓</a></div>
- </div></div>
+<section class="continuum-hero" aria-labelledby="hero-title">
+ <div class="continuum-hero__copy">
+  <p class="cap">nus unified environment</p>
+  <h1 id="hero-title">A little less<br><em>back and forth.</em></h1>
+  <p class="continuum-hero__lede">Say hello to less switching between IDEs, terminals, and browsers just to build one app.<br>Say hello to <span class="hero-wordmark">nus</span>.</p>
+  <div class="continuum-hero__actions"><a class="btn btn--signal" href="./download/">${icon('download-simple')}Get nus</a><a class="source-cta" href="${SITE.repo}">Read the source <span aria-hidden="true">↗</span></a></div>
+  <p class="continuum-hero__meta">macOS · Windows · Linux <span aria-hidden="true">/</span> Preview software</p>
+ </div>
+ <div class="shell-stage">
+  <div class="shell-stage__intro"><h2><span aria-hidden="true">»</span> A shell with room for you.</h2><p>Your commands, your pages, your own place to begin.</p></div>
+  <figure class="shell-capture">
+   <a href="./assets/films/nus-home-2026-09-26.png" target="_blank" rel="noopener" aria-label="View the full-size nus home screenshot">
+    <img src="./assets/films/nus-home-2026-09-26.png" width="3204" height="1912" fetchpriority="high" alt="The actual nus app on macOS: its home prompt, saved commands, shell sessions, and Memphis artwork in a dark workspace.">
+   </a>
+  </figure>
+ </div>
 </section>
-<div class="section__in capture-note"><span>Both windows are the Mac build, recorded by the app’s own recorder from a script on a fixed clock — paced for reading, not a measurement.</span><span><a href="./about/#pictures">How the pictures are made</a> · <a href="${SITE.repo}/tree/main/docs/promo">The scripts</a></span></div>
-<section class="section section--tight" id="measured"><div class="section__in">
- <div class="sectionhead"><h2>Light on its feet.</h2><span class="cap">Measured on release builds</span></div>
- <div class="figs figs--lead">
-  <div><b>${figures['mac.disk']}<small> MiB</small></b><span>The Mac app, on disk</span><em>${figures['mac.download']} MiB to download · Windows ${figures['windows.disk']} MiB · Linux ${figures['linux.disk']} GiB</em></div>
-  <div><b>${figures['file10.p95']}<small> ms</small></b><span>Opening a 10 MiB file</span><em>p95 across 20 opens</em></div>
-  <div><b>${figures['file100.max']}<small> ms</small></b><span>Opening a 100 MiB file</span><em>maximum across five opens</em></div>
-  <div><b>${figures['tabs.median']}<small> MiB</small></b><span>Each idle browser tab</span><em>${figures['tabs.range']} MiB, after initialization</em></div>
-  <div><b>${figures['windows.range']}<small> MiB</small></b><span>Each empty window</span><em>added per extra window</em></div>
+
+<section class="section home-performance" id="measured"><div class="section__in">
+ <div class="home-sectionhead"><div><p class="cap">Substance behind the feeling</p><h2>Light on its feet.</h2></div><a href="./benchmarks/">Explore the benchmarks ↗</a></div>
+ <div class="home-measurements">
+  <div><p>Open a 10 MiB file<span>p95 across 20 independent launches</span></p><b>${figures['file10.p95']}<small> ms</small></b></div>
+  <div><p>Open a 100 MiB file<span>Maximum across five independent launches</span></p><b>${figures['file100.max']}<small> ms</small></b></div>
+  <div><p>A terminal, browser, and editor<span>Mac app on disk · APFS · ${figures['package.release']}</span></p><b>${figures['mac.disk']}<small> MiB</small></b></div>
  </div>
- <p class="small dim figs__note">A whole Chromium and a whole terminal in one process, and it still opens like a terminal. File opens are the editor pane on real files; memory is what each further tab or window adds once it has settled. <a href="./benchmarks/">Measurements and comparisons →</a></p>
+ <p class="home-measurements__note">Apple M4 Pro · 48 GiB · ${figures['recorded.date']}. File opens end at the first loaded-content submission, before display scanout. The package measurement describes ${figures['package.release']}; current downloads may differ. <a href="./benchmarks/">Methods, builds, and raw results ↗</a></p>
 </div></section>
+
 <section class="section" id="work"><div class="section__in">
- <div class="sectionhead"><h2>The work has a few moving parts.</h2><span class="cap">Keep them close</span></div>
+ <div class="home-sectionhead"><div><p class="cap">Keep the work close</p><h2>The work has a few moving parts.</h2></div></div>
  <div class="work-notes">
-  <article><span class="note-number">01</span><h3>Start where you already are.</h3><p>Keep your shell, your commands, your aliases. Open a URL beside the terminal and follow the output without losing your place.</p><a href="./panels/#workspace">Around the workspace →</a></article>
-  <article><span class="note-number">02</span><h3>Leave a trail you can use.</h3><p>Find a command, read its output, and move through a session with a scrollable history map. Playback is there when you need it.</p><a href="./panels/#history">Follow the history →</a></article>
-  <article><span class="note-number">03</span><h3>Make it feel like yours.</h3><p>Choose what your prompt suggests: shells, pages, assistants, or a mix. Tune the type, the colours, and even the view behind your first command.</p><a href="./panels/#home">Meet your home →</a></article>
+  <article><span class="note-number">01</span><h3>Start where you already are.</h3><p>Keep your shell, your commands, your aliases. Open a URL beside the terminal and follow the output without losing your place.</p><a href="./panels/#workspace">Around the workspace ↗</a></article>
+  <article><span class="note-number">02</span><h3>Leave a trail you can use.</h3><p>Find a command, read its output, and move through a session with a scrollable history map. Playback is there when you need it.</p><a href="./panels/#history">Follow the history ↗</a></article>
+  <article><span class="note-number">03</span><h3>Make it feel like yours.</h3><p>Choose what your prompt suggests: shells, pages, assistants, or a mix. Tune the type, the colours, and even the view behind your first command.</p><a href="./panels/#home">Meet your home ↗</a></article>
  </div>
 </div></section>
-<section class="section personal-section"><div class="section__in personal-grid"><div><p class="cap">An invitation to tinker</p><h2>Good tools leave<br><em>room for you.</em></h2></div><div><p>nus started with the distance between a terminal and a browser. Every little trip out of the work adds up. So I’m building a place where those tools can share a window, a project, and a bit of context.</p><p>It’s early. There are edges to smooth and platforms to test. You can see the source, read the decisions, and help find what needs attention.</p><a href="./about/">A note from the maker →</a></div></div></section>
-<section class="section"><div class="section__in closing-note"><span class="wordmark">nus</span><h2>Pull up a shell.</h2><a class="btn btn--signal" href="./download/">${icon('download-simple')}Get nus</a><p class="small dim">Preview and stable channels, with signing details on every package.</p></div></section>`
+
+<section class="section home-evaluation"><div class="section__in">
+ <div><p class="cap">Know your tools</p><h2>A clear view<br>before you commit.</h2><p>Inspect the source, the release, and the boundaries before bringing nus into your work. It’s preview software, with its progress and limitations in the open.</p></div>
+ <nav aria-label="Evaluate nus"><a href="${SITE.repo}/blob/main/SECURITY.md"><span>Security &amp; data handling</span><span aria-hidden="true">↗</span></a><a href="./download/"><span>Packages, signing &amp; installation</span><span aria-hidden="true">↗</span></a><a href="./docs/architecture/"><span>Architecture &amp; boundaries</span><span aria-hidden="true">↗</span></a><a href="./docs/product/"><span>Product behaviour &amp; current scope</span><span aria-hidden="true">↗</span></a></nav>
+</div></section>
+
+<section class="section personal-section"><div class="section__in personal-grid"><div><p class="cap">An invitation to tinker</p><h2>Good tools leave<br><em>room for you.</em></h2></div><div><p>nus started with the distance between a terminal and a browser. Every little trip out of the work adds up. So I’m building a place where those tools can share a window, a project, and a bit of context.</p><p>It’s early. There are edges to smooth and platforms to test. You can see the source, read the decisions, and help find what needs attention.</p><a href="./about/">A note from the maker ↗</a></div></div></section>
+<section class="section"><div class="section__in closing-note"><span class="wordmark">nus</span><h2>Pull up a shell.</h2><a class="btn btn--signal" href="./download/">${icon('download-simple')}Get nus</a><p class="small dim">Preview builds for macOS, Windows, and Linux.<br>Package verification and signing details on the download page.</p></div></section>`
 };

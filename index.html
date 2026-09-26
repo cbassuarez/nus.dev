@@ -23,6 +23,7 @@
 <link rel="preload" as="font" type="font/woff2" href="./assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="./assets/fonts/Newsreader-Italic.woff2" crossorigin>
 <link rel="stylesheet" href="./assets/css/site.css?v=5c1c0a6c6e79">
+<link rel="stylesheet" href="./assets/css/continuum.css?v=e9f963d82c44">
 <script>
 /* Apply the stored theme and signal before first paint, so the page never flashes. */
 (function(){try{
@@ -34,7 +35,7 @@
 }catch(e){}})();
 </script>
 </head>
-<body>
+<body class="continuum-site home-page">
 <a class="skip" href="#main">Skip to content</a>
 <div class="band"></div>
 <div id="site-header"><header class="masthead">
@@ -45,6 +46,7 @@
     </a>
     <nav class="nav" aria-label="Primary">
       <a href="./panels/" title="Panels" aria-label="Panels"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"/></svg><span class="nav__name">Panels</span></a>
+      <a href="./benchmarks/" title="Benchmarks" aria-label="Benchmarks"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,152V136a96.37,96.37,0,0,0-64-90.51V40a16,16,0,0,0-16-16H112A16,16,0,0,0,96,40v5.49A96.37,96.37,0,0,0,32,136v16a16,16,0,0,0-16,16v24a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V168A16,16,0,0,0,224,152Zm-16-16v16H160V62.67A80.36,80.36,0,0,1,208,136ZM144,40V152H112V40ZM48,136A80.36,80.36,0,0,1,96,62.67V152H48Zm176,56H32V168H224v24Z"/></svg><span class="nav__name">Benchmarks</span></a>
       <a href="./docs/" title="Docs" aria-label="Docs"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232,48H160a40,40,0,0,0-32,16A40,40,0,0,0,96,48H24a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8H96a24,24,0,0,1,24,24,8,8,0,0,0,16,0,24,24,0,0,1,24-24h72a8,8,0,0,0,8-8V56A8,8,0,0,0,232,48ZM96,192H32V64H96a24,24,0,0,1,24,24V200A39.81,39.81,0,0,0,96,192Zm128,0H160a39.81,39.81,0,0,0-24,8V88a24,24,0,0,1,24-24h64ZM160,88h40a8,8,0,0,1,0,16H160a8,8,0,0,1,0-16Zm48,40a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,128Zm0,32a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,160Z"/></svg><span class="nav__name">Docs</span></a>
       <a href="./download/" title="Download" aria-label="Download"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"/></svg><span class="nav__name">Download</span></a>
       <a href="./about/" title="About" aria-label="About"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M245.11,60.68c-7.65-13.19-27.84-16.16-58.5-8.66A95.93,95.93,0,0,0,32,128a98,98,0,0,0,.78,12.31C5.09,169,5.49,186,10.9,195.32,16,204.16,26.64,208,40.64,208a124.11,124.11,0,0,0,28.79-4A95.93,95.93,0,0,0,224,128a97.08,97.08,0,0,0-.77-12.25c12.5-13,20.82-25.35,23.65-35.92C248.83,72.51,248.24,66.07,245.11,60.68ZM128,48a80.11,80.11,0,0,1,78,62.2c-17.06,16.06-40.15,32.53-62.07,45.13C116.38,171.14,92.48,181,73.42,186.4A79.94,79.94,0,0,1,128,48ZM24.74,187.29c-1.46-2.51-.65-7.24,2.22-13a79.05,79.05,0,0,1,10.29-15.05,96,96,0,0,0,18,31.32C38,193.46,27.24,191.61,24.74,187.29ZM128,208a79.45,79.45,0,0,1-38.56-9.94,370,370,0,0,0,62.43-28.86c21.58-12.39,40.68-25.82,56.07-39.08A80.07,80.07,0,0,1,128,208ZM231.42,75.69c-1.7,6.31-6.19,13.53-12.63,21.13a95.69,95.69,0,0,0-18-31.35c14.21-2.35,27.37-2.17,30.5,3.24C232.19,70.28,232.24,72.63,231.42,75.69Z"/></svg><span class="nav__name">About</span></a>
@@ -63,36 +65,50 @@
 </header></div>
 <main id="main" data-page-transition>
 
-<section class="orbit orbit--flat" data-orbit>
- <div class="orbit__rail" data-orbit-rail><div class="orbit__stage" data-orbit-stage>
- <div class="orbit__core">nus unified environment</p><h1>A little less<br><em>back and forth.</em></h1><p class="orbit__lede">Say hello to never again switching between IDEs, terminals, and broswers just to design one app. <br>Say hello to <i><b>nus</i></b>.</p><div class="orbit__acts"><a class="btn btn--signal" href="./download/"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"/></svg>Get nus</a><a class="source-cta" href="https://github.com/cbassuarez/nus">Read the source <span aria-hidden="true">↗</span></a></div><div class="orbit__meta"><span>Independent software</span><span>macOS / Windows / Linux</span></div></div>
-  <div class="orbit__body" data-orbit-body><figure class="orbit-film orbit-film--hero" data-film><video width="1440" height="1080" poster="./assets/films/hero-desktop.png" data-poster-desktop="./assets/films/hero-desktop.png" data-poster-mobile="./assets/films/hero-mobile.png" preload="none" muted playsinline aria-label="A real nus workflow: npm run dev starts Fieldnotes, then opens its page beside the same shell." data-src="./assets/films/hero-desktop.mp4" data-src-mobile="./assets/films/hero-mobile.mp4"></video><figcaption><span><b>Shell → page</b> · One command. One workspace.</span><button class="film-toggle" data-film-toggle data-play-label="Play 12-second demo ↗">Play 12-second demo ↗</button></figcaption><p class="film-error small" data-film-error hidden>The recording didn’t load. The still is a frame from the same take.</p></figure></div>
-  <div class="orbit__body" data-orbit-body><figure class="orbit-film" data-film><video width="1320" height="870" poster="./assets/films/memphis.png" preload="none" muted playsinline loop aria-label="A nus window on a Mac: the home prompt over the Memphis art." data-src="./assets/films/memphis.mp4"></video><figcaption><span><b>Your home</b> · The Memphis art behind the prompt.</span><button class="film-toggle" data-film-toggle>Play recording ↗</button></figcaption><p class="film-error small" data-film-error hidden>The recording didn’t load. The still is a frame from the same take.</p></figure></div>
-  <div class="orbit__dial" data-orbit-dial><span>Scroll to orbit</span><span class="orbit__track"><i></i></span><a href="#work">Explore nus ↓</a></div>
- </div></div>
+<section class="continuum-hero" aria-labelledby="hero-title">
+ <div class="continuum-hero__copy">
+  <p class="cap">nus unified environment</p>
+  <h1 id="hero-title">A little less<br><em>back and forth.</em></h1>
+  <p class="continuum-hero__lede">Say hello to less switching between IDEs, terminals, and browsers just to build one app.<br>Say hello to <span class="hero-wordmark">nus</span>.</p>
+  <div class="continuum-hero__actions"><a class="btn btn--signal" href="./download/"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"/></svg>Get nus</a><a class="source-cta" href="https://github.com/cbassuarez/nus">Read the source <span aria-hidden="true">↗</span></a></div>
+  <p class="continuum-hero__meta">macOS · Windows · Linux <span aria-hidden="true">/</span> Preview software</p>
+ </div>
+ <div class="shell-stage">
+  <div class="shell-stage__intro"><h2><span aria-hidden="true">»</span> A shell with room for you.</h2><p>Your commands, your pages, your own place to begin.</p></div>
+  <figure class="shell-capture">
+   <a href="./assets/films/nus-home-2026-09-26.png" target="_blank" rel="noopener" aria-label="View the full-size nus home screenshot">
+    <img src="./assets/films/nus-home-2026-09-26.png" width="3204" height="1912" fetchpriority="high" alt="The actual nus app on macOS: its home prompt, saved commands, shell sessions, and Memphis artwork in a dark workspace.">
+   </a>
+  </figure>
+ </div>
 </section>
-<div class="section__in capture-note"><span>Both windows are the Mac build, recorded by the app’s own recorder from a script on a fixed clock — paced for reading, not a measurement.</span><span><a href="./about/#pictures">How the pictures are made</a> · <a href="https://github.com/cbassuarez/nus/tree/main/docs/promo">The scripts</a></span></div>
-<section class="section section--tight" id="measured"><div class="section__in">
- <div class="sectionhead"><h2>Light on its feet.</h2><span class="cap">Measured on release builds</span></div>
- <div class="figs figs--lead">
-  <div><b>379<small> MiB</small></b><span>The Mac app, on disk</span><em>154 MiB to download · Windows 458 MiB · Linux 1.49 GiB</em></div>
-  <div><b>16.1<small> ms</small></b><span>Opening a 10 MiB file</span><em>p95 across 20 opens</em></div>
-  <div><b>65.5<small> ms</small></b><span>Opening a 100 MiB file</span><em>maximum across five opens</em></div>
-  <div><b>107.2<small> MiB</small></b><span>Each idle browser tab</span><em>96.4–111.6 MiB, after initialization</em></div>
-  <div><b>-20.0–29.6<small> MiB</small></b><span>Each empty window</span><em>added per extra window</em></div>
+
+<section class="section home-performance" id="measured"><div class="section__in">
+ <div class="home-sectionhead"><div><p class="cap">Substance behind the feeling</p><h2>Light on its feet.</h2></div><a href="./benchmarks/">Explore the benchmarks ↗</a></div>
+ <div class="home-measurements">
+  <div><p>Open a 10 MiB file<span>p95 across 20 independent launches</span></p><b>16.1<small> ms</small></b></div>
+  <div><p>Open a 100 MiB file<span>Maximum across five independent launches</span></p><b>65.5<small> ms</small></b></div>
+  <div><p>A terminal, browser, and editor<span>Mac app on disk · APFS · v0.0.1-preview.7</span></p><b>379<small> MiB</small></b></div>
  </div>
- <p class="small dim figs__note">A whole Chromium and a whole terminal in one process, and it still opens like a terminal. File opens are the editor pane on real files; memory is what each further tab or window adds once it has settled. <a href="./benchmarks/">Measurements and comparisons →</a></p>
+ <p class="home-measurements__note">Apple M4 Pro · 48 GiB · 2026-09-23. File opens end at the first loaded-content submission, before display scanout. The package measurement describes v0.0.1-preview.7; current downloads may differ. <a href="./benchmarks/">Methods, builds, and raw results ↗</a></p>
 </div></section>
+
 <section class="section" id="work"><div class="section__in">
- <div class="sectionhead"><h2>The work has a few moving parts.</h2><span class="cap">Keep them close</span></div>
+ <div class="home-sectionhead"><div><p class="cap">Keep the work close</p><h2>The work has a few moving parts.</h2></div></div>
  <div class="work-notes">
-  <article><span class="note-number">01</span><h3>Start where you already are.</h3><p>Keep your shell, your commands, your aliases. Open a URL beside the terminal and follow the output without losing your place.</p><a href="./panels/#workspace">Around the workspace →</a></article>
-  <article><span class="note-number">02</span><h3>Leave a trail you can use.</h3><p>Find a command, read its output, and move through a session with a scrollable history map. Playback is there when you need it.</p><a href="./panels/#history">Follow the history →</a></article>
-  <article><span class="note-number">03</span><h3>Make it feel like yours.</h3><p>Choose what your prompt suggests: shells, pages, assistants, or a mix. Tune the type, the colours, and even the view behind your first command.</p><a href="./panels/#home">Meet your home →</a></article>
+  <article><span class="note-number">01</span><h3>Start where you already are.</h3><p>Keep your shell, your commands, your aliases. Open a URL beside the terminal and follow the output without losing your place.</p><a href="./panels/#workspace">Around the workspace ↗</a></article>
+  <article><span class="note-number">02</span><h3>Leave a trail you can use.</h3><p>Find a command, read its output, and move through a session with a scrollable history map. Playback is there when you need it.</p><a href="./panels/#history">Follow the history ↗</a></article>
+  <article><span class="note-number">03</span><h3>Make it feel like yours.</h3><p>Choose what your prompt suggests: shells, pages, assistants, or a mix. Tune the type, the colours, and even the view behind your first command.</p><a href="./panels/#home">Meet your home ↗</a></article>
  </div>
 </div></section>
-<section class="section personal-section"><div class="section__in personal-grid"><div><p class="cap">An invitation to tinker</p><h2>Good tools leave<br><em>room for you.</em></h2></div><div><p>nus started with the distance between a terminal and a browser. Every little trip out of the work adds up. So I’m building a place where those tools can share a window, a project, and a bit of context.</p><p>It’s early. There are edges to smooth and platforms to test. You can see the source, read the decisions, and help find what needs attention.</p><a href="./about/">A note from the maker →</a></div></div></section>
-<section class="section"><div class="section__in closing-note"><span class="wordmark">nus</span><h2>Pull up a shell.</h2><a class="btn btn--signal" href="./download/"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"/></svg>Get nus</a><p class="small dim">Preview and stable channels, with signing details on every package.</p></div></section>
+
+<section class="section home-evaluation"><div class="section__in">
+ <div><p class="cap">Know your tools</p><h2>A clear view<br>before you commit.</h2><p>Inspect the source, the release, and the boundaries before bringing nus into your work. It’s preview software, with its progress and limitations in the open.</p></div>
+ <nav aria-label="Evaluate nus"><a href="https://github.com/cbassuarez/nus/blob/main/SECURITY.md"><span>Security &amp; data handling</span><span aria-hidden="true">↗</span></a><a href="./download/"><span>Packages, signing &amp; installation</span><span aria-hidden="true">↗</span></a><a href="./docs/architecture/"><span>Architecture &amp; boundaries</span><span aria-hidden="true">↗</span></a><a href="./docs/product/"><span>Product behaviour &amp; current scope</span><span aria-hidden="true">↗</span></a></nav>
+</div></section>
+
+<section class="section personal-section"><div class="section__in personal-grid"><div><p class="cap">An invitation to tinker</p><h2>Good tools leave<br><em>room for you.</em></h2></div><div><p>nus started with the distance between a terminal and a browser. Every little trip out of the work adds up. So I’m building a place where those tools can share a window, a project, and a bit of context.</p><p>It’s early. There are edges to smooth and platforms to test. You can see the source, read the decisions, and help find what needs attention.</p><a href="./about/">A note from the maker ↗</a></div></div></section>
+<section class="section"><div class="section__in closing-note"><span class="wordmark">nus</span><h2>Pull up a shell.</h2><a class="btn btn--signal" href="./download/"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"/></svg>Get nus</a><p class="small dim">Preview builds for macOS, Windows, and Linux.<br>Package verification and signing details on the download page.</p></div></section>
 </main>
 <div id="site-footer"><footer class="foot">
   <div class="foot__in">
@@ -118,7 +134,7 @@
       <span>© 2026 Sebastian Suarez-Solis</span>
       <span>MIT</span>
       <span class="grow"></span>
-      <span>Set in IBM Plex Mono &amp; Newsreader</span>
+      <span>System sans, IBM Plex Mono &amp; Newsreader</span>
     </div>
   </div>
 </footer></div>

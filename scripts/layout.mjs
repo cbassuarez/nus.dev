@@ -53,6 +53,7 @@ function masthead(depth) {
   // labels stay only for words that are content. The header is chrome.
   const links = [
     ['Panels', `${r}/panels/`, 'squares-four'],
+    ['Benchmarks', `${r}/benchmarks/`, 'hard-hat'],
     ['Docs', `${r}/docs/`, 'book-open-text'],
     ['Download', `${r}/download/`, 'download-simple'],
     ['About', `${r}/about/`, 'planet'],
@@ -127,7 +128,7 @@ function footer(depth) {
       <span>© ${year} ${SITE.author}</span>
       <span>MIT</span>
       <span class="grow"></span>
-      <span>Set in IBM Plex Mono &amp; Newsreader</span>
+      <span>System sans, IBM Plex Mono &amp; Newsreader</span>
     </div>
   </div>
 </footer>`;
@@ -168,7 +169,8 @@ ${indexed ? '' : '<meta name="robots" content="noindex,nofollow,noarchive">'}
 
 <link rel="preload" as="font" type="font/woff2" href="${r}/assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="${r}/assets/fonts/Newsreader-Italic.woff2" crossorigin>
-<link rel="stylesheet" href="${r}/assets/css/site.css?v=${assetVersion('assets/css/site.css')}">
+<link rel="stylesheet" href="${r}/assets/css/site.css?v=${assetVersion('assets/css/site.css')}">${chrome ? '' : `
+<link rel="stylesheet" href="${r}/assets/css/continuum.css?v=${assetVersion('assets/css/continuum.css')}">`}
 <script>
 /* Apply the stored theme and signal before first paint, so the page never flashes. */
 (function(){try{
@@ -180,7 +182,7 @@ ${indexed ? '' : '<meta name="robots" content="noindex,nofollow,noarchive">'}
 }catch(e){}})();
 </script>
 ${head}</head>
-<body${bodyClass ? ` class="${bodyClass}"` : ''}>
+<body class="${chrome ? bodyClass : `continuum-site ${bodyClass}`.trim()}">
 <a class="skip" href="#main">Skip to content</a>
 <div class="band"></div>
 <div id="site-header">${chrome ? chrome.header : masthead(depth)}</div>
