@@ -5,8 +5,9 @@ import {mountSite} from './site.js?v=benchmarks-1';
 import {mountFeel} from './feel.js?v=swup-1';
 import {mountFilms} from './films.js?v=swup-1';
 import {mountOrbit} from './orbit.js?v=swup-1';
-import {mountDownloads} from './releases.js?v=swup-1';
+import {mountDownloads} from './releases.js?v=tiles-1';
 import {mountReview} from './review.js?v=swup-1';
+import {mountTour} from './tour.js?v=tour-1';
 
 let cleanups=[];
 function unmount(){
@@ -18,6 +19,7 @@ function mount(){
  mountFeel();
  const orbit=mountOrbit(document.querySelector('[data-orbit]'));if(orbit)cleanups.push(()=>orbit.destroy());
  if(document.querySelector('[data-downloads]'))cleanups.push(mountDownloads());
+ if(document.querySelector('[data-tour]'))cleanups.push(mountTour());
  if(document.body.classList.contains('review-page'))cleanups.push(mountReview());
 }
 const siteRoot=new URL('../../',import.meta.url).pathname;
@@ -30,7 +32,7 @@ const swup=new window.Swup({
  plugins:[new window.SwupHeadPlugin({awaitAssets:true})],
  ignoreVisit:(url,{el}={})=>{
   const to=new URL(url,location.href);
-  return el?.closest('[data-no-swup]') || to.origin!==location.origin || !to.pathname.startsWith(siteRoot) || /\.(?:zip|gz|mp4|png|svg|json|pdf)$/i.test(to.pathname);
+  return el?.closest('[data-no-swup]') || to.origin!==location.origin || !to.pathname.startsWith(siteRoot) || /\.(?:zip|gz|mp4|png|webp|svg|json|pdf)$/i.test(to.pathname);
  }
 });
 swup.hooks.before('content:replace',visit=>{

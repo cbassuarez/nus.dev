@@ -1,5 +1,19 @@
 # Real app footage
 
+## Panels tour captures · September 26, 2026
+
+`nus-shell-page-2026-09-26.webp`, `nus-split-2026-09-26.webp`,
+`nus-history-2026-09-26.webp` and `nus-assistants-2026-09-26.webp` are the
+author's supplied 2000 × 1194 captures of the current app in its dark theme
+with a green signal, taken just after the site redesign was pushed: a zsh
+session beside the GitHub page it pushed to, the same tab split into two
+shells, that session's command history, and Settings · Assistants. They are
+WebP with only their colour profile (no EXIF or XMP), displayed intact with
+full-size links. The panels tour shows the first three on its numbered
+slides and the assistants capture beside its own section. The Hatch slide is
+redrawn in HTML from a capture that is not in this folder yet; add one and
+point that slide's `shot` at it.
+
 ## Homepage still · September 26, 2026
 
 `nus-home-2026-09-26.png` is the author's supplied 3204 × 1912 screenshot of

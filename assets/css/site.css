@@ -1864,7 +1864,6 @@ body.panels-page { --shell: 1320px; }
 .channel-picker legend { font-size:12px; text-transform:uppercase; letter-spacing:.1em; margin-bottom:12px; }
 .channel-picker label { cursor:pointer; display:flex; gap:9px; align-items:center; }
 .channel-picker input { accent-color:var(--signal); width:17px; height:17px; }
-.download-choice select { display:block; width:100%; margin:12px 0; padding:15px 12px; background:var(--paper); color:var(--ink); border:1px solid var(--ink); border-radius:0; font:inherit; font-size:14px; }
 .download-choice .row { gap:20px; font-size:13px; }
 .download-primary { width:100%; justify-content:center; margin:16px 0 0; }
 .download-status { min-height:3.3em; }
