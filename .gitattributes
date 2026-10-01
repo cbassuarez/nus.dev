@@ -1,0 +1,3 @@
+# The build hashes source bytes (the ring proof, CSS and JS cache-busts), so
+# every checkout has to match CI byte for byte, whatever core.autocrlf says.
+* text=auto eol=lf
