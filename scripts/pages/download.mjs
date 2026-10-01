@@ -1,7 +1,7 @@
 import { icon, SITE } from '../layout.mjs';
 import { TARGETS } from '../../assets/js/releases.js';
 
-const LOGOS = { macos: 'apple-logo', windows: 'windows-logo', linux: 'linux-logo' };
+const LOGOS = { macos: 'brands/apple', windows: 'brands/windows', linux: 'brands/linux' };
 
 /* One tile per published target. The first is checked so the page works
    before the script runs; releases.js then checks the visitor's own OS. */

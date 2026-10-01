@@ -196,6 +196,7 @@ Pages serves `main` at the repo root. `CNAME` points at `nus.dev`; see
 ## Licence
 
 Site code MIT, same as the app. Bundled fonts are OFL (IBM Plex Mono,
-Newsreader), the icons are Phosphor (MIT), and the pinned Cuelume interaction
+Newsreader), the icons are Phosphor (MIT) apart from the Simple Icons (CC0)
+platform marks in `assets/icons/brands/`, and the pinned Cuelume interaction
 sound library is MIT — see `assets/fonts/OFL-*.txt`, `assets/icons/LICENSE`,
 and `assets/vendor/cuelume/0.2.2/LICENSE`.
