@@ -2019,3 +2019,32 @@ html.is-leaving.is-animating [data-page-transition]{clip-path:inset(0 100% 0 0);
 /* A directed desktop take and a readable phone cut share one player. */
 .orbit-film--hero video {aspect-ratio:4/3;}
 @media(max-width:700px){.orbit-film--hero video{aspect-ratio:4/5;}.orbit-film--hero figcaption{align-items:flex-start;}.orbit-film--hero .film-toggle{font-size:11px;white-space:nowrap;}}
+
+/* --- the install command: the page's first beat ------------------------- */
+.install-hero .section__in {padding-block:48px 40px;}
+.install-hero h1 {font-size:clamp(40px,5.6vw,68px);letter-spacing:-.055em;line-height:1.07;margin:10px 0 18px;}
+.install-hero .lede {font-size:15px;line-height:1.8;max-width:44ch;margin:0 0 30px;}
+.install-hero__note {max-width:72ch;margin-top:30px;}
+.cmd {max-width:100%;border:var(--float) solid var(--ink);box-shadow:8px 8px 0 var(--ink);background:var(--paper);}
+.cmd__tabs {display:flex;border-bottom:var(--hair) solid var(--ink);}
+.cmd__tabs button {font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:9px 16px;min-height:36px;background:none;color:var(--ink);border:0;border-right:var(--hair) solid var(--ink);cursor:pointer;}
+.cmd__tabs button[aria-selected="true"] {background:var(--ink);color:var(--paper);}
+.cmd__tabs button:focus-visible {outline:var(--float) solid var(--signal);outline-offset:-4px;}
+.cmd__line {display:flex;align-items:center;gap:14px;padding:20px 18px 20px 22px;font-family:var(--mono);font-size:clamp(13px,1.45vw,17px);}
+.cmd__line + .cmd__line {border-top:var(--hair) solid var(--ink);}
+.cmd.is-tabbed .cmd__line + .cmd__line {border-top:0;}
+.cmd__os {flex:none;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);width:9ch;}
+.cmd.is-tabbed .cmd__os {display:none;}
+.cmd__prompt {flex:none;color:var(--signal);font-weight:600;}
+.cmd__line code {flex:1;min-width:0;background:none;padding:0;font-size:inherit;white-space:nowrap;overflow-x:auto;}
+.copy {flex:none;display:inline-flex;align-items:center;gap:7px;min-height:36px;padding:7px 12px;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--paper);color:var(--ink);border:var(--struct) solid var(--ink);box-shadow:3px 3px 0 var(--ink);cursor:pointer;transition:transform var(--t-fast) var(--ease),box-shadow var(--t-fast) var(--ease);}
+.copy svg {width:14px;height:14px;fill:currentColor;}
+.copy:hover {transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink);}
+.copy:active {transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink);}
+.copy:focus-visible {outline:var(--float) solid var(--signal);outline-offset:3px;}
+.copy.is-copied {background:var(--signal);color:var(--on-signal);border-color:var(--signal);}
+#install .install-lines {grid-template-columns:minmax(0,1fr);max-width:100%;}
+.codebox {position:relative;}
+.codebox pre {margin:0;padding-right:104px;}
+.codebox .copy {position:absolute;top:8px;right:8px;}
+@media(max-width:560px) { .cmd__line {flex-wrap:wrap;padding:16px;align-items:flex-start;} .cmd__line code {flex-basis:calc(100% - 24px);white-space:normal;overflow-wrap:anywhere;} .cmd__os {width:auto;flex-basis:100%;} .cmd__line .copy {margin-left:auto;} .codebox pre {padding-right:16px;} .codebox .copy {position:static;margin:8px 0 0 auto;display:flex;width:max-content;} }

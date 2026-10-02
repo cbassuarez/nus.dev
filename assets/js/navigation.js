@@ -6,6 +6,7 @@ import {mountFeel} from './feel.js?v=swup-1';
 import {mountFilms} from './films.js?v=swup-1';
 import {mountOrbit} from './orbit.js?v=swup-1';
 import {mountDownloads} from './releases.js?v=tiles-1';
+import {mountInstall} from './install.js?v=install-1';
 import {mountReview} from './review.js?v=swup-1';
 import {mountTour} from './tour.js?v=tour-1';
 
@@ -19,6 +20,7 @@ function mount(){
  mountFeel();
  const orbit=mountOrbit(document.querySelector('[data-orbit]'));if(orbit)cleanups.push(()=>orbit.destroy());
  if(document.querySelector('[data-downloads]'))cleanups.push(mountDownloads());
+ if(document.querySelector('[data-copy]'))mountInstall();
  if(document.querySelector('[data-tour]'))cleanups.push(mountTour());
  if(document.body.classList.contains('review-page'))cleanups.push(mountReview());
 }
