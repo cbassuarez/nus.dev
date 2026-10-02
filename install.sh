@@ -38,7 +38,8 @@ has_package() { curl -fsSL "$dl/$1/SHA256SUMS.txt" 2>/dev/null | grep -q -- "-$t
 # Download one file of the release into $tmp and check it against SHA256SUMS.txt.
 fetch() {
   say "downloading $1"
-  curl -fL --progress-bar -o "$tmp/$1" "$dl/$tag/$1"
+  # GitHub serves a `~` in an asset's name as `.` (preview 10's .deb).
+  curl -fL --progress-bar -o "$tmp/$1" "$dl/$tag/$(printf '%s' "$1" | tr '~' '.')"
   want=$(grep -- " $1\$" "$tmp/SHA256SUMS.txt" | cut -d' ' -f1)
   if command -v sha256sum >/dev/null 2>&1; then got=$(sha256sum "$tmp/$1" | cut -d' ' -f1)
   else got=$(shasum -a 256 "$tmp/$1" | cut -d' ' -f1); fi
