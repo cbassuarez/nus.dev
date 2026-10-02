@@ -1,9 +1,11 @@
 export const API = 'https://api.github.com/repos/cbassuarez/nus/releases?per_page=30';
 const REPO = 'https://github.com/cbassuarez/nus';
+// [id, OS, architecture, label for the file kind, what the asset name ends with].
+// Windows is offered as its installer; the ZIP stays published for in-app updates and install.ps1.
 export const TARGETS = [
-  ['macos-arm64', 'macOS', 'Apple silicon', 'zip'],
-  ['windows-x86_64', 'Windows', 'Intel / AMD 64-bit', 'zip'],
-  ['linux-x86_64', 'Linux', 'Intel / AMD 64-bit', 'tar.gz']
+  ['macos-arm64', 'macOS', 'Apple silicon', 'zip', '.zip'],
+  ['windows-x86_64', 'Windows', 'Intel / AMD 64-bit', 'installer', '-setup.exe'],
+  ['linux-x86_64', 'Linux', 'Intel / AMD 64-bit', 'tar.gz', '.tar.gz']
 ];
 function activeRelease(release) {
   const embedded = (release.body || '').match(/<!-- nus-release:(.*?) -->/s)?.[1];
@@ -44,14 +46,19 @@ export function latestPackageFor(releases, channel, target) {
 export function packageFor(release, target) {
   const platform = TARGETS.find(t => t[0] === target);
   if (!platform || !publishedReleases([release]).length) return null;
-  const name = `nus-${release.tag_name.slice(1)}-${target}.${platform[3]}`;
+  const name = `nus-${release.tag_name.slice(1)}-${target}${platform[4]}`;
   const url = `${REPO}/releases/download/${release.tag_name}/${name}`;
   const asset = release.assets.find(a => a.name === name && a.state === 'uploaded' && a.size > 0 && a.browser_download_url === url);
   if (!asset) return null;
   let meta;
   try {
     const m = JSON.parse((release.body || '').match(/<!-- nus-release:(.*?) -->/s)?.[1] || '{}');
-    if (m.version === release.tag_name) meta = m.assets?.find(a => a.target === target && a.name === name && a.size === asset.size);
+    if (m.version === release.tag_name) {
+      // The installer rides on its platform's record and shares that record's signing.
+      const entry = m.assets?.find(a => a.target === target);
+      const record = entry?.name === name ? entry : entry?.installer?.name === name ? {...entry.installer, signing: entry.signing} : null;
+      if (record?.size === asset.size) meta = record;
+    }
   } catch { /* Missing metadata must never imply a signed package. */ }
   const hash = asset.digest?.startsWith('sha256:') ? asset.digest.slice(7) : meta?.sha256;
   if (!/^[a-f0-9]{64}$/.test(hash || '')) return null;

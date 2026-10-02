@@ -7,6 +7,35 @@ function fixture(tag='v0.0.1-preview.1', signing='notarized') {
  const entry={name,target:'macos-arm64',size:100,sha256:hash,signing};
  return {tag_name:tag,prerelease:tag.includes('-preview.'),draft:false,published_at:'2026-09-20T12:00:00Z',body:`<!-- nus-release:${JSON.stringify({version:tag,assets:[entry]})} -->`,assets:[{name,size:100,state:'uploaded',digest:`sha256:${hash}`,browser_download_url:`https://github.com/cbassuarez/nus/releases/download/${tag}/${name}`}]};
 }
+// A Windows release as publish-release.py writes it: the ZIP is the record, the installer rides on it.
+function windowsFixture(tag='v0.0.2-preview.9', signing='authenticode', {installer=true}={}) {
+ const zip=`nus-${tag.slice(1)}-windows-x86_64.zip`, setup=zip.replace(/\.zip$/,'-setup.exe');
+ const zipHash='c'.repeat(64), setupHash='d'.repeat(64);
+ const entry={name:zip,target:'windows-x86_64',size:200,sha256:zipHash,signing,...(installer?{installer:{name:setup,sha256:setupHash,size:150}}:{})};
+ const asset=(name,size,hash)=>({name,size,state:'uploaded',digest:`sha256:${hash}`,browser_download_url:`https://github.com/cbassuarez/nus/releases/download/${tag}/${name}`});
+ return {tag_name:tag,prerelease:tag.includes('-preview.'),draft:false,published_at:'2026-09-30T12:00:00Z',body:`<!-- nus-release:${JSON.stringify({version:tag,assets:[entry]})} -->`,assets:[asset(zip,200,zipHash),...(installer?[asset(setup,150,setupHash)]:[])]};
+}
+test('Windows is offered as the installer, never the ZIP',()=>{
+ const r=windowsFixture(); const p=packageFor(r,'windows-x86_64');
+ assert.equal(p.name,'nus-0.0.2-preview.9-windows-x86_64-setup.exe');
+ assert.equal(p.url,r.assets[1].browser_download_url); assert.equal(p.size,150);
+ assert.equal(p.hash,'d'.repeat(64)); assert.equal(p.signing,'authenticode');
+ assert.equal(TARGETS.find(t=>t[0]==='windows-x86_64')[3],'installer');
+});
+test('a Windows release with only its ZIP creates no download button',()=>{
+ assert.equal(packageFor(windowsFixture('v0.0.2-preview.9','authenticode',{installer:false}),'windows-x86_64'),null);
+});
+test('the installer takes its signing and fallback hash from the record it rides on',()=>{
+ const r=windowsFixture(); delete r.assets[1].digest;
+ assert.equal(packageFor(r,'windows-x86_64').hash,'d'.repeat(64));
+ r.assets[1].size=151; assert.equal(packageFor(r,'windows-x86_64'),null);
+ assert.equal(packageFor(windowsFixture('v0.0.2-preview.9','unsigned'),'windows-x86_64').signing,'unsigned');
+ assert.equal(packageFor(windowsFixture('v0.0.2','unsigned'),'windows-x86_64'),null);
+});
+test('an older installer stays available when the newest Windows release has none',()=>{
+ const older=windowsFixture('v0.0.2-preview.8'), newer={...windowsFixture('v0.0.2-preview.9','authenticode',{installer:false}),published_at:'2026-10-01T12:00:00Z'};
+ assert.equal(latestPackageFor([older,newer],'preview','windows-x86_64').release,older);
+});
 test('channels never confuse a draft, preview and stable release',()=>{
  const preview=fixture(), stable=fixture('v0.0.1');
  assert.equal(latestFor([preview,stable],'stable'),stable);

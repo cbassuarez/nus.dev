@@ -8,10 +8,12 @@ function next(){
  const r=structuredClone(original),tag='v99.0.0-preview.1';
  const m=JSON.parse(r.body.match(/<!-- nus-release:(.*?) -->/s)[1]);
  m.version=tag;m.revision='b'.repeat(40);
- m.assets.forEach(a=>{a.name=a.name.replace(original.tag_name.slice(1),tag.slice(1));a.sha256='c'.repeat(64);});
+ const rename=name=>name.replace(original.tag_name.slice(1),tag.slice(1));
+ // A platform's installer rides on its record, so it is renamed and re-hashed with it.
+ m.assets.forEach(a=>{a.name=rename(a.name);a.sha256='c'.repeat(64);if(a.installer){a.installer.name=rename(a.installer.name);a.installer.sha256='c'.repeat(64);}});
  r.tag_name=tag;r.prerelease=true;r.published_at='2099-01-01T00:00:00Z';r.body='<!-- nus-release:'+JSON.stringify(m)+' -->';
- r.assets=r.assets.filter(a=>m.assets.some(x=>a.name.replace(original.tag_name.slice(1),tag.slice(1))===x.name));
- r.assets.forEach(a=>{a.name=a.name.replace(original.tag_name.slice(1),tag.slice(1));a.browser_download_url=`https://github.com/cbassuarez/nus/releases/download/${tag}/${a.name}`;a.digest='sha256:'+'c'.repeat(64);});
+ r.assets=r.assets.filter(a=>m.assets.some(x=>rename(a.name)===x.name||rename(a.name)===x.installer?.name));
+ r.assets.forEach(a=>{a.name=rename(a.name);a.browser_download_url=`https://github.com/cbassuarez/nus/releases/download/${tag}/${a.name}`;a.digest='sha256:'+'c'.repeat(64);});
  return r;
 }
 test('new release advances URL, version, source and checksum together',()=>{
