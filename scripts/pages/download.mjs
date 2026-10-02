@@ -54,9 +54,9 @@ export default {
 </div></section>
 <section class="section"><div class="section__in">
   <div class="sectionhead"><h2>Up and running.</h2><span class="cap">Installation</span></div>
-    <div data-install="macos"><ol class="install-steps"><li>Unzip the complete download.</li><li>Move <strong>nus.app</strong> into Applications.</li><li>For an unnotarized preview, macOS may require <b>System Settings</b> › <b>Privacy &amp; Security</b> › <b>Open Anyway</b>.</li><li>Open <i>nus</i> and choose your shell. Your existing shell configuration comes with you.</li></ol><p class="dim small">Check the package record above for the selected build’s signing and notarization status.</p></div>
+    <div data-install="macos"><ol class="install-steps"><li>Unzip the complete download.</li><li>Move <strong>nus.app</strong> into Applications.</li><li>For an unnotarized preview, macOS may require <b>System Settings</b> › <b>Privacy &amp; Security</b> › <b>Open Anyway</b>.</li><li>Open <i>nus</i> and choose your shell. Your existing shell configuration comes with you.</li></ol><p class="dim small">Check the package record above for the selected build’s signing and notarization status. Homebrew and the one-line installer below also put the <code>nus</code> command on your PATH.</p></div>
   <div data-install="windows" hidden><ol class="install-steps"><li>Run the downloaded <strong>setup</strong> file. It installs for your user and asks for no administrator rights.</li><li>Choose where nus goes, and whether to add the <code>nus</code> command to PATH, list nus as a browser, or put an icon on your desktop.</li><li>Open nus and choose your shell. Settings are stored in your user profile, and updates arrive inside the app.</li></ol><p class="dim small">The package record states whether this build is signed; if it is not, Windows may show a SmartScreen warning. Windows signing uses a separate certificate from Apple. A portable ZIP is on the <a href="${SITE.repo}/releases">release page</a> for the rare case you want to run nus from a folder.</p></div>
-  <div data-install="linux" hidden><ol class="install-steps"><li>Extract the archive into a folder you want to keep.</li><li>Run <code>./nus</code> inside that folder.</li><li>Follow the included README for desktop integration.</li></ol><p class="dim small">Requires glibc 2.35 or newer, GTK 3, NSS, ALSA and a working Vulkan driver. Ubuntu 22.04 is the packaging baseline. Wayland and X11 behavior depends on your desktop; report issues with the compositor and graphics driver noted.</p></div>
+  <div data-install="linux" hidden><ol class="install-steps"><li>On Debian or Ubuntu, use apt: the <a href="#install">one line or the repository below</a>, or the release’s <strong>.deb</strong> with <code>sudo apt install ./nus-preview_*.deb</code>. It sets up Chromium’s sandbox and the applications entry, and apt keeps nus updated.</li><li>Anywhere else, extract the archive and run <code>./install-desktop.sh</code>. It installs nus for your account, adds it to your applications and puts the <code>nus</code> command in <code>~/.local/bin</code>; the extracted folder can go afterwards. If your system blocks Chromium’s sandbox, it prints the one <code>sudo</code> command that allows it.</li><li>Open nus from your applications, or run <code>nus</code>.</li></ol><p class="dim small">Requires glibc 2.35 or newer, GTK 3, NSS, ALSA and a working Vulkan driver. Ubuntu 22.04 is the packaging baseline. Wayland and X11 behavior depends on your desktop; report issues with the compositor and graphics driver noted.</p></div>
 </div></section>
 <section class="section"><div class="section__in">
   <div class="sectionhead"><h2>Every package, together.</h2><span class="cap">Selected channel</span></div>
@@ -66,18 +66,22 @@ export default {
 </div>
 <section class="section" id="install"><div class="section__in">
   <div class="sectionhead"><h2>From a shell.</h2><span class="cap">One line</span></div>
-  <p>The same package, fetched and checked for you. The script picks the newest release with a build for your machine, verifies it against the release’s <code>SHA256SUMS.txt</code>, unpacks it, and puts <code>nus</code> on your PATH. It needs no administrator rights and writes nowhere else. <a href="${SITE.url}/install.sh">Read it first</a> if you like; it is short.</p>
+  <p>The same package, fetched and checked for you. The script picks the newest release with a build for your machine, verifies every download against the release’s <code>SHA256SUMS.txt</code>, and installs it the way your system expects: nus.app on a Mac; on Debian and Ubuntu, the .deb through apt, which asks for <code>sudo</code> and keeps nus updated; on other Linux, for your account alone; on Windows, the signed installer, run silently. Every way ends with the <code>nus</code> command on your PATH. <a href="${SITE.url}/install.sh">Read it first</a> if you like; it is short.</p>
   <div class="install-lines">
     <div><span class="cap">macOS · Linux</span><pre><code>curl -fsSL ${SITE.url}/install.sh | sh</code></pre></div>
     <div><span class="cap">Windows</span><pre><code>irm ${SITE.url}/install.ps1 | iex</code></pre></div>
   </div>
-  <p class="small dim"><code>NUS_CHANNEL=preview</code> takes the preview channel when a stable exists; <code>NUS_VERSION=v0.0.1</code> pins a tag. On Windows, set them as <code>$env:</code> variables first.</p>
-  <div class="sectionhead" style="margin-top:34px"><h2>Or your package manager.</h2><span class="cap">Homebrew · winget</span></div>
+  <p class="small dim"><code>NUS_CHANNEL=preview</code> takes the preview channel when a stable exists; <code>NUS_VERSION=v0.0.1</code> pins a tag; <code>NUS_USER=1</code> installs on Linux for your account only, without apt or <code>sudo</code>. On Windows, set them as <code>$env:</code> variables first.</p>
+  <div class="sectionhead" style="margin-top:34px"><h2>Or your package manager.</h2><span class="cap">Homebrew · winget · apt</span></div>
   <div class="install-lines">
-    <div><span class="cap">macOS</span><pre><code>brew install --cask cbassuarez/tap/nus</code></pre></div>
-    <div><span class="cap">Windows</span><pre><code>winget install cbassuarez.nus</code></pre></div>
+    <div><span class="cap">macOS</span><pre><code>brew install cbassuarez/tap/nus@preview</code></pre></div>
+    <div><span class="cap">Windows</span><pre><code>winget install cbassuarez.nus.Preview</code></pre></div>
+    <div style="grid-column:1/-1"><span class="cap">Debian · Ubuntu</span><pre><code>sudo curl -fsSLo /usr/share/keyrings/nus-archive-keyring.gpg ${SITE.repo}/releases/download/apt-preview/nus-archive-keyring.gpg
+sudo curl -fsSLo /etc/apt/sources.list.d/nus-preview.sources ${SITE.repo}/releases/download/apt-preview/nus-preview.sources
+sudo apt update &amp;&amp; sudo apt install nus-preview</code></pre></div>
   </div>
-  <p class="small dim">The cask and the winget manifest are written from each release’s own hashes. A preview cask is not notarized: <code>--no-quarantine</code>, or right-click and Open the first time. The winget listing appears once a release has been accepted into the community repository; until then the one-liner above installs the same package.</p>
+  <p>Whichever you use, the command is <code>nus</code>. On its own it opens nus, or brings it forward; <code>nus &lt;file or URL&gt;</code> opens that, and <code>nus --help</code> lists the rest.</p>
+  <p class="small dim">These are the preview channel, where every release so far has been. For stable, drop <code>@preview</code> and <code>.Preview</code>, and use <code>apt-release</code>, <code>nus.sources</code> and the package <code>nus</code>. Each is written from the release’s own hashes when it is published. The winget listing appears once Microsoft’s reviewers accept a release; until then the one-liner above installs the same installer. A preview cask is not notarized, so it clears macOS’s quarantine flag itself.</p>
 </div></section>
 <section class="section"><div class="section__in">
   <div class="sectionhead"><h2>For the curious.</h2><span class="cap">Build from source</span></div>

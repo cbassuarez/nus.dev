@@ -16,7 +16,6 @@ npm run build     # write the pages
 npm run dev       # write them, then serve on http://localhost:8000
 npm run sync      # pull the app's screenshots out of ../nus into assets/shots/
 npm run releases  # refresh assets/releases.json, the download page's fallback
-npm run packaging # write the Homebrew cask and winget manifests from it
 npm run vendor:cuelume -- 0.2.2  # intentionally refresh the pinned site sound library
 npm run wasm      # rebuild the VT core for the browser  (needs Rust + wasm-pack)
 npm run record    # re-record the hero session           (needs the nus checkout)
@@ -161,16 +160,21 @@ published-package size measurements.
 ## Installing
 
 `install.sh` and `install.ps1` at the root are served as-is and are what the
-download page's one-liners run: find the newest release with a package for
-the machine, verify it against the release's `SHA256SUMS.txt`, unpack, put
-`nus` on PATH. They talk to GitHub Releases directly, so they work wherever
-the site is hosted.
+download page's one-liners run. Each finds the newest release with a package
+for the machine and verifies every download against the release's
+`SHA256SUMS.txt`, then installs it the way that system expects: nus.app on
+macOS; on Debian and Ubuntu the release's .deb through apt (Chromium's
+sandbox, the desktop entry, updates through apt); on other Linux the archive,
+through its own `install-desktop.sh`; on Windows the signed installer, run
+silently. Every way puts the `nus` command on PATH. They talk to GitHub
+Releases directly, so they work wherever the site is hosted.
 
-`scripts/packaging.mjs` writes `packaging/homebrew/Casks/nus.rb` and the
-winget manifests from `assets/releases.json`. The release-snapshot workflow
-runs it and pushes the cask to `cbassuarez/homebrew-tap` when a `TAP_TOKEN`
-secret (contents: write on the tap) exists; winget manifests are submitted
-to microsoft/winget-pkgs by hand or with `wingetcreate`.
+The package managers are fed by the app's release workflow, not this site
+(see the app's `docs/RELEASING.md`): the Homebrew casks `nus` and
+`nus@preview` in `cbassuarez/homebrew-tap`, the winget packages
+`cbassuarez.nus` and `cbassuarez.nus.Preview`, and the apt repositories in
+the app's `apt-release` and `apt-preview` releases. The download page names
+them; keep its commands in step with that workflow.
 
 `scripts/markdown.mjs` covers the subset those files use — headings,
 paragraphs, lists, pipe tables, fenced code, blockquotes, and the inline set.
