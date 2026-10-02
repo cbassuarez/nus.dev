@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.6.0.schema.json
+PackageIdentifier: cbassuarez.nus
+PackageVersion: 0.0.2-preview.9
+InstallerType: zip
+NestedInstallerType: portable
+NestedInstallerFiles:
+  - RelativeFilePath: nus-0.0.2-preview.9-windows-x86_64\bin\nus.exe
+    PortableCommandAlias: nus
+Commands:
+  - nus
+ReleaseDate: 2026-10-02
+ReleaseNotesUrl: https://github.com/cbassuarez/nus/releases/tag/v0.0.2-preview.9
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/cbassuarez/nus/releases/download/v0.0.2-preview.9/nus-0.0.2-preview.9-windows-x86_64-setup.exe
+    InstallerSha256: 7BB182806284A7D6A4D177B24C62C8713CB6482B9267D3D53E3A9D533A555B89
+ManifestType: installer
+ManifestVersion: 1.6.0
