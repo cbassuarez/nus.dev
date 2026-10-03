@@ -78,6 +78,19 @@ okmark="$red$bold$ok$reset"
 # The step at the cursor, redrawn in place (a terminal only).
 redraw() { [ -n "$tty" ] && printf '\r%s[2K' "$esc"; }
 
+# Live steps are drawn the way docker buildx and indicatif draw them: each
+# frame in one write, every line overwritten where it stands and cleared only
+# past its end (never blanked first, which is what flickers), cut to the
+# terminal's width so a wrapped line cannot throw the cursor moves off, and
+# the cursor hidden meanwhile. Unchanged frames are not written at all.
+cursor() { if [ -n "$tty" ]; then printf '%s[?25%s' "$esc" "$1"; fi; }
+trap 'cursor h' EXIT
+trap 'cursor h; exit 130' INT TERM
+
+# Bytes in a file, 0 before it exists: a redirection from a missing file
+# fails before any 2>/dev/null applies, so test first.
+bytes() { if [ -f "$1" ]; then wc -c < "$1" | tr -d ' '; else echo 0; fi; }
+
 die() {
   [ -n "$tty" ] && printf '\r%s[2K' "$esc"
   printf '  %s%s%s %s\n' "$red$bold" "$bad" "$reset" "$*" >&2
@@ -133,18 +146,18 @@ fetch() { # n file
   size=$(curl -fsIL "$url" 2>/dev/null | tr -d '\r' | awk 'tolower($1) == "content-length:" { n = $2 } END { print n + 0 }')
   if [ -n "$tty" ]; then
     curl -fsL -o "$tmp/$2" "$url" 2>/dev/null & cpid=$!
-    i=0
+    i=0; cursor l
     while alive "$cpid"; do
-      got=$(wc -c < "$tmp/$2" 2>/dev/null | tr -d ' ' || echo 0)
-      [ -n "$got" ] || got=0
+      got=$(bytes "$tmp/$2")
       if [ "$size" -gt 0 ]; then pct=$(( got * 100 / size )); else pct=0; fi
-      seg=$(( pct / 5 )); [ "$seg" -gt 20 ] && seg=20
-      redraw
-      printf '  %s%s%s  %s%s%s%s %s%s%s%s  %s  %s' "$grey" "$1" "$reset" "$bold" "$(pad Download 10)" "$reset" \
+      [ "$pct" -gt 100 ] && pct=100
+      seg=$(( pct / 5 ))
+      printf '\r  %s%s%s  %s%s%s%s %s%s%s%s  %s  %s%s[K' "$grey" "$1" "$reset" "$bold" "$(pad Download 10)" "$reset" \
         "$red$(spinner $i)$reset" "$red" "$(repeat "$full" "$seg")" "$faint$(repeat "$empty" $((20 - seg)))" "$reset" \
-        "$(printf '%3s%%' "$pct")" "$grey$(( got / 1048576 )) / $(( size / 1048576 )) MB$reset"
+        "$(printf '%3s%%' "$pct")" "$grey$(( got / 1048576 )) / $(( size / 1048576 )) MB$reset" "$esc"
       i=$((i + 1)); sleep 0.1
     done
+    cursor h
     wait "$cpid" || die "the download of $2 failed"
     redraw
   else
@@ -164,6 +177,34 @@ fetch() { # n file
 # Run a command with its output in a dimmed, indented window of its last four
 # lines; on success the window folds into the step's line, on failure all of
 # it stays, with the log's path.
+# One frame of a running step: its line, then, when the command reports
+# progress (apt's APT::Status-Fd lines, "pmstatus:pkg:percent:what it is
+# doing", the protocol apt's graphical frontends read), a bar with apt's own
+# words for what it is doing on the step's line; then the last three lines of
+# its output, dimmed. Output is cleaned before it is shown: colours and
+# cursor moves stripped, carriage-return progress kept at its latest state,
+# every line cut to fit. Each line ends clearing to its end.
+frame() { # n name doing tick start log
+  info=$(GUT="$gutter" W=$((cols - 10)) awk '
+    { k = split($0, part, "\r"); j = k; while (j > 1 && part[j] !~ /[^ ]/) j--
+      { p = part[j]; gsub(/\033\[[0-9;?]*[ -\/]*[@-~]/, "", p); gsub(/\033[@-_]/, "", p); gsub(/\t/, "  ", p)
+        if (p ~ /^(pm|dl)status:/) { split(p, f, ":"); pct = int(f[3]); d = p; sub(/^[^:]*:[^:]*:[^:]*:/, "", d); what = d; has = 1 }
+        else if (p ~ /[^ ]/) { tail[++c] = p }
+      } }
+    END {
+      print (has ? pct : "-"); print what
+      for (j = (c > 3 ? c - 2 : 1); j <= c; j++) { t = tail[j]; if (length(t) > ENVIRON["W"]) t = substr(t, 1, ENVIRON["W"] - 3) "..."; print t }
+    }' "$6" 2>/dev/null)
+  pct=$(printf '%s\n' "$info" | sed -n 1p); what=$(printf '%s\n' "$info" | sed -n 2p)
+  [ -n "$what" ] || what=$3
+  row "$1" "$2" "$(printf '%s' "$what" | cut -c1-52)" "$grey$(spinner "$4")$reset" "$(took "$5")" | sed "s/\$/$esc[K/"
+  if [ "$pct" != - ] && [ -n "$pct" ]; then
+    seg=$(( pct / 5 )); [ "$seg" -gt 20 ] && seg=20
+    printf '        %s%s%s%s%s  %s%3s%%%s%s[K\n' "$red" "$(repeat "$full" "$seg")" "$faint" "$(repeat "$empty" $((20 - seg)))" "$reset" "$grey" "$pct" "$reset" "$esc"
+  fi
+  printf '%s\n' "$info" | sed -n '3,$p' | while IFS= read -r l; do printf '        %s%s %s%s%s[K\n' "$faint" "$gutter" "$l" "$reset" "$esc"; done
+}
+
 stream() { # n name detail-while detail-done log command...
   n=$1 name=$2 doing=$3 done=$4 log=$5; shift 5
   start=$(now)
@@ -173,23 +214,22 @@ stream() { # n name detail-while detail-done log command...
     return
   fi
   "$@" >"$log" 2>&1 & pid=$!
-  shown=0; i=0
+  shown=0; i=0; last=; cursor l
   while alive "$pid"; do
-    [ "$shown" -gt 0 ] && printf '%s[%dA' "$esc" "$shown"
-    redraw; row "$n" "$name" "$doing" "$grey$(spinner $i)$reset" "$(took "$start")"
-    lines=$(tail -n 4 "$log" 2>/dev/null | cut -c1-$((cols - 12)))
-    k=0
-    if [ -n "$lines" ]; then
-      printf '%s\n' "$lines" | while IFS= read -r l; do printf '\r%s[2K      %s%s %s%s\n' "$esc" "$faint" "$gutter" "$l" "$reset"; done
-      k=$(printf '%s\n' "$lines" | wc -l | tr -d ' ')
+    frame=$(frame "$n" "$name" "$doing" "$i" "$start" "$log")
+    if [ "$frame" != "$last" ]; then
+      up=; [ "$shown" -gt 0 ] && up="$esc[${shown}A"
+      printf '%s\r%s\n%s[J' "$up" "$frame" "$esc"
+      shown=$(printf '%s\n' "$frame" | wc -l | tr -d ' '); last=$frame
     fi
-    shown=$((k + 1)); i=$((i + 1)); sleep 0.1
+    i=$((i + 1)); sleep 0.1
   done
+  cursor h
   wait "$pid" && status=0 || status=$?
-  printf '%s[%dA%s[J' "$esc" "$shown" "$esc"
+  [ "$shown" -gt 0 ] && printf '%s[%dA%s[J' "$esc" "$shown" "$esc"
   if [ "$status" -ne 0 ]; then
     row "$n" "$name" "$doing" "$red$bold$bad$reset" "$(took "$start")"
-    sed "s/^/      $faint$gutter$reset /" "$log"
+    grep -av -e '^pmstatus:' -e '^dlstatus:' "$log" | sed "s/^/      $faint$gutter$reset /"
     die "$name failed; the full log is $log"
   fi
   row "$n" "$name" "$done" "$okmark" "$(took "$start")"
@@ -216,7 +256,7 @@ uninstall() {
     if command -v dpkg-query >/dev/null 2>&1 && dpkg-query -W -f '${Status}' "$pkg" 2>/dev/null | grep -q 'ok installed'; then
       n=$((n + 1))
       if [ "$(id -u)" = 0 ]; then sudo=; else sudo=sudo; fi
-      stream "0$n" Remove "$pkg with apt (sudo)" "$pkg removed" "$log" $sudo apt-get remove -y "$pkg"
+      stream "0$n" Remove "$pkg with apt (sudo)" "$pkg removed" "$log" $sudo apt-get remove -y -o APT::Status-Fd=1 -o APT::Color=0 -o Dpkg::Progress-Fancy=0 "$pkg"
     fi
     if [ -x "$data/nus/app/$dir/install-desktop.sh" ]; then
       n=$((n + 1))
@@ -320,7 +360,7 @@ main() {
       # The step and the password prompt make way for the step's own line.
       [ -n "$tty" ] && printf '%s[2A%s[J' "$esc" "$esc"
     fi
-    stream 04 "$verb" 'with apt (sudo)' "$where" "$log" $sudo apt-get install -y "$tmp/$deb"
+    stream 04 "$verb" 'with apt (sudo)' "$where" "$log" $sudo apt-get install -y -o APT::Status-Fd=1 -o APT::Color=0 -o Dpkg::Progress-Fancy=0 "$tmp/$deb"
     finish "$updates" "$mode"
     return
   fi
