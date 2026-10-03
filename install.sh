@@ -22,6 +22,10 @@
 #   NUS_USER=1            Linux: install for this account only, without apt or sudo
 #   NUS_BIN=~/bin         macOS: where the `nus` link goes (default: ~/.local/bin)
 #   NO_COLOR=1            no colour; a pipe or a log gets plain lines anyway
+#
+# To remove nus when its own `nus uninstall` cannot run:
+#
+#   curl -fsSL https://cbassuarez.com/nus.dev/install.sh | sh -s -- --uninstall
 set -eu
 
 repo="cbassuarez/nus"
@@ -66,6 +70,7 @@ alive() { st=$(ps -o stat= -p "$1" 2>/dev/null) || return 1; case $st in ''|*Z*)
 
 # One step of the manifest: number, name, detail, status, time.
 row() { # n name detail mark time
+  case $3 in "$HOME"/*) set -- "$1" "$2" "~${3#"$HOME"}" "$4" "$5" ;; esac
   printf '  %s%s%s  %s%s%s%s  %s%s\n' "$grey" "$1" "$reset" "$bold" "$(pad "$2" 10)" "$reset" "$grey$(pad "$3" 52)$reset" "$4" "$grey$(printf '%7s' "$5")$reset"
 }
 okmark="$red$bold$ok$reset"
@@ -199,7 +204,41 @@ finish() { # how updates arrive · whether this was an update
   printf '  %s%s\n\n' "$(pad updates 16)" "$grey$1$reset"
 }
 
+# Every installed copy, removed the way it was installed; profiles stay.
+# Needs no network: it is for when nus itself will not start.
+uninstall() {
+  data=${XDG_DATA_HOME:-$HOME/.local/share}
+  banner "nus unified environment $dot uninstaller" "every copy on this machine"
+  n=0
+  for dir in preview release; do
+    case $dir in preview) pkg=nus-preview ;; *) pkg=nus ;; esac
+    [ "${NUS_CHANNEL:-}" = preview ] && [ "$dir" != preview ] && continue
+    if command -v dpkg-query >/dev/null 2>&1 && dpkg-query -W -f '${Status}' "$pkg" 2>/dev/null | grep -q 'ok installed'; then
+      n=$((n + 1))
+      if [ "$(id -u)" = 0 ]; then sudo=; else sudo=sudo; fi
+      stream "0$n" Remove "$pkg with apt (sudo)" "$pkg removed" "$log" $sudo apt-get remove -y "$pkg"
+    fi
+    if [ -x "$data/nus/app/$dir/install-desktop.sh" ]; then
+      n=$((n + 1))
+      stream "0$n" Remove "for this account" "$data/nus/app/$dir" "$log" sh "$data/nus/app/$dir/install-desktop.sh" --uninstall
+    fi
+  done
+  for apps in /Applications "$HOME/Applications"; do
+    [ -d "$apps/nus.app" ] || continue
+    n=$((n + 1)); start=$(now)
+    rm -rf "$apps/nus.app" || die "could not remove $apps/nus.app"
+    link="${NUS_BIN:-$HOME/.local/bin}/nus"
+    case $(readlink "$link" 2>/dev/null) in "$apps/nus.app/"*) rm -f "$link" ;; esac
+    row "0$n" Remove "$apps/nus.app" "$okmark" "$(took "$start")"
+  done
+  [ "$n" -gt 0 ] || { row 01 Found 'no installed copy of nus' "$okmark" ''; return; }
+  printf '  %s\n' "$faint$(repeat "$rule" 81)$reset"
+  printf '  nus is gone. Settings stay in %s%s%s\n\n' "$grey" "$data/nus/installs" "$reset"
+}
+
 main() {
+  log="${TMPDIR:-/tmp}/nus-install.log"
+  if [ "${1:-}" = --uninstall ] || [ -n "${NUS_UNINSTALL:-}" ]; then uninstall; return; fi
   need curl
 
   # --- which package ------------------------------------------------------

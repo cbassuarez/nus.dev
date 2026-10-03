@@ -13,6 +13,7 @@
 #   $env:NUS_CHANNEL = 'preview'    take the preview channel even if a stable exists
 #   $env:NUS_VERSION = 'v0.0.1'     install one exact tag
 #   $env:NO_COLOR    = '1'          no colour; redirected output is plain anyway
+#   $env:NUS_UNINSTALL = '1'        remove every copy instead (when `nus uninstall` cannot run)
 $ErrorActionPreference = 'Stop'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -180,7 +181,27 @@ function Finish($mode, $version) {
   [Console]::WriteLine('')
 }
 
+# Every copy for this user, by its own uninstaller; profiles stay. For when
+# nus itself will not start: $env:NUS_UNINSTALL = '1'; irm .../install.ps1 | iex
+function Uninstall {
+  Banner "nus unified environment $dot uninstaller" 'every copy for this user'
+  $n = 0
+  foreach ($dir in 'preview', 'release') {
+    $u = Get-ChildItem (Join-Path $env:LOCALAPPDATA "nus\uninstall\$dir") -Filter 'unins*.exe' -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $u) { continue }
+    $n++; $start = Now
+    $p = Start-Process $u.FullName -ArgumentList '/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART' -Wait -PassThru
+    if ($p.ExitCode -ne 0) { Fail "the $dir uninstaller exited with $($p.ExitCode)" }
+    Row "0$n" 'Remove' "%LOCALAPPDATA%\Programs\nus\$dir" $okMark (Took $start)
+  }
+  if ($n -eq 0) { Row '01' 'Found' 'no installed copy of nus' $okMark ''; return }
+  [Console]::WriteLine("  $faint$($rule * 81)$reset")
+  [Console]::WriteLine("  nus is gone. Settings stay in %LOCALAPPDATA%\nus\installs")
+  [Console]::WriteLine('')
+}
+
 function Main {
+  if ($env:NUS_UNINSTALL) { Uninstall; return }
   if ($env:PROCESSOR_ARCHITECTURE -ne 'AMD64' -and $env:PROCESSOR_ARCHITEW6432 -ne 'AMD64') {
     Fail "nus builds for 64-bit Intel/AMD Windows (this is $env:PROCESSOR_ARCHITECTURE)."
   }
