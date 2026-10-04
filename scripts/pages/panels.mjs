@@ -5,18 +5,25 @@ const FILMS='../assets/films/';
 
 /* The numbered sections, one slide each: the copy, and the capture that shows it. */
 const SLIDES=[
- {id:'home',tab:'Your home',title:'A place to begin.<br>A place to come back to.',
-  copy:['Start at the prompt, open a project, or resume a session. Saved commands, links, and prompts keep the things you use close at hand.','The background, type, colours, and suggestions are yours to choose. Keep it quiet, or give your workspace a little personality.'],
-  link:['../docs/product/','Explore the product guide ↗'],
-  capture:'home'},
- {id:'workspace',tab:'Shells &amp; pages',title:'Your shell,<br>with a view.',
-  copy:['Keep your shell configuration, aliases, and command-line tools. Start a server and open its page beside the output. Keep documentation nearby while a command runs.','Tabs, splits, and named Spaces let each project keep its own arrangement.'],
-  points:[['A real terminal.','Your commands run in a shell. Follow their output, select text, and return to the session when you need it.'],['A browser beside it.','Chromium pages have navigation, search, downloads, and developer tools. Open a detected localhost address straight from the shell.'],['Room for the whole job.','Keep the server, documentation, and assistant in the same project. Move between them without losing your place.']],
+ {id:'browser',tab:'The browser',title:'A real browser.<br>Right here.',
+  copy:['Read a page, use a web app, or try what you’re building. Chromium pages have their own address row, navigation, search, downloads, and developer tools.','Find starts in the page. Widen its scope to the tab, window, or all of nus when the answer might be somewhere else.'],
+  link:['../docs/product/#the-browser','Explore the browser ↗'],
+  capture:'browser'},
+ {id:'workspace',tab:'Pages &amp; shells',title:'Give the page<br>room to work.',
+  copy:['Start a server and open its page beside the output. Give the page most of the window, keep documentation nearby, or let either pane take the whole view.','Tabs, splits, and named Spaces let each project keep its own arrangement. Your shell configuration, aliases, and command-line tools come with you.'],
+  points:[['The page in front.','Use the actual site while its server keeps running beside it.'],['A shell within reach.','Follow the output, select text, and return to the command when you need it.'],['Room for the whole job.','Keep the server, documentation, and assistant in the same project. Move between them without losing your place.']],
   capture:'workspace'},
- {id:'editor',tab:'The editor',title:'From the output<br>to the source.',
-  copy:['Open a file beside the terminal. Follow a file-and-line reference from command output into the editor, then return to the running shell.','Keep the source close to the page you’re building, with dedicated text selection and editing controls.'],
+ {id:'editor',tab:'The editor',title:'Source and result.<br>Side by side.',
+  copy:['Open a file beside the page you’re building. The source and the working result stay in the same window, with dedicated text selection and editing controls.','Follow a file-and-line reference from command output into the editor, then return to the running session.'],
   link:['../docs/product/','Read about the editor ↗'],
   capture:'editor'},
+ {id:'kept',tab:'Kept pages',title:'Keep the page.<br>Find it again.',
+  copy:['Save the page in front with its title and address. The Kept collection gives useful pages a place to return to, with actions to reopen the original, pin it, or mark it to read.','Keep a local project page close while you work, alongside the references you want to revisit.'],
+  capture:'kept'},
+ {id:'home',tab:'Your home',title:'A place to begin.<br>A place to come back to.',
+  copy:['Start at the prompt, open a project, or resume a session. Saved links, commands, and prompts keep the things you use close at hand.','The background, type, colours, and suggestions are yours to choose. Keep it quiet, or give your workspace a little personality.'],
+  link:['../docs/product/','Explore the product guide ↗'],
+  capture:'home'},
  {id:'history',tab:'History',title:'Find your<br>way back.',
   copy:['A session is more than its last screen. Move through commands and their output, find an earlier result, or follow a recording when the sequence matters.','Keep useful commands in your saved collection so you can find them again without digging through a whole session.'],
   points:[['Commands &amp; output','Navigate the work by command, with its output close at hand.'],['Session playback','Revisit a recorded session in order, at your own pace.'],['Saved commands','Keep recurring commands, links, and prompts together.']],
@@ -42,14 +49,14 @@ const slide=(s,i)=>`
     ${s.small?`<p class="small">${s.small}</p>`:''}
     ${s.link?`<a class="tour__more" href="${s.link[0]}">${s.link[1]}</a>`:''}
    </div>
-  </article>`;
+  </article>`.split('\n').map(line=>line.trimEnd()).join('\n');
 
 export default {
  title:'Around nus',path:'/panels/',depth:1,bodyClass:'panels-page',
- description:'Explore the nus workspace: shells, pages, source files, saved commands, session history, and Hatch.',
+ description:'Explore the nus browser, Find, source beside a working page, saved pages, Home, session history, and Hatch.',
  body:`
 <section class="panels-intro">
- <div class="panels-intro__copy"><p class="cap">A look around nus</p><h1>One project.<br><em>A few good neighbours.</em></h1><p>Run the command. Read the page. Open the source.<br>Keep the work together, and make the space your own.</p></div>
+ <div class="panels-intro__copy"><p class="cap">A look around nus</p><h1>One project.<br><em>A few good neighbours.</em></h1><p>Use the page. Open the source. Keep what matters.<br>Keep the work together, and make the space your own.</p></div>
 </section>
 
 <section class="section tour" data-tour aria-label="A look around nus"><div class="section__in">

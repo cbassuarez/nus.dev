@@ -52,11 +52,11 @@ rebuilding — never the generated HTML, which is overwritten.
 
 ## Product media
 
-The homepage shows a fourteen-second native nus recording of an authored
-Hello World project: start its server, open the page beside the terminal,
-and click the working counter. The native topbar remains visible. The
-install command above it uses the same platform detection and Copy behavior
-as the download page.
+The homepage shows a fourteen-second native nus browser recording of an
+authored Hello World project: use the counter, Find in the page, view the
+source beside the result, and keep the page. The browser stays visible
+throughout, with the native topbar retained. The install command above it
+uses the same platform detection and Copy behavior as the download page.
 
 The muted hero autoplays and loops when visible. A compact pause control
 sits over the video; there is no caption row. Offscreen and hidden pages
@@ -64,28 +64,33 @@ pause it, and reduced motion keeps the poster until the visitor selects
 Play. The complete desktop window keeps its natural proportions at every
 width. It is a paced demonstration, not a performance measurement.
 
-The numbered Panels tour pairs each description with a capture from the
-same project. The editor, history, Home and Hatch details omit the window
-topbar. Hatch shows actual running and finished sessions. The product guide
-reuses these figures through `{{capture:name}}` tokens, resolved by
-`scripts/product-media.mjs` during the build.
+The numbered Panels tour starts with the browser and Find, then shows the
+page beside its server, source beside the page, Kept pages, Home, command
+history, and Hatch. The browser, editor, Kept, history, Home and Hatch details
+omit the window topbar. Hatch shows actual running and finished sessions.
+The product guide reuses these figures through `{{capture:name}}` tokens,
+resolved by `scripts/product-media.mjs` during the build.
 
 | File in `assets/films/` | Subject |
 |---|---|
-| `nus-hero-web.mp4` | The 14-second shell and page workflow, 1600 × 1086 at 30 fps |
-| `nus-hero-poster.png` | The full-resolution final native frame, 2240 × 1520 |
-| `nus-editor-detail.png` | The actual main.js source and file tab, 1433 × 957 |
+| `nus-browser-hero-web.mp4` | The 14-second browser workflow, 1600 × 1086 at 30 fps |
+| `nus-browser-hero-readme.gif` | The same browser workflow for README embeds, 960 × 652 at 12 fps |
+| `nus-browser-hero-poster.png` | The full native browser window, 2240 × 1520 |
+| `nus-browser-find.png` | Native Find with a highlighted live page match, 2208 × 1434 |
+| `nus-workspace-page.png` | The page leads, with its server beside it, 2240 × 1520 |
+| `nus-source-page.png` | The complete main.js source beside its working page, 2208 × 1434 |
+| `nus-kept-pages.png` | The saved page's title, address and actions, 2208 × 790 |
+| `nus-home-links.png` | Saved link, project commands and resumable session, 2105 × 1246 |
 | `nus-history-detail.png` | Command search, output and the map, 1176 × 1208 |
-| `nus-home-project.png` | Saved commands, project and resumable server, 2105 × 1246 |
 | `nus-hatch-project.png` | The running server and finished source checks, 1920 × 936 |
 
-`hello-world-provenance.json` records the source build, native capture
+`browser-features-provenance.json` records the source build, native capture
 parameters, verified states, dimensions and file hashes. These macOS
 captures use isolated profiles, `NUS_SHOT_NO_HOVER=1` and disabled port
 toasts. Keep their original colors when the site theme changes. Retain
 lossless native masters and scripts with the capture work; only publication
-exports belong here. Earlier supplied screenshots and the WASM PTY replay
-remain available as source history.
+exports belong here. Earlier supplied screenshots, the previous Hello World
+shell recording and the WASM PTY replay remain available as source history.
 
 ## Design
 

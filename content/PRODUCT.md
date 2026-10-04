@@ -330,7 +330,7 @@ no nus. Recordings are kept 7 days, 1 day, or not at all.
 
 ## The browser
 
-{{capture:workspace}}
+{{capture:browser}}
 
 Chromium, rendered offscreen and composited by nus. New tab opens the palette
 or your start page; URL or search from there. The search engine is yours to
@@ -379,6 +379,12 @@ as a band, history-ranked address rows, favicons with a letter tile for pages
 without one, idle pages sleeping after 30 minutes and archiving after 12
 hours, a status lamp per page (signal while loading, ink when live, hazard
 stripes when local, hollow while asleep).
+
+**Kept pages.** Keep the page in front with the bookmark control or Cmd+D
+on macOS. The Kept collection brings saved titles and addresses together,
+with actions to reopen the original, pin an entry, or mark it to read.
+
+{{capture:kept}}
 
 **Tidy.** Suggestions only. A page open elsewhere gets a band on the newer
 tab. TIDY — from the palette, or hourly / daily — proposes groups (by host,

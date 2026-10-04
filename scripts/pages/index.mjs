@@ -20,7 +20,7 @@ export default {
    <div class="cmd__line" data-cmd-panel="windows"><span class="cmd__os">Windows</span><span class="cmd__prompt" aria-hidden="true">»</span><code>irm ${SITE.url}/install.ps1 | iex</code><button class="copy" type="button" data-copy aria-label="Copy the Windows install command">${icon('copy')}<span>Copy</span></button></div>
   </div>
   <figure class="shell-capture hero-film" data-film data-film-autoplay>
-   <video width="1600" height="1086" data-src="./assets/films/nus-hero-web.mp4" data-poster-desktop="./assets/films/nus-hero-poster.png" poster="./assets/films/nus-hero-poster.png" autoplay muted loop playsinline preload="none" aria-label="A real nus workflow: run the Hello World server, open its page beside the shell, and click the working counter twice."></video>
+   <video width="1600" height="1086" data-src="./assets/films/nus-browser-hero-web.mp4" data-poster-desktop="./assets/films/nus-browser-hero-poster.png" poster="./assets/films/nus-browser-hero-poster.png" autoplay muted loop playsinline preload="none" aria-label="A real nus browser workflow: click the Hello World counter, find text in the page, open its source beside it, and keep the page for later."></video>
    <div class="hero-film__controls"><button class="film-toggle" type="button" data-film-toggle data-play-label="Play demo" hidden aria-pressed="false">Play demo</button></div>
    <p class="film-error sr-only" data-film-error hidden role="status">The demo could not start automatically. Select Play demo to try again.</p>
   </figure>

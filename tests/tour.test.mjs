@@ -6,7 +6,7 @@ const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 test('the panels tour has one slide per numbered section, each with a tab and a picture',()=>{
  const html=read('panels/index.html');
  const slides=[...html.matchAll(/<article class="tour__slide" id="([^"]+)" data-tour-slide>/g)].map(m=>m[1]);
- assert.deepEqual(slides,['home','workspace','editor','history','hatch']);
+ assert.deepEqual(slides,['browser','workspace','editor','kept','home','history','hatch']);
  const tabs=[...html.matchAll(/<a class="tour__tab" href="#([^"]+)" data-tour-tab data-no-swup>/g)].map(m=>m[1]);
  assert.deepEqual(tabs,slides);
  for(const id of slides){

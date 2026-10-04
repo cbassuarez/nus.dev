@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Around nus · nus</title>
-<meta name="description" content="Explore the nus workspace: shells, pages, source files, saved commands, session history, and Hatch.">
+<meta name="description" content="Explore the nus browser, Find, source beside a working page, saved pages, Home, session history, and Hatch.">
 
 <link rel="canonical" href="https://cbassuarez.com/nus.dev/panels/">
 <meta name="theme-color" content="#c8102e">
@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="nus.dev">
 <meta property="og:title" content="Around nus · nus">
-<meta property="og:description" content="Explore the nus workspace: shells, pages, source files, saved commands, session history, and Hatch.">
+<meta property="og:description" content="Explore the nus browser, Find, source beside a working page, saved pages, Home, session history, and Hatch.">
 <meta property="og:url" content="https://cbassuarez.com/nus.dev/panels/">
 <meta property="og:image" content="https://cbassuarez.com/nus.dev/assets/icon/nus-512.png">
 <meta name="twitter:card" content="summary">
@@ -66,69 +66,91 @@
 <main id="main" data-page-transition>
 
 <section class="panels-intro">
- <div class="panels-intro__copy"><p class="cap">A look around nus</p><h1>One project.<br><em>A few good neighbours.</em></h1><p>Run the command. Read the page. Open the source.<br>Keep the work together, and make the space your own.</p></div>
+ <div class="panels-intro__copy"><p class="cap">A look around nus</p><h1>One project.<br><em>A few good neighbours.</em></h1><p>Use the page. Open the source. Keep what matters.<br>Keep the work together, and make the space your own.</p></div>
 </section>
 
 <section class="section tour" data-tour aria-label="A look around nus"><div class="section__in">
  <div class="tour__bar">
   <button class="tour__btn tour__play" type="button" data-tour-play data-tour-controls hidden aria-label="Pause the tour"><span data-tour-playing><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M200,32H160a16,16,0,0,0-16,16V208a16,16,0,0,0,16,16h40a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm0,176H160V48h40ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Zm0,176H56V48H96Z"/></svg></span><span data-tour-paused hidden><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232.4,114.49,88.32,26.35a16,16,0,0,0-16.2-.3A15.86,15.86,0,0,0,64,39.87V216.13A15.94,15.94,0,0,0,80,232a16.07,16.07,0,0,0,8.36-2.35L232.4,141.51a15.81,15.81,0,0,0,0-27ZM80,215.94V40l143.83,88Z"/></svg></span></button>
-  <nav class="tour__tabs" aria-label="Workspace features" data-tour-tabs><a class="tour__tab" href="#home" data-tour-tab data-no-swup><span class="tour__n">01</span>Your home<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a><a class="tour__tab" href="#workspace" data-tour-tab data-no-swup><span class="tour__n">02</span>Shells &amp; pages<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a><a class="tour__tab" href="#editor" data-tour-tab data-no-swup><span class="tour__n">03</span>The editor<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a><a class="tour__tab" href="#history" data-tour-tab data-no-swup><span class="tour__n">04</span>History<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a><a class="tour__tab" href="#hatch" data-tour-tab data-no-swup><span class="tour__n">05</span>Hatch<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a></nav>
-  <div class="tour__step" data-tour-controls hidden><button class="tour__btn" type="button" data-tour-prev aria-label="Previous slide"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"/></svg></button><span class="tour__count" data-tour-count aria-hidden="true">01 / 05</span><button class="tour__btn" type="button" data-tour-next aria-label="Next slide"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg></button></div>
+  <nav class="tour__tabs" aria-label="Workspace features" data-tour-tabs><a class="tour__tab" href="#browser" data-tour-tab data-no-swup><span class="tour__n">01</span>The browser<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a><a class="tour__tab" href="#workspace" data-tour-tab data-no-swup><span class="tour__n">02</span>Pages &amp; shells<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a><a class="tour__tab" href="#editor" data-tour-tab data-no-swup><span class="tour__n">03</span>The editor<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a><a class="tour__tab" href="#kept" data-tour-tab data-no-swup><span class="tour__n">04</span>Kept pages<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a><a class="tour__tab" href="#home" data-tour-tab data-no-swup><span class="tour__n">05</span>Your home<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a><a class="tour__tab" href="#history" data-tour-tab data-no-swup><span class="tour__n">06</span>History<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a><a class="tour__tab" href="#hatch" data-tour-tab data-no-swup><span class="tour__n">07</span>Hatch<i class="tour__progress" data-tour-progress aria-hidden="true"></i></a></nav>
+  <div class="tour__step" data-tour-controls hidden><button class="tour__btn" type="button" data-tour-prev aria-label="Previous slide"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"/></svg></button><span class="tour__count" data-tour-count aria-hidden="true">01 / 07</span><button class="tour__btn" type="button" data-tour-next aria-label="Next slide"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg></button></div>
  </div>
  <div class="tour__slides" data-tour-slides>
-  <article class="tour__slide" id="home" data-tour-slide>
-   <figure class="tour__shot"><a href="../assets/films/nus-home-project.png" target="_blank" rel="noopener" aria-label="View the full-size home capture"><img src="../assets/films/nus-home-project.png" width="2105" height="1246" fetchpriority="high" decoding="async" alt="The nus Home prompt with three saved commands and links, the Hello World project, and its resumable development server."></a><figcaption>Hello World, with its saved commands and development server ready to return to.</figcaption></figure>
+  <article class="tour__slide" id="browser" data-tour-slide>
+   <figure class="tour__shot"><a href="../assets/films/nus-browser-find.png" target="_blank" rel="noopener" aria-label="View the full-size browser capture"><img src="../assets/films/nus-browser-find.png" width="2208" height="1434" fetchpriority="high" decoding="async" alt="The working Hello World page in the native nus browser, with its address row and Find bar searching for Hello. The page match is highlighted and the counter reads count is 1."></a><figcaption>Find in the live page, with the browser controls in reach.</figcaption></figure>
    <div class="tour__copy">
-    <p class="cap">01 / Your home</p>
-    <h2>A place to begin.<br>A place to come back to.</h2>
-    <p>Start at the prompt, open a project, or resume a session. Saved commands, links, and prompts keep the things you use close at hand.</p><p>The background, type, colours, and suggestions are yours to choose. Keep it quiet, or give your workspace a little personality.</p>
-    
-    
-    <a class="tour__more" href="../docs/product/">Explore the product guide ↗</a>
+    <p class="cap">01 / The browser</p>
+    <h2>A real browser.<br>Right here.</h2>
+    <p>Read a page, use a web app, or try what you’re building. Chromium pages have their own address row, navigation, search, downloads, and developer tools.</p><p>Find starts in the page. Widen its scope to the tab, window, or all of nus when the answer might be somewhere else.</p>
+
+
+    <a class="tour__more" href="../docs/product/#the-browser">Explore the browser ↗</a>
    </div>
   </article>
   <article class="tour__slide" id="workspace" data-tour-slide>
-   <figure class="tour__shot"><a href="../assets/films/nus-hero-poster.png" target="_blank" rel="noopener" aria-label="View the full-size workspace capture"><img src="../assets/films/nus-hero-poster.png" width="2240" height="1520" loading="lazy" decoding="async" alt="The Hello World development server in a real nus terminal beside its working browser page, with the native nus topbar retained."></a><figcaption>The running server and its working page, in the same window.</figcaption></figure>
+   <figure class="tour__shot"><a href="../assets/films/nus-workspace-page.png" target="_blank" rel="noopener" aria-label="View the full-size workspace capture"><img src="../assets/films/nus-workspace-page.png" width="2240" height="1520" loading="lazy" decoding="async" alt="The working Hello World browser page occupies most of a native nus window, beside a narrow terminal running its development server. The native window topbar is retained."></a><figcaption>Give the page room; keep its running server beside it.</figcaption></figure>
    <div class="tour__copy">
-    <p class="cap">02 / Shells &amp; pages</p>
-    <h2>Your shell,<br>with a view.</h2>
-    <p>Keep your shell configuration, aliases, and command-line tools. Start a server and open its page beside the output. Keep documentation nearby while a command runs.</p><p>Tabs, splits, and named Spaces let each project keep its own arrangement.</p>
-    <ul class="tour__points"><li><b>A real terminal.</b>Your commands run in a shell. Follow their output, select text, and return to the session when you need it.</li><li><b>A browser beside it.</b>Chromium pages have navigation, search, downloads, and developer tools. Open a detected localhost address straight from the shell.</li><li><b>Room for the whole job.</b>Keep the server, documentation, and assistant in the same project. Move between them without losing your place.</li></ul>
-    
-    
+    <p class="cap">02 / Pages &amp; shells</p>
+    <h2>Give the page<br>room to work.</h2>
+    <p>Start a server and open its page beside the output. Give the page most of the window, keep documentation nearby, or let either pane take the whole view.</p><p>Tabs, splits, and named Spaces let each project keep its own arrangement. Your shell configuration, aliases, and command-line tools come with you.</p>
+    <ul class="tour__points"><li><b>The page in front.</b>Use the actual site while its server keeps running beside it.</li><li><b>A shell within reach.</b>Follow the output, select text, and return to the command when you need it.</li><li><b>Room for the whole job.</b>Keep the server, documentation, and assistant in the same project. Move between them without losing your place.</li></ul>
+
+
    </div>
   </article>
   <article class="tour__slide" id="editor" data-tour-slide>
-   <figure class="tour__shot"><a href="../assets/films/nus-editor-detail.png" target="_blank" rel="noopener" aria-label="View the full-size editor capture"><img src="../assets/films/nus-editor-detail.png" width="1433" height="957" loading="lazy" decoding="async" alt="The real nus editor showing main.js, the seven lines that make the Hello World counter work. The file tab remains visible; the window topbar is omitted."></a><figcaption>The main.js source behind the counter, in the native editor.</figcaption></figure>
+   <figure class="tour__shot"><a href="../assets/films/nus-source-page.png" target="_blank" rel="noopener" aria-label="View the full-size editor capture"><img src="../assets/films/nus-source-page.png" width="2208" height="1434" loading="lazy" decoding="async" alt="The native nus editor shows the complete main.js counter source beside its working Hello World browser page. The file tab and browser address row remain visible; the window topbar is omitted."></a><figcaption>The source and its working page, side by side.</figcaption></figure>
    <div class="tour__copy">
     <p class="cap">03 / The editor</p>
-    <h2>From the output<br>to the source.</h2>
-    <p>Open a file beside the terminal. Follow a file-and-line reference from command output into the editor, then return to the running shell.</p><p>Keep the source close to the page you’re building, with dedicated text selection and editing controls.</p>
-    
-    
+    <h2>Source and result.<br>Side by side.</h2>
+    <p>Open a file beside the page you’re building. The source and the working result stay in the same window, with dedicated text selection and editing controls.</p><p>Follow a file-and-line reference from command output into the editor, then return to the running session.</p>
+
+
     <a class="tour__more" href="../docs/product/">Read about the editor ↗</a>
+   </div>
+  </article>
+  <article class="tour__slide" id="kept" data-tour-slide>
+   <figure class="tour__shot"><a href="../assets/films/nus-kept-pages.png" target="_blank" rel="noopener" aria-label="View the full-size kept capture"><img src="../assets/films/nus-kept-pages.png" width="2208" height="790" loading="lazy" decoding="async" alt="The native nus Kept collection lists the saved Hello World page, with its title, localhost address and actions to open or manage the bookmark."></a><figcaption>A saved page, ready to find and open again.</figcaption></figure>
+   <div class="tour__copy">
+    <p class="cap">04 / Kept pages</p>
+    <h2>Keep the page.<br>Find it again.</h2>
+    <p>Save the page in front with its title and address. The Kept collection gives useful pages a place to return to, with actions to reopen the original, pin it, or mark it to read.</p><p>Keep a local project page close while you work, alongside the references you want to revisit.</p>
+
+
+
+   </div>
+  </article>
+  <article class="tour__slide" id="home" data-tour-slide>
+   <figure class="tour__shot"><a href="../assets/films/nus-home-links.png" target="_blank" rel="noopener" aria-label="View the full-size home capture"><img src="../assets/films/nus-home-links.png" width="2105" height="1246" loading="lazy" decoding="async" alt="The nus Home prompt with a saved Hello World link first, saved project commands, the Hello World project and a resumable session."></a><figcaption>The page, project commands and a session to return to.</figcaption></figure>
+   <div class="tour__copy">
+    <p class="cap">05 / Your home</p>
+    <h2>A place to begin.<br>A place to come back to.</h2>
+    <p>Start at the prompt, open a project, or resume a session. Saved links, commands, and prompts keep the things you use close at hand.</p><p>The background, type, colours, and suggestions are yours to choose. Keep it quiet, or give your workspace a little personality.</p>
+
+
+    <a class="tour__more" href="../docs/product/">Explore the product guide ↗</a>
    </div>
   </article>
   <article class="tour__slide" id="history" data-tour-slide>
    <figure class="tour__shot"><a href="../assets/films/nus-history-detail.png" target="_blank" rel="noopener" aria-label="View the full-size history capture"><img src="../assets/films/nus-history-detail.png" width="1176" height="1208" loading="lazy" decoding="async" alt="The Hello World session in nus command history, with command search, actual output and the scrollable map at the right."></a><figcaption>The commands, their output, and a map of the Hello World session.</figcaption></figure>
    <div class="tour__copy">
-    <p class="cap">04 / History</p>
+    <p class="cap">06 / History</p>
     <h2>Find your<br>way back.</h2>
     <p>A session is more than its last screen. Move through commands and their output, find an earlier result, or follow a recording when the sequence matters.</p><p>Keep useful commands in your saved collection so you can find them again without digging through a whole session.</p>
     <ul class="tour__points"><li><b>Commands &amp; output</b>Navigate the work by command, with its output close at hand.</li><li><b>Session playback</b>Revisit a recorded session in order, at your own pace.</li><li><b>Saved commands</b>Keep recurring commands, links, and prompts together.</li></ul>
-    
-    
+
+
    </div>
   </article>
   <article class="tour__slide" id="hatch" data-tour-slide>
    <figure class="tour__shot"><a href="../assets/films/nus-hatch-project.png" target="_blank" rel="noopener" aria-label="View the full-size hatch capture"><img src="../assets/films/nus-hatch-project.png" width="1920" height="936" loading="lazy" decoding="async" alt="The real nus Hatch overview showing the Hello World development server running and its source check finished."></a><figcaption>The development server is running; the project checks have finished.</figcaption></figure>
    <div class="tour__copy">
-    <p class="cap">05 / Hatch</p>
+    <p class="cap">07 / Hatch</p>
     <h2>Ongoing work.<br>Within reach.</h2>
     <p>Bring up an overview of terminal work across your Spaces. See what’s running, finished, or needs your attention, then return to the original session.</p><p>Use a dropdown from the top edge or a centred panel. Move the same shell into the full workspace when you need more room.</p>
-    
+
     <p class="small">Shortcuts, window placement, and focus behaviour vary by platform and desktop. Native-platform testing is ongoing.</p>
-    
+
    </div>
   </article>
  </div>
