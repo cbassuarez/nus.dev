@@ -35,4 +35,6 @@ Publish the failure evidence and close the branch of investigation. Do not spend
 
 This experiment must not hold ordinary nus distribution hostage. A usable release with a clearly stated extension limitation remains a useful deliverable.
 
+The reviewed {{reviewedTag}} release packages the pinned CEF runtime on all three platforms and exercises browser rendering and failure recovery. That work does not establish that a source-built extension patch has been attempted or that Chrome extensions work. The source-build experiment remains proposed.
+
 [Source proposal and known barriers]({{source}}/docs/EXTENSIONS.md) · [CEF integration]({{source}}/spikes/composite/src/browser.rs)

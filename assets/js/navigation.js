@@ -7,7 +7,7 @@ import {mountFilms} from './films.js?v=hello-world-1';
 import {mountOrbit} from './orbit.js?v=swup-1';
 import {mountDownloads} from './releases.js?v=tiles-1';
 import {mountInstall} from './install.js?v=hero-install-1';
-import {mountReview} from './review.js?v=swup-1';
+import {mountReview} from './review.js?v=review-20261004';
 import {mountTour} from './tour.js?v=tour-1';
 
 let cleanups=[];

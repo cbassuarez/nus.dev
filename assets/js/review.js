@@ -1,6 +1,6 @@
 /* Review Room progressive enhancements. The packet remains complete without JavaScript. */
 import {API} from "./releases.js?v=swup-1";
-import {reviewReleaseRecord,packageCards,releaseSummary,distributionNotice,distributionStatus} from "./review-releases.js?v=swup-1";
+import {reviewReleaseRecord,packageCards,releaseSummary,distributionNotice,distributionStatus} from "./review-releases.js?v=review-20261004";
 import {feel} from "./feel.js?v=swup-1";
 
 function wireCopy(root) {

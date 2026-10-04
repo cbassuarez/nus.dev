@@ -2,6 +2,8 @@
 
 The figures above come from the September 23 M4 Pro measurements linked in the benchmark report. They are not fresh measurements of every package currently published. The report identifies its hardware, fixture and measurement endpoints.
 
+The [release checks](../releases/#reviewed-release) and [current walkthrough](../try/) cover functional behavior of {{reviewedTag}}. Neither reruns these timing or memory measurements. Benchmark workflow success is also separate from a new native performance sample.
+
 ## Three sizes, not one
 
 Compressed download size, installed application size and runtime memory are different measurements. The [release record](../releases/) derives compressed sizes from the published assets. The source performance report separately describes the installed bundle and RSS measurements. A {{figure:mac.download}} MiB download does not describe its memory footprint.

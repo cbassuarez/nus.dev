@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "checked_at": "2026-10-04",
+  "tag": "v0.0.2-preview.17",
+  "revision": "a81adee496f3dfbc6749e2bb3b3f9a966e36acbc",
+  "checks": [
+    {
+      "name": "Release publication",
+      "result": "Passed",
+      "scope": "Three platform packages, Windows installer, Debian package, release manifest and SHA-256 sums published.",
+      "url": "https://github.com/cbassuarez/nus/actions/runs/37227526637"
+    },
+    {
+      "name": "Windows signing and lifecycle",
+      "result": "Passed",
+      "scope": "Azure Authenticode signatures on five executable payloads and the installer; signed browser/keyword checks; install, upgrade, native launch, normal uninstall, reinstall with the same profile, and complete cleanup.",
+      "url": "https://github.com/cbassuarez/nus/actions/runs/37227526637/job/111516093210"
+    },
+    {
+      "name": "macOS packaged behavior",
+      "result": "Passed",
+      "scope": "macOS 15 arm64 runner: release-mode tests, loader, browser rendering, timeout, crash, hang, retry and keyword regression. Ad-hoc signing; no Apple notarization.",
+      "url": "https://github.com/cbassuarez/nus/actions/runs/37227526637/job/111510200882"
+    },
+    {
+      "name": "Linux packaged behavior",
+      "result": "Passed",
+      "scope": "Ubuntu 22.04 x86-64 runner: release-mode tests, loader, browser and keyword regressions, Debian installation, launch and complete removal.",
+      "url": "https://github.com/cbassuarez/nus/actions/runs/37227526637/job/111510200804"
+    },
+    {
+      "name": "Workspace CI",
+      "result": "Passed",
+      "scope": "Root-workspace checks on macOS, Windows and Linux at the reviewed source revision.",
+      "url": "https://github.com/cbassuarez/nus/actions/runs/37227525505"
+    },
+    {
+      "name": "Profile and component compatibility",
+      "result": "Passed",
+      "scope": "Compatibility workflow at the reviewed source revision; this is not universal backward compatibility.",
+      "url": "https://github.com/cbassuarez/nus/actions/runs/37227525502"
+    },
+    {
+      "name": "Verified output retention",
+      "result": "Passed",
+      "scope": "The bounded PTY ring invariant and mutation check; not a proof of the entire application or a performance measurement.",
+      "url": "https://github.com/cbassuarez/nus/actions/runs/37227525497"
+    },
+    {
+      "name": "Local accelerated Mac split capture",
+      "result": "Open",
+      "scope": "On the local macOS 15.6 capture machine, the preview 17 accelerated split rendered with a black strip and clipped page content, and its resized-paint wait did not finish. Software-paint capture passed. The cause is not yet established; the packaged CI browser regression covers its own fixture.",
+      "url": "../../assets/review/accelerated-split.png"
+    }
+  ],
+  "integrations": [
+    {
+      "name": "Homebrew tap",
+      "result": "Skipped",
+      "scope": "Repository credential unavailable; the tap was unchanged.",
+      "url": "https://github.com/cbassuarez/nus/actions/runs/37227526637/job/111517880724"
+    },
+    {
+      "name": "winget submission",
+      "result": "Skipped",
+      "scope": "Repository credential unavailable; no manifests submitted.",
+      "url": "https://github.com/cbassuarez/nus/actions/runs/37227526637/job/111517880746"
+    },
+    {
+      "name": "apt repository",
+      "result": "Skipped",
+      "scope": "Signing credential unavailable; the rolling repository was unchanged. The published .deb remains available.",
+      "url": "https://github.com/cbassuarez/nus/actions/runs/37227526637/job/111517811524"
+    },
+    {
+      "name": "Site release snapshot",
+      "result": "Passed separately",
+      "scope": "Automatic release dispatch lacked its credential. A manual dispatch rebuilt and tested the snapshot; Pages deployment then succeeded.",
+      "url": "https://github.com/cbassuarez/nus.dev/actions/runs/37230206827"
+    }
+  ],
+  "limits": "Maintainer-operated automated checks on named CI runners. They do not establish independent security review, physical display latency, broad hardware acceptance or Apple notarization. Green optional jobs may have skipped their underlying integration."
+}

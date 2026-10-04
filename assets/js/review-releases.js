@@ -19,7 +19,14 @@ export function reviewReleaseRecord(releases,checkedAt=null) {
 }
 export function distributionStatus(record) {
   const desktop=record.packages.filter(x=>x.id.startsWith('macos')||x.id.startsWith('windows'));
-  if(desktop.some(x=>['unsigned','ad-hoc'].includes(x.pkg?.signing)))return {
+  const mac=desktop.find(x=>x.id.startsWith('macos'))?.pkg?.signing;
+  const win=desktop.find(x=>x.id.startsWith('windows'))?.pkg?.signing;
+  if(win==='authenticode' && ['ad-hoc','unsigned'].includes(mac))return {
+    label:'Windows signed · macOS notarization open',
+    text:'Windows packages are Authenticode signed. macOS remains a preview.',
+    detail:'The Mac package lacks Developer ID distribution and Apple notarization. Linux packages provide SHA-256 checksums. Funding supports the remaining distribution work, independent security research and broader platform validation. Signing establishes publisher identity, not a guarantee of safety.'
+  };
+  if(desktop.length===2 && desktop.every(x=>['unsigned','ad-hoc'].includes(x.pkg?.signing)))return {
     label:'Unsigned preview · seeking distribution funding',
     text:'The previews are unsigned for trusted distribution.',
     detail:'Windows has no Authenticode signature; macOS uses an ad-hoc signature and is not Apple-notarized. Funding would pay for verified publisher signing and notarization, alongside independent security research and packaged-platform testing.'
@@ -34,10 +41,7 @@ export function distributionNotice(record) {
   const state=distributionStatus(record);
   // The exact labels remain visible even if only one platform changes signing.
   const labels=record.packages.filter(x=>x.pkg).map(x=>`${x.os}: ${signingLabel(x.pkg.signing)}`).join(' · ');
-  const unsigned=record.packages.filter(x=>['unsigned','ad-hoc'].includes(x.pkg?.signing)).map(x=>x.os);
-  let detail=state.detail;
-  if(unsigned.length && unsigned.length<2) detail=`${unsigned.join(' and ')} still lacks verified publisher distribution. Funding supports signing, independent security research and packaged-platform testing. Signing establishes publisher identity, not a guarantee of safety.`;
-  return `<p><strong>${state.text}</strong> ${escape(detail)}</p><p class="small dim">${escape(labels||'No package signing record is available.')}</p>`;
+  return `<p><strong>${state.text}</strong> ${escape(state.detail)}</p><p class="small dim">${escape(labels||'No package signing record is available.')}</p>`;
 }
 export function packageCards(record) {
   if(!record.release)return '<p class="review-callout">No verified package is available in this snapshot. <a href="https://github.com/cbassuarez/nus/releases">Inspect Releases ↗</a></p>';

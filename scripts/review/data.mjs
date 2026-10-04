@@ -1,19 +1,24 @@
 import {readFileSync} from 'node:fs';
 import {reviewReleaseRecord} from '../../assets/js/review-releases.js';
 const latest=reviewReleaseRecord(JSON.parse(readFileSync(new URL('../../assets/releases.json',import.meta.url),'utf8')).releases);
+export const EVIDENCE=JSON.parse(readFileSync(new URL('../../assets/review/release-evidence.json',import.meta.url),'utf8'));
+if(EVIDENCE.schema!==1 || !/^v[\w.-]+$/.test(EVIDENCE.tag) || !/^[a-f0-9]{40}$/.test(EVIDENCE.revision))throw new Error('Invalid review evidence');
 // Proposal amounts are spending ceilings, not purchase quotes or an active bounty.
 export const REVIEW = {
-  date: '2026-09-21',
-  edition: '2026.09',
+  date: '2026-10-04',
+  edition: '2026.10',
   request: 5000,
   releaseTag: latest.release?.tag_name || null,
-  evidenceRevision: latest.revision || '1c58b5a51185a65b60141f9f45c6b6af151fb9e8',
+  reviewedTag: EVIDENCE.tag,
+  evidenceRevision: EVIDENCE.revision,
+  securityDate: '2026-09-20',
+  securityRevision: '1c58b5a51185a65b60141f9f45c6b6af151fb9e8',
   measurementRevision: '1c58b5a51185a65b60141f9f45c6b6af151fb9e8',
   budget: [
     {id:'bounties', label:'Independent security research / bounties', amount:1800, basis:'Capped reserve', purpose:'An invited round of adversarial research on browser, assistant, shell, local-control and private-session boundaries. Researcher payouts and any payment fees share this ceiling. This is proposed funding, not an active public bounty or guaranteed audit.'},
     {id:'cef', label:'Source-built CEF investigation', amount:900, basis:'Compute and storage allowance', purpose:'One initial platform and a pinned CEF/Chromium version: source checkout, clean build, limited rebuilds, a small extension-compatibility test set and a published maintenance assessment. Partial and negative results are valid outputs.'},
     {id:'automated', label:'Automated security analysis', amount:500, basis:'Metered usage ceiling', purpose:'Model/API and sandbox compute for adversarial review, reproducing suspected issues, reviewing fixes and adding regression tests. Maintainer validation remains necessary; this does not buy a security certification.'},
-    {id:'windows', label:'Windows signing / two-year reserve', amount:593, basis:'Provisional signing allowance', purpose:'Reserve for individual code-signing validation and cloud-backed signing. Confirm provider eligibility, current certificate and service prices, renewal terms and required signing volume before purchase.'},
+    {id:'windows', label:'Windows signing / continued distribution', amount:593, basis:'Two-year planning reserve', purpose:'Authenticode signing is working in the reviewed release. This reserve supports continued cloud signing and validation costs; it is not a claim that initial setup is still missing or that this amount has been spent. Confirm actual charges, renewal terms and signing volume before committing funds.'},
     {id:'validation', label:'Cross-platform validation', amount:300, basis:'Test-infrastructure allowance', purpose:'Clean-machine and virtualized checks of installation, permissions, browser behavior and packaged-runtime regressions on supported platforms. Existing hardware and free CI are used first.'},
     {id:'domain', label:'Project domain / three years', amount:270, basis:'Maintainer quote: $90/year wholesale', purpose:'Three years of the intended nus.dev identity. Registration availability, retail markup and renewal price must be checked at checkout. The site currently remains at cbassuarez.com/nus.dev via cbassuarez.github.io/nus.dev.'},
     {id:'apple', label:'Apple distribution / two years', amount:198, basis:'Planning basis: $99/year', purpose:'Apple Developer Program membership for Developer ID distribution and notarization. Enrollment and successful signing are separate from a completed native build.'},

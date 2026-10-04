@@ -3,9 +3,10 @@ import assert from 'node:assert/strict';
 import {readFileSync,readdirSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {join} from 'node:path';
-import {REVIEW,validateBudget} from '../scripts/review/data.mjs';
+import {createHash} from 'node:crypto';
+import {REVIEW,EVIDENCE,validateBudget} from '../scripts/review/data.mjs';
 import {REVIEW_PAGES} from '../scripts/review/manifest.mjs';
-import {releaseRecord,releasePackages} from '../scripts/review/components.mjs';
+import {releaseRecord,releasePackages,releaseEvidence} from '../scripts/review/components.mjs';
 import {SITE} from '../scripts/layout.mjs';
 import {distributionStatus} from '../assets/js/review-releases.js';
 import {signingLabel} from '../assets/js/releases.js';
@@ -57,10 +58,16 @@ test('review body remains complete without client JavaScript',()=>{
  for(const x of REVIEW.budget)assert.ok(funding.includes(`id="budget-${x.id}"`));
  assert.ok(funding.includes('$5,000'));assert.ok(funding.includes('not active'));
 });
-test('review release record follows the latest published snapshot with matching source',()=>{
+test('downloads follow the latest published snapshot while review evidence remains pinned',()=>{
  const snapshot=JSON.parse(read('assets/releases.json')),record=releaseRecord(snapshot);
  assert.equal(record.release.tag_name,REVIEW.releaseTag);
- assert.equal(record.revision,REVIEW.evidenceRevision);
+ assert.equal(REVIEW.evidenceRevision,EVIDENCE.revision);
+ assert.equal(REVIEW.reviewedTag,EVIDENCE.tag);
+ const fixed=releaseEvidence(2);
+ assert.ok(fixed.includes(EVIDENCE.tag));
+ assert.ok(fixed.includes(EVIDENCE.revision));
+ assert.ok(fixed.includes('Skipped'));
+ assert.ok(!fixed.includes('v99.0.0-preview.1'));
  const absent=releaseRecord({releases:[]});assert.equal(absent.release,null);
  assert.ok(!releasePackages(absent).includes('/releases/download/'));
  const damaged=structuredClone(snapshot);
@@ -82,12 +89,41 @@ test('no new automatic third-party runtime or video autoplay',()=>{
 });
 
 
-test('overview leads with unsigned distribution and specifications before film',()=>{
+test('overview leads with current distribution and a short primary review path',()=>{
  const html=read('review/index.html');
  assert.ok(html.indexOf(distributionStatus(releaseRecord(JSON.parse(read('assets/releases.json')))).label)<html.indexOf('<h1>'));
- assert.ok(html.indexOf('Specifications')<html.indexOf('<video'));
+ assert.ok(html.includes('What ships today'));
+ assert.ok(html.includes('What has been checked'));
+ assert.deepEqual(REVIEW_PAGES.filter(x=>x.primary).map(x=>x.slug),['','try','releases','funding']);
  assert.ok(html.includes('one-time proposal'));
  assert.ok(html.includes('data-review-signing'));
+});
+test('review records separate narrative, release, security and measurement dates',()=>{
+ for(const file of reviewFiles){const html=read(file);
+  assert.ok(html.includes('Dates and scope of this packet'),file);
+  assert.ok(html.includes(REVIEW.date),file);
+  assert.ok(html.includes(REVIEW.securityDate),file);
+  assert.ok(html.includes(REVIEW.evidenceRevision.slice(0,7)),file);
+ }
+ assert.ok(read('review/security/index.html').includes(`/blob/${REVIEW.securityRevision}/docs/RELEASE_AUDIT_2026-09-20.md`));
+ assert.ok(read('review/milestones/index.html').includes('Distribution baseline · partial'));
+ assert.ok(read('review/try/index.html').includes('nus uninstall --everything'));
+});
+test('published walkthrough identifies its exact package and preserves native PNG bytes',()=>{
+ const take=JSON.parse(read('assets/review/walkthrough.json'));
+ assert.equal(take.tag,EVIDENCE.tag);assert.equal(take.revision,EVIDENCE.revision);
+ assert.match(take.method,/software-paint/);
+ assert.deepEqual(take.capture_pixels,[2560,1700]);
+ const release=releaseRecord(JSON.parse(read('assets/releases.json'))).packages.find(x=>x.id==='macos-arm64');
+ // When downloads move on, provenance still belongs to the captured package.
+ if(release.release.tag_name===take.tag)assert.equal(take.archive_sha256,release.pkg.hash);
+ for(const x of take.captures){
+  const bytes=readFileSync(join(ROOT,'assets/review',x.file));
+  assert.equal(createHash('sha256').update(bytes).digest('hex'),x.sha256);
+  assert.equal(x.sha256,x.master_sha256);
+  assert.equal(bytes.readUInt32BE(16),2560);assert.equal(bytes.readUInt32BE(20),1700);
+ }
+ for(const name of ['split','find','kept','workspace'])assert.ok(read('review/try/index.html').includes(`/assets/review/${name}.png`));
 });
 test('historical measurements remain pinned when downloads advance',()=>{
  const html=read('review/performance/index.html');

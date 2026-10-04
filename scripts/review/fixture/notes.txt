@@ -1,0 +1,11 @@
+Fieldnotes / review
+
+One local task: a shell, a page and a file.
+
+Review checklist
+  Start the local server.
+  Open its page beside the shell.
+  Find review in this file.
+  Keep the page and arrange the workspace.
+
+These are disposable notes for the published-build walkthrough.

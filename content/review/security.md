@@ -37,7 +37,13 @@ The unusual part of nus is also the risky part: web pages, shells and assistants
 
 This is a **historical, maintainer-led review record**. Its original scope and open release gates remain relevant. Publishing a package does not retroactively prove every listed platform test passed. A funded round should tie fresh results to one fixed packaged candidate.
 
-[Full audit, including remaining gates]({{source}}/docs/RELEASE_AUDIT_2026-09-20.md)
+[September 20 audit, with its original scope and remaining gates]({{securitySource}}/docs/RELEASE_AUDIT_2026-09-20.md)
+
+## Current release evidence
+
+**{{reviewedTag}}** has linked packaged browser and keyword regression results on all three platforms, Windows signature and installer lifecycle checks, profile compatibility checks and a verified bounded PTY output-retention invariant. The [evidence page](../releases/#reviewed-release) names each procedure and runner.
+
+These are maintainer-operated automated checks. They do not establish a new independent audit of assistant context, private sessions, native bridges or the full browser sandbox. The PTY proof covers retained bytes; it does not prove complete transport, isolation, liveness or speed.
 
 ## Proposed independent round
 

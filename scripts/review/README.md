@@ -5,7 +5,8 @@ This is a parallel unlisted collection in the existing static site. Run
 with source changes. No framework, package install or client CMS is required.
 
 - `manifest.mjs` defines all eleven routes and both navigation forms.
-- `data.mjs` owns proposal amounts, edition and the selected app release.
+- `data.mjs` owns proposal amounts, edition and fixed narrative/evidence revisions.
+- `assets/review/release-evidence.json` owns the reviewed candidate, scoped workflow results and integration outcomes. Inspect runs and logs before updating it; green optional jobs can have skipped their work.
 - `components.mjs` reuses the public release parser and formats evidence.
 - `layout.mjs` provides review chrome to the shared `scripts/layout.mjs` page shell.
 - `build.mjs` combines structured pages and `content/review/*.md`.
@@ -28,7 +29,7 @@ URLs remain public; do not store credentials, private reports or payment records
 
 Use `{{budget:bounties}}`, `{{budget:cef}}`, `{{budget:automated}}` and
 `{{request}}` in Markdown instead of duplicating amounts. `{{source}}` expands
-to the packet's pinned application source revision. Unknown tokens fail the build.
+to the packet's pinned application source revision. `{{securitySource}}` keeps the historical audit's source; `{{reviewedTag}}` names the fixed candidate. Unknown tokens fail the build.
 
 Refresh `assets/releases.json` through `npm run releases`. The latest published
 release is selected automatically; each platform keeps its newest validated package
@@ -37,11 +38,11 @@ check on entry, when returning after a minute, and every five minutes while visi
 An unavailable API leaves the displayed packages intact with an explicit status.
 The release-snapshot workflow rebuilds and tests the review output before committing
 it, so the no-JavaScript fallback advances too. Historical performance evidence uses
-`REVIEW.measurementRevision` and never advances with the download snapshot.
+`REVIEW.measurementRevision` and never advances with the download snapshot. Narrative, fixed release checks, captures, security audit and runtime measurements have separate dates. A newer download does not inherit older checks.
 
-The present movie is an existing paced recording of the app building this site,
-not a new full workflow demo or latency test. Budget rows are proposed ceilings;
-no bounty program or third-party approval is implied.
+The review walkthrough uses native stills of the published preview 17 Mac package. `capture.py` verifies the supplied archive against its published manifest and checks that the captured executable matches the archive. It copies `fixture/` into a disposable project and uses isolated profile/shell state; no app rebuild is involved. Run it with `--app`, `--archive`, `--manifest` and a fresh `--out`. Original PNG exports and `walkthrough.json` belong in `assets/review/`; keep original PNGs and logs locally. Inspect every export before publishing. The native harness skips onboarding, uses Chromium software-paint upload and scripts the task; stills are not timing or cross-platform acceptance evidence. Earlier movies remain source history on public product pages.
+
+Budget rows are proposed ceilings; existing Windows signing is operational and its allocation is a continuation reserve. No spending, grant award, active bounty program or third-party approval is implied.
 
 ## Checks
 

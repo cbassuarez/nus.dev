@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "recorded_at": "2026-10-04",
+  "tag": "v0.0.2-preview.17",
+  "revision": "a81adee496f3dfbc6749e2bb3b3f9a966e36acbc",
+  "platform": "macOS / Apple silicon",
+  "archive": "nus-0.0.2-preview.17-macos-arm64.zip",
+  "archive_sha256": "da322669f557cd660b48580063a0d67d586c983238a31c244deb0dd3e6867f87",
+  "app_sha256": "704cc2602cc589d6b05c1be18421e6dfd6ecd128e73a0e4efd24ae9e0015e61b",
+  "logical_size": [
+    1280,
+    850
+  ],
+  "capture_pixels": [
+    2560,
+    1700
+  ],
+  "method": "NUS_SHOT native renderer; Chromium software-paint upload; scripted local task; original PNGs with no retouching",
+  "limits": "Disposable fixture and profile; onboarding skipped; reduced motion; NUS_SOFTWARE_PAINT=1. Stills demonstrate UI state, not timing, default accelerated rendering, full event-pump acceptance or cross-platform parity.",
+  "captures": [
+    {
+      "name": "shell",
+      "file": "shell.png",
+      "sha256": "00681bc9ce734f68f0439adb14d530612e7d681ec99ff534506a21d5ce093979",
+      "master_sha256": "00681bc9ce734f68f0439adb14d530612e7d681ec99ff534506a21d5ce093979"
+    },
+    {
+      "name": "split",
+      "file": "split.png",
+      "sha256": "7262e36d6948895a0c6aea48f8034d70f71a5c209aa066d858b24adfc28f77e9",
+      "master_sha256": "7262e36d6948895a0c6aea48f8034d70f71a5c209aa066d858b24adfc28f77e9"
+    },
+    {
+      "name": "find",
+      "file": "find.png",
+      "sha256": "2e4840abb827dec8fbc06f225982d4bc432b0991e816a7e50394f557516db0cc",
+      "master_sha256": "2e4840abb827dec8fbc06f225982d4bc432b0991e816a7e50394f557516db0cc"
+    },
+    {
+      "name": "kept",
+      "file": "kept.png",
+      "sha256": "efc7920d5352f5cfa838abafd003456af3e0929e1488bdfe8522d9b00a5023b0",
+      "master_sha256": "efc7920d5352f5cfa838abafd003456af3e0929e1488bdfe8522d9b00a5023b0"
+    },
+    {
+      "name": "workspace",
+      "file": "workspace.png",
+      "sha256": "17fb42faa89488189f2ff752768b70ee7fd58521ad6a3c7ac8b6eaa8e20725a4",
+      "master_sha256": "17fb42faa89488189f2ff752768b70ee7fd58521ad6a3c7ac8b6eaa8e20725a4"
+    }
+  ]
+}

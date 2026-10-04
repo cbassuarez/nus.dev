@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {reviewReleaseRecord,packageCards,releaseSummary,distributionStatus} from '../assets/js/review-releases.js';
+import {reviewReleaseRecord,packageCards,releaseSummary,distributionStatus,distributionNotice} from '../assets/js/review-releases.js';
 const releases=JSON.parse(readFileSync(new URL('../assets/releases.json',import.meta.url))).releases;
 const original=releases[0];
 function next(){
@@ -40,7 +40,18 @@ test('distribution lead reflects actual signing rather than permanently claiming
  const record=reviewReleaseRecord([original]);
  record.packages.forEach(x=>{if(x.id.startsWith('macos'))x.pkg.signing='ad-hoc';if(x.id.startsWith('windows'))x.pkg.signing='unsigned';});
  assert.match(distributionStatus(record).label,/Unsigned/);
+ record.packages.find(x=>x.id.startsWith('windows')).pkg.signing='authenticode';
+ assert.match(distributionStatus(record).label,/Windows signed/);
+ assert.match(distributionNotice(record),/Windows packages are Authenticode signed/);
+ assert.ok(!distributionNotice(record).includes('The previews are unsigned'));
  record.packages.forEach(x=>{if(x.id.startsWith('macos'))x.pkg.signing='notarized';if(x.id.startsWith('windows'))x.pkg.signing='authenticode';});
  assert.match(distributionStatus(record).label,/Publisher-signed/);
  assert.match(distributionStatus(reviewReleaseRecord([])).label,/unverified/);
+});
+test('missing or unknown platform signing cannot inherit complete publisher distribution',()=>{
+ const record=reviewReleaseRecord([original]);
+ record.packages.find(x=>x.id.startsWith('macos')).pkg=null;
+ assert.match(distributionStatus(record).label,/unverified/);
+ record.packages.find(x=>x.id.startsWith('windows')).pkg.signing='unknown';
+ assert.match(distributionStatus(record).label,/unverified/);
 });

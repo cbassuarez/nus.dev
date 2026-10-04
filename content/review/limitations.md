@@ -20,7 +20,15 @@ Page text, files and command output can influence an assistant. Deliberate execu
 
 ## Signed production builds on every platform
 
-Read the signing label on each asset. An ad-hoc Mac preview is not notarized; an unsigned Windows preview is not Authenticode signed. A checksum is an integrity identifier, not a security audit.
+The reviewed Windows package and installer are Authenticode signed. The Mac package remains ad-hoc signed and is not Apple-notarized; Linux publishes SHA-256 checksums. Read each current asset's own label when downloads advance. Signing identifies a publisher; a checksum identifies bytes; neither is a security audit.
+
+## Default accelerated rendering in the current Mac split capture
+
+The local {{reviewedTag}} capture showed a black strip and clipped page content in the accelerated browser split; its resized-paint wait did not finish. The software-paint capture passed. The cause is not yet established. The [evidence record and original capture](../releases/#reviewed-release) retain this open observation; the walkthrough names its software-paint path explicitly.
+
+## Package-manager availability everywhere
+
+The reviewed release did not update Homebrew, winget or the rolling apt repository. Their optional jobs exited successfully without the required credentials. Direct release packages, including the Windows installer and Debian package, were published. A green job does not establish that a package-manager listing changed.
 
 ## No dependencies or licensing constraints
 

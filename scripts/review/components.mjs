@@ -1,6 +1,6 @@
 import {F,HOME,rounded,range} from '../benchmarks/facts.mjs';
 import {SITE, rel} from '../layout.mjs';
-import {REVIEW, money} from './data.mjs';
+import {REVIEW, EVIDENCE, money} from './data.mjs';
 import {escape as e} from './layout.mjs';
 import {reviewReleaseRecord,packageCards,releaseSummary} from '../../assets/js/review-releases.js';
 
@@ -11,6 +11,24 @@ export function ledger(rows) {
 }
 export function recordSummary(record) {return `<div data-review-record>${releaseSummary(record)}</div>`;}
 export function releasePackages(record) {return `<div data-review-packages>${packageCards(record)}</div>`;}
+export function freshness(depth) {
+  return `<details class="review-freshness"><summary>Dates and scope of this packet</summary>${ledger([
+    ['Narrative updated',REVIEW.date],
+    ['Reviewed candidate',`<a href="${SITE.repo}/releases/tag/${REVIEW.reviewedTag}">${REVIEW.reviewedTag}</a> · <a href="${SITE.repo}/commit/${REVIEW.evidenceRevision}">${REVIEW.evidenceRevision.slice(0,7)}</a> · results checked ${EVIDENCE.checked_at}`],
+    ['Security review',`${REVIEW.securityDate} · historical maintainer-led audit; independent review remains proposed`],
+    ['Runtime measurements',`${HOME.recorded_at.slice(0,10)} · M4 Pro fixture; measurements retain their original build identities`]
+  ])}<p>Downloads refresh independently. The reviewed candidate, captures, audit and measurements keep their own dates and source records.</p><a href="${rel(depth)}/assets/review/release-evidence.json">Release evidence record ↗</a></details>`;
+}
+export function releaseEvidence(depth) {
+  const table=rows=>`<div class="tablewrap"><table><thead><tr><th>Check</th><th>Result</th><th>Scope and evidence</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${e(x.name)}</td><td><span class="review-result">${e(x.result)}</span></td><td>${e(x.scope)} <a href="${e(x.url)}">Evidence ↗</a></td></tr>`).join('')}</tbody></table></div>`;
+  const base=`${SITE.repo}/releases/download/${EVIDENCE.tag}`;
+  return `<section id="reviewed-release"><h2>The reviewed candidate</h2><p>Results checked ${EVIDENCE.checked_at} for <a href="${SITE.repo}/releases/tag/${EVIDENCE.tag}">${EVIDENCE.tag}</a>, source <a class="review-inline-hash" href="${SITE.repo}/commit/${EVIDENCE.revision}">${EVIDENCE.revision}</a>. This record stays fixed when the download listing advances.</p><p><a href="${base}/release.json">Published release manifest ↗</a> · <a href="${base}/SHA256SUMS.txt">Package hashes ↗</a> · <a href="${rel(depth)}/assets/review/release-evidence.json">Review evidence JSON ↗</a></p>${table(EVIDENCE.checks)}<h2>Distribution integrations</h2><p>A green job can exit successfully without updating an integration. The logs for this candidate distinguish that outcome.</p>${table(EVIDENCE.integrations)}<div class="review-callout"><p>${e(EVIDENCE.limits)}</p></div></section>`;
+}
+export function walkthrough(depth,compact=false) {
+  const captures=[['split','A shell and its page','A real local Python server opens beside the shell that started it.'],['find','The file and Find','The project notes open in the editor; the shared Find bar searches for “review”.'],['kept','Return through Kept','The local page appears in the unified Kept library.'],['workspace','See the whole task','Orrery shows the shell/page pair, the file and Kept together.']];
+  const r=rel(depth);
+  return `<section class="review-tour" aria-label="Published-build walkthrough"><p class="cap">${REVIEW.reviewedTag} / macOS / ${REVIEW.date}</p>${(compact?captures.slice(0,1):captures).map(([name,title,text],i)=>`<figure><a href="${r}/assets/review/${name}.png" aria-label="Open full-size capture: ${title}"><img src="${r}/assets/review/${name}.png" alt="${e(title)} in nus ${REVIEW.reviewedTag}" width="2560" height="1700" loading="lazy"></a><figcaption><b>${String(i+1).padStart(2,'0')} / ${title}</b><span>${text}</span></figcaption></figure>`).join('')}<p class="small dim">Native captures of the published Apple-silicon package, hash-checked before capture. Scripted task, disposable profile, onboarding skipped, reduced motion, Chromium software-paint upload; these stills do not validate default accelerated rendering, measure speed or certify other platforms. <a href="${r}/assets/review/walkthrough.json">Capture provenance ↗</a></p></section>`;
+}
 export function film(depth) {
   const r=rel(depth);
   return `<figure class="review-film"><video controls playsinline preload="none" width="1320" height="870" poster="${r}/assets/films/shell.png" aria-describedby="film-caption"><source src="${r}/assets/films/shell.mp4" type="video/mp4"><p><a href="${r}/assets/films/shell.mp4">Open the recording</a></p></video><figcaption id="film-caption"><b>The shell / macOS</b><span>The app building this site. Scripted pacing, not a performance measurement.</span><a href="${r}/about/#pictures">How this was recorded ↗</a></figcaption></figure>`;

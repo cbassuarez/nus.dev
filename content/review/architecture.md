@@ -16,7 +16,17 @@ Hosted providers retain their own account requirements and data policies. A loca
 
 ## Profiles and sync
 
-A profile lives locally. Optional sync encrypts selected profile files under a user-held key and carries them through a chosen folder or private Git remote. There is no nus-operated account or sync service in the path. The carrier can still observe blob sizes and timing, and losing the key has recovery consequences described in the source notes.
+A profile lives locally. “Here” uses a shared location for the installed channel, so updating, reinstalling or moving the app continues with the same local profile without sync. A busy or failed legacy migration stops rather than creating a duplicate. Normal uninstall keeps the profile for reinstall; deliberate complete cleanup removes that channel's local data, recovery copies, vault keys, logs and owned retained packages.
+
+Other channels, projects and external sync folders remain outside that cleanup. [Try and cleanup instructions](../try/) describe the two uninstall choices.
+
+Optional sync encrypts selected profile files under a user-held key and carries them through a chosen folder or private Git remote. There is no nus-operated account or sync service in the path. The carrier can still observe blob sizes and timing, and losing the key has recovery consequences described in the source notes.
+
+## Keeping and finding the task
+
+Kept provides one record for a page's bookmark, reading, saved-copy, keyword, pin and collection roles. Address and palette results prioritize those records; `said:<word>` searches saved copies. The shared Find bar searches pages, shells and editors, with wider scopes when the current pane has no answer. Whole-word and pattern support depends on the surface; browser-page search stays plain text and case.
+
+Orrery and tab dragging arrange the same workspace. Tab rows report running, listening, waiting, finished, playing and edited state. These are views of local task state, not a claim that web pages, executable tools and assistant output share one trust level.
 
 ## Implementation record
 
