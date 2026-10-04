@@ -142,6 +142,8 @@ there; layouts, held shells, the journal and `home` are rows too.
 
 ## Home
 
+{{capture:home}}
+
 The window's first tab, and what an empty new tab opens: a terminal with no
 PTY behind it. One line, centred, a caret in the signal colour. A URL and
 Enter: the pane becomes that page. A command: the pane becomes a shell
@@ -309,6 +311,8 @@ otherwise.
 
 ## History and replay
 
+{{capture:history}}
+
 Ctrl+Shift+H opens the session as a continuous, searchable document with a
 map at the right. Command boundaries are detents on the map, failed commands
 have stronger ticks, and the viewport shows what is visible; drag it to
@@ -325,6 +329,8 @@ map, copy controls, the transcript and the cast — that needs no server and
 no nus. Recordings are kept 7 days, 1 day, or not at all.
 
 ## The browser
+
+{{capture:workspace}}
 
 Chromium, rendered offscreen and composited by nus. New tab opens the palette
 or your start page; URL or search from there. The search engine is yours to
@@ -387,6 +393,8 @@ are used for is built natively — blocking, boosts, the reader, containers,
 tab tools — and password filling through the `op` and `bw` CLIs.
 
 ## The editor
+
+{{capture:editor}}
 
 A full editor pane: open a file from the prompt (`nus <file>`), a click on a
 path, the FILES tree or the URL row. Multi-buffer, find and replace,
@@ -460,6 +468,8 @@ ask before kill, probe, tunnel tool, hidden processes. `ports` in
 or process.
 
 ## The hatch
+
+{{capture:hatch}}
 
 A quick terminal on a global hotkey — Ctrl+` by default; Win+` or
 Ctrl+Shift+Space — that works whether or not nus is in front, on the monitor

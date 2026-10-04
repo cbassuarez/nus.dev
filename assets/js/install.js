@@ -28,11 +28,15 @@ async function copy(button) {
 }
 
 export function mountInstall(root = document) {
-  for (const button of root.querySelectorAll('[data-copy]')) {
-    button.addEventListener('click', () => copy(button));
+  const controller = new AbortController();
+  const buttons = [...root.querySelectorAll('[data-copy]')];
+  const on = (el, type, fn) => el.addEventListener(type, fn, {signal: controller.signal});
+  for (const button of buttons) {
+    on(button, 'click', () => copy(button));
   }
+  const cleanup = () => { controller.abort(); for (const button of buttons) clearTimeout(button._reset); };
   const cmd = root.querySelector('[data-cmd]');
-  if (!cmd) return;
+  if (!cmd) return cleanup;
   const tabs = [...cmd.querySelectorAll('[data-cmd-tab]')];
   const panels = [...cmd.querySelectorAll('[data-cmd-panel]')];
   const show = (which) => {
@@ -41,6 +45,7 @@ export function mountInstall(root = document) {
   };
   cmd.querySelector('[data-cmd-tabs]').hidden = false;
   cmd.classList.add('is-tabbed');
-  for (const t of tabs) t.addEventListener('click', () => show(t.dataset.cmdTab));
+  for (const t of tabs) on(t, 'click', () => show(t.dataset.cmdTab));
   show(detectTarget() === 'windows-x86_64' ? 'windows' : 'unix');
+  return cleanup;
 }

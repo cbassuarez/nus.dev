@@ -15,6 +15,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { buildReview } from './review/build.mjs';
 import {applyFacts} from './benchmarks/facts.mjs';
 import { render } from './markdown.mjs';
+import {applyProductCaptures} from './product-media.mjs';
 import { page, icon, SITE } from './layout.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -71,7 +72,7 @@ ${docNav({ toc })}
     <span>${icon(d.ic)}</span>
     <span>${d.title}</span>
   </div>
-${html}
+${applyProductCaptures(html)}
 </article>
 </div>`;
 

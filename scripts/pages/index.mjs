@@ -14,11 +14,15 @@ export default {
   <p class="continuum-hero__meta">macOS · Windows · Linux <span aria-hidden="true">/</span> Preview software</p>
  </div>
  <div class="shell-stage">
-  <div class="shell-stage__intro"><h2><span aria-hidden="true">»</span> A shell with room for you.</h2><p>Your commands, your pages, your own place to begin.</p></div>
-  <figure class="shell-capture">
-   <a href="./assets/films/nus-home-2026-09-26.png" target="_blank" rel="noopener" aria-label="View the full-size nus home screenshot">
-    <img src="./assets/films/nus-home-2026-09-26.png" width="3204" height="1912" fetchpriority="high" alt="The actual nus app on macOS: its home prompt, saved commands, shell sessions, and Memphis artwork in a dark workspace.">
-   </a>
+  <div class="shell-install cmd" data-cmd>
+   <div class="cmd__tabs" role="tablist" aria-label="Install on your system" data-cmd-tabs hidden><button type="button" role="tab" aria-selected="true" data-cmd-tab="unix">macOS · Linux</button><button type="button" role="tab" aria-selected="false" data-cmd-tab="windows">Windows</button></div>
+   <div class="cmd__line" data-cmd-panel="unix"><span class="cmd__os">macOS · Linux</span><span class="cmd__prompt" aria-hidden="true">»</span><code>curl -fsSL ${SITE.url}/install.sh | sh</code><button class="copy" type="button" data-copy aria-label="Copy the macOS and Linux install command">${icon('copy')}<span>Copy</span></button></div>
+   <div class="cmd__line" data-cmd-panel="windows"><span class="cmd__os">Windows</span><span class="cmd__prompt" aria-hidden="true">»</span><code>irm ${SITE.url}/install.ps1 | iex</code><button class="copy" type="button" data-copy aria-label="Copy the Windows install command">${icon('copy')}<span>Copy</span></button></div>
+  </div>
+  <figure class="shell-capture hero-film" data-film data-film-autoplay>
+   <video width="1600" height="1086" data-src="./assets/films/nus-hero-web.mp4" data-poster-desktop="./assets/films/nus-hero-poster.png" poster="./assets/films/nus-hero-poster.png" autoplay muted loop playsinline preload="none" aria-label="A real nus workflow: run the Hello World server, open its page beside the shell, and click the working counter twice."></video>
+   <div class="hero-film__controls"><button class="film-toggle" type="button" data-film-toggle data-play-label="Play demo" hidden aria-pressed="false">Play demo</button></div>
+   <p class="film-error sr-only" data-film-error hidden role="status">The demo could not start automatically. Select Play demo to try again.</p>
   </figure>
  </div>
 </section>

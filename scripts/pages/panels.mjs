@@ -1,47 +1,35 @@
 import {SITE,icon} from '../layout.mjs';
+import {productFigure} from '../product-media.mjs';
 
 const FILMS='../assets/films/';
-
-/* Hatch has no capture in the repo yet, so it is redrawn from one: the same
-   sheet, rows and footer the app shows. Swap in a `shot` when there is one. */
-const hatch=`<div class="hatch-art" role="img" aria-label="Hatch, ready. The work list shows git push, finished, in nus-site, and a zsh shell in the home folder; Enter opens the existing session.">
-   <div class="hatch-art__sheet" aria-hidden="true">
-    <div class="hatch-art__head"><span class="hatch-art__mark">hatch</span><span class="hatch-art__state">Hatch · ready</span><span class="hatch-art__acts"><span>Expand</span><span>Pin</span><span>Hide</span></span></div>
-    <div class="hatch-art__tabs"><span class="on">Work</span><span>Terminal</span><span>+ Shell</span><span>‹</span><span>›</span></div>
-    <div class="hatch-art__row on"><i></i><span><b>git push</b><small>nus · /Users/seb/nus-site</small></span><em>Finished</em></div>
-    <div class="hatch-art__row"><i></i><span><b>zsh</b><small>nus · /Users/seb</small></span><em>Shell</em></div>
-    <div class="hatch-art__foot"><span>↑ ↓ select · Enter opens the existing session</span><span class="hatch-art__acts"><span>nus</span><span>Quit</span></span></div>
-   </div>
-  </div>`;
 
 /* The numbered sections, one slide each: the copy, and the capture that shows it. */
 const SLIDES=[
  {id:'home',tab:'Your home',title:'A place to begin.<br>A place to come back to.',
   copy:['Start at the prompt, open a project, or resume a session. Saved commands, links, and prompts keep the things you use close at hand.','The background, type, colours, and suggestions are yours to choose. Keep it quiet, or give your workspace a little personality.'],
   link:['../docs/product/','Explore the product guide ↗'],
-  shot:{src:'nus-home-2026-09-26.png',w:3204,h:1912,alt:'The current nus home: a prompt and saved commands, with projects and resumable sessions beneath, surrounded by Memphis artwork.',caption:'Home: the prompt and saved commands, with Memphis artwork behind them.'}},
+  capture:'home'},
  {id:'workspace',tab:'Shells &amp; pages',title:'Your shell,<br>with a view.',
   copy:['Keep your shell configuration, aliases, and command-line tools. Start a server and open its page beside the output. Keep documentation nearby while a command runs.','Tabs, splits, and named Spaces let each project keep its own arrangement.'],
   points:[['A real terminal.','Your commands run in a shell. Follow their output, select text, and return to the session when you need it.'],['A browser beside it.','Chromium pages have navigation, search, downloads, and developer tools. Open a detected localhost address straight from the shell.'],['Room for the whole job.','Keep the server, documentation, and assistant in the same project. Move between them without losing your place.']],
-  shot:{src:'nus-shell-page-2026-09-26.webp',w:2000,h:1194,alt:'A zsh session that has just committed and pushed the site, beside a browser pane open on the nus.dev repository on GitHub.',caption:'A zsh session beside the page it just pushed to.'}},
+  capture:'workspace'},
  {id:'editor',tab:'The editor',title:'From the output<br>to the source.',
   copy:['Open a file beside the terminal. Follow a file-and-line reference from command output into the editor, then return to the running shell.','Keep the source close to the page you’re building, with dedicated text selection and editing controls.'],
   link:['../docs/product/','Read about the editor ↗'],
-  shot:{src:'nus-split-2026-09-26.webp',w:2000,h:1194,alt:'One tab split into two zsh sessions: the pushed site on the left, a fresh prompt on the right.',caption:'One tab, split in two. A file opens the same way, beside the running shell.'}},
+  capture:'editor'},
  {id:'history',tab:'History',title:'Find your<br>way back.',
   copy:['A session is more than its last screen. Move through commands and their output, find an earlier result, or follow a recording when the sequence matters.','Keep useful commands in your saved collection so you can find them again without digging through a whole session.'],
   points:[['Commands &amp; output','Navigate the work by command, with its output close at hand.'],['Session playback','Revisit a recorded session in order, at your own pace.'],['Saved commands','Keep recurring commands, links, and prompts together.']],
-  shot:{src:'nus-history-2026-09-26.webp',w:2000,h:1194,alt:'Command history for a session: four commands, each with its status, duration and folder, the output of git push, and a map of the session down the right edge.',caption:'Command history: every command, its status and folder, and a map of the session.'}},
+  capture:'history'},
  {id:'hatch',tab:'Hatch',title:'Ongoing work.<br>Within reach.',
   copy:['Bring up an overview of terminal work across your Spaces. See what’s running, finished, or needs your attention, then return to the original session.','Use a dropdown from the top edge or a centred panel. Move the same shell into the full workspace when you need more room.'],
   small:'Shortcuts, window placement, and focus behaviour vary by platform and desktop. Native-platform testing is ongoing.',
-  art:hatch,caption:'Hatch, redrawn from a capture of the app: finished work and open shells, a keypress away.'}
+  capture:'hatch'}
 ];
 
 const n=i=>String(i+1).padStart(2,'0');
 
-const figure=(s,i)=>s.shot?`<figure class="tour__shot"><a href="${FILMS}${s.shot.src}" target="_blank" rel="noopener" aria-label="View the full-size capture: ${s.tab}"><img src="${FILMS}${s.shot.src}" width="${s.shot.w}" height="${s.shot.h}" ${i===0?'fetchpriority="high"':'loading="lazy"'} decoding="async" alt="${s.shot.alt}"></a><figcaption>${s.shot.caption}</figcaption></figure>`
- :`<figure class="tour__shot tour__shot--art">${s.art}<figcaption>${s.caption}</figcaption></figure>`;
+const figure=(s,i)=>productFigure(s.capture,{eager:i===0});
 
 const slide=(s,i)=>`
   <article class="tour__slide" id="${s.id}" data-tour-slide>

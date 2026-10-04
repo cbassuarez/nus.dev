@@ -13,11 +13,11 @@ class Element extends EventTarget {
  pause(){this.paused=true;this.dispatchEvent(new Event('pause'));}
  load(){this.currentTime=0;}
 }
-function fixture(mobile=false){
+function fixture(mobile=false,{autoplay=false,reducedMotion=false}={}){
  const video=new Element({src:'desktop.mp4',srcMobile:'mobile.mp4',posterDesktop:'desktop.png',posterMobile:'mobile.png'}),button=new Element({playLabel:'Play demo'}),error=new Element();
- const frame={scrollIntoView(options){this.scrollOptions=options;},querySelector:s=>s==='video'?video:s==='[data-film-toggle]'?button:error};
+ const frame={hasAttribute:name=>name==='data-film-autoplay'&&autoplay,scrollIntoView(options){this.scrollOptions=options;},querySelector:s=>s==='video'?video:s==='[data-film-toggle]'?button:error};
  const document=new Element();document.querySelectorAll=()=>[frame];document.hidden=false;
- const narrow=new Element(),reduced=new Element();narrow.matches=mobile;reduced.matches=false;
+ const narrow=new Element(),reduced=new Element();narrow.matches=mobile;reduced.matches=reducedMotion;
  globalThis.document=document;globalThis.matchMedia=q=>q.includes('700px')?narrow:reduced;
  let observer;globalThis.IntersectionObserver=class {constructor(fn){this.fn=fn;observer=this;}observe(){}disconnect(){this.disconnected=true;}};
  const cleanup=mountFilms();
@@ -30,6 +30,20 @@ test('hero loads on explicit play, selects phone composition, and replays on dem
  f.video.ended=true;f.video.paused=true;f.video.currentTime=12;f.video.dispatchEvent(new Event('ended'));assert.equal(f.button.textContent,'Replay ↻');
  f.intersect(false);f.intersect(true);assert.equal(f.video.paused,true);
  f.button.dispatchEvent(new Event('click'));await Promise.resolve();assert.equal(f.video.currentTime,0);assert.equal(f.video.paused,false);f.cleanup();
+});
+test('autoplay waits for visibility, stays muted, and respects a visitor pause',async()=>{
+ const f=fixture(false,{autoplay:true});
+ assert.equal(f.video.src,undefined);assert.equal(f.video.muted,true);assert.equal(f.button.hidden,false);
+ f.intersect(true);await Promise.resolve();assert.equal(f.video.src,'desktop.mp4');assert.equal(f.video.paused,false);
+ f.button.dispatchEvent(new Event('click'));assert.equal(f.video.paused,true);
+ f.intersect(false);f.intersect(true);await Promise.resolve();assert.equal(f.video.paused,true);f.cleanup();
+});
+test('reduced motion keeps the autoplay hero on its poster until explicitly played',async()=>{
+ const f=fixture(false,{autoplay:true,reducedMotion:true});
+ f.intersect(true);await Promise.resolve();assert.equal(f.video.src,undefined);assert.equal(f.video.autoplay,false);
+ f.button.dispatchEvent(new Event('click'));await Promise.resolve();assert.equal(f.video.paused,false);
+ f.document.hidden=true;f.document.dispatchEvent(new Event('visibilitychange'));assert.equal(f.video.paused,true);
+ f.cleanup();
 });
 test('visibility pauses, reduced motion cancels resume, cleanup removes listeners',async()=>{
  const f=fixture();f.intersect(true);f.button.dispatchEvent(new Event('click'));await Promise.resolve();

@@ -23,7 +23,7 @@
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/IBMPlexMono-Regular.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/Newsreader-Italic.woff2" crossorigin>
 <link rel="stylesheet" href="../assets/css/site.css?v=b617e9c8ed00">
-<link rel="stylesheet" href="../assets/css/continuum.css?v=9b3cde986b00">
+<link rel="stylesheet" href="../assets/css/continuum.css?v=06c93c45ddf7">
 <script>
 /* Apply the stored theme and signal before first paint, so the page never flashes. */
 (function(){try{
@@ -77,7 +77,7 @@
  </div>
  <div class="tour__slides" data-tour-slides>
   <article class="tour__slide" id="home" data-tour-slide>
-   <figure class="tour__shot"><a href="../assets/films/nus-home-2026-09-26.png" target="_blank" rel="noopener" aria-label="View the full-size capture: Your home"><img src="../assets/films/nus-home-2026-09-26.png" width="3204" height="1912" fetchpriority="high" decoding="async" alt="The current nus home: a prompt and saved commands, with projects and resumable sessions beneath, surrounded by Memphis artwork."></a><figcaption>Home: the prompt and saved commands, with Memphis artwork behind them.</figcaption></figure>
+   <figure class="tour__shot"><a href="../assets/films/nus-home-project.png" target="_blank" rel="noopener" aria-label="View the full-size home capture"><img src="../assets/films/nus-home-project.png" width="2105" height="1246" fetchpriority="high" decoding="async" alt="The nus Home prompt with three saved commands and links, the Hello World project, and its resumable development server."></a><figcaption>Hello World, with its saved commands and development server ready to return to.</figcaption></figure>
    <div class="tour__copy">
     <p class="cap">01 / Your home</p>
     <h2>A place to begin.<br>A place to come back to.</h2>
@@ -88,7 +88,7 @@
    </div>
   </article>
   <article class="tour__slide" id="workspace" data-tour-slide>
-   <figure class="tour__shot"><a href="../assets/films/nus-shell-page-2026-09-26.webp" target="_blank" rel="noopener" aria-label="View the full-size capture: Shells &amp; pages"><img src="../assets/films/nus-shell-page-2026-09-26.webp" width="2000" height="1194" loading="lazy" decoding="async" alt="A zsh session that has just committed and pushed the site, beside a browser pane open on the nus.dev repository on GitHub."></a><figcaption>A zsh session beside the page it just pushed to.</figcaption></figure>
+   <figure class="tour__shot"><a href="../assets/films/nus-hero-poster.png" target="_blank" rel="noopener" aria-label="View the full-size workspace capture"><img src="../assets/films/nus-hero-poster.png" width="2240" height="1520" loading="lazy" decoding="async" alt="The Hello World development server in a real nus terminal beside its working browser page, with the native nus topbar retained."></a><figcaption>The running server and its working page, in the same window.</figcaption></figure>
    <div class="tour__copy">
     <p class="cap">02 / Shells &amp; pages</p>
     <h2>Your shell,<br>with a view.</h2>
@@ -99,7 +99,7 @@
    </div>
   </article>
   <article class="tour__slide" id="editor" data-tour-slide>
-   <figure class="tour__shot"><a href="../assets/films/nus-split-2026-09-26.webp" target="_blank" rel="noopener" aria-label="View the full-size capture: The editor"><img src="../assets/films/nus-split-2026-09-26.webp" width="2000" height="1194" loading="lazy" decoding="async" alt="One tab split into two zsh sessions: the pushed site on the left, a fresh prompt on the right."></a><figcaption>One tab, split in two. A file opens the same way, beside the running shell.</figcaption></figure>
+   <figure class="tour__shot"><a href="../assets/films/nus-editor-detail.png" target="_blank" rel="noopener" aria-label="View the full-size editor capture"><img src="../assets/films/nus-editor-detail.png" width="1433" height="957" loading="lazy" decoding="async" alt="The real nus editor showing main.js, the seven lines that make the Hello World counter work. The file tab remains visible; the window topbar is omitted."></a><figcaption>The main.js source behind the counter, in the native editor.</figcaption></figure>
    <div class="tour__copy">
     <p class="cap">03 / The editor</p>
     <h2>From the output<br>to the source.</h2>
@@ -110,7 +110,7 @@
    </div>
   </article>
   <article class="tour__slide" id="history" data-tour-slide>
-   <figure class="tour__shot"><a href="../assets/films/nus-history-2026-09-26.webp" target="_blank" rel="noopener" aria-label="View the full-size capture: History"><img src="../assets/films/nus-history-2026-09-26.webp" width="2000" height="1194" loading="lazy" decoding="async" alt="Command history for a session: four commands, each with its status, duration and folder, the output of git push, and a map of the session down the right edge."></a><figcaption>Command history: every command, its status and folder, and a map of the session.</figcaption></figure>
+   <figure class="tour__shot"><a href="../assets/films/nus-history-detail.png" target="_blank" rel="noopener" aria-label="View the full-size history capture"><img src="../assets/films/nus-history-detail.png" width="1176" height="1208" loading="lazy" decoding="async" alt="The Hello World session in nus command history, with command search, actual output and the scrollable map at the right."></a><figcaption>The commands, their output, and a map of the Hello World session.</figcaption></figure>
    <div class="tour__copy">
     <p class="cap">04 / History</p>
     <h2>Find your<br>way back.</h2>
@@ -121,15 +121,7 @@
    </div>
   </article>
   <article class="tour__slide" id="hatch" data-tour-slide>
-   <figure class="tour__shot tour__shot--art"><div class="hatch-art" role="img" aria-label="Hatch, ready. The work list shows git push, finished, in nus-site, and a zsh shell in the home folder; Enter opens the existing session.">
-   <div class="hatch-art__sheet" aria-hidden="true">
-    <div class="hatch-art__head"><span class="hatch-art__mark">hatch</span><span class="hatch-art__state">Hatch · ready</span><span class="hatch-art__acts"><span>Expand</span><span>Pin</span><span>Hide</span></span></div>
-    <div class="hatch-art__tabs"><span class="on">Work</span><span>Terminal</span><span>+ Shell</span><span>‹</span><span>›</span></div>
-    <div class="hatch-art__row on"><i></i><span><b>git push</b><small>nus · /Users/seb/nus-site</small></span><em>Finished</em></div>
-    <div class="hatch-art__row"><i></i><span><b>zsh</b><small>nus · /Users/seb</small></span><em>Shell</em></div>
-    <div class="hatch-art__foot"><span>↑ ↓ select · Enter opens the existing session</span><span class="hatch-art__acts"><span>nus</span><span>Quit</span></span></div>
-   </div>
-  </div><figcaption>Hatch, redrawn from a capture of the app: finished work and open shells, a keypress away.</figcaption></figure>
+   <figure class="tour__shot"><a href="../assets/films/nus-hatch-project.png" target="_blank" rel="noopener" aria-label="View the full-size hatch capture"><img src="../assets/films/nus-hatch-project.png" width="1920" height="936" loading="lazy" decoding="async" alt="The real nus Hatch overview showing the Hello World development server running and its source check finished."></a><figcaption>The development server is running; the project checks have finished.</figcaption></figure>
    <div class="tour__copy">
     <p class="cap">05 / Hatch</p>
     <h2>Ongoing work.<br>Within reach.</h2>
@@ -178,6 +170,6 @@
   </div>
 </footer></div>
 <div id="page-announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
-<script type="module" src="../assets/js/navigation.js?v=693cc804b635"></script>
+<script type="module" src="../assets/js/navigation.js?v=5b447ee23e6c"></script>
 </body>
 </html>

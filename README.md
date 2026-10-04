@@ -18,7 +18,7 @@ npm run sync      # pull the app's screenshots out of ../nus into assets/shots/
 npm run releases  # refresh assets/releases.json, the download page's fallback
 npm run vendor:cuelume -- 0.2.2  # intentionally refresh the pinned site sound library
 npm run wasm      # rebuild the VT core for the browser  (needs Rust + wasm-pack)
-npm run record    # re-record the hero session           (needs the nus checkout)
+npm run record    # re-record the legacy PTY session     (needs the nus checkout)
 ```
 
 Node 18 or newer. There is no `npm install` — the build has no dependencies,
@@ -50,74 +50,42 @@ CNAME                                    nus.dev
 Editing a page means editing `scripts/pages/*.mjs` or `content/*.md` and
 rebuilding — never the generated HTML, which is overwritten.
 
-## The hero terminal
+## Product media
 
-The shell in the hero is not a mockup and not a video. It is a recorded PTY
-session replayed through **nus's own VT core compiled to WebAssembly**, so
-every glyph's position, colour, width and wrap is decided by the same
-`nus_vt::Term` the application runs.
+The homepage shows a fourteen-second native nus recording of an authored
+Hello World project: start its server, open the page beside the terminal,
+and click the working counter. The native topbar remains visible. The
+install command above it uses the same platform detection and Copy behavior
+as the download page.
 
-```
-wasm/vt-wasm/          a wasm-bindgen shim over nus-vt (pinned by git rev)
-assets/wasm/           the built artifact, committed — 224 KB
-casts/nus-vt.cast      the recording, asciinema v2, plain text
-casts/session.txt      what gets typed during a recording
-casts/zdotdir/.zshrc   the OSC 133 prompt nus installs for zsh
-assets/js/terminal.js  the canvas painter and transport
-```
+The muted hero autoplays and loops when visible. A compact pause control
+sits over the video; there is no caption row. Offscreen and hidden pages
+pause it, and reduced motion keeps the poster until the visitor selects
+Play. The complete desktop window keeps its natural proportions at every
+width. It is a paced demonstration, not a performance measurement.
 
-`crates/vt` depends only on `vte`, `bitflags`, `unicode-width` and `png`, so it
-cross-compiles to `wasm32-unknown-unknown` unmodified. The grid crosses into
-JavaScript as a flat `u32` array read through a `Uint32Array` view on wasm
-memory — four words per cell, no copy and no JSON.
+The numbered Panels tour pairs each description with a capture from the
+same project. The editor, history, Home and Hatch details omit the window
+topbar. Hatch shows actual running and finished sessions. The product guide
+reuses these figures through `{{capture:name}}` tokens, resolved by
+`scripts/product-media.mjs` during the build.
 
-Because it is the real parser, the page gets the real behaviour for free: OSC
-133 marks make `at_prompt()` answer, the theme toggle repaints through
-`Palette::set_base` rather than a CSS filter, and resizing reflows the grid.
-
-To re-record, with the nus checkout at `../nus`:
-
-```
-cd ../nus
-ZDOTDIR=../nus-site/casts/zdotdir \
-  python3 ../nus-site/scripts/record-cast.py ../nus-site/casts/nus-vt.cast \
-  --cols 80 --rows 24 --max-seconds 3 --send ../nus-site/casts/session.txt -- zsh -i
-```
-
-Bump `wasm/vt-wasm/Cargo.toml`'s pinned `rev` and the revision named in the
-hero caption together — the caption is a claim about which commit painted the
-page, so it has to stay true.
-
-## Screenshots
-
-Real captures of the running app live in `docs/media/` in the **app** repo, so
-they are versioned with the thing they show. `npm run sync` copies them into
-`assets/shots/`.
-
-nus runs on Windows today, so they have to be taken there. The shot list the
-site wants, one file each:
-
-| File | What |
+| File in `assets/films/` | Subject |
 |---|---|
-| `window-browser.png` | The browser half: sidebar revealed with a stack and the PORTS folder, a page on localhost with its hazard tape, devtools beside it |
-| `panel-palette.png` | ⌘K mid-query, tabs above actions |
-| `panel-ask.png` | Ask with a question answered and command blocks out |
-| `panel-folders.png` | The sidebar showing PORTS and GITHUB filled |
-| `panel-atlas.png` | The atlas over a launch |
-| `panel-stacks.png` | The sidebar with a stack nested two deep |
-| `panel-site.png` | The site panel open on a host |
-| `panel-tiles.png` | Three tabs tiled as an L |
-| `panel-peek.png` | A peek floating over a page |
-| `panel-pip.png` | PiP over another tab |
-| `panel-compact.png` | Compact, with a row hovered |
+| `nus-hero-web.mp4` | The 14-second shell and page workflow, 1600 × 1086 at 30 fps |
+| `nus-hero-poster.png` | The full-resolution final native frame, 2240 × 1520 |
+| `nus-editor-detail.png` | The actual main.js source and file tab, 1433 × 957 |
+| `nus-history-detail.png` | Command search, output and the map, 1176 × 1208 |
+| `nus-home-project.png` | Saved commands, project and resumable server, 2105 × 1246 |
+| `nus-hatch-project.png` | The running server and finished source checks, 1920 × 936 |
 
-Capture the whole window, PNG, no OS shadow, and take each one **twice** —
-once in paper and once in ink — suffixed `-paper` / `-ink`, so the page can
-swap with the theme the way everything else does. Note the scale factor in the
-commit message; the site needs it to size them without guessing.
-
-The shell in the hero does **not** want a screenshot: it is live, and a still
-would be a downgrade.
+`hello-world-provenance.json` records the source build, native capture
+parameters, verified states, dimensions and file hashes. These macOS
+captures use isolated profiles, `NUS_SHOT_NO_HOVER=1` and disabled port
+toasts. Keep their original colors when the site theme changes. Retain
+lossless native masters and scripts with the capture work; only publication
+exports belong here. Earlier supplied screenshots and the WASM PTY replay
+remain available as source history.
 
 ## Design
 
@@ -126,9 +94,8 @@ The site is drawn from the same tokens as the app: see
 in the app repo, which is the source of truth. `assets/css/site.css` mirrors it.
 Change the app's design doc first, then the CSS.
 
-The hero is not a screenshot — it is the app window rebuilt in HTML, so it
-follows the visitor's theme and the signal colour they pick in the masthead,
-and it obeys nus's own width rule (no split under 900px, no sidebar under 640).
+The site follows the visitor's theme and signal color. Native product media
+keeps the app's recorded Blueprint appearance and original aspect ratio.
 
 ## Docs
 
