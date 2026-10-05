@@ -302,7 +302,10 @@ main() {
       if [ -n "$stable" ] && has_package "$stable"; then tag=$stable; fi
     fi
     if [ -z "$tag" ]; then
-      for t in $(curl -fsSL "$api?per_page=30" | tags_of); do
+      # A refused list (GitHub allows 60 unauthenticated calls an hour) is not
+      # the same as no package: say which.
+      list=$(curl -fsSL "$api?per_page=30") || die "could not list nus's releases from GitHub (a 403 means its hourly limit for this address is spent; try again later)"
+      for t in $(printf '%s\n' "$list" | tags_of); do
         case "$t" in *-preview.*) if has_package "$t"; then tag=$t; break; fi ;; esac
       done
     fi
@@ -314,7 +317,7 @@ main() {
   case "$tag" in *-preview.*) channel=preview; dir=preview; pkg=nus-preview ;; *) channel=stable; dir=release; pkg=nus ;; esac
 
   tmp=$(mktemp -d "${TMPDIR:-/tmp}/nus-install.XXXXXX")
-  trap 'rm -rf "$tmp"' EXIT
+  trap 'cursor h; rm -rf "$tmp"' EXIT
   trap 'exit 1' INT TERM
   log="${TMPDIR:-/tmp}/nus-install.log"
   curl -fsSL -o "$tmp/SHA256SUMS.txt" "$dl/$tag/SHA256SUMS.txt"
