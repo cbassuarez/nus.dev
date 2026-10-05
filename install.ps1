@@ -14,6 +14,7 @@
 #   $env:NUS_VERSION = 'v0.0.1'     install one exact tag
 #   $env:NO_COLOR    = '1'          no colour; redirected output is plain anyway
 #   $env:NUS_UNINSTALL = '1'        remove every copy instead (when `nus uninstall` cannot run)
+$callerErrors = $ErrorActionPreference
 $ErrorActionPreference = 'Stop'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -60,7 +61,7 @@ function Row($n, $name, $detail, $mark, $time) {
 function Fail([string]$why) {
   Clear-Line
   [Console]::WriteLine("  $red$bold$bad$reset $why")
-  throw $why
+  throw (New-Object Management.Automation.ErrorRecord (New-Object Exception $why), 'nus-install', 'NotSpecified', $null)
 }
 
 # --- the wordmark ----------------------------------------------------------------
@@ -98,8 +99,11 @@ function Banner($tag, $version) {
 }
 
 # --- downloads -------------------------------------------------------------------
+# GitHub serves it as application/octet-stream, which Windows PowerShell 5.1
+# hands back as bytes, not text.
 function Get-Sums($tag) {
-  try { (Invoke-WebRequest -UseBasicParsing "$dl/$tag/SHA256SUMS.txt").Content } catch { $null }
+  try { $c = (Invoke-WebRequest -UseBasicParsing "$dl/$tag/SHA256SUMS.txt").Content } catch { return $null }
+  if ($c -is [byte[]]) { [Text.Encoding]::UTF8.GetString($c) } else { $c }
 }
 function Has-Package($tag) {
   $sums = Get-Sums $tag
@@ -216,7 +220,8 @@ function Main {
       if ($stable -and (Has-Package $stable)) { $tag = $stable }
     }
     if (-not $tag) {
-      $list = Invoke-RestMethod -Headers $headers "$api?per_page=30"
+      # ${api}, not $api: PowerShell would read `$api?per_page` as one variable.
+      $list = Invoke-RestMethod -Headers $headers "${api}?per_page=30"
       foreach ($r in $list) {
         if ($r.prerelease -and -not $r.draft -and (Has-Package $r.tag_name)) { $tag = $r.tag_name; break }
       }
@@ -265,4 +270,13 @@ function Main {
   }
 }
 
-try { Main } catch { if (-not $tty) { Write-Error $_ } }
+# Under `irm | iex` this runs in the caller's own session: give it back its
+# error preference, and never end silently. Fail has already said why; anything
+# else is said here.
+try { Main } catch {
+  if (-not $tty) { Write-Error $_ -ErrorAction Continue }
+  elseif ($_.FullyQualifiedErrorId -ne 'nus-install') {
+    Clear-Line
+    [Console]::WriteLine("  $red$bold$bad$reset $($_.Exception.Message)")
+  }
+} finally { $ErrorActionPreference = $callerErrors }
