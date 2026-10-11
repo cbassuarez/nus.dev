@@ -143,7 +143,6 @@ export function mountDownloads(root = document.querySelector('[data-downloads]')
   };
   root.addEventListener('change', render);
   q('[data-retry]').addEventListener('click',refresh);
-  q('[data-copy]').addEventListener('click',async () => { try { await navigator.clipboard.writeText(q('[data-hash]').textContent); q('[data-copy]').textContent='Copied'; } catch { q('[data-copy]').textContent='Select the hash to copy'; } });
   refresh();
   const recheck=()=>{if(!document.hidden && Date.now()-lastCheck>60000)refresh();};
   document.addEventListener('visibilitychange',recheck);

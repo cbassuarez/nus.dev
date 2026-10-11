@@ -1,7 +1,7 @@
 /* Review Room progressive enhancements. The packet remains complete without JavaScript. */
 import {API} from "./releases.js?v=swup-1";
 import {reviewReleaseRecord,packageCards,releaseSummary,distributionNotice,distributionStatus} from "./review-releases.js?v=review-20261004";
-import {feel} from "./feel.js?v=swup-1";
+import {feel} from "./feel.js?v=copy-cues-1";
 
 function wireCopy(root) {
   for (const button of root.querySelectorAll("[data-copy-hash]")) {
@@ -13,10 +13,10 @@ function wireCopy(root) {
       try {
         await navigator.clipboard.writeText(value);
         button.textContent="Copied";
-        feel.emit("review.copy.success",{target:button});
+        feel.emit("copy.success",{target:button});
       } catch {
         button.textContent="Select the checksum to copy";
-        feel.emit("review.copy.error",{target:button});
+        feel.emit("copy.error",{target:button});
       }
     });
   }

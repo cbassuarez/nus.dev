@@ -1,30 +1,34 @@
 import { detectTarget } from './releases.js?v=tiles-1';
+import { feel } from './feel.js?v=copy-cues-1';
 
 /* The download page's commands. Without script both lines show, labelled;
    with it they become tabs, opened at the visitor's own system, and every
    command gets a working Copy button. */
 
-function copyText(button) {
-  const box = button.closest('.cmd__line, .codebox');
-  const code = box && box.querySelector('code');
-  return code ? code.textContent.trim() : '';
+function copySource(button) {
+  return button.closest('[data-hash-section]')?.querySelector('[data-hash]')
+    || button.closest('.cmd__line, .codebox')?.querySelector('code');
 }
 
 async function copy(button) {
-  const text = copyText(button);
-  const label = button.querySelector('span');
+  const code = copySource(button);
+  const text = code?.textContent.trim();
+  if (!text) return;
+  const label = button.querySelector('span') || button;
+  const original = button._copyLabel ||= label.textContent;
   try {
     await navigator.clipboard.writeText(text);
     button.classList.add('is-copied');
-    if (label) label.textContent = 'Copied';
+    label.textContent = 'Copied';
+    feel.emit('copy.success', {target: button});
   } catch {
     // No clipboard here: select the command so it can be copied by hand.
-    const code = button.closest('.cmd__line, .codebox')?.querySelector('code');
-    if (code) getSelection()?.selectAllChildren(code);
-    if (label) label.textContent = 'Select';
+    getSelection()?.selectAllChildren(code);
+    label.textContent = 'Select';
+    feel.emit('copy.error', {target: button});
   }
   clearTimeout(button._reset);
-  button._reset = setTimeout(() => { button.classList.remove('is-copied'); if (label) label.textContent = 'Copy'; }, 1800);
+  button._reset = setTimeout(() => { button.classList.remove('is-copied'); label.textContent = original; }, 1800);
 }
 
 export function mountInstall(root = document) {

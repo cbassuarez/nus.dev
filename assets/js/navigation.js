@@ -2,12 +2,12 @@
 import '../vendor/swup/4.10.0/Swup.umd.js';
 import '../vendor/swup-head-plugin/2.3.1/index.umd.js';
 import {mountSite} from './site.js?v=benchmarks-1';
-import {mountFeel} from './feel.js?v=swup-1';
+import {mountFeel} from './feel.js?v=copy-cues-1';
 import {mountFilms} from './films.js?v=hello-world-1';
 import {mountOrbit} from './orbit.js?v=swup-1';
-import {mountDownloads} from './releases.js?v=tiles-1';
-import {mountInstall} from './install.js?v=hero-install-1';
-import {mountReview} from './review.js?v=review-20261004';
+import {mountDownloads} from './releases.js?v=copy-cues-1';
+import {mountInstall} from './install.js?v=copy-cues-1';
+import {mountReview} from './review.js?v=copy-cues-1';
 import {mountTour} from './tour.js?v=tour-1';
 
 let cleanups=[];

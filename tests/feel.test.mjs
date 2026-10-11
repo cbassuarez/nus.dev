@@ -27,9 +27,9 @@ test("sound defaults on, persists off, and mute itself is silent",()=>{
   assert.equal(SOUND_DEFAULT,true);assert.equal(SOUND_VOLUME,0.55);
   const h=harness();assert.equal(h.feel.soundEnabled,true);assert.deepEqual(h.enabled,[true]);
   h.feel.setSound(false);assert.equal(h.values.get("nus.sound"),"off");
-  h.feel.emit("review.copy.success");
+  h.feel.emit("copy.success");
   assert.deepEqual(h.plays,[]);
-  h.feel.setSound(true);h.feel.emit("review.copy.success");
+  h.feel.setSound(true);h.feel.emit("copy.success");
   assert.equal(h.plays.at(-1).name,"success");
 });
 

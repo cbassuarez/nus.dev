@@ -1,4 +1,4 @@
-import { FEEL_EVENTS } from "./feel-config.js";
+import { FEEL_EVENTS } from "./feel-config.js?v=copy-cues-1";
 
 export function createFeel({ audio, storage, motion, dispatch } = {}) {
   if (!audio || typeof audio.play !== "function" || typeof audio.setEnabled !== "function") {

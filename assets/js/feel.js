@@ -8,8 +8,8 @@ import {
   audioBackend,
   diagnostics as audioState
 } from "./feel-audio.js";
-import { SOUND_VOLUME } from "./feel-config.js";
-import { createFeel } from "./feel-core.js";
+import { SOUND_VOLUME } from "./feel-config.js?v=copy-cues-1";
+import { createFeel } from "./feel-core.js?v=copy-cues-1";
 import { createMotion } from "./feel-motion.js";
 
 const safeStorage = {
