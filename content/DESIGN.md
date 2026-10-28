@@ -109,8 +109,9 @@ entrance.
   a caps tab row under the page.
 - **Palette** (600 wide, 220 from the top): a serif *go* prompt, 2px edge,
   8×8 shadow, selected row in ink fill.
-- **The hatch:** a 960-wide sheet from the top edge with no top border, the
-  signal band as a lip along its foot; or a card, 70% × 60%, centred, the
+- **The hatch:** on Windows and Linux a drawer from the side away from the
+  sidebar, the signal band as a lip down its inner edge; on a Mac a 960-wide
+  sheet from the top edge with no top border, the lip along its foot; or a card, 70% × 60%, centred, the
   carapace as a 22px frame.
 - **PiP:** 400 wide, a 4px signal band, 2px edge, 6×6 shadow, a caps footer.
 - **Bands:** questions — a risky paste, a permission, a link about to open,

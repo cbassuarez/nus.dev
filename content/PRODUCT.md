@@ -487,8 +487,10 @@ ports, ask and the prompt LSP all work up there. + Shell makes a new one;
 HOIST (Ctrl+Shift+↑) sends the tab you are on up, LAND (Ctrl+Shift+↓) brings
 the hatch's tab down as a normal tab.
 
-Two looks: a SHEET that drops from the top edge (from the camera housing on
-a notched Mac), or a CARD centred on the screen. Pin keeps it from hiding on
+Two looks: a SHEET, or a CARD centred on the screen. On Windows and Linux
+the sheet is a drawer from the side of the screen away from your tabs, as
+tall as the space above the taskbar, its lip down its inner edge; on a Mac
+it drops from the top edge (from the camera housing on a notched Mac). Pin keeps it from hiding on
 focus loss; Esc hides. Optional six-second completion notices and a compact
 status along the top edge, neither of which takes focus. A menu-bar or tray
 entry — Signal — opens a drawer of work rows, downloads and quick actions on
